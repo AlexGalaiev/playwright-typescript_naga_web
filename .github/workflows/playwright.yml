@@ -16,12 +16,20 @@ jobs:
         node-version: 18
         cache: 'npm'
         cache-dependency-path: package-lock.json
+    - uses: actions/cache@v3
+      id: playwright-cache
+      with:
+          path: '~/.cache/ms-playwright'
+          key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}'
+          restore-keys: |
+            ${{ runner.os }}-playwright-
     - name: Install dependencies
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      id: playwright_tests
+      run: npx playwright test --project=${{ github.head_ref || github.ref_name }} --workers=1
     - uses: actions/upload-artifact@v3
       if: always()
       with:
