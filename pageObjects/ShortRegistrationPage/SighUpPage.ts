@@ -7,6 +7,7 @@ export class SignUp{
     readonly password: Locator;
     readonly country: Locator;
     readonly submitBtn: Locator;
+    readonly riskWarning: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -14,19 +15,20 @@ export class SignUp{
         this.password = page.locator("[name='password']");
         this.country = page.locator("[data-testid='naga-dropdown-input']");
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
+        this.riskWarning = page.locator(".registration-form__risk-warning");
     };
 
     async goto(MainPage: string, pageTest: string){
         await this.page.goto(`${MainPage}/${pageTest}`);
         await this.email.waitFor({timeout:4000})
     }
-    async createCFDUser(Country: String){
+    async createCFDUser(Country: string){
         let user = new RandomUser();
         await this.email.pressSequentially(user.getRandomUserEmail());
         await this.password.pressSequentially("Test123!")
-        await this.checkCountry("Ukraine")
+        await this.checkCountry(Country)
         await this.submitBtn.click();     
-    }
+    };
 
     async checkCountry(Country: string){
         if(await this.country.textContent() !== Country){
@@ -35,4 +37,7 @@ export class SignUp{
             await this.country.press('Enter')
         } else {}
     };
+    async getRiskWarningText(){
+        return this.riskWarning.textContent();
+    }
 }
