@@ -7,5 +7,8 @@
     },
     "RedirectionNotice":{
         "answer": "Your account doesn't belong to the NAGA entity you are trying to login to. Please continue and we will direct you to the appropriate one"
+    },
+    "SighInHeaderMainText":{
+        "answer":"Sign In to your account"
     }
 }

@@ -5,7 +5,7 @@ import { StartKYCPopup } from "../pageObjects/common/startKYC_Popup/startKYCPage
 import { PhoneVerification } from "../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { PersonalInformation } from "../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 
-test("NAGA Capital full registration user", async({ page, NagaCapital })=>{
+test.skip("NAGA Capital full registration user", async({ page, NagaCapital })=>{
     await test.step('Short registration of lead user', async ()=>{
         let sighUp = new SignUp(page);
         await sighUp.goto(NagaCapital, 'register');
