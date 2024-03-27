@@ -8,6 +8,7 @@ export class SignUp{
     readonly country: Locator;
     readonly submitBtn: Locator;
     readonly riskWarning: Locator;
+    readonly sighUpTittle: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -16,6 +17,8 @@ export class SignUp{
         this.country = page.locator("[data-testid='naga-dropdown-input']");
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
         this.riskWarning = page.locator(".registration-form__risk-warning");
+        this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
+    
     };
 
     async goto(MainPage: string, pageTest: string){
@@ -39,5 +42,8 @@ export class SignUp{
     };
     async getRiskWarningText(){
         return this.riskWarning.textContent();
+    };
+    async getSighUpTittleText(){
+        return this.sighUpTittle.textContent();
     }
 }

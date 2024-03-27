@@ -9,6 +9,7 @@ export class SighIn{
     readonly forgotPasswordLink: Locator;
     readonly redirectionNotice: Locator;
     readonly redirectionButton: Locator;
+    readonly sighInHeaderName: Locator;
 
 
     constructor(page: Page){
@@ -19,6 +20,7 @@ export class SighIn{
         this.forgotPasswordLink = page.locator(".login-form__forgot-password");
         this.redirectionNotice = page.locator(".prompt__content__message");
         this.redirectionButton = page.locator("//div[@class='prompt__actions']//button");
+        this.sighInHeaderName = page.locator("//h2[contains(@class, 'login-form__headline')]")
     }
     async sigInUserToPlatform(UserEmail: string, UserPassword: string){
         await this.signInName.pressSequentially(UserEmail);
@@ -34,5 +36,8 @@ export class SighIn{
     async redirectAccept(){
         await this.redirectionButton.click()
         await this.page.waitForTimeout(1500);
+    };
+    async getSighInHeaderText(){
+        return this.sighInHeaderName.textContent();
     }
 }
