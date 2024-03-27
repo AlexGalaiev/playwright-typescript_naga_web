@@ -20,7 +20,7 @@ export class SignUp{
 
     async goto(MainPage: string, pageTest: string){
         await this.page.goto(`${MainPage}/${pageTest}`);
-        await this.email.waitFor({timeout:4000})
+        // await this.email.waitFor({timeout:4000})
     }
     async createCFDUser(Country: string){
         let user = new RandomUser();

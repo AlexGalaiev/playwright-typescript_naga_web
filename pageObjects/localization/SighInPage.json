@@ -1,0 +1,11 @@
+{
+    "ForgotPasswordDescription":{
+        "answer": "Enter the email address associated with your account, and we will email you a link to reset your password"
+    },
+    "ForgotPasswordEmailSendDisclaimerText":{
+        "answer":"We’ve sent your password reset instructions to:"
+    },
+    "RedirectionNotice":{
+        "answer": "Your account doesn't belong to the NAGA entity you are trying to login to. Please continue and we will direct you to the appropriate one"
+    }
+}

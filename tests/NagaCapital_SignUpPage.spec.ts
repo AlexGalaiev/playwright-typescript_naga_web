@@ -1,5 +1,5 @@
 import { expect } from "@playwright/test";
-import{test} from "..//test-options";
+import { test } from "..//test-options";
 import { getLocalization } from "../pageObjects/localization/getText";
 import { ChangeBrandPopup } from "../pageObjects/ShortRegistrationPage/ChangeBrandPopup";
 import { SignUp } from "../pageObjects/ShortRegistrationPage/SighUpPage";
