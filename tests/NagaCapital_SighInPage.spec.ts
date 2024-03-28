@@ -5,11 +5,13 @@ import { SighIn } from "../pageObjects/SighIn/SignInPage";
 import { getLocalization } from "../pageObjects/localization/getText";
 import {test} from "../test-options"
 import { MainPage } from "../pageObjects/MainPage/MainPage";
+import { RandomUser } from "../pageObjects/common/testUserCredentials/randomUser";
+import { MyAccounts } from "../pageObjects/MainPage/MyAccounts";
 
 
 test.describe("Naga Capital. SignIn Page", async()=>{
     const localization_SignInPage = "/pageObjects/localization/SighInPage.json";
-
+    
     test("Forgot password", async({page, NagaCapital})=>{
         let localization = new getLocalization(localization_SignInPage);
         let signInPage = new SighIn(page);
@@ -42,6 +44,18 @@ test.describe("Naga Capital. SignIn Page", async()=>{
         await signUp.goto(NagaCapital,"feed");
         await mainPage.openRegistrationFromGuestMode();
         expect(await signUp.getSighUpTittleText()).toContain("Sign Up, it's free!");
+    })
+    test("Account locking", async({page, NagaCapital})=>{
+        let sighUp = new SignUp(page);
+        await sighUp.goto(NagaCapital, "register");
+        let randomUser = await sighUp.createCFDUser("Ukraine");
+        let myAccountsMenu = new MyAccounts(page); 
+        await myAccountsMenu.openUserMenu();
+        await myAccountsMenu.userLogOut();
+        console.log(1)
+
+    
+
     })
 
 })
