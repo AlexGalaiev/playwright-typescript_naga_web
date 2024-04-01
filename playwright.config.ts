@@ -16,7 +16,11 @@ export default defineConfig<TestOptions>({
   expect: {
     timeout: 420000
   },
-  reporter: [['list'],['html']],
+  reporter: [
+    ['list'],
+    ['html', {outputFile: 'reports', open: 'never'}],
+    ['junit', { outputFile: "./test-results/junit-report.xml", embedAnnotationsAsProperties: true}]
+  ],
   use: {
     video: 'retain-on-failure',
     screenshot: 'only-on-failure',

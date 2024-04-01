@@ -27,11 +27,12 @@ export class SignUp{
 
     async createCFDUser(Country: string){
         let user = new RandomUser();
-        await this.email.pressSequentially(user.getRandomUserEmail());
+        let randomEmail = user.getRandomUserEmail();
+        await this.email.pressSequentially(randomEmail);
         await this.password.pressSequentially("Test123!")
         await this.checkCountry(Country)
         await this.submitBtn.click();
-        return user;
+        return randomEmail;
     };
 
     async checkCountry(Country: string){
@@ -46,5 +47,5 @@ export class SignUp{
     };
     async getSighUpTittleText(){
         return this.sighUpTittle.textContent();
-    }
+    };
 }
