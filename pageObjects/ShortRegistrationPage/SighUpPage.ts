@@ -23,14 +23,16 @@ export class SignUp{
 
     async goto(MainPage: string, pageTest: string){
         await this.page.goto(`${MainPage}/${pageTest}`);
-        // await this.email.waitFor({timeout:4000})
-    }
+    };
+
     async createCFDUser(Country: string){
         let user = new RandomUser();
-        await this.email.pressSequentially(user.getRandomUserEmail());
+        let randomEmail = user.getRandomUserEmail();
+        await this.email.pressSequentially(randomEmail);
         await this.password.pressSequentially("Test123!")
         await this.checkCountry(Country)
-        await this.submitBtn.click();     
+        await this.submitBtn.click();
+        return randomEmail;
     };
 
     async checkCountry(Country: string){
@@ -45,5 +47,5 @@ export class SignUp{
     };
     async getSighUpTittleText(){
         return this.sighUpTittle.textContent();
-    }
+    };
 }

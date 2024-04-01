@@ -10,5 +10,18 @@
     },
     "SighInHeaderMainText":{
         "answer":"Sign In to your account"
+    },
+    "incorrectPassword_1try":{
+        "answer":"Unfortunately, the password you entered is not correct. Please try again. You have 4 more attemtps left."
+    },
+    "incorrectPassword_2try":{
+        "answer":"The password you entered is not correct. Please try again or reset your password if you forgot it. You have 2 more attempts left."
+    },
+    "AccountBlockDescription":{
+        "answer":"Incorrect password. You have 1 more attempt left. Afterwards, you will be unable to log in for 2 hours. You may reset your password in case you forgot it."
+    },
+    "AccountBlockDescriptionLastTry":{
+        "answer":"Incorrect password. You have exceeded the number of login attempts, your account is blocked for 2 hours."
     }
+    
 }
