@@ -22,12 +22,3 @@ export const test = base.extend<TestOptions>({
         await use(page) 
         await browserContext.close()}
 })
-
-
-
-
-// await context.addCookies(
-//     [{name: 'JSESSIONID', domain: 'cosmos-capex-live.az-qa.com', 'path':'/fxclient5', value: '786E7014D6863D7261FA1F8943CBC00B.webgw_cscglivefe03'}]
-//     );
-
-// await context.addCookies([{name: 'name', domain: 'domem', 'path':'path', value: 'value'}]);

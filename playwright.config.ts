@@ -18,8 +18,7 @@ export default defineConfig<TestOptions>({
   },
   reporter: [
     ['list'],
-    ['html', {outputFile: 'reports', open: 'never'}],
-    ['junit', { outputFile: "./test-results/junit-report.xml", embedAnnotationsAsProperties: true}]
+    ['html', {outputFile: 'reports', open: 'never'}]
   ],
   use: {
     video: 'retain-on-failure',
