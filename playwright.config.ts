@@ -1,6 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import type { TestOptions } from './test-options';
 
+require('dotenv').config();
+
 export default defineConfig<TestOptions>({
   testDir: './tests',
   /* Run tests in files in parallel */
@@ -12,7 +14,7 @@ export default defineConfig<TestOptions>({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-
+  
   expect: {
     timeout: 420000
   },

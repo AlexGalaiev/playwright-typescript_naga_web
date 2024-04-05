@@ -4,7 +4,7 @@ export type TestOptions = {
     NagaMarkets: string;
     NagaCapital: string;
     baseUrl: string;
-    browserContext: BrowserContext
+    browserContext: BrowserContext;
 }
 
 export const test = base.extend<TestOptions>({
