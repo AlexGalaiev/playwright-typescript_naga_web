@@ -55,7 +55,7 @@ export class TestRailIntegration{
     }; 
 
     
-    async getTestCasesFromTestRun(RunId){
+    private async getTestCasesFromTestRun(RunId){
         const username = process.env.TESTRAIL_USERNAME || '';
         const password = process.env.TESTRAIL_PASSWORD || '';
         const myHeaders = new Headers();
@@ -75,8 +75,12 @@ export class TestRailIntegration{
     async getTestCaseId(RunId, tags){
         let getCasesFromTestRun = await this.getTestCasesFromTestRun(RunId);
         let findId = _.find(getCasesFromTestRun.tests, {case_id: _.toNumber(tags[0]?.replace('@',''))});
-        console.log('findId',findId.id);
+        return findId.id
+    };
 
+    async addResultToTest(RunId, tags){
+        let realTestCaseId = await this.getTestCaseId(RunId, tags);
+        await this.TestRail.addResult(realTestCaseId, {status_id:1})
     }
 }
 
