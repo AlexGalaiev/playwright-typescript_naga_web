@@ -27,6 +27,7 @@ export default defineConfig<TestOptions>({
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
   },
+  // globalSetup: require.resolve("./global_setup.ts"),
 
   /* Configure projects for major browsers */
   projects: [
@@ -37,6 +38,7 @@ export default defineConfig<TestOptions>({
         NagaMarkets:'https://sxdevmarkets.com',
         NagaCapital:'https://sxdevcap.com'
     },
+     
   },
   ]
 });

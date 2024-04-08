@@ -1,12 +1,13 @@
 import TestRail from "@dlenroc/testrail";
 import TestrailApiClient from "testrail-api";
 import _ from 'lodash'
+import moment, { now } from "moment";
 
+let momentTime = new Date();
 
 export class TestRailIntegration{
     readonly TestRail: TestRail;
     readonly TestProject: number;
-    CaseId: number | undefined;
     TestRunId: number | undefined;
     
     constructor(){
@@ -15,7 +16,6 @@ export class TestRailIntegration{
             username: process.env.TESTRAIL_USERNAME || '',
             password: process.env.TESTRAIL_PASSWORD || ''
         }),
-        this.CaseId;
         this.TestRunId;
     };
 
@@ -23,7 +23,7 @@ export class TestRailIntegration{
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:'Naga AT',
+            name:`Naga_AT_${momentTime.toISOString()}`,
             description:'Naga Automation test cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
@@ -36,14 +36,12 @@ export class TestRailIntegration{
         const cases = await this.getTestCases(3,13)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:'Naga Manual',
+            name:`Naga_manula_${momentTime.toISOString()}`,
             description:'Naga manual cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
 
         });
-        let TestRunId = addRunId.id;
-        return TestRunId
     };
 
     private async getTestCases(priority: number, type: number){
@@ -72,7 +70,7 @@ export class TestRailIntegration{
         }
       };
       
-    async getTestCaseId(RunId, tags){
+    private async getTestCaseId(RunId, tags){
         let getCasesFromTestRun = await this.getTestCasesFromTestRun(RunId);
         let findId = _.find(getCasesFromTestRun.tests, {case_id: _.toNumber(tags[0]?.replace('@',''))});
         return findId.id
@@ -81,7 +79,16 @@ export class TestRailIntegration{
     async addResultToTest(RunId, tags){
         let realTestCaseId = await this.getTestCaseId(RunId, tags);
         await this.TestRail.addResult(realTestCaseId, {status_id:1})
+    };
+
+    async getTestRunId(){
+        let allRuns = await this.TestRail.getRuns(1);
+        let testATruns = _.filter(allRuns, item=> _.includes(item.name, "Naga_AT"));
+        let currentRun = _.orderBy(testATruns, ['id']['desc'])
+        return currentRun[0].id
     }
+
+
 }
 
     
