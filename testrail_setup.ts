@@ -1,5 +1,6 @@
 import TestRail from "@dlenroc/testrail";
 import TestrailApiClient from "testrail-api";
+import _ from 'lodash'
 
 
 export class TestRailIntegration{
@@ -22,7 +23,7 @@ export class TestRailIntegration{
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:'Naga Automation',
+            name:'Naga AT',
             description:'Naga Automation test cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
@@ -45,21 +46,16 @@ export class TestRailIntegration{
         return TestRunId
     };
 
-    async getTestCases(priority: number, type: number){
+    private async getTestCases(priority: number, type: number){
         let cases = await this.TestRail.getCases(1,{
             priority_id:priority,
             type_id: type
         });
         return cases;
     }; 
-    async getTestATRun(){
-        let testRun = this.TestRail.getRuns(1);
-        let filterRuns = (await testRun).filter((tittleRun)=>tittleRun.name.includes('Naga AT'));
-        return filterRuns
-    };
+
     
-    
-    async getTestCaseIdFromRun(RunId:number){
+    async getTestCasesFromTestRun(RunId){
         const username = process.env.TESTRAIL_USERNAME || '';
         const password = process.env.TESTRAIL_PASSWORD || '';
         const myHeaders = new Headers();
@@ -69,12 +65,19 @@ export class TestRailIntegration{
         const requestOptions = {method: "GET", headers: myHeaders, redirect: "follow"};
         try {
           const response = await fetch(`https://naga.testrail.io/index.php?/api/v2/get_tests/${RunId}`, requestOptions);
-          const result = await response.text();
+          const result = await response.json();
           return result;
         } catch (error) {
           console.error(error);
         }
       };
+      
+    async getTestCaseId(RunId, tags){
+        let getCasesFromTestRun = await this.getTestCasesFromTestRun(RunId);
+        let findId = _.find(getCasesFromTestRun.tests, {case_id: _.toNumber(tags[0]?.replace('@',''))});
+        console.log('findId',findId.id);
 
-       
+    }
 }
+
+    
