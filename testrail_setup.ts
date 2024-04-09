@@ -13,11 +13,14 @@ export class TestRailIntegration{
     constructor(){
         this.TestRail = new TestRail({
             host: "https://naga.testrail.io/",
-            username: process.env.TESTRAIL_USERNAME || '',
-            password: process.env.TESTRAIL_PASSWORD || ''
+            username: 'autoUser@gmail.com',
+            password: 'Password1234!'
         }),
         this.TestRunId;
     };
+
+    // username: process.env.TESTRAIL_USERNAME || '',
+    //         password: process.env.TESTRAIL_PASSWORD || ''
 
     async AddAutomationRun(){
         const cases = await this.getTestCases(4,3)
