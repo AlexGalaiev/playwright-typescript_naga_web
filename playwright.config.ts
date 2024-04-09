@@ -27,18 +27,21 @@ export default defineConfig<TestOptions>({
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
   },
-  // globalSetup: require.resolve("./global_setup.ts"),
+  // globalSetup: require.resolve)
 
   /* Configure projects for major browsers */
   projects: [
+    // {
+    //   name:'Create testrail runs',
+    //   testMatch: /global\.setup\.ts/,
+    // },
     {
       name: 'qa',
       use: { 
         ...devices['Desktop Chrome'],
         NagaMarkets:'https://sxdevmarkets.com',
-        NagaCapital:'https://sxdevcap.com'
-    },
-     
+        NagaCapital:'https://sxdevcap.com'}
+        // dependencies: ['Create testrail runs']
   },
   ]
 });

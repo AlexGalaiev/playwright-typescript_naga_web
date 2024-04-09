@@ -14,7 +14,7 @@ import { PageAfterLogout } from "../pageObjects/common/logOutPopup/PageAfterLogo
 test.describe("Naga Capital. SignIn Page", async()=>{
     const localization_SignInPage = "/pageObjects/localization/SighInPage.json";
     
-    test("Forgot password", async({page, NagaCapital})=>{
+    test("@23574 Forgot password", async({page, NagaCapital})=>{
         let localization = new getLocalization(localization_SignInPage);
         let signInPage = new SighIn(page);
         let forgotPassword = new ForgotPassword(page);
@@ -25,7 +25,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
         await forgotPassword.getForgotPasswordDescription() === await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText');
     });
 
-    test("Redirection notice between platforms", {tag: '@24926'}, async({page, NagaMarkets, NagaCapital}, testInfo)=>{
+    test("@24926 Redirection notice between platforms", async({page, NagaMarkets, NagaCapital}, testInfo)=>{
         
         let localization = new getLocalization(localization_SignInPage);
         console.log(await testInfo.title)
@@ -53,7 +53,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             expect(await signUp.getSighUpTittleText()).toContain("Sign Up, it's free!");
         });
     })
-    test("Account locking", async({page, NagaCapital})=>{
+    test("@23896 Account locking", async({page, NagaCapital})=>{
         let sighUp = new SignUp(page);
         let sighIn = new SighIn(page);
         let localization = new getLocalization(localization_SignInPage);

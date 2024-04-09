@@ -27,6 +27,8 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Create Testrail runs
+      run: npx playwright test basetest.spec.ts --project=${{ github.head_ref || github.ref_name }} --workers=1         
     - name: Run Playwright tests
       id: playwright_tests
       run: npx playwright test --project=${{ github.head_ref || github.ref_name }} --workers=1

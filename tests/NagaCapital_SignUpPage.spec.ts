@@ -7,7 +7,7 @@ import { SignUp } from "../pageObjects/ShortRegistrationPage/SighUpPage";
 test.describe("Naga Capital. Sigh up page", async()=>{
     let SighUpPage_localization = "/pageObjects/localization/SignUpPage.json"
     
-    test("Change brand popup", async({page, NagaCapital, NagaMarkets})=>{
+    test("@C23569 Change brand popup", async({page, NagaCapital, NagaMarkets})=>{
         let localizationText = new getLocalization(SighUpPage_localization)
         let sighUp = new SignUp(page);
         await sighUp.goto(NagaCapital, "register")

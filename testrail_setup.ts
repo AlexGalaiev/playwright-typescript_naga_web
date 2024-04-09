@@ -36,7 +36,7 @@ export class TestRailIntegration{
         const cases = await this.getTestCases(3,13)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:`Naga_manula_${momentTime.toISOString()}`,
+            name:`Naga_manual_${momentTime.toISOString()}`,
             description:'Naga manual cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
@@ -76,9 +76,10 @@ export class TestRailIntegration{
         return findId.id
     };
 
-    async addResultToTest(RunId, tags){
+    async addResultToTest(RunId, tags, testStatus){
         let realTestCaseId = await this.getTestCaseId(RunId, tags);
-        await this.TestRail.addResult(realTestCaseId, {status_id:1})
+        let testRailStatus = await this.getStatus(testStatus)
+        await this.TestRail.addResult(realTestCaseId, {status_id:testRailStatus})
     };
 
     async getTestRunId(){
@@ -86,6 +87,17 @@ export class TestRailIntegration{
         let testATruns = _.filter(allRuns, item=> _.includes(item.name, "Naga_AT"));
         let currentRun = _.orderBy(testATruns, ['id']['desc'])
         return currentRun[0].id
+    };
+
+    private async getStatus(testStatus){
+        let testRailStatuses = {
+            'passed':1,
+            'failed':5,
+            'skipped':4,
+            'interrupted':2
+        };
+        let TRstatus = await testRailStatuses[testStatus]
+        return TRstatus
     }
 
 
