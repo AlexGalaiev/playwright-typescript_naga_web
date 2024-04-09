@@ -99,7 +99,13 @@ export class TestRailIntegration{
         let TRstatus = await testRailStatuses[testStatus]
         return TRstatus
     }
+// ___________________________________
 
+//     async getListTags(){
+//         let tags = [ '@24926', '@24915' ]
+//         let itag = _.forEach(tags, (tag) =>{});
+
+// }
 
 }
 
