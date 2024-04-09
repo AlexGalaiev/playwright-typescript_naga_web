@@ -57,8 +57,10 @@ export class TestRailIntegration{
 
     
     private async getTestCasesFromTestRun(RunId){
-        const username = process.env.TESTRAIL_USERNAME || '';
-        const password = process.env.TESTRAIL_PASSWORD || '';
+        // const username = process.env.TESTRAIL_USERNAME || '';
+        // const password = process.env.TESTRAIL_PASSWORD || '';
+        const username = 'autoUser@gmail.com';
+        const password = 'Password1234!';
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", "Basic " + btoa(`${username}:${password}`));
