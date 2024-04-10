@@ -27,7 +27,7 @@ export default defineConfig<TestOptions>({
     screenshot: 'only-on-failure',
     trace: 'on-first-retry',
   },
-  // globalSetup: require.resolve)
+  globalSetup:  process.env.CI  ?  require.resolve("./global-setup.ts")  :  undefined,
 
   /* Configure projects for major browsers */
   projects: [

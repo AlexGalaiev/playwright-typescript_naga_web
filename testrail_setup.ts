@@ -13,8 +13,8 @@ export class TestRailIntegration{
     constructor(){
         this.TestRail = new TestRail({
             host: "https://naga.testrail.io/",
-            username: 'autoUser@gmail.com',
-            password: 'Password1234!'
+            username: process.env.TESTRAIL_USERNAME || '',
+            password: process.env.TESTRAIL_PASSWORD || ''
         }),
         this.TestRunId;
     };
@@ -55,10 +55,11 @@ export class TestRailIntegration{
         return cases;
     }; 
 
-    
+    // const username = process.env.TESTRAIL_USERNAME || '';
+    //     const password = process.env.TESTRAIL_PASSWORD || '';
     private async getTestCasesFromTestRun(RunId){
-        const username = process.env.TESTRAIL_USERNAME || '';
-        const password = process.env.TESTRAIL_PASSWORD || '';
+        const username = 'autoUser@gmail.com';
+        const password = 'Password1234!';
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", "Basic " + btoa(`${username}:${password}`));
@@ -96,20 +97,30 @@ export class TestRailIntegration{
         let testRailStatuses = {
             'passed':1,
             'failed':5,
-            'skipped':4,
-            'interrupted':2
+            'timedOut':5,
+            'skipped':2,
+            'interrupted':4
         };
         let TRstatus = await testRailStatuses[testStatus]
         return TRstatus
     }
 // ___________________________________
 
-//     async getListTags(){
-//         let tags = [ '@24926', '@24915' ]
-//         let itag = _.forEach(tags, (tag) =>{});
-
-// }
-
-}
-
+    // async getListTags(){
+    //     let tags = [ '@24926', '@24915' ];
+    //     let itag = _.forEach(tags, (tag)=>{let finind = this.getTestCaseId(1284, tag)});
     
+        
+    //     }
+    };
+
+
+
+
+
+        // let itag = _.forEach(tags, (tag) =>{
+        //     this.getTestCaseId(RunId, tag)
+        //     console.log(tag, itag)
+
+
+   
