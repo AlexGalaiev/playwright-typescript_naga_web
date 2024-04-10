@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "sanity_qa": "npx playwright test --project=qa --workers=1 --global-setup ./global_setup.ts" 
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
