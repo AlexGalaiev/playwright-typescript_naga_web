@@ -31,17 +31,12 @@ export default defineConfig<TestOptions>({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name:'Create testrail runs',
-    //   testMatch: /global\.setup\.ts/,
-    // },
     {
       name: 'qa',
       use: { 
         ...devices['Desktop Chrome'],
         NagaMarkets:'https://sxdevmarkets.com',
         NagaCapital:'https://sxdevcap.com'}
-        // dependencies: ['Create testrail runs']
   },
   ]
 });

@@ -7,5 +7,5 @@ async function TestRailCreateRuns() {
     await TR.AddAutomationRun()
 }
 
-export default TestRailCreateRuns()
+export default TestRailCreateRuns;
     

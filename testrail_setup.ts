@@ -18,10 +18,7 @@ export class TestRailIntegration{
         }),
         this.TestRunId;
     };
-
-    // username: process.env.TESTRAIL_USERNAME || '',
-    //         password: process.env.TESTRAIL_PASSWORD || ''
-
+    
     async AddAutomationRun(){
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
@@ -55,13 +52,9 @@ export class TestRailIntegration{
         return cases;
     }; 
 
-    // const username = process.env.TESTRAIL_USERNAME || '';
-    //     const password = process.env.TESTRAIL_PASSWORD || '';
     private async getTestCasesFromTestRun(RunId){
-        // const username = process.env.TESTRAIL_USERNAME || '';
-        // const password = process.env.TESTRAIL_PASSWORD || '';
-        const username = 'autoUser@gmail.com';
-        const password = 'Password1234!';
+        const username = process.env.TESTRAIL_USERNAME || '';
+        const password = process.env.TESTRAIL_PASSWORD || '';
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", "Basic " + btoa(`${username}:${password}`));
