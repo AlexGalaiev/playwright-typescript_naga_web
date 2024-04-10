@@ -92,9 +92,9 @@ export class TestRailIntegration{
         let testRailStatuses = {
             'passed':1,
             'failed':5,
-            'skipped':4,
-            // 'interrupted':2,
-            'timedOut':2
+            'skipped':2,
+            'timedOut':5,
+            'interrupted':4
         };
         let TRstatus = await testRailStatuses[testStatus]
         return TRstatus
