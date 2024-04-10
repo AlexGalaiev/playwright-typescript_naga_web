@@ -58,6 +58,8 @@ export class TestRailIntegration{
     // const username = process.env.TESTRAIL_USERNAME || '';
     //     const password = process.env.TESTRAIL_PASSWORD || '';
     private async getTestCasesFromTestRun(RunId){
+        // const username = process.env.TESTRAIL_USERNAME || '';
+        // const password = process.env.TESTRAIL_PASSWORD || '';
         const username = 'autoUser@gmail.com';
         const password = 'Password1234!';
         const myHeaders = new Headers();
@@ -97,9 +99,9 @@ export class TestRailIntegration{
         let testRailStatuses = {
             'passed':1,
             'failed':5,
-            'timedOut':5,
-            'skipped':2,
-            'interrupted':4
+            'skipped':4,
+            // 'interrupted':2,
+            'timedOut':2
         };
         let TRstatus = await testRailStatuses[testStatus]
         return TRstatus
