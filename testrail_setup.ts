@@ -1,7 +1,5 @@
 import TestRail from "@dlenroc/testrail";
-import TestrailApiClient from "testrail-api";
 import _ from 'lodash'
-import moment, { now } from "moment";
 
 let momentTime = new Date();
 
@@ -18,7 +16,7 @@ export class TestRailIntegration{
         }),
         this.TestRunId;
     };
-    
+    // create automation test run
     async AddAutomationRun(){
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
@@ -32,6 +30,7 @@ export class TestRailIntegration{
         this.TestRunId = addRunId.id;
         return this.TestRunId
     };
+    // create manual test run
     async AddManualRun(){
         const cases = await this.getTestCases(3,13)
         const addRunId = await this.TestRail.addRun(1, {
@@ -43,7 +42,7 @@ export class TestRailIntegration{
 
         });
     };
-
+    // function that filter all number of test cases and give only with need parameters
     private async getTestCases(priority: number, type: number){
         let cases = await this.TestRail.getCases(1,{
             priority_id:priority,
@@ -51,7 +50,7 @@ export class TestRailIntegration{
         });
         return cases;
     }; 
-
+    //get all test cases of test run
     private async getTestCasesFromTestRun(RunId){
         const username = process.env.TESTRAIL_USERNAME || '';
         const password = process.env.TESTRAIL_PASSWORD || '';
@@ -68,26 +67,26 @@ export class TestRailIntegration{
           console.error(error);
         }
       };
-      
+    // return real case Id from tag . It works ONLY with one tag
     private async getTestCaseId(RunId, tags){
         let getCasesFromTestRun = await this.getTestCasesFromTestRun(RunId);
         let findId = _.find(getCasesFromTestRun.tests, {case_id: _.toNumber(tags[0]?.replace('@',''))});
         return findId.id
     };
-
+    //add results to only ONE test
     async addResultToTest(RunId, tags, testStatus){
         let realTestCaseId = await this.getTestCaseId(RunId, tags);
         let testRailStatus = await this.getStatus(testStatus)
         await this.TestRail.addResult(realTestCaseId, {status_id:testRailStatus})
     };
-
+    //Check AT run is correct and return correct AT run
     async getTestRunId(){
         let allRuns = await this.TestRail.getRuns(1);
         let testATruns = _.filter(allRuns, item=> _.includes(item.name, "Naga_AT"));
         let currentRun = _.orderBy(testATruns, ['id']['desc'])
         return currentRun[0].id
     };
-
+    //map of testStatuses
     private async getStatus(testStatus){
         let testRailStatuses = {
             'passed':1,
@@ -100,22 +99,22 @@ export class TestRailIntegration{
         return TRstatus
     }
 // ___________________________________
-
-    // async getListTags(){
-    //     let tags = [ '@24926', '@24915' ];
-    //     let itag = _.forEach(tags, (tag)=>{let finind = this.getTestCaseId(1284, tag)});
-    
-        
-    //     }
+    //create map of testcaseid (tag of test) and real testCaseIn test run {@tag:realTestCaseId}
+    async getListTags(RunId, tags){
+        const tagIdMap = {};
+        let getCasesFromTestRun = await this.getTestCasesFromTestRun(RunId);
+        _.forEach(tags, (tag)=>{
+            let findId = _.find(getCasesFromTestRun.tests, {case_id: _.toNumber(tag?.replace('@',''))});
+            tagIdMap[tag] = findId.id
+        })
+        return tagIdMap;
     };
-
-
-
-
-
-        // let itag = _.forEach(tags, (tag) =>{
-        //     this.getTestCaseId(RunId, tag)
-        //     console.log(tag, itag)
-
-
-   
+    //marks ALL test from test map 
+    async addResultToListOfTests(RunId, tags, testStatus){
+        let realIdMap = await this.getListTags(RunId, tags);
+        let testRailStatus = await this.getStatus(testStatus)
+        _.forEach(tags, async (tag)=>{
+            await this.TestRail.addResult(realIdMap[tag], {status_id:testRailStatus})
+        })
+    }
+}
