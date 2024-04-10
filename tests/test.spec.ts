@@ -4,10 +4,10 @@ import TestRail from "@dlenroc/testrail";
 import { TestRailIntegration } from "../testrail_setup";
 
 
-test("test @24926", async({page})=>{
+test("test @23569 @23896", async({page})=>{
     let Tr = await new TestRailIntegration();
-    // await Tr.getListTags()
-    // await Tr.getListTags()
-    await test.info().status
-})
+    // console.log(await Tr.getListTags(1288, test.info().tags))
+    await Tr.addResultToListOfTests(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
 
+
+})

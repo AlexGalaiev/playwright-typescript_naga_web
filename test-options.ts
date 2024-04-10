@@ -24,6 +24,6 @@ export const test = base.extend<TestOptions>({
         await use(page)
         console.log(await test.info().status)
         let Tr = await new TestRailIntegration();
-        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, test.info().status)
+        await Tr.addResultToListOfTests(await Tr.getTestRunId(), await test.info().tags, test.info().status)
         await browserContext.close()}
 })
