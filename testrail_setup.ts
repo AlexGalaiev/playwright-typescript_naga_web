@@ -1,5 +1,7 @@
 import TestRail from "@dlenroc/testrail";
-import _ from 'lodash'
+import _ from 'lodash';
+import * as fs from 'fs';
+import path from "path";
 
 let momentTime = new Date();
 
@@ -21,7 +23,7 @@ export class TestRailIntegration{
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:`Naga_AT_${momentTime.toISOString()}`,
+            name:`Naga_AT_${momentTime.toLocaleDateString()}`,
             description:'Naga Automation test cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
@@ -35,7 +37,7 @@ export class TestRailIntegration{
         const cases = await this.getTestCases(3,13)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:`Naga_manual_${momentTime.toISOString()}`,
+            name:`Naga_manual_${momentTime.toLocaleDateString()}`,
             description:'Naga manual cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
@@ -68,7 +70,7 @@ export class TestRailIntegration{
         }
       };
     // return real case Id from tag . It works ONLY with one tag
-    private async getTestCaseId(RunId, tags){
+    async getTestCaseId(RunId, tags){
         let getCasesFromTestRun = await this.getTestCasesFromTestRun(RunId);
         let findId = _.find(getCasesFromTestRun.tests, {case_id: _.toNumber(tags[0]?.replace('@',''))});
         return findId.id
@@ -112,9 +114,18 @@ export class TestRailIntegration{
     //marks ALL test from test map 
     async addResultToListOfTests(RunId, tags, testStatus){
         let realIdMap = await this.getListTags(RunId, tags);
-        let testRailStatus = await this.getStatus(testStatus)
-        _.forEach(tags, async (tag)=>{
-            await this.TestRail.addResult(realIdMap[tag], {status_id:testRailStatus})
+        let testRailStatus = await this.getStatus(testStatus);
+        
+        await tags.forEach(async (tag)=>{
+            let realId = await realIdMap[tag]
+            await this.TestRail.addResult(realId, {status_id:testRailStatus, comment: 'comment'})
         })
+        
     }
+    async addCommentToTestCase(TestCaseId, status){
+        if(status === 'failed'|| status === 'timedOut' || status === 'skipped' || status === 'interrupted') {
+            await this.TestRail.addResult(TestCaseId, {comment: 'for more information visit github action ==> https://github.com/SwipeStoxGmbH/naga-trader-automation/actions'})
+        }
+        
+    };
 }

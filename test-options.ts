@@ -1,5 +1,7 @@
 import {test as base, BrowserContext, chromium as baseChromium, TestInfo} from "@playwright/test";
 import { TestRailIntegration } from "./testrail_setup";
+import { TestError } from "playwright/types/testReporter";
+import TestRailReporter from "playwright-testrail-reporter";
 
 export type TestOptions = {
     NagaMarkets: string;
@@ -22,8 +24,8 @@ export const test = base.extend<TestOptions>({
     page: async ({browserContext}, use)=>{
         let page = await browserContext.newPage()
         await use(page)
-        console.log(await test.info().status)
         let Tr = await new TestRailIntegration();
-        await Tr.addResultToListOfTests(await Tr.getTestRunId(), await test.info().tags, test.info().status)
+        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserContext.close()}
 })
