@@ -20,12 +20,12 @@ export default defineConfig<TestOptions>({
   },
   reporter: [
     ['list'],
-    ['html', {outputFile: 'reports', open: 'never'}]
+    ['html']
   ],
   use: {
     video: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    trace: 'on-first-retry',
+    trace:'retain-on-failure',
   },
   globalSetup:  process.env.CI  ?  require.resolve("./global-setup.ts")  :  undefined,
 

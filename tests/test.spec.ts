@@ -1,13 +1,14 @@
 import {test} from "../test-options";
-import { TestInfo } from "playwright/test";
+import {expect} from "@playwright/test";
 import TestRail from "@dlenroc/testrail";
 import { TestRailIntegration } from "../testrail_setup";
+import { SignUp } from "../pageObjects/ShortRegistrationPage/SighUpPage";
 
-
-test("test @23569 @23896", async({page})=>{
+test("name @24917", async({page, NagaCapital})=>{
     let Tr = await new TestRailIntegration();
-    // console.log(await Tr.getListTags(1288, test.info().tags))
-    await Tr.addResultToListOfTests(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
-
-
+    // let sighUp = new SignUp(page);
+    // await sighUp.goto(NagaCapital, 'register');
+    // expect(1).toBeGreaterThan(1000)
+    expect(1000).toBeGreaterThan(100)
+    
 })

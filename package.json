@@ -14,6 +14,7 @@
   "dependencies": {
     "@dlenroc/testrail": "^1.9.1",
     "dotenv": "^16.4.5",
+    "image-js": "^0.35.5",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",
