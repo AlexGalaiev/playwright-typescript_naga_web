@@ -1,20 +1,20 @@
 import { expect } from "@playwright/test";
-import { SignUp } from "../pageObjects/ShortRegistrationPage/SighUpPage"
-import { ForgotPassword } from "../pageObjects/SighIn/ForgotPassword";
-import { SighIn } from "../pageObjects/SighIn/SignInPage";
-import { getLocalization } from "../pageObjects/localization/getText";
-import {test} from "../test-options"
-import { MainPage } from "../pageObjects/MainPage/MainPage";
-import { RandomUser } from "../pageObjects/common/testUserCredentials/randomUser";
-import { MyAccounts } from "../pageObjects/MainPage/MyAccounts";
-import { LogOutPopup } from "../pageObjects/common/logOutPopup/LogOutPopup";
-import { PageAfterLogout } from "../pageObjects/common/logOutPopup/PageAfterLogout";
+import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
+import { ForgotPassword } from "../../pageObjects/SighIn/ForgotPassword";
+import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { getLocalization } from "../../pageObjects/localization/getText";
+import {test} from "../../test-options"
+import { MainPage } from "../../pageObjects/MainPage/MainPage";
+import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
+import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
+import { LogOutPopup } from "../../pageObjects/common/logOutPopup/LogOutPopup";
+import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout";
 
 
 test.describe("Naga Capital. SignIn Page", async()=>{
     const localization_SignInPage = "/pageObjects/localization/SighInPage.json";
     
-    test("@23574 Forgot password", async({page, NagaCapital})=>{
+    test("@23916 Forgot password", async({page, NagaCapital})=>{
         let localization = new getLocalization(localization_SignInPage);
         let signInPage = new SighIn(page);
         let forgotPassword = new ForgotPassword(page);
@@ -25,7 +25,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
         await forgotPassword.getForgotPasswordDescription() === await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText');
     });
 
-    test("@24926 Redirection notice between platforms", async({page, NagaMarkets, NagaCapital}, testInfo)=>{
+    test("@23911 Entity redirection", async({page, NagaMarkets, NagaCapital}, testInfo)=>{
         
         let localization = new getLocalization(localization_SignInPage);
         console.log(await testInfo.title)
@@ -37,7 +37,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
         expect(await page.url()).toContain(NagaCapital)
     }); 
 
-    test("Open platform in Guest mode", async({page, NagaCapital})=>{
+    test("@24929 Open platform in Guest mode", async({page, NagaCapital})=>{
         let localization = new getLocalization(localization_SignInPage);
         let signUp = new SignUp(page);
         let sighIn = new SighIn(page);
@@ -53,7 +53,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             expect(await signUp.getSighUpTittleText()).toContain("Sign Up, it's free!");
         });
     })
-    test("@23896 Account locking", async({page, NagaCapital})=>{
+    test("@23915 Account locking", async({page, NagaCapital})=>{
         let sighUp = new SignUp(page);
         let sighIn = new SighIn(page);
         let localization = new getLocalization(localization_SignInPage);
