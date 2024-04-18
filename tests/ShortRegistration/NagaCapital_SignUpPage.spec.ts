@@ -1,13 +1,13 @@
 import { expect } from "@playwright/test";
-import { test } from "..//test-options";
-import { getLocalization } from "../pageObjects/localization/getText";
-import { ChangeBrandPopup } from "../pageObjects/ShortRegistrationPage/ChangeBrandPopup";
-import { SignUp } from "../pageObjects/ShortRegistrationPage/SighUpPage";
+import { test } from "../../test-options";
+import { getLocalization } from "../../pageObjects/localization/getText";
+import { ChangeBrandPopup } from "../../pageObjects/ShortRegistrationPage/ChangeBrandPopup";
+import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 
 test.describe("Naga Capital. Sigh up page", async()=>{
     let SighUpPage_localization = "/pageObjects/localization/SignUpPage.json"
     
-    test("@C23569 Change brand popup", async({page, NagaCapital, NagaMarkets})=>{
+    test("@C24918 Change brand popup", async({page, NagaCapital, NagaMarkets})=>{
         let localizationText = new getLocalization(SighUpPage_localization)
         let sighUp = new SignUp(page);
         await sighUp.goto(NagaCapital, "register")
@@ -19,7 +19,7 @@ test.describe("Naga Capital. Sigh up page", async()=>{
         expect(await page.url()).toContain(NagaMarkets)
     });
 
-    test("Risk Disclaimer text", async({page, NagaCapital})=>{
+    test("@24930 Risk Disclaimer text", async({page, NagaCapital})=>{
         let localizationText = new getLocalization(SighUpPage_localization)
         let sighUp = new SignUp(page);
         await sighUp.goto(NagaCapital, "register")
