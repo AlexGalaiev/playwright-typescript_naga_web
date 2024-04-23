@@ -26,6 +26,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
     });
 
     test("@23911 Entity redirection", async({page, NagaMarkets, NagaCapital}, testInfo)=>{
+        
         let localization = new getLocalization(localization_SignInPage);
         console.log(await testInfo.title)
         let sighInPage = new SighIn(page);
