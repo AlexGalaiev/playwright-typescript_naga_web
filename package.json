@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@dlenroc/testrail": "^1.9.1",
+    "browsers": "^1.0.2",
     "dotenv": "^16.4.5",
     "image-js": "^0.35.5",
     "json-stringify-safe": "^5.0.1",
