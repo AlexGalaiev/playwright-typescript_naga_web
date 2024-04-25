@@ -62,4 +62,6 @@ test.describe("User profile", async()=>{
             expect(await addAccountForm.checkPasswordContainerIsVisibel()).toBeTruthy()
         })
     })
+
+    test.skip("Account switching", async({page, NagaCapital})=>{})
   })
