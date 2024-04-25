@@ -13,5 +13,4 @@ export class BlockAccountPopup{
     async getBlockAccountDescription(){
         return await this.blockAccountDescription.textContent();
     }
-    async 
 }
