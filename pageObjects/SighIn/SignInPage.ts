@@ -47,5 +47,8 @@ export class SighIn{
     async clickSignInBtn(){
         return this.signBtn.click();
     };
+    async goto(MainPage: string, pageTest: string){
+        await this.page.goto(`${MainPage}/${pageTest}`);
+    };
 
 }
