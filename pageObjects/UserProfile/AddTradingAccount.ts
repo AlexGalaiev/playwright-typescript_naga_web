@@ -43,7 +43,7 @@ export class AddAcountForm{
         this.showPasswordBtn = page.locator("//div[@class='trading-account-item'][1]//ul//a[text()='Show password']");
         this.passwordContainer = page.locator("//div[contains(@class, 'password-container')]");
     };
-    }
+
 
     async create_USD_LiveAccount(){
         await this.addNewAccountBtn.waitFor({timeout:1500})
@@ -98,12 +98,5 @@ export class AddAcountForm{
 
     async checkPasswordContainerIsVisibel(){
         return this.passwordContainer.isVisible()
-    }
-    }
-    async create_EUR_DemoAccount(){
-        await this.addAccountPopup.waitFor({timeout:3000});
-        await this.accountTypeDemo.click();
-        await this.accountName.pressSequentially('Demo_EUR');
-        await this.createAccount.click();
     }
 }

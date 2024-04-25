@@ -22,10 +22,6 @@ test.describe("User profile", async()=>{
         await test.step('Create account with filled personal information', async ()=>{
             await sighUp.goto(NagaCapital, 'register');
             await sighUp.createCFDUser("Ukraine");
-            // await mainPage.mainPageIsDownLoaded();
-        await test.step('Create account with filled personal information', async ()=>{
-            await sighUp.goto(NagaCapital, 'register');
-            await sighUp.createCFDUser("Ukraine");
             await mainPage.mainPageIsDownLoaded();
             await mainPage.proceedRegistration();
             await new StartKYCPopup(page).startKYC();
@@ -66,11 +62,4 @@ test.describe("User profile", async()=>{
             expect(await addAccountForm.checkPasswordContainerIsVisibel()).toBeTruthy()
         })
     })
-    })
-            await new HeaderMenuUserProfile(page).openAddNewTradingAccount();
-            await addAccount.create_USD_LiveAccount();
-            console.log(3)
-
-        })
-    })
-})
+  })

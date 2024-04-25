@@ -17,8 +17,6 @@ export class HeaderMenuUserProfile{
         await this.page.waitForTimeout(1000)
         await this.tradingAccountsMenuPoint.click();
         await this.page.waitForTimeout(1000)
-        await this.userProfileMenu.waitFor({timeout:1500})
-        await this.tradingAccountsMenuPoint.click();
     }
     
 }
