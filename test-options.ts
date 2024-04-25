@@ -1,7 +1,6 @@
 import {test as base, BrowserContext, chromium as baseChromium, TestInfo} from "@playwright/test";
 import { TestRailIntegration } from "./testrail_setup";
 import { TestError } from "playwright/types/testReporter";
-import TestRailReporter from "playwright-testrail-reporter";
 
 export type TestOptions = {
     NagaMarkets: string;
