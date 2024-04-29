@@ -8,7 +8,7 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { AddAcountForm } from "../../pageObjects/UserProfile/AddTradingAccount";
 import { HeaderMenuUserProfile } from "../../pageObjects/UserProfile/HeaderUserProfile";
-import {test} from "..//..//test-options";
+import {test} from "../../test-options";
 
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 

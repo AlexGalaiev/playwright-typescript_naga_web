@@ -13,6 +13,7 @@ export class MainPage{
     readonly verifyHeaders: Locator;
     readonly verifyStepHeader: Locator;
     readonly finishStepHeader: Locator;
+    readonly manageFunds: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -23,8 +24,9 @@ export class MainPage{
         this.sideBar = page.locator('.sidebar__wrapper');
         this.verifyHeaders = page.locator("//div[@class = 'header-verify-account-levels']");
         this.CompleatRegistration = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
-        this.verifyStepHeader = this.verifyHeaders.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
-        this.finishStepHeader = this.verifyHeaders.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
+        this.verifyStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
+        this.finishStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
+        this.manageFunds = page.locator("//span[text()='Manage Funds']")
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
@@ -56,5 +58,9 @@ export class MainPage{
         await this.page.waitForTimeout(4000)
         let numberOfTrdingAccounts = (await this.tradingAccount).count();
         return numberOfTrdingAccounts
-    }
+    };
+    async openManageFunds(){
+        await this.page.waitForTimeout(1000)
+        await this.manageFunds.click();
+    };
 }

@@ -120,7 +120,6 @@ export class TestRailIntegration{
             let realId = await realIdMap[tag]
             await this.TestRail.addResult(realId, {status_id:testRailStatus, comment: 'comment'})
         })
-        
     }
     async addCommentToTestCase(TestCaseId, status){
         if(status === 'failed'|| status === 'timedOut' || status === 'skipped' || status === 'interrupted') {
