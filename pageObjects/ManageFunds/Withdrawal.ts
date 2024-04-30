@@ -12,6 +12,12 @@ export class Withdrawal{
     readonly WithdrawBtn: Locator;
     readonly ccCashier: Locator;
     readonly ccCashierModalPopup: Locator;
+    readonly neteller: Locator;
+    readonly skril: Locator;
+    readonly perfectMoney: Locator;
+    readonly netelerCashier: Locator;
+    readonly perfectMoneyCashier: Locator;
+    readonly skrillCashier: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -25,8 +31,14 @@ export class Withdrawal{
         this.WithdrawBtn = page.locator("//button[text()='Withdraw']");
         this.ccCashier = page.locator("#cashier-block");
         this.ccCashierModalPopup = page.locator("//div[@class='modal-body']");
-
+        this.neteller = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='praxisNeteller']")
+        this.skril = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='praxisSkrill']")
+        this.perfectMoney = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='perfectmoney']")
+        this.netelerCashier = page.locator(".praxis-withdrawal")
+        this.perfectMoneyCashier = page.locator(".ewallet-withdrawal-form")
+        this.skrillCashier = page.locator("//div[@payment_method='skrill']")
     };
+    //Withdrawal credit card
     async chooseWithdrawalMenu(){
         return await this.WithdrawalMenupoint.click();
     };
@@ -55,5 +67,27 @@ export class Withdrawal{
     }
     async checkModalPopup(){
         return this.ccCashierModalPopup;
+    }
+    //Ewallet withdrawal
+    async checkNetelerCashier(){
+        return await this.netelerCashier
+    };
+    async clickNeteler(){
+        return await this.neteller.click();
+    };
+    async clickPerfectMoney(){
+        return await this.perfectMoney.click();
+    };
+    async clickEwalletWithdrawal(){
+        return await this.WithdrawalEwallet.click();
+    };
+    async clickSkrillWithdrawal(){
+        return await this.skril.click();
+    };
+    async checkSkrilCashier(){
+        return await this.skrillCashier
+    };
+    async checkPerfectMoneyCashier(){
+        return await this.perfectMoneyCashier
     }
 }

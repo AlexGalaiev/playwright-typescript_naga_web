@@ -45,5 +45,69 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
             await withdrawal.openModalCCPopup();
             expect(await withdrawal.checkModalPopup()).toBeVisible()
         })
+    });
+
+    test("@24098 Check Neteller withdrawal", async({page, NagaCapital})=>{
+        let sighIn = new SighIn(page);
+        let withdrawal = new Withdrawal(page);
+        let mainPage = new MainPage(page);
+        let amountValueToWithrawal = '50'
+        await test.step('Login by withdrawal user to platform and open Neteler withdrawal', async()=>{
+            await sighIn.goto(NagaCapital,'login');
+            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
+            await mainPage.openManageFunds();
+            await withdrawal.chooseWithdrawalMenu()
+            await withdrawal.clickEwalletWithdrawal()
+        });
+        await test.step("Make Neteler withdrawal", async()=>{
+            await withdrawal.clickPerfectMoney()
+            await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
+            await withdrawal.clickWithdrawBtn();
+        })
+        await test.step("Check Neteller cashier", async()=>{
+            expect(await withdrawal.checkNetelerCashier()).toBeVisible()
+        })
     })
-})
+
+    test("@24095 Check Skrill withdrawal", async({page, NagaCapital})=>{
+        let sighIn = new SighIn(page);
+        let withdrawal = new Withdrawal(page);
+        let mainPage = new MainPage(page);
+        let amountValueToWithrawal = '50'
+        await test.step('Login by withdrawal user to platform and open Skrill withdrawal', async()=>{
+            await sighIn.goto(NagaCapital,'login');
+            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
+            await mainPage.openManageFunds();
+            await withdrawal.chooseWithdrawalMenu();
+            await withdrawal.clickSkrillWithdrawal();
+        });
+        await test.step("Make Skrill withdrawal", async()=>{
+            await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
+            await withdrawal.clickWithdrawBtn();
+        })
+        await test.step("Check Skril withdrawal", async()=>{
+            expect(await withdrawal.checkSkrilCashier()).toBeVisible()
+        })
+    });
+    test("@24089 Check Perfect money withdrawal", async({page, NagaCapital})=>{
+        let sighIn = new SighIn(page);
+        let withdrawal = new Withdrawal(page);
+        let mainPage = new MainPage(page);
+        let amountValueToWithrawal = '50'
+        await test.step('Login by withdrawal user to platform and open Perfect Money withdrawal', async()=>{
+            await sighIn.goto(NagaCapital,'login');
+            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
+            await mainPage.openManageFunds();
+            await withdrawal.chooseWithdrawalMenu();
+            await withdrawal.clickSkrillWithdrawal();
+        });
+        await test.step("Make Perfect Money withdrawal", async()=>{
+            await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
+            await withdrawal.clickWithdrawBtn();
+        })
+        await test.step("Check Perfect money withdrawal", async()=>{
+            expect(await withdrawal.checkPerfectMoneyCashier()).toBeVisible()
+        })
+    })
+    })
+
