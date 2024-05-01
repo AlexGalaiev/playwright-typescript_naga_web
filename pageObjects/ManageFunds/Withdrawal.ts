@@ -31,7 +31,12 @@ export class Withdrawal{
         this.WithdrawBtn = page.locator("//button[text()='Withdraw']");
         this.ccCashier = page.locator("#cashier-block");
         this.ccCashierModalPopup = page.locator("//div[@class='modal-body']");
-
+        this.neteller = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='praxisNeteller']")
+        this.skril = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='praxisSkrill']")
+        this.perfectMoney = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='perfectmoney']")
+        this.netelerCashier = page.locator(".praxis-withdrawal")
+        this.perfectMoneyCashier = page.locator(".ewallet-withdrawal-form")
+        this.skrillCashier = page.locator("#cashier-block")
     };
     //Withdrawal credit card
     async chooseWithdrawalMenu(){
@@ -62,5 +67,34 @@ export class Withdrawal{
     }
     async checkModalPopup(){
         return this.ccCashierModalPopup;
+    }
+    //Ewallet withdrawal
+    async checkNetelerCashier(){
+        await this.page.waitForTimeout(500)
+        return await this.netelerCashier
+    };
+    async clickNeteler(){
+        await this.page.waitForTimeout(500)
+        return await this.neteller.click();
+    };
+    async clickPerfectMoney(){
+        await this.page.waitForTimeout(500)
+        return await this.perfectMoney.click();
+    };
+    async clickEwalletWithdrawal(){
+        await this.page.waitForTimeout(500)
+        return await this.WithdrawalEwallet.click();
+    };
+    async clickSkrillWithdrawal(){
+        await this.page.waitForTimeout(500)
+        return await this.skril.click();
+    };
+    async checkSkrilCashier(){
+        await this.page.waitForTimeout(500)
+        return await this.skrillCashier
+    };
+    async checkPerfectMoneyCashier(){
+        await this.page.waitForTimeout(500)
+        return await this.perfectMoneyCashier
     }
 }
