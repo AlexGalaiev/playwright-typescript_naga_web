@@ -36,7 +36,7 @@ export class Withdrawal{
         this.perfectMoney = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='perfectmoney']")
         this.netelerCashier = page.locator(".praxis-withdrawal")
         this.perfectMoneyCashier = page.locator(".ewallet-withdrawal-form")
-        this.skrillCashier = page.locator("//div[@payment_method='skrill']")
+        this.skrillCashier = page.locator("#cashier-block")
     };
     //Withdrawal credit card
     async chooseWithdrawalMenu(){
@@ -44,7 +44,7 @@ export class Withdrawal{
     };
     async inputAmountWithdrawal(AmountToInput: string){
         await this.CCWithdrawalAmount.pressSequentially(AmountToInput);
-        await this.page.waitForTimeout(1000)
+        await this.page.waitForTimeout(1500)
     };
     async getCheckWithdrawalAmount(){
         await this.page.waitForTimeout(1000)
@@ -55,11 +55,11 @@ export class Withdrawal{
         return await this.WithdrawBtn.click();
     };
     async checkCCCashier(){
-        await this.page.waitForTimeout(3000);
+        await this.page.waitForTimeout(3500);
         return await this.ccCashier;
     };
     async getErrorText(){
-        await this.page.waitForTimeout(1500);
+        await this.page.waitForTimeout(2000);
         return await this.WithdrawalAmountErrorMSG.textContent();
     };
     async openModalCCPopup(){
@@ -70,24 +70,31 @@ export class Withdrawal{
     }
     //Ewallet withdrawal
     async checkNetelerCashier(){
+        await this.page.waitForTimeout(500)
         return await this.netelerCashier
     };
     async clickNeteler(){
+        await this.page.waitForTimeout(500)
         return await this.neteller.click();
     };
     async clickPerfectMoney(){
+        await this.page.waitForTimeout(500)
         return await this.perfectMoney.click();
     };
     async clickEwalletWithdrawal(){
+        await this.page.waitForTimeout(500)
         return await this.WithdrawalEwallet.click();
     };
     async clickSkrillWithdrawal(){
+        await this.page.waitForTimeout(500)
         return await this.skril.click();
     };
     async checkSkrilCashier(){
+        await this.page.waitForTimeout(500)
         return await this.skrillCashier
     };
     async checkPerfectMoneyCashier(){
+        await this.page.waitForTimeout(500)
         return await this.perfectMoneyCashier
     }
 }

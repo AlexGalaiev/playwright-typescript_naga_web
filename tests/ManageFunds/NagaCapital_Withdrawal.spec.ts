@@ -60,7 +60,6 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
             await withdrawal.clickEwalletWithdrawal()
         });
         await test.step("Make Neteler withdrawal", async()=>{
-            await withdrawal.clickPerfectMoney()
             await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
             await withdrawal.clickWithdrawBtn();
         })
@@ -79,6 +78,7 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
             await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
             await mainPage.openManageFunds();
             await withdrawal.chooseWithdrawalMenu();
+            await withdrawal.clickEwalletWithdrawal()
             await withdrawal.clickSkrillWithdrawal();
         });
         await test.step("Make Skrill withdrawal", async()=>{
@@ -99,7 +99,8 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
             await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
             await mainPage.openManageFunds();
             await withdrawal.chooseWithdrawalMenu();
-            await withdrawal.clickSkrillWithdrawal();
+            await withdrawal.clickEwalletWithdrawal();
+            await withdrawal.clickPerfectMoney();
         });
         await test.step("Make Perfect Money withdrawal", async()=>{
             await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
