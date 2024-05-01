@@ -31,12 +31,7 @@ export class Withdrawal{
         this.WithdrawBtn = page.locator("//button[text()='Withdraw']");
         this.ccCashier = page.locator("#cashier-block");
         this.ccCashierModalPopup = page.locator("//div[@class='modal-body']");
-        this.neteller = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='praxisNeteller']")
-        this.skril = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='praxisSkrill']")
-        this.perfectMoney = page.locator("//div[@class='ewallet-withdrawal-sidebar']//img[@class='perfectmoney']")
-        this.netelerCashier = page.locator(".praxis-withdrawal")
-        this.perfectMoneyCashier = page.locator(".ewallet-withdrawal-form")
-        this.skrillCashier = page.locator("//div[@payment_method='skrill']")
+
     };
     //Withdrawal credit card
     async chooseWithdrawalMenu(){
@@ -44,7 +39,7 @@ export class Withdrawal{
     };
     async inputAmountWithdrawal(AmountToInput: string){
         await this.CCWithdrawalAmount.pressSequentially(AmountToInput);
-        await this.page.waitForTimeout(1000)
+        await this.page.waitForTimeout(1500)
     };
     async getCheckWithdrawalAmount(){
         await this.page.waitForTimeout(1000)
@@ -55,11 +50,11 @@ export class Withdrawal{
         return await this.WithdrawBtn.click();
     };
     async checkCCCashier(){
-        await this.page.waitForTimeout(3000);
+        await this.page.waitForTimeout(3500);
         return await this.ccCashier;
     };
     async getErrorText(){
-        await this.page.waitForTimeout(1500);
+        await this.page.waitForTimeout(2000);
         return await this.WithdrawalAmountErrorMSG.textContent();
     };
     async openModalCCPopup(){
@@ -67,27 +62,5 @@ export class Withdrawal{
     }
     async checkModalPopup(){
         return this.ccCashierModalPopup;
-    }
-    //Ewallet withdrawal
-    async checkNetelerCashier(){
-        return await this.netelerCashier
-    };
-    async clickNeteler(){
-        return await this.neteller.click();
-    };
-    async clickPerfectMoney(){
-        return await this.perfectMoney.click();
-    };
-    async clickEwalletWithdrawal(){
-        return await this.WithdrawalEwallet.click();
-    };
-    async clickSkrillWithdrawal(){
-        return await this.skril.click();
-    };
-    async checkSkrilCashier(){
-        return await this.skrillCashier
-    };
-    async checkPerfectMoneyCashier(){
-        return await this.perfectMoneyCashier
     }
 }
