@@ -3,8 +3,10 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { Withdrawal } from "../../pageObjects/ManageFunds/Withdrawal"
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 import {test} from "..//..//test-options"
+import { getLocalization } from "../../pageObjects/localization/getText";
 
 test.describe("Naga Capital. Withdrawal credit card", async()=>{
+    const ManageFunds_Withdrawal = "/pageObjects/localization/ManageFunds_Withdrawal.json";
     test("@24097 Withdrawal credti card", async({page, NagaCapital})=>{
         let sighIn = new SighIn(page);
         let withdrawal = new Withdrawal(page);
@@ -110,5 +112,34 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
             expect(await withdrawal.checkPerfectMoneyCashier()).toBeVisible()
         })
     })
+
+    test("@24091 Check Crypto withdrawal", async({page, NagaCapital})=>{
+        let sighIn = new SighIn(page);
+        let withdrawal = new Withdrawal(page);
+        let mainPage = new MainPage(page);
+        let amountValueToWithrawal = '60';
+        let localization = new getLocalization(ManageFunds_Withdrawal);
+        await test.step('Login to platform and open Crypto withdrawal', async()=>{
+            await sighIn.goto(NagaCapital,'login');
+            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
+            await mainPage.openManageFunds();
+            await withdrawal.chooseWithdrawalMenu();
+            await withdrawal.clickCrypto();
+        })
+        await test.step("Make crypto withdrawal", async()=>{
+            await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
+            await withdrawal.clickWithdrawBtn();
+        })
+        await test.step("Check crypto wallet popup", async()=>{
+            expect(await withdrawal.checkCryptoPopup).toBeTruthy
+            await withdrawal.checkCryptoPopupHeaderText() === 'Withdraw to Crypto'
+            await withdrawal.performCryptoWithdrawalToTestAccount();
+        })
+        await test.step('Check crypto withdrawal success popup', async()=>{
+            expect(await withdrawal.checkCryptoWithdrawalSuccessPopup).toBeTruthy
+            await withdrawal.checkCryptoSuccessPopupText() === await localization.getLocalizationText("CryptoWithdrawalSuccessPopupText")
+
+        })
     })
+})
 

@@ -18,12 +18,20 @@ export class Withdrawal{
     readonly netelerCashier: Locator;
     readonly perfectMoneyCashier: Locator;
     readonly skrillCashier: Locator;
+    readonly WithdrawalCrypto: Locator;
+    readonly cryptoAdressPopup: Locator;
+    readonly cryptoAdressPopupHeader: Locator;
+    readonly cryptoWalletAdress: Locator;
+    readonly cryptoPopupWithdrawalBtn: Locator;
+    readonly cryptoWithdrawalSuccessPopup: Locator;
+    readonly cryptoSuccessPopupText: Locator;
 
     constructor(page: Page){
         this.page = page;
         this.WithdrawalMenupoint = page.locator("#mm_withdraw");
         this.WithdrawalCreditCard = page.locator("//button[@data-option-index='0']");
-        this.WithdrawalBankAccount = page.locator("//button[@data-option-index='1']")
+        this.WithdrawalBankAccount = page.locator("//button[@data-option-index='1']");
+        this.WithdrawalCrypto = page.locator("//button[@data-option-index='3']");
         this.WithdrawalEwallet = page.locator("//button[@data-option-index='2']")
         this.CCWithdrawalAmount = page.locator("//input[contains(@class, 'amount')]");
         this.WithdrawalAmountErrorMSG = page.locator("//div[@class='error']")
@@ -37,6 +45,12 @@ export class Withdrawal{
         this.netelerCashier = page.locator(".praxis-withdrawal")
         this.perfectMoneyCashier = page.locator(".ewallet-withdrawal-form")
         this.skrillCashier = page.locator("#cashier-block")
+        this.cryptoAdressPopup = page.locator("//div[@class='modal-body']");
+        this.cryptoAdressPopupHeader = page.locator("//span[@class='crypto-withdraw-modal__header__title']");
+        this.cryptoWalletAdress = page.locator("//input[@name='address']");
+        this.cryptoPopupWithdrawalBtn = page.locator("//div[contains(@class, 'actions')]//button[@type='submit']");
+        this.cryptoWithdrawalSuccessPopup = page.locator("//div[@class='modal-content']")
+        this.cryptoSuccessPopupText = page.locator("//div[@class='modal-body']")
     };
     //Withdrawal credit card
     async chooseWithdrawalMenu(){
@@ -96,5 +110,26 @@ export class Withdrawal{
     async checkPerfectMoneyCashier(){
         await this.page.waitForTimeout(500)
         return await this.perfectMoneyCashier
+    };
+    async clickCrypto(){
+        return this.WithdrawalCrypto.click();
+    };
+    async checkCryptoPopup(){
+        return await this.cryptoAdressPopup.isVisible
+    };
+    async checkCryptoPopupHeaderText(){
+        return await this.cryptoAdressPopupHeader.textContent()
+    };
+    async performCryptoWithdrawalToTestAccount(){
+        await this.cryptoWalletAdress.pressSequentially("1Lbcfr7sAHTD9CgdQo3HTMTkV8LK4ZnX71")
+        await this.page.waitForTimeout(750);
+        await this.cryptoPopupWithdrawalBtn.click()
+    };
+    async checkCryptoWithdrawalSuccessPopup(){
+        return await this.cryptoWithdrawalSuccessPopup.isVisible
+    };
+    async checkCryptoSuccessPopupText(){
+        return await this.cryptoSuccessPopupText.textContent();
     }
+
 }
