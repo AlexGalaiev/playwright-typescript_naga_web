@@ -12,7 +12,7 @@ import {test} from "../../test-options";
 
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
-test.describe("User profile", async()=>{
+test.describe("NagaCapital - User profile", async()=>{
     
   test("@23922 Create 2nd live account", async({page, NagaCapital})=>{
         let sighUp = new SignUp(page);
