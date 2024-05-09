@@ -24,7 +24,9 @@ test.describe("NagaCapital - User profile", async()=>{
             await userProfile.getUserNameText() !== nameBeforeChanging;
         })
         await test.step("Update about me section", async()=>{
-            
+            let defaultText = await userProfile.getDefaultText();
+            await userProfile.changeAboutMeText();
+            await userProfile.getEditedAboutMe() !== defaultText;
         })
     })
 })
