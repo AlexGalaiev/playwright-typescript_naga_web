@@ -8,6 +8,7 @@ export class PhoneVerification{
     readonly submitBtn: Locator;
     readonly verificationCode: Locator;
     readonly continueBtn: Locator;
+    readonly MN_verifyCode: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -17,6 +18,7 @@ export class PhoneVerification{
         this.submitBtn = page.locator("//div[contains(@class, 'phone-verification-capital')]//button[contains(@class, 'submit')]");
         this.verificationCode = page.locator("//input[contains(@name, 'otp')]");
         this.continueBtn = page.locator("//footer[contains(@class, 'phone-verification-capital')]");
+        this.MN_verifyCode = page.locator("//button[contains(@class, 'verify-phone-number')]")
     }
 
     async insertTestPhoneNumber(){
@@ -38,11 +40,13 @@ export class PhoneVerification{
         await this.page.waitForTimeout(10000)
     };
 
-    async fillPersonalInformation(){
-        
+    async MN_insertVerificationCode(){
+        await this.page.waitForTimeout(2000);
+        for(const otpCode of await this.verificationCode.all()){
+            await otpCode.pressSequentially('1');
+        }
+        await this.page.waitForTimeout(500)
+        await this.MN_verifyCode.click()
+        await this.page.waitForSelector("//div[@class='modal-content']", {state:"visible"})
     }
-
-
-
-
 }

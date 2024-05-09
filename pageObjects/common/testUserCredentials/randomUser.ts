@@ -9,5 +9,9 @@ export class RandomUser {
         let randomUser = `test_user_${momentTime.getTime()}@naga.com`;
         return randomUser;
     };
+    public randomUserName(){
+        const randomNumber = Math.floor(Math.random() * (99999 - 10 + 1)) + 10;
+        return `user_${randomNumber}`;
+    }
 
 }
