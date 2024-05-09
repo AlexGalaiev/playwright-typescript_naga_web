@@ -9,6 +9,8 @@ export class SignUp{
     readonly submitBtn: Locator;
     readonly riskWarning: Locator;
     readonly sighUpTittle: Locator;
+    readonly NM_checkboxPrivacyPolicy: Locator;
+    readonly NM_checkbox_yearsConfirmeation: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -18,7 +20,8 @@ export class SignUp{
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
         this.riskWarning = page.locator(".registration-form__risk-warning");
         this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
-    
+        this.NM_checkboxPrivacyPolicy = page.locator("//div[@class='custom-checkbox'][1]");
+        this.NM_checkbox_yearsConfirmeation = page.locator("//div[@class='custom-checkbox'][2]");
     };
 
     async goto(MainPage: string, pageTest: string){
@@ -34,6 +37,18 @@ export class SignUp{
         await this.submitBtn.click();
         return randomEmail;
     };
+    async create_NM_CFDUser(Country: string){
+        let user = new RandomUser();
+        let randomEmail = user.getRandomUserEmail();
+        await this.email.pressSequentially(randomEmail);
+        await this.password.pressSequentially("Test123!")
+        await this.checkCountry(Country)
+        await this.NM_checkboxPrivacyPolicy.click();
+        await this.NM_checkbox_yearsConfirmeation.click();
+        await this.submitBtn.click();
+        return randomEmail;
+
+    }
 
     async checkCountry(Country: string){
         if(await this.country.textContent() !== Country){

@@ -1,0 +1,17 @@
+{
+    "YouAreInPopupDescription":{
+        "answer": "Your account doesn't belong to the NAGA entity you are trying to login to. Please continue and we will direct you to the appropriate one"
+    },
+    "KYC_Start_header":{
+        "answer":"You are about to open a real money trading account with NAGA!"
+    },
+    "KYC_Start_description":{
+        "answer":"Due to regulatory requirements we will have to ask you a few questions to assess your experience and profile for trading. Please read each question carefully. The outcome of your questionnaire will define which account category you are in."
+    },
+    "KYC_Start_disclaimer":{
+        "answer":"Please answer honestly and carefully, especially when it comes to questions relevant to your knowledge, investment objectives, financial situation; depending on the answers given, you may not have access to copy trading, have limited access, or even have your account rejected all-together, since it is our obligation to evaluate your answers and assess the suitability of the service, in our aim to provide investor protection."
+    },
+    "KYC_Start_accounts_types":{
+        "answer":"Due to regulatory requierements, NAGA uses an automated scoring system to evaulate your replies and categorize your knowledge and suitability for trading. Once you complete the questionaire, you will see the scoring result. After 15 days you can be re-assessed and get a higher score. In short, these are the major differences for you in each category:"
+    }
+}

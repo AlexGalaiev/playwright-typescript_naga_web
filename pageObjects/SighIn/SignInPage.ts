@@ -1,6 +1,5 @@
 import { Locator, Page } from "@playwright/test";
 
-
 export class SighIn{
     readonly page: Page;
     readonly signInName: Locator;
