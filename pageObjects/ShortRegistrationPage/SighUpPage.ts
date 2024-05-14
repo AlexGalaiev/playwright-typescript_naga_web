@@ -47,7 +47,6 @@ export class SignUp{
         await this.NM_checkbox_yearsConfirmeation.click();
         await this.submitBtn.click();
         return randomEmail;
-
     }
 
     async checkCountry(Country: string){

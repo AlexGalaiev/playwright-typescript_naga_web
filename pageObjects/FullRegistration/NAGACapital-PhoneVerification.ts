@@ -47,6 +47,6 @@ export class PhoneVerification{
         }
         await this.page.waitForTimeout(500)
         await this.MN_verifyCode.click()
-        await this.page.waitForSelector("//div[@class='modal-content']", {state:"visible"})
+        await this.page.waitForSelector("//div[@class='modal-content']", {state:"visible", timeout: 15000})
     }
 }

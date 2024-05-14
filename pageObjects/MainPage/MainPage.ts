@@ -14,6 +14,7 @@ export class MainPage{
     readonly verifyStepHeader: Locator;
     readonly finishStepHeader: Locator;
     readonly manageFunds: Locator;
+    readonly verifyBanner: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -27,6 +28,7 @@ export class MainPage{
         this.verifyStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
         this.finishStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
         this.manageFunds = page.locator("//span[text()='Manage Funds']")
+        this.verifyBanner = page.locator(".header__verify")
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
