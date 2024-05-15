@@ -98,3 +98,4 @@ export class FinalStep{
     async getElementaryFundAccount(){
         return await this.ElementaryFundAccount.textContent()
     }
+}
