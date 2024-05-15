@@ -2,7 +2,7 @@
     "YouAreInPopupDescription":{
         "answer": "Your account doesn't belong to the NAGA entity you are trying to login to. Please continue and we will direct you to the appropriate one"
     },
-    "KYC_Start_header":{
+    "KYC_Start_introduction":{
         "answer":"You are about to open a real money trading account with NAGA!"
     },
     "KYC_Start_description":{
@@ -13,5 +13,62 @@
     },
     "KYC_Start_accounts_types":{
         "answer":"Due to regulatory requierements, NAGA uses an automated scoring system to evaulate your replies and categorize your knowledge and suitability for trading. Once you complete the questionaire, you will see the scoring result. After 15 days you can be re-assessed and get a higher score. In short, these are the major differences for you in each category:"
+    },
+    "KYC_Advance_Disclaimer":{
+        "answer":"You have full access to all NAGA Products"
+    },
+    "KYC_AdvanceScorring_Footer_description":{
+        "answer":"Trading in Contract for Difference (CFDs) involves a high level of risk and may not be suitable for all investors. The leveraged nature of CFDs can result in substantial financial losses that exceed your initial investment. Before engaging in CFD trading, it is imperative that you carefully consider your risk tolerance and investment objectives. You may proceed further with your trading experience, by accepting this risk."
+    },
+    "KYC_AdvanceScorring_Footer_fundAccount":{
+        "answer":"You can already fund up to €2,000 to your account without account verification. However we will ask you to verify your account within 15 days"
+    },
+    "KYC_PreAdvance_Disclaimer":{
+        "answer":"You can trade all instruments and auto-copy traders with a risk score of up to 7"
+    },
+    "KYC_PreAdvance_Footer_quizWarning":{
+        "answer":"You may prepare and re-take the questionnaire to unlock more features in 15 days."
+    },
+    "KYC_PreAdvance_Footer_description":{
+        "answer":"Trading in Contract for Difference (CFDs) involves a high level of risk and may not be suitable for all investors. The leveraged nature of CFDs can result in substantial financial losses that exceed your initial investment. Before engaging in CFD trading, it is imperative that you carefully consider your risk tolerance and investment objectives. You may proceed further with your trading experience, by accepting this risk."
+    },
+    "KYC_PreAdvance_Footer_fundaccount":{
+        "answer":"You can already fund up to €2,000 to your account without account verification. However we will ask you to verify your account within 15 days."
+    },
+    "KYC_Intermidiate_Warning":{
+        "answer":"You can trade all instruments and auto-copy traders with a risk score of up to 5"
+    },
+    "KYC_Intermidiate_Disclaimer":{
+        "answer":"You may prepare and re-take the questionnaire to unlock more features in 15 days."
+    },
+    "KYC_Intermidiate_Desription":{
+        "answer":"Trading in Contract for Difference (CFDs) involves a high level of risk and may not be suitable for all investors. The leveraged nature of CFDs can result in substantial financial losses that exceed your initial investment. Before engaging in CFD trading, it is imperative that you carefully consider your risk tolerance and investment objectives. You may proceed further with your trading experience, by accepting this risk."
+    },
+    "KYC_Intermidiate_FundAccount":{
+        "answer":"You can already fund up to €2,000 to your account without account verification. However we will ask you to verify your account within 15 days."
+    },
+    "KYC_Elementary_Warning":{
+        "answer":"You can fund your account and trade real stocks but can't use Autocopy"
+    },
+    "KYC_Elementary_Disclaimer":{
+        "answer":"You may prepare and re-take the questionnaire to unlock more features in 15 days."
+    },
+    "KYC_Elementary_Description":{
+        "answer":"Trading in Contract for Difference (CFDs) involves a high level of risk and may not be suitable for all investors. The leveraged nature of CFDs can result in substantial financial losses that exceed your initial investment. Before engaging in CFD trading, it is imperative that you carefully consider your risk tolerance and investment objectives. You may proceed further with your trading experience, by accepting this risk."
+    },
+    "KYC_Elementary_FundAccount":{
+        "answer":"You can already fund up to €2,000 to your account without account verification. However we will ask you to verify your account within 15 days."
+    },
+    "KYC_Beginer_warning":{
+        "answer":"Thank you for interest in the services and products of the Company. Based on the answers you provided and taking into account the risks associated with trading CFDs we do not consider that CFD products meet your investment profile. Currently, you cannot continue with a real account opening application relevant to CFDs and Autocopy, while access to real stocks trading is still allowable."
+    },
+    "KYC_Beginer_disclaimer":{
+        "answer":"We strongly encourage you to use and trade with a demo account and read educational information and the risk disclosure statement for CFDs on our website. You may also wish to seek independent financial advice. Should your needs and/or circumstances change and/or your investment knowledge and experience reach an adequate level, we may be able to reconsider your application relevant to CFDs in the future."
+    },
+    "KYC_Beginer_fundAccount":{
+        "answer":"You can fund your account up to 2,000 but we will ask you to verify your account within 15 days."
+    },
+    "KYC_Beginer_retakeQUIZ":{
+        "answer":"You may prepare and re-take the questionnaire to unlock more features in 15 days."
     }
 }

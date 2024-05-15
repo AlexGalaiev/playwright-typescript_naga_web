@@ -6,6 +6,7 @@ export class KYC_Start{
     readonly description: Locator;
     readonly desclaimer: Locator;
     readonly accountsTypes: Locator;
+    readonly startVerificationBtn: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -13,6 +14,7 @@ export class KYC_Start{
         this.description = page.locator(".kyc-introduction__content")
         this.desclaimer = page.locator("//div[@class='kyc-introduction__warning']//p")
         this.accountsTypes = page.locator(".kyc-introduction__account-types")
+        this.startVerificationBtn = page.locator(".kyc-introduction__btn")
     }
     async getIntroductionText(){
         return await this.headerText.textContent();
@@ -25,5 +27,8 @@ export class KYC_Start{
     }
     async openAccountsTypes(){
         await this.accountsTypes.click();
+    }
+    async clickStartVerificationBtn(){
+        await this.startVerificationBtn.click()
     }
 }
