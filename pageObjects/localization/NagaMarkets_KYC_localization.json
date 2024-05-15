@@ -14,6 +14,9 @@
     "KYC_Start_accounts_types":{
         "answer":"Due to regulatory requierements, NAGA uses an automated scoring system to evaulate your replies and categorize your knowledge and suitability for trading. Once you complete the questionaire, you will see the scoring result. After 15 days you can be re-assessed and get a higher score. In short, these are the major differences for you in each category:"
     },
+    "KYC_Advance_Disclaimer":{
+        "answer":"You have full access to all NAGA Products"
+    },
     "KYC_AdvanceScorring_Footer_description":{
         "answer":"Trading in Contract for Difference (CFDs) involves a high level of risk and may not be suitable for all investors. The leveraged nature of CFDs can result in substantial financial losses that exceed your initial investment. Before engaging in CFD trading, it is imperative that you carefully consider your risk tolerance and investment objectives. You may proceed further with your trading experience, by accepting this risk."
     },

@@ -3,7 +3,9 @@ import { KYC_answerFunctions } from "./KYC_answer/NagaMarkets_KYC_answer";
 
 
 const KYC_SCORE = {
-    "Advance":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_Advance.json"
+    "Advance":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_Advance.json",
+    "PreAdvance":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_PreAdvance.json",
+    "Intermediate":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_Intermediate.json"
 }
 
 export class FullRegistration{
@@ -33,6 +35,7 @@ export class FullRegistration{
     }
     async inputDateOfBirth(){
         await this.dateObBirth.pressSequentially("12.12.1980")
+        await this.page.locator("//button[@type='submit']").click()
     }
 
     async checkbox(QuestionName: string, level: string){
@@ -81,7 +84,7 @@ export class FullRegistration{
         let quiz = new KYC_answerFunctions(KYC_SCORE[level])
         await question.textContent() === await quiz.getQuizText(QuestionName)
         let answer = await quiz.getQuizAnswer(QuestionName)
-        let answerQuiz = await this.page.locator(`span[text()='${answer}']`)
+        let answerQuiz = await this.page.locator(`//label[@data-naga-components="checkbox"][1]`)
         await this.page.waitForTimeout(1200);
         await answerQuiz.click();
         await this.page.waitForTimeout(500)
@@ -91,6 +94,14 @@ export class FullRegistration{
     async inputId(){
         await this.id.pressSequentially("445533445533")
         await this.page.waitForTimeout(250)
+    }
+    async inputAdress(){
+        await this.placeOfBirth.click()
+        await this.placeOfBirth.pressSequentially("Bosnia and herzegovina association for united nations")
+        await this.page.waitForTimeout(1000)
+        await this.placeOfBirth.press('Enter')
+        await this.page.waitForTimeout(500)
+        await this.submitBtn.click();
     }
 
     async fill_KYC(level: string){
@@ -123,11 +134,7 @@ export class FullRegistration{
         await this.singleSelect("gender_on_passport", level)
         await this.clickSubmitBtn();
         await this.inputDateOfBirth();
-        await this.placeOfBirth.click()
-        await this.placeOfBirth.pressSequentially("Bosnia and herzegovina association for united nations")
-        await this.page.waitForTimeout(1000)
-        await this.placeOfBirth.press('Enter')
-        await this.clickSubmitBtn();
+        await this.inputAdress();
         await this.singleSelectOther('currency', level);
         await this.inputId()
         await this.clickSubmitBtn();

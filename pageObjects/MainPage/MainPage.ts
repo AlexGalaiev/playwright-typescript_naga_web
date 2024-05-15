@@ -15,6 +15,8 @@ export class MainPage{
     readonly finishStepHeader: Locator;
     readonly manageFunds: Locator;
     readonly verifyBanner: Locator;
+    readonly verifyBannerDisclaimer: Locator;
+    readonly IUnderstandBtn: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -28,7 +30,9 @@ export class MainPage{
         this.verifyStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
         this.finishStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
         this.manageFunds = page.locator("//span[text()='Manage Funds']")
-        this.verifyBanner = page.locator(".header__verify")
+        this.verifyBanner = page.locator(".header__verify__content")
+        this.verifyBannerDisclaimer = page.locator(".user-status-box__desc-text")
+        this.IUnderstandBtn = page.locator("//button[text()='I understand']")
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
@@ -65,4 +69,13 @@ export class MainPage{
         await this.page.waitForTimeout(1000)
         await this.manageFunds.click();
     };
+    async getVerifyBannerContent(){
+        return await this.verifyBanner.textContent()
+    };
+    async getVerifyBannerDisclaimerText(){
+        return await this.verifyBannerDisclaimer.textContent()
+    };
+    async clickIUnderstanBtn(){
+        return await this.IUnderstandBtn.click()
+    }
 }
