@@ -69,7 +69,7 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
         let KYC_PreAdvance = "PreAdvance";
         let KYC_FinalStep = new FinalStep(page)
         let mainPage = new MainPage(page)
-        await test.step("Fill KYC advance level", async()=>{
+        await test.step("Fill KYC Preadvance level", async()=>{
             await quiz.fill_KYC(KYC_PreAdvance);
         })
         await test.step("Check KYC status of created account", async()=>{
@@ -95,7 +95,7 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
         let KYC_Intermediate = "Intermediate";
         let KYC_FinalStep = new FinalStep(page)
         let mainPage = new MainPage(page)
-        await test.step("Fill KYC advance level", async()=>{
+        await test.step("Fill KYC intermediate level", async()=>{
             await quiz.fill_KYC(KYC_Intermediate);
         })
         await test.step("Check KYC status of created account", async()=>{
@@ -118,11 +118,11 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
         let quiz = new FullRegistration(page)
         let localization = new getLocalization(kycFinishContent)
         let localizationMainPage = new getLocalization(mainPageLocalization)
-        let KYC_Intermediate = "Elementary";
+        let KYC_Elementary = "Elementary";
         let KYC_FinalStep = new FinalStep(page)
         let mainPage = new MainPage(page)
-        await test.step("Fill KYC advance level", async()=>{
-            await quiz.fill_KYC(KYC_Intermediate);
+        await test.step("Fill KYC elementary level", async()=>{
+            await quiz.fill_KYC(KYC_Elementary);
         })
         await test.step("Check KYC status of created account", async()=>{
             await KYC_FinalStep.getUsersScorring() === 'Elementary'
@@ -130,6 +130,32 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
             await localization.getLocalizationText("KYC_Elementary_Disclaimer") === await KYC_FinalStep.getElementaryDisclaimer()
             await localization.getLocalizationText("KYC_Elementary_Description") === await KYC_FinalStep.getElementaryDescription()
             await KYC_FinalStep.getIntermediateFundAcount() == await localization.getLocalizationText("KYC_Elementary_FundAccount")
+            await KYC_FinalStep.clickFundAccount();
+        })
+        await test.step("Check main page: check accounts and verification banner", async()=>{
+            await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody") === await mainPage.getVerifyBannerDisclaimerText();
+            await mainPage.clickIUnderstanBtn();
+        })
+    })
+
+    test("@24922 Naga Markets. KYC - Beginner level.", async({page})=>{
+        let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json"
+        let mainPageLocalization = "/pageObjects/localization/NagaMarkets_MainPage.json"
+        let quiz = new FullRegistration(page)
+        let localization = new getLocalization(kycFinishContent)
+        let localizationMainPage = new getLocalization(mainPageLocalization)
+        let KYC_Beginner = "Beginner";
+        let KYC_FinalStep = new FinalStep(page)
+        let mainPage = new MainPage(page)
+        await test.step("Fill KYC beginner level", async()=>{
+            await quiz.fill_KYC(KYC_Beginner);
+        })
+        await test.step("Check KYC status of created account", async()=>{
+            await KYC_FinalStep.getUsersScorring() === 'Beginner Account'
+            await localization.getLocalizationText("KYC_Beginer_warning") === await KYC_FinalStep.getBeginnerWarning();
+            await localization.getLocalizationText("KYC_Beginer_disclaimer") === await KYC_FinalStep.getBeginnerDisclaimer
+            await localization.getLocalizationText("KYC_Beginer_fundAccount") === await KYC_FinalStep.getBeginnerDescription()
+            await KYC_FinalStep.getBeginnerFundAccount() == await localization.getLocalizationText("KYC_Beginer_retakeQUIZ")
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{

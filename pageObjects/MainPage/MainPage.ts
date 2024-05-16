@@ -17,6 +17,7 @@ export class MainPage{
     readonly verifyBanner: Locator;
     readonly verifyBannerDisclaimer: Locator;
     readonly IUnderstandBtn: Locator;
+    readonly UpgradeButton: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -33,6 +34,7 @@ export class MainPage{
         this.verifyBanner = page.locator(".header__verify__content")
         this.verifyBannerDisclaimer = page.locator(".user-status-box__desc-text")
         this.IUnderstandBtn = page.locator("//button[text()='I understand']")
+        this.UpgradeButton = page.locator("//button[@type='button']//span[text()='Upgrade Now']")
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
@@ -77,5 +79,8 @@ export class MainPage{
     };
     async clickIUnderstanBtn(){
         return await this.IUnderstandBtn.click()
+    };
+    async clickUpgradeBtn(){
+        await this.UpgradeButton.click()
     }
 }

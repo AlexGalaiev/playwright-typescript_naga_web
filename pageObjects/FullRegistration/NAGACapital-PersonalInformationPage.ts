@@ -8,6 +8,7 @@ export class PersonalInformation{
     readonly address: Locator;
     readonly submitBtn: Locator;
     readonly street: Locator;
+    readonly personalInfoForm: Locator;
 
     constructor(page:Page){
         this.page = page;
@@ -17,6 +18,7 @@ export class PersonalInformation{
         this.address = page.locator("[data-testid='naga-dropdown-input']");
         this.submitBtn = page.locator("//button[contains(@class, 'kyc-live-account-capital_submitButton')]")
         this.street = page.locator('#addr_street_no')
+        this.personalInfoForm = page.locator(".complete-your-profile-modal__content")
     }
 
     async fillPersonalInformation(){
@@ -29,5 +31,9 @@ export class PersonalInformation{
         await this.address.press("Enter");
         await this.page.waitForTimeout(500);
         await this.submitBtn.click();
+    }
+    async waitPersonalInfoBlock(){
+        await this.personalInfoForm.waitFor({state: "visible"})
+        await this.page.reload()
     }
 }

@@ -13,5 +13,8 @@
     }, 
     "VerifyBanner_TextContent":{
         "answer":"You have an important task left! Verify your account to use all NAGA features."
+    },
+    "UpgradeAccountBannerContent":{
+        "answer":"Get a Real Money Account for free and enjoy all NAGA features."
     }
 }
