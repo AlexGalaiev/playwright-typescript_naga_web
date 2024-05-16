@@ -18,6 +18,10 @@ export class FinalStep{
     readonly ElementaryDisclaimer: Locator;
     readonly ElementaryDescription: Locator;
     readonly ElementaryFundAccount: Locator;
+    readonly BeginnerWarning: Locator;
+    readonly BeginnerDisclaimer: Locator;
+    readonly BeginnerDescription: Locator;
+    readonly BeginnerFundAccount: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -41,7 +45,11 @@ export class FinalStep{
         this.ElementaryDisclaimer = page.locator("//p[contains(@class, 'descriptionFooter')][1]")
         this.ElementaryDescription = page.locator("//p[contains(@class, 'descriptionFooter')][2]")
         this.ElementaryFundAccount = page.locator("//p[contains(@class, 'descriptionFooter')][3]")
-
+        //beginner
+        this.BeginnerWarning = page.locator("//p[contains(@class, 'categoryDescription')]");
+        this.BeginnerDisclaimer = page.locator("//p[contains(@class, 'descriptionFooter')][1]")
+        this.BeginnerDescription = page.locator("//p[contains(@class, 'descriptionFooter')][2]")
+        this.BeginnerFundAccount = page.locator("//p[contains(@class, 'descriptionFooter')][3]")
     };
 //advance
     async getDisclaimer(){
@@ -97,5 +105,18 @@ export class FinalStep{
     }
     async getElementaryFundAccount(){
         return await this.ElementaryFundAccount.textContent()
+    }
+    //Beginner
+    async getBeginnerWarning(){
+        return await this.BeginnerWarning.textContent()
+    }
+    async getBeginnerDisclaimer(){
+        return await this.BeginnerDisclaimer.textContent();
+    }
+    async getBeginnerDescription(){
+        return await this.BeginnerDescription.textContent();
+    }
+    async getBeginnerFundAccount(){
+        return await this.BeginnerFundAccount.textContent()
     }
 }

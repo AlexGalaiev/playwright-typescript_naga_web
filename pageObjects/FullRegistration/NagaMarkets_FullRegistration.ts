@@ -5,7 +5,9 @@ import { KYC_answerFunctions } from "./KYC_answer/NagaMarkets_KYC_answer";
 const KYC_SCORE = {
     "Advance":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_Advance.json",
     "PreAdvance":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_PreAdvance.json",
-    "Intermediate":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_Intermediate.json"
+    "Intermediate":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_Intermediate.json",
+    "Elementary":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_Elementary.json",
+    "Beginner":"/pageObjects/FullRegistration/KYC_answer/NagaMarkets_Beginer.json"
 }
 
 export class FullRegistration{
