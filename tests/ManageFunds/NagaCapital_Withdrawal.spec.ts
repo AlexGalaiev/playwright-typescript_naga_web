@@ -7,16 +7,19 @@ import { getLocalization } from "../../pageObjects/localization/getText";
 
 test.describe("Naga Capital. Withdrawal credit card", async()=>{
     const ManageFunds_Withdrawal = "/pageObjects/localization/ManageFunds_Withdrawal.json";
-    test("@24097 Withdrawal credti card", async({page, NagaCapital})=>{
+    let amountValueToWithrawal = '50'
+
+    test.beforeEach("Login by trade user", async({page, NagaCapital })=>{
         let sighIn = new SighIn(page);
-        let withdrawal = new Withdrawal(page);
         let mainPage = new MainPage(page);
-        let amountValueToWithrawal = '50'
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
             await sighIn.goto(NagaCapital,'login');
             await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
             await mainPage.openManageFunds();
         });
+    })
+    test("@24097 Withdrawal credti card", async({page})=>{
+        let withdrawal = new Withdrawal(page);
         await test.step("Make withdrawal with credit card", async()=>{
             await withdrawal.chooseWithdrawalMenu();
             await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
@@ -28,19 +31,12 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
         })
     })
 
-    test("@24932 Withdrawal validation rulls", async({page, NagaCapital})=>{
-        let sighIn = new SighIn(page);
+    test("@24932 Withdrawal validation rulls", async({page})=>{
         let withdrawal = new Withdrawal(page);
-        let mainPage = new MainPage(page);
-        let amountValueToWithrawal = '10'
-        await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
-            await sighIn.goto(NagaCapital,'login');
-            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
-        });
+        let valueToWithrawal = '10'
         await test.step('Input NOT valid amount for withdrawal', async()=>{
             await withdrawal.chooseWithdrawalMenu();
-            await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
+            await withdrawal.inputAmountWithdrawal(valueToWithrawal);
             await withdrawal.getErrorText() === "Amount has to be greater than or equal to $50"
         });
         await test.step("Open modal popup for cc cashier", async()=>{
@@ -49,19 +45,11 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
         })
     });
 
-    test("@24098 Check Neteller withdrawal", async({page, NagaCapital})=>{
-        let sighIn = new SighIn(page);
+    test("@24098 Check Neteller withdrawal", async({page})=>{
         let withdrawal = new Withdrawal(page);
-        let mainPage = new MainPage(page);
-        let amountValueToWithrawal = '50'
-        await test.step('Login by withdrawal user to platform and open Neteler withdrawal', async()=>{
-            await sighIn.goto(NagaCapital,'login');
-            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+        await test.step("Make Neteler withdrawal", async()=>{
             await withdrawal.chooseWithdrawalMenu()
             await withdrawal.clickEwalletWithdrawal()
-        });
-        await test.step("Make Neteler withdrawal", async()=>{
             await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
             await withdrawal.clickWithdrawBtn();
         })
@@ -70,20 +58,13 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
         })
     })
 
-    test("@24095 Check Skrill withdrawal", async({page, NagaCapital})=>{
-        let sighIn = new SighIn(page);
+    test("@24095 Check Skrill withdrawal", async({page})=>{
         let withdrawal = new Withdrawal(page);
-        let mainPage = new MainPage(page);
         let amountValueToWithrawal = '50'
-        await test.step('Login by withdrawal user to platform and open Skrill withdrawal', async()=>{
-            await sighIn.goto(NagaCapital,'login');
-            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+        await test.step("Make Skrill withdrawal", async()=>{
             await withdrawal.chooseWithdrawalMenu();
             await withdrawal.clickEwalletWithdrawal()
             await withdrawal.clickSkrillWithdrawal();
-        });
-        await test.step("Make Skrill withdrawal", async()=>{
             await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
             await withdrawal.clickWithdrawBtn();
         })
@@ -91,20 +72,13 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
             expect(await withdrawal.checkSkrilCashier()).toBeVisible()
         })
     });
-    test("@24089 Check Perfect money withdrawal", async({page, NagaCapital})=>{
-        let sighIn = new SighIn(page);
+    test("@24089 Check Perfect money withdrawal", async({page})=>{
         let withdrawal = new Withdrawal(page);
-        let mainPage = new MainPage(page);
         let amountValueToWithrawal = '50'
-        await test.step('Login by withdrawal user to platform and open Perfect Money withdrawal', async()=>{
-            await sighIn.goto(NagaCapital,'login');
-            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+        await test.step("Make Perfect Money withdrawal", async()=>{
             await withdrawal.chooseWithdrawalMenu();
             await withdrawal.clickEwalletWithdrawal();
             await withdrawal.clickPerfectMoney();
-        });
-        await test.step("Make Perfect Money withdrawal", async()=>{
             await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
             await withdrawal.clickWithdrawBtn();
         })
@@ -113,20 +87,13 @@ test.describe("Naga Capital. Withdrawal credit card", async()=>{
         })
     })
 
-    test("@24091 Check Crypto withdrawal", async({page, NagaCapital})=>{
-        let sighIn = new SighIn(page);
+    test("@24091 Check Crypto withdrawal", async({page})=>{
         let withdrawal = new Withdrawal(page);
-        let mainPage = new MainPage(page);
         let amountValueToWithrawal = '60';
         let localization = new getLocalization(ManageFunds_Withdrawal);
-        await test.step('Login to platform and open Crypto withdrawal', async()=>{
-            await sighIn.goto(NagaCapital,'login');
-            await sighIn.sigInUserToPlatform("n.mucibabic+testcap1@naga.com", process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+        await test.step("Make crypto withdrawal", async()=>{
             await withdrawal.chooseWithdrawalMenu();
             await withdrawal.clickCrypto();
-        })
-        await test.step("Make crypto withdrawal", async()=>{
             await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
             await withdrawal.clickWithdrawBtn();
         })
