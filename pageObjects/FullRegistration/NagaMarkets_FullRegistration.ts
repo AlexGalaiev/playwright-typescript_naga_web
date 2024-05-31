@@ -41,10 +41,13 @@ export class FullRegistration{
     }
 
     async checkbox(QuestionName: string, level: string){
+        //Get quiestion text from json and compare it from text on the page
         let question = await this.page.locator(`//label[@for='${QuestionName}']`)
         let quiz = new KYC_answerFunctions(KYC_SCORE[level])
         await question.textContent() === await quiz.getQuizText(QuestionName)
+        //get answer from json 
         let answer = await quiz.getQuizAnswer(QuestionName)
+        //get answer on ui 
         let answerQuiz = await this.page.locator(`//label[@for='${QuestionName}']//..//..//button[contains(text(), '${answer}')]`)
         await this.page.waitForTimeout(500);
         await answerQuiz.click(); 

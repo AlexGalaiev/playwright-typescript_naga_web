@@ -18,6 +18,7 @@ export class MainPage{
     readonly verifyBannerDisclaimer: Locator;
     readonly IUnderstandBtn: Locator;
     readonly UpgradeButton: Locator;
+    readonly TradeHeaderMenuPoint: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -35,6 +36,7 @@ export class MainPage{
         this.verifyBannerDisclaimer = page.locator(".user-status-box__desc-text")
         this.IUnderstandBtn = page.locator("//button[text()='I understand']")
         this.UpgradeButton = page.locator("//button[@type='button']//span[text()='Upgrade Now']")
+        this.TradeHeaderMenuPoint = page.locator("//a[@href='/markets']")
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
@@ -82,5 +84,8 @@ export class MainPage{
     };
     async clickUpgradeBtn(){
         await this.UpgradeButton.click()
+    };
+    async chooseTradeMenuPoint(){
+        await this.TradeHeaderMenuPoint.click();
     }
 }

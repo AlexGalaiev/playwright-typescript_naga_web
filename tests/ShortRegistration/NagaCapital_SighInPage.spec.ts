@@ -51,7 +51,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             expect(await signUp.getSighUpTittleText()).toContain("Sign Up, it's free!");
         });
     })
-    test("@23915 Account locking", async({page, NagaCapital})=>{
+    test("@23986 Account locking", async({page, NagaCapital})=>{
         let sighUp = new SignUp(page);
         let sighIn = new SighIn(page);
         let localization = new getLocalization(localization_SignInPage);
