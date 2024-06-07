@@ -9,6 +9,7 @@ export class ChangeLimitSuccessPopup{
     readonly MaxProfitWithValue: Locator;
     readonly MaxLossWithValue: Locator;
     readonly thankYouBtn: Locator
+    readonly direction: Locator;
     
     constructor(page: Page){
         this.page = page;
@@ -19,6 +20,7 @@ export class ChangeLimitSuccessPopup{
         this.MaxProfitWithValue = page.locator("//div[text()='Max. Profit']//..//span[contains(@class, 'amount')]")
         this.MaxLossWithValue = page.locator("//div[text()='Max. Loss']//..//span[contains(@class, 'amount')]")
         this.thankYouBtn = page.locator("#ot_ok_thx")
+        this.direction = page.locator("//div[@class='modal-trade-summary__buy-sell']//div[@class='modal-trade-summary__direction']")
     }
     async getInvesctmentsAmount(){
         await this.popupBody.waitFor({state:"visible"})
@@ -32,5 +34,11 @@ export class ChangeLimitSuccessPopup{
     };
     async acceptPopup(){
         return await this.thankYouBtn.click()
+    };
+    async getTakeProfitValue(){
+        return await this.MaxProfitWithValue.textContent()
+    }
+    async getDirection(){
+        return await this.direction.textContent()
     }
 } 

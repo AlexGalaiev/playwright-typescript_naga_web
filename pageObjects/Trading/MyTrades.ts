@@ -17,6 +17,7 @@ export class MyTrades{
     readonly accptanceOfClosingPositions: Locator;
     readonly tradeDetails: Locator;
     readonly emptyPage: Locator;
+    readonly gotItBtn: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -37,16 +38,19 @@ export class MyTrades{
         this.selectAll = page.locator("//span[text()='Select All']")
         this.closeNTrades = page.locator("//div[@class='close-multiple-trades-actions']//button[contains(text(), 'Close')]");
         this.accptanceOfClosingPositions = page.locator("//div[@class='close-multiple-trades-modal__header-actions']//button[contains(text(), 'Close')]")
-        this.emptyPage = page.locator(".no-data__title")
+        this.emptyPage = page.locator(".no-data__title");
+        this.gotItBtn = page.locator("//button[text()='Got it']")
     }
     async checkActiveTradesHasAttribute(){
         let attributes = await this.activeTradesTab.getAttribute("class")
         return attributes
     }
     async getDepositValue(){
+        await this.depositValue.waitFor({state:"visible"})
         return await this.depositValue.textContent();
     };
     async getUnits(){
+        await this.units.waitFor({state:"visible"})
         return await this.units.textContent()
     }
     async getTakeProfit(){
@@ -67,12 +71,15 @@ export class MyTrades{
         return await this.emptyPage.textContent()
     }
     async closePositionsIfExist(){
-        if(await this.itemList.isVisible()){
+        await this.page.waitForTimeout(1500)
+        let existPosition = await this.itemList.isVisible()
+        if(existPosition === true){
             await this.closeMultiplePositions.click();
             await this.selectAll.click();
             await this.closeNTrades.click();
             await this.accptanceOfClosingPositions.waitFor({state:"visible"});
             await this.accptanceOfClosingPositions.click()
+            await this.gotItBtn.click()
         }else{
             await this.getEmptyPageText() === "No Active Trades"
         }
