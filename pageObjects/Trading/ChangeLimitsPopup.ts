@@ -33,7 +33,9 @@ export class ChangeLimitsPopup{
         await this.updateBtn.click()
     };
     async enableTakeProgit(){
-        return await this.takeProfit.click()
+        await this.takeProfit.click()
+        await this.page.waitForTimeout(250);
+        await this.updateBtn.click()
     };
     async updatePosition(){
         return await this.updateBtn.click();

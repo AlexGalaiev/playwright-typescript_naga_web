@@ -52,28 +52,81 @@ test.describe("Naga Capital. Trading", async()=>{
             let stopLoss = await myTrades.getStopLoss();
             await test.step("Check change limit popup and enable Stop Loss", async()=>{
                 await myTrades.openChangeLimitPopup();
-                await changeLimitPopup.getInstrumentName() === tradingInstrument;
-                await changeLimitPopup.getInvestedAmount() === depositValue;
+                expect(await changeLimitPopup.getInstrumentName()).toContain(tradingInstrument);
+                expect(await changeLimitPopup.getInvestedAmount()).toEqual(depositValue);
                 await changeLimitPopup.enableStopLoss();
             })
             await test.step("Check change limit popup", async()=>{
-                await changeLimitPopupResult.getInvesctmentsAmount() === depositValue;
-                await changeLimitPopupResult.getLotsAmount() === units;
-                await changeLimitPopupResult.getStopLossValue() !== stopLoss
+                expect(await changeLimitPopupResult.getDirection()).toEqual("SELLPrice will fall");
+                expect(await changeLimitPopupResult.getInvesctmentsAmount()).toEqual(depositValue);
+                expect(await changeLimitPopupResult.getLotsAmount()).toEqual(units);
+                expect(await changeLimitPopupResult.getStopLossValue()).not.toEqual(stopLoss)
                 await changeLimitPopupResult.acceptPopup();
             })
             await test.step("Check trade details", async()=>{
                 await myTrades.openTradeDetails();
-                await tradeDetails.getDepositAmount() === depositValue;
-                await tradeDetails.getLots() === units;
+                expect(await tradeDetails.getDepositAmount()).toEqual(depositValue);
+                expect(await tradeDetails.getLots()).toEqual(units);
                 await tradeDetails.clickCloseTrade();
                 await tradeDetails.clickCloseTradeConfirm()
             })  
             await test.step("Check success popup", async()=>{
-                await successPopup.getDeposit() === depositValue
-                await successPopup.getLots() === units;
+                expect(await successPopup.getDeposit()).toEqual(depositValue)
+                expect(await successPopup.getLots()).toEqual(units);
                 await successPopup.acceptPopup()
             })
+        })
+    })
+    test("@25017 Long position + Take profit", async({page})=>{
+        let tradingInstrument = "AUD/CAD"
+        let instruments = new AllInstruments(page)
+        let newPosition = new NewPosition(page)
+        let myTrades = new MyTrades(page);
+        let changeLimitPopup = new ChangeLimitsPopup(page);
+        let changeLimitPopupResult = new ChangeLimitSuccessPopup(page);
+        let tradeDetails = new TradeDetails(page);
+        let successPopup = new ClosePositionSuccessPopup(page)
+        await test.step("Choose instrument", async()=>{
+            await instruments.searchInstrument(tradingInstrument);
+            await instruments.openLongPosition();
+        })
+        await test.step("Open long position", async()=>{
+            await newPosition.increaseInvestmentValue();
+            await newPosition.submitPosition()
+        })
+        await test.step("Check My-trades", async()=>{
+            await new MainPage(page).chooseMyTradesMenuPoint();
+            expect(await myTrades.checkActiveTradesHasAttribute()).toContain('active')
+        })
+        await test.step("Check change limit of opened position and close position", async()=>{
+            let depositValue = await myTrades.getDepositValue();
+            let units = await myTrades.getUnits()
+            let takeProfit = await myTrades.getTakeProfit()
+            await test.step("Check change limit popup and enable Take Profit", async()=>{
+                await myTrades.openChangeLimitPopup();
+                await changeLimitPopup.getInstrumentName() === tradingInstrument;
+                await changeLimitPopup.getInvestedAmount() === depositValue;
+                await changeLimitPopup.enableTakeProgit();
+            })
+            await test.step("Check change limit popup", async()=>{
+                expect(await changeLimitPopupResult.getDirection()).toEqual("BUYPrice will rise");
+                expect(await changeLimitPopupResult.getInvesctmentsAmount()).toEqual(depositValue);
+                expect(await changeLimitPopupResult.getLotsAmount()).toEqual(units);
+                expect(await changeLimitPopupResult.getTakeProfitValue()).not.toEqual(takeProfit);
+                await changeLimitPopupResult.acceptPopup();
+            })
+            await test.step("Check trade details", async()=>{
+                await myTrades.openTradeDetails();
+                expect(await tradeDetails.getDepositAmount()).toEqual(depositValue);
+                expect(await tradeDetails.getLots()).toEqual(units);
+                await tradeDetails.clickCloseTrade();
+                await tradeDetails.clickCloseTradeConfirm()
+            })
+            await test.step("Check success popup", async()=>{
+                expect(await successPopup.getDeposit()).toEqual(depositValue)
+                expect(await successPopup.getLots()).toEqual(units);
+                await successPopup.acceptPopup()
+            }) 
         })
     })
 })
