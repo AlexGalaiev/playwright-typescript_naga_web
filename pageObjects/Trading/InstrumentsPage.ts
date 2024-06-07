@@ -15,6 +15,8 @@ export class AllInstruments{
     readonly emptyWatchlistHeader: Locator;
     readonly emptyWatchlistText: Locator;
     readonly addPriceAlert: Locator;
+    readonly sellBtn: Locator;
+    readonly buyBtn: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -30,6 +32,8 @@ export class AllInstruments{
         this.emptyWatchlistHeader = page.locator("//div[@class='no-data__title']")
         this.emptyWatchlistText = page.locator("//div[@class='no-data__description']")
         this.addPriceAlert = page.locator("//div[@class='symbol-row']//i[contains(@class,'icn-price-alert')]")
+        this.sellBtn = page.locator("//div[@data-type='SELL']")
+        this.buyBtn = page.locator("//div[@data-type='BUY']")
     }
 
     async searchInstrument(NameOfInstrument: string){
@@ -60,5 +64,12 @@ export class AllInstruments{
     async addPriceAlertToInstrumnet(){
         await this.addPriceAlert.click();
         await this.page.waitForTimeout(500)
+    };
+    async openShortPosition(){
+        await this.sellBtn.click()
+    };
+    async openLongPosition(){
+        await this.buyBtn.click()
     }
+
 }
