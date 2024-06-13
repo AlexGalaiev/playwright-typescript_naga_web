@@ -20,9 +20,10 @@ test("@23575 Upgrade account banner", async({page})=>{
     let localization_KYC_start = new getLocalization("/pageObjects/localization/NagaMarkets_KYC_localization.json")
     let mainPage = new MainPage(page)
     await test.step("Check upgrade banner", async()=>{
-        await mainPage.getVerifyBannerContent() === await localization_MainPage.getLocalizationText("UpgradeAccountBannerContent")
+        expect(await mainPage.getVerifyBannerContent()).toContain(await localization_MainPage.getLocalizationText("UpgradeAccountBannerContent"))
         await mainPage.clickUpgradeBtn()
-        await new startVerification_NagaMarkets(page).getKycIntroductionText() === await localization_KYC_start.getLocalizationText("KYC_start_introduction")
+        console.log(await new startVerification_NagaMarkets(page).getKycIntroductionText())
+        expect(await localization_KYC_start.getLocalizationText("KYC_start_introduction")).toContain(await new startVerification_NagaMarkets(page).getKycIntroductionText())
     })
 })
 test("@23943 KYC categorizations", async({page})=>{
@@ -32,8 +33,8 @@ test("@23943 KYC categorizations", async({page})=>{
     await test.step("Check upgrade banner", async()=>{
         await mainPage.clickUpgradeBtn()})
     await test.step("Check Kyc start information", async()=>{
-        await kycStart.getKycContent() === await localization_KYC_start.getLocalizationText("KYC_start_QUIZDescription")
-        await kycStart.getKycWarning() === await localization_KYC_start.getLocalizationText("KYC_start_Warning")
+        expect(await kycStart.getKycContent()).toBe(await localization_KYC_start.getLocalizationText("KYC_start_QUIZDescription"))
+        expect(await kycStart.getKycWarning()).toBe(await localization_KYC_start.getLocalizationText("KYC_start_Warning"))
     })
     await test.step("Check KYC categorization", async()=>{
         await kycStart.openKYCKategorizationBanner();

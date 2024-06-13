@@ -25,13 +25,13 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
         await test.step("Fill personal information, phone verification", async()=>{
             await personalInfo.fillPersonalInformation()
             await verification.MN_insertVerificationCode()
-            await youAreIn.getDescriptionText() === await localiztion.getLocalizationText("YouAreInPopupDescription")
+            expect(await youAreIn.getDescriptionText()).toContain(await localiztion.getLocalizationText("YouAreInPopupDescription"))
             await youAreIn.clickOpenRealMoneyAccount()
         })
         await test.step("Check information on KYC verification start", async()=>{
-            await kycStart.getIntroductionText() === await localiztion.getLocalizationText("KYC_Start_introduction");
-            await kycStart.getDescriptionText() === await localiztion.getLocalizationText("KYC_Start_description");
-            await kycStart.getDisclaimertext() === await localiztion.getLocalizationText("KYC_Start_disclaimer")
+            expect(await kycStart.getIntroductionText()).toContain(await localiztion.getLocalizationText("KYC_Start_introduction"));
+            expect(await kycStart.getDescriptionText()).toContain(await localiztion.getLocalizationText("KYC_Start_description"));
+            expect(await kycStart.getDisclaimertext()).toContain(await localiztion.getLocalizationText("KYC_Start_disclaimer"))
             await kycStart.clickStartVerificationBtn();
         })
     })
@@ -49,14 +49,14 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
             await quiz.fill_KYC(KYC_Advance);
         })
         await test.step("Check KYC status of created account", async()=>{
-            await KYC_FinalStep.getUsersScorring() === 'Advanced'
-            await localization.getLocalizationText("KYC_Advance_Disclaimer") === await KYC_FinalStep.getDisclaimer();
-            await localization.getLocalizationText("KYC_AdvanceScorring_Footer_description") === await KYC_FinalStep.getDescription()
-            await KYC_FinalStep.getFundAccountText == await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount")
+            expect(await KYC_FinalStep.getUsersScorring()).toEqual('Advanced')
+            expect(await localization.getLocalizationText("KYC_Advance_Disclaimer")).toContain(await KYC_FinalStep.getDisclaimer());
+            expect(await localization.getLocalizationText("KYC_AdvanceScorring_Footer_description")).toContain(await KYC_FinalStep.getDescription())
+            expect(await KYC_FinalStep.getFundAccountText).toContain(await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            await localizationMainPage.getLocalizationText("VerifyBanner_TextContent") === await mainPage.getVerifyBannerContent()
+            expect(await localizationMainPage.getLocalizationText("VerifyBanner_TextContent")).toContain(await mainPage.getVerifyBannerContent())
         })
     })
     
@@ -73,15 +73,15 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
             await quiz.fill_KYC(KYC_PreAdvance);
         })
         await test.step("Check KYC status of created account", async()=>{
-            await KYC_FinalStep.getUsersScorring() === 'Pre-Advanced'
-            await localization.getLocalizationText("KYC_PreAdvance_Disclaimer") === await KYC_FinalStep.getPreAdvanceDisclaimer();
-            await localization.getLocalizationText("KYC_PreAdvance_Footer_quizWarning") === await KYC_FinalStep.getPreAdvanceWarning()
-            await localization.getLocalizationText("KYC_PreAdvance_Footer_description") === await KYC_FinalStep.getPreAdvanceDescription()
-            await KYC_FinalStep.getPreAdvanceFundAccount == await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount")
+            expect(await KYC_FinalStep.getUsersScorring()).toEqual('Pre-Advanced')
+            expect(await localization.getLocalizationText("KYC_PreAdvance_Disclaimer")).toContain(await KYC_FinalStep.getPreAdvanceDisclaimer());
+            expect(await localization.getLocalizationText("KYC_PreAdvance_Footer_quizWarning")).toContain(await KYC_FinalStep.getPreAdvanceWarning())
+            expect(await localization.getLocalizationText("KYC_PreAdvance_Footer_description")).toContain(await KYC_FinalStep.getPreAdvanceDescription())
+            expect(await KYC_FinalStep.getPreAdvanceFundAccount).toContain(await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody") === await mainPage.getVerifyBannerDisclaimerText();
+            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toBe(await mainPage.getVerifyBannerDisclaimerText());
             await mainPage.clickIUnderstanBtn();
         })
     })
@@ -99,15 +99,15 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
             await quiz.fill_KYC(KYC_Intermediate);
         })
         await test.step("Check KYC status of created account", async()=>{
-            await KYC_FinalStep.getUsersScorring() === 'Intermediate'
-            await localization.getLocalizationText("KYC_Intermidiate_Warning") === await KYC_FinalStep.getIntermediateWarning();
-            await localization.getLocalizationText("KYC_Intermidiate_Disclaimer") === await KYC_FinalStep.getIntermediateDisclaimer()
-            await localization.getLocalizationText("KYC_Intermidiate_Desription") === await KYC_FinalStep.getIntermediateDescription()
-            await KYC_FinalStep.getIntermediateFundAcount == await localization.getLocalizationText("KYC_Intermidiate_FundAccount")
+            expect(await KYC_FinalStep.getUsersScorring()).toEqual('Intermediate')
+            expect(await localization.getLocalizationText("KYC_Intermidiate_Warning")).toContain(await KYC_FinalStep.getIntermediateWarning())
+            expect(await localization.getLocalizationText("KYC_Intermidiate_Disclaimer")).toContain(await KYC_FinalStep.getIntermediateDisclaimer())
+            expect(await localization.getLocalizationText("KYC_Intermidiate_Desription")).toContain(await KYC_FinalStep.getIntermediateDescription())
+            expect(await KYC_FinalStep.getIntermediateFundAcount).toContain(await localization.getLocalizationText("KYC_Intermidiate_FundAccount"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody") === await mainPage.getVerifyBannerDisclaimerText();
+            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toBe(await mainPage.getVerifyBannerDisclaimerText());
             await mainPage.clickIUnderstanBtn();
         })
     })
@@ -125,15 +125,15 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
             await quiz.fill_KYC(KYC_Elementary);
         })
         await test.step("Check KYC status of created account", async()=>{
-            await KYC_FinalStep.getUsersScorring() === 'Elementary'
-            await localization.getLocalizationText("KYC_Elementary_Warning") === await KYC_FinalStep.getElementaryWarning();
-            await localization.getLocalizationText("KYC_Elementary_Disclaimer") === await KYC_FinalStep.getElementaryDisclaimer()
-            await localization.getLocalizationText("KYC_Elementary_Description") === await KYC_FinalStep.getElementaryDescription()
-            await KYC_FinalStep.getIntermediateFundAcount() == await localization.getLocalizationText("KYC_Elementary_FundAccount")
+            expect(await KYC_FinalStep.getUsersScorring()).toEqual('Elementary')
+            expect(await localization.getLocalizationText("KYC_Elementary_Warning")).toContain(await KYC_FinalStep.getElementaryWarning())
+            expect(await localization.getLocalizationText("KYC_Elementary_Disclaimer")).toContain(await KYC_FinalStep.getElementaryDisclaimer())
+            expect(await localization.getLocalizationText("KYC_Elementary_Description")).toContain(await KYC_FinalStep.getElementaryDescription())
+            expect(await KYC_FinalStep.getIntermediateFundAcount()).toContain(await localization.getLocalizationText("KYC_Elementary_FundAccount"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody") === await mainPage.getVerifyBannerDisclaimerText();
+            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerDisclaimerText());
             await mainPage.clickIUnderstanBtn();
         })
     })
@@ -151,15 +151,15 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
             await quiz.fill_KYC(KYC_Beginner);
         })
         await test.step("Check KYC status of created account", async()=>{
-            await KYC_FinalStep.getUsersScorring() === 'Beginner Account'
-            await localization.getLocalizationText("KYC_Beginer_warning") === await KYC_FinalStep.getBeginnerWarning();
-            await localization.getLocalizationText("KYC_Beginer_disclaimer") === await KYC_FinalStep.getBeginnerDisclaimer
-            await localization.getLocalizationText("KYC_Beginer_fundAccount") === await KYC_FinalStep.getBeginnerDescription()
-            await KYC_FinalStep.getBeginnerFundAccount() == await localization.getLocalizationText("KYC_Beginer_retakeQUIZ")
+            expect(await KYC_FinalStep.getUsersScorring()).toEqual('Beginner Account')
+            expect(await localization.getLocalizationText("KYC_Beginer_warning")).toContain(await KYC_FinalStep.getBeginnerWarning())
+            expect(await localization.getLocalizationText("KYC_Beginer_disclaimer")).toContain(await KYC_FinalStep.getBeginnerDisclaimer())
+            expect(await localization.getLocalizationText("KYC_Beginer_fundAccount")).toContain(await KYC_FinalStep.getBeginnerDescription())
+            expect(await KYC_FinalStep.getBeginnerFundAccount()).toContain(await localization.getLocalizationText("KYC_Beginer_retakeQUIZ"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody") === await mainPage.getVerifyBannerDisclaimerText();
+            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerDisclaimerText());
             await mainPage.clickIUnderstanBtn();
         })
     })

@@ -21,8 +21,8 @@ test.describe("NagaCapital. Deposit", async()=>{
         await test.step("Check credit card deposit", async()=>{
             await deposit.chooseCreditCardDeposit();
             await deposit.performDeposit();
-            await deposit.getPraxisHeaderTittle() === "Fund via Credit Card"
-            await deposit.checkNameOfIframe() === "Credit and Debit Card"
+            expect(await deposit.getPraxisHeaderTittle()).toContain("Fund via Credit Card")
+            expect(await deposit.checkNameOfIframe()).toContain("_cashier_iframe")
         })
     })
     
@@ -31,8 +31,8 @@ test.describe("NagaCapital. Deposit", async()=>{
         await test.step("Check perfect money deposit", async()=>{
             await deposit.choosePerfectMoneyDeposit();
             await deposit.performDeposit();
-            await deposit.getPraxisHeaderTittle() === "Fund via Perfect Money"
-            await deposit.checkNameOfIframe() === "PAY WITHCREDIT AND DEBIT CARD"
+            expect(await deposit.getPraxisHeaderTittle()).toContain("Fund via Perfect Money")
+            expect(await deposit.checkNameOfIframe()).toContain("_cashier_iframe")
         })
     })
 
@@ -41,8 +41,8 @@ test.describe("NagaCapital. Deposit", async()=>{
         await test.step("Check netteler deposit", async()=>{
             await deposit.chooseNettelerDeposit();
             await deposit.performDeposit();
-            await deposit.getPraxisHeaderTittle() === "Fund via Neteller";
-            await deposit.checkNameOfIframe() === "PAY WITH NETELLER";
+            expect(await deposit.getPraxisHeaderTittle()).toContain("Fund via Neteller");
+            expect(await deposit.checkNameOfIframe()).toContain("_cashier_iframe")
         })
     })
     test("@24077 Deposit via Skrill", async({page})=>{
@@ -50,8 +50,8 @@ test.describe("NagaCapital. Deposit", async()=>{
         await test.step("Check netteler deposit", async()=>{
             await deposit.choosekSkrillDeposit();
             await deposit.performDeposit();
-            await deposit.getPraxisHeaderTittle() === "Fund via Skrill";
-            await deposit.checkNameOfIframe() === "PAY WITH SKRILL";
+            expect(await deposit.getPraxisHeaderTittle()).toContain("Fund via Skrill");
+            expect(await deposit.checkNameOfIframe()).toContain("_cashier_iframe")
         })
     })
     test("@24068 Deposit via Crypto", async({page})=>{
@@ -59,7 +59,7 @@ test.describe("NagaCapital. Deposit", async()=>{
         await test.step("Check crypto deposit", async()=>{
             await deposit.chooseCyproDeposit();
             await deposit.performDeposit();
-            expect(await deposit.checkCryptoIframeDeposit());
+            expect(await deposit.checkCryptoIframeDeposit())
         })
     })
     test("@24072 Deposit via WireTransfer", async({page})=>{

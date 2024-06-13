@@ -17,7 +17,7 @@ export class startVerification_NagaMarkets{
         this.kycCategorizationPopup = page.locator("//div[contains(@class, 'types-modal__header')]")
     }
     async getKycIntroductionText(){
-        return await this.kycIntroduction.textContent()
+        return await this.kycIntroduction.innerText()
     }
     async getKycContent(){
         return await this.kycContent.textContent()

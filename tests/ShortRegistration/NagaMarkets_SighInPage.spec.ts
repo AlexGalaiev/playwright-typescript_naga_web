@@ -21,9 +21,9 @@ test.describe("Naga Markets. SignIn Page", async()=>{
         let forgotPassword = new ForgotPassword(page);
         await new SignUp(page).goto(NagaMarkets,"login")
         await signInPage.forgotPasswordClick()
-        await forgotPassword.getForgotPasswordDescription() === await localization.getLocalizationText("ForgotPasswordDescription")
+        expect(await forgotPassword.getForgotPasswordDescription()).toEqual(await localization.getLocalizationText("ForgotPasswordDescription"))
         await forgotPassword.sendForgotPasswordToEmail("forgotPassword@gmail.com");
-        await forgotPassword.getForgotPasswordDescription() === await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText');
+        expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
     });
     
     test("@23569 Entity redirection", async({page, NagaMarkets, NagaCapital})=>{
@@ -34,7 +34,7 @@ test.describe("Naga Markets. SignIn Page", async()=>{
             await sighInPage.sigInUserToPlatform("NagaCapitalLead@gmail.com", "Test123!");
         });
         await test.step("Check redirection notice of switching between platform", async()=>{
-            await localization.getLocalizationText("RedirectionNotice") === await sighInPage.getRedirectionNoticeMsg();
+            expect(await localization.getLocalizationText("RedirectionNotice")).toEqual(await sighInPage.getRedirectionNoticeMsg());
             await sighInPage.redirectAccept();
             expect(await page.url()).toContain(NagaCapital)
         });
@@ -48,7 +48,7 @@ test.describe("Naga Markets. SignIn Page", async()=>{
         await test.step("Redirect from platform (in Guest mode) to sigh in page", async()=>{
             await signUp.goto(NagaMarkets,"feed");
             await mainPage.openLoginFromGuestMode();
-            expect(await sighIn.getSighInHeaderText()) === await localization.getLocalizationText("SighInHeaderMainText");
+            expect(await sighIn.getSighInHeaderText()).toEqual(await localization.getLocalizationText("SighInHeaderMainText"));
         });
         await test.step("Redirect from platform(in Guest mode) to sigh Up page", async()=>{
             await signUp.goto(NagaMarkets,"feed");
@@ -78,13 +78,13 @@ test.describe("Naga Markets. SignIn Page", async()=>{
             await sighIn.sigInUserToPlatform(randomUser, "111Test123")
         });
         await test.step("Check account msg after incorrect password", async()=>{
-            await sighIn.getLoginErrorMsg() === await localization.getLocalizationText("incorrectPassword_1try");
+            expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_1try"));
             await sighIn.clickSignInBtn();
-            await sighIn.getLoginErrorMsg() === await localization.getLocalizationText("incorrectPassword_2try");
+            expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_2try"));
             await sighIn.clickSignInBtn();
-            await sighIn.getLoginErrorMsg() === await localization.getLocalizationText("AccountBlockDescription");
+            expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescription"));
             await sighIn.clickSignInBtn();
-            await sighIn.getLoginErrorMsg() === await localization.getLocalizationText("AccountBlockDescriptionLastTry");
+            expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescriptionLastTry"));
         })
     })
 

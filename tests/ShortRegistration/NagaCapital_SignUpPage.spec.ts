@@ -7,14 +7,14 @@ import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 test.describe("Naga Capital. Sigh up page", async()=>{
     let SighUpPage_localization = "/pageObjects/localization/SignUpPage.json"
     
-    test("@C24918 Change brand popup", async({page, NagaCapital, NagaMarkets})=>{
+    test("@C24931 Change brand popup", async({page, NagaCapital, NagaMarkets})=>{
         let localizationText = new getLocalization(SighUpPage_localization)
         let sighUp = new SignUp(page);
         await sighUp.goto(NagaCapital, "register")
         await sighUp.createCFDUser("France");
         let changeBrandPopup = new ChangeBrandPopup(page);
-        await changeBrandPopup.getPopupHeaderText() === await localizationText.getLocalizationText("NagaCapital_redirectToNagaMarkets_head");
-        await changeBrandPopup.getPopupText() === await localizationText.getLocalizationText("NagaCapital_redirectToNagaMarkets_text");
+        expect(await changeBrandPopup.getPopupHeaderText()).toEqual(await localizationText.getLocalizationText("NagaCapital_redirectToNagaMarkets_head"));
+        expect(await changeBrandPopup.getPopupText()).toEqual(await localizationText.getLocalizationText("NagaCapital_redirectToNagaMarkets_text"));
         await changeBrandPopup.proceedRegistration();
         expect(await page.url()).toContain(NagaMarkets)
     });
@@ -23,6 +23,6 @@ test.describe("Naga Capital. Sigh up page", async()=>{
         let localizationText = new getLocalization(SighUpPage_localization)
         let sighUp = new SignUp(page);
         await sighUp.goto(NagaCapital, "register")
-        await sighUp.getRiskWarningText() === await localizationText.getLocalizationText("NagaCapital_RiskDisclaimer")
+        expect(await sighUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("NagaCapital_RiskDisclaimer"))
     })
 })
