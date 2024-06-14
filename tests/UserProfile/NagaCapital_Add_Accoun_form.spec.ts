@@ -54,7 +54,7 @@ test.describe("NagaCapital - User profile", async()=>{
         await test.step('Check possibility to change account name', async()=>{
             await new HeaderMenuUserProfile(page).openAddNewTradingAccount();
             await addAccountForm.editAccountName('Default_Live_account')
-            await addAccountForm.getDefaultAccountName() === 'Default_Live_account'
+            expect(await addAccountForm.getDefaultAccountName()).toEqual('Default_Live_account')
             await addAccountForm.editAccountName('NAGA - USD');
         })
         await test.step('Check possibility to show password', async()=>{

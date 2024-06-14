@@ -1,3 +1,4 @@
+import { expect } from "@playwright/test";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
@@ -21,12 +22,12 @@ test.describe("NagaCapital - User profile", async()=>{
             await headerMenu.openProfileMenuPoint();
             let nameBeforeChanging = await userProfile.getUserNameText();
             await userProfile.changeName(randomUser.randomUserName())
-            await userProfile.getUserNameText() !== nameBeforeChanging;
+            expect(await userProfile.getUserNameText()).not.toEqual(nameBeforeChanging);
         })
         await test.step("Update about me section", async()=>{
             let defaultText = await userProfile.getDefaultText();
             await userProfile.changeAboutMeText();
-            await userProfile.getEditedAboutMe() !== defaultText;
+            expect(await userProfile.getEditedAboutMe()).not.toEqual(defaultText);
         })
     })
 })

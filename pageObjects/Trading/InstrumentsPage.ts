@@ -1,3 +1,4 @@
+import { expect } from "@playwright/test";
 import { Locator, Page } from "playwright";
 
 
@@ -70,6 +71,12 @@ export class AllInstruments{
     };
     async openLongPosition(){
         await this.buyBtn.click()
-    }
+    };
+    async cleanWatchlist(){
+        const removeIcons = await this.page.$$("//i[contains(@class, 'remove-favorites')]");
+        for(let icon of removeIcons){
+            if(await icon.isVisible()){
+                await icon.click()
+            }else{}}}
 
 }

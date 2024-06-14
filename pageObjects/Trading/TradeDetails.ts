@@ -22,6 +22,7 @@ export class TradeDetails{
         return await this.depositAmount.textContent();
     };
     async getLots(){
+        await this.page.waitForTimeout(500)
         return await this.lots.textContent();
     };
     async clickCloseTrade(){
