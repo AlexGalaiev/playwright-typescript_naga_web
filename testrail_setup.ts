@@ -20,13 +20,14 @@ export class TestRailIntegration{
             password: process.env.TESTRAIL_PASSWORD || ''
         }),
         this.TestRunId;
+        this.testinfo
     };
     // create automation test run
     async AddAutomationRun(){
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:`Naga_AT_${this.testinfo.project.name}_${momentTime.toLocaleDateString()}`,
+            name:`Naga_AT_${await this.testinfo.project.name}_${momentTime.toLocaleDateString()}`,
             description:'Naga Automation test cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)

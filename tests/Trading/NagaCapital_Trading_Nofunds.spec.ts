@@ -5,7 +5,7 @@ import { MyTrades } from "../../pageObjects/Trading/MyTrades";
 import {test} from "..//..//test-options"
 
 test.describe("NagaCapital. Trading", async()=>{
-    test.skip("Login to platform", async({page, NagaCapital})=>{
+    test.skip("Login to platform", async({page, NagaCapital}, testinfo)=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page)
         await test.step("Login to platfotm", async()=>{
