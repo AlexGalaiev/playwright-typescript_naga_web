@@ -2,7 +2,6 @@ import TestRail from "@dlenroc/testrail";
 import _ from 'lodash';
 import * as fs from 'fs';
 import path from "path";
-import { TestInfo } from "playwright/test";
 
 let momentTime = new Date();
 
@@ -10,8 +9,6 @@ export class TestRailIntegration{
     readonly TestRail: TestRail;
     readonly TestProject: number;
     TestRunId: number | undefined;
-    readonly testinfo: TestInfo
-
     
     constructor(){
         this.TestRail = new TestRail({
@@ -20,14 +17,13 @@ export class TestRailIntegration{
             password: process.env.TESTRAIL_PASSWORD || ''
         }),
         this.TestRunId;
-        this.testinfo
     };
     // create automation test run
     async AddAutomationRun(){
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:`Naga_AT_${await this.testinfo.project.name}_${momentTime.toLocaleDateString()}`,
+            name:`Naga_AT_${process.env.TESTS_ENV}_${momentTime.toLocaleDateString()}`,
             description:'Naga Automation test cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
@@ -41,7 +37,7 @@ export class TestRailIntegration{
         const cases = await this.getTestCases(3,13)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:`Naga_manual__${momentTime.toLocaleDateString()}`,
+            name:`Naga_manual_${process.env.TESTS_ENV}_${momentTime.toLocaleDateString()}`,
             description:'Naga manual cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
