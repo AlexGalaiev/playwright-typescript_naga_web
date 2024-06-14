@@ -20,17 +20,17 @@ test.describe("Naga Capital. SignIn Page", async()=>{
         let forgotPassword = new ForgotPassword(page);
         await new SignUp(page).goto(NagaCapital,"login")
         await signInPage.forgotPasswordClick()
-        await forgotPassword.getForgotPasswordDescription() === await localization.getLocalizationText("ForgotPasswordDescription")
+        expect(await forgotPassword.getForgotPasswordDescription()).toEqual(await localization.getLocalizationText("ForgotPasswordDescription"))
         await forgotPassword.sendForgotPasswordToEmail("forgotPassword@gmail.com");
-        await forgotPassword.getForgotPasswordDescription() === await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText');
+        expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
     });
 
-    test("@23911 Entity redirection", async({page, NagaMarkets, NagaCapital}, testInfo)=>{
+    test("@23911 Entity redirection", async({page, NagaMarkets, NagaCapital})=>{
         let localization = new getLocalization(localization_SignInPage);
         let sighInPage = new SighIn(page);
         await new SignUp(page).goto(NagaMarkets,"login");
-        await sighInPage.sigInUserToPlatform("NagaCapitalLead@gmail.com", "Test123!");
-        await localization.getLocalizationText("RedirectionNotice") === await sighInPage.getRedirectionNoticeMsg();
+        await sighInPage.sigInUserToPlatform("NagaCapitalLead@gmail.com", process.env.USER_PASSWORD || '');
+        expect(await localization.getLocalizationText("RedirectionNotice")).toEqual(await sighInPage.getRedirectionNoticeMsg());
         await sighInPage.redirectAccept();
         expect(await page.url()).toContain(NagaCapital)
     }); 
@@ -43,7 +43,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
         await test.step("Redirect from platform (in Guest mode) to sigh in page", async()=>{
             await signUp.goto(NagaCapital,"feed");
             await mainPage.openLoginFromGuestMode();
-            expect(await sighIn.getSighInHeaderText()) === await localization.getLocalizationText("SighInHeaderMainText");
+            expect(await sighIn.getSighInHeaderText()).toEqual(await localization.getLocalizationText("SighInHeaderMainText"));
         });
         await test.step("Redirect from platform(in Guest mode) to sigh Up page", async()=>{
             await signUp.goto(NagaCapital,"feed");
@@ -51,7 +51,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             expect(await signUp.getSighUpTittleText()).toContain("Sign Up, it's free!");
         });
     })
-    test("@23986 Account locking", async({page, NagaCapital})=>{
+    test("@23896 Account locking", async({page, NagaCapital})=>{
         let sighUp = new SignUp(page);
         let sighIn = new SighIn(page);
         let localization = new getLocalization(localization_SignInPage);
@@ -63,12 +63,12 @@ test.describe("Naga Capital. SignIn Page", async()=>{
         await new LogOutPopup(page).proceedLogOut();
         await new PageAfterLogout(page).pageAfterLogOutSignIn();
         await sighIn.sigInUserToPlatform(randomUser, "111Test123")
-        await sighIn.getLoginErrorMsg() === await localization.getLocalizationText("incorrectPassword_1try");
+        expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_1try"));
         await sighIn.clickSignInBtn();
-        await sighIn.getLoginErrorMsg() === await localization.getLocalizationText("incorrectPassword_2try");
+        expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_2try"));
         await sighIn.clickSignInBtn();
-        await sighIn.getLoginErrorMsg() === await localization.getLocalizationText("AccountBlockDescription");
+        expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescription"));
         await sighIn.clickSignInBtn();
-        await sighIn.getLoginErrorMsg() === await localization.getLocalizationText("AccountBlockDescriptionLastTry");
+        expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescriptionLastTry"));
     })
 })

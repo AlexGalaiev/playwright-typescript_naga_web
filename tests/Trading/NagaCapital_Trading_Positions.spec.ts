@@ -104,8 +104,8 @@ test.describe("Naga Capital. Trading", async()=>{
             let takeProfit = await myTrades.getTakeProfit()
             await test.step("Check change limit popup and enable Take Profit", async()=>{
                 await myTrades.openChangeLimitPopup();
-                await changeLimitPopup.getInstrumentName() === tradingInstrument;
-                await changeLimitPopup.getInvestedAmount() === depositValue;
+                expect(await changeLimitPopup.getInstrumentName()).toEqual(tradingInstrument);
+                expect(await changeLimitPopup.getInvestedAmount()).toEqual(depositValue);
                 await changeLimitPopup.enableTakeProgit();
             })
             await test.step("Check change limit popup", async()=>{

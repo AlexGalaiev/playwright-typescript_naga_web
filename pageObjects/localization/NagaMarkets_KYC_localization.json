@@ -72,10 +72,10 @@
         "answer":"You may prepare and re-take the questionnaire to unlock more features in 15 days."
     },
     "KYC_start_introduction":{
-        "answer":"You are about to open a real money trading account with NAGA!"
+        "answer":"You are about to open a real money trading\n account with NAGA!"
     },
     "KYC_start_QUIZDescription":{
-        "answer":"Due to regulatory requirements we will have to ask you a few questions to assess your experience and profile for trading. Please read each question carefully. The outcome of your questionnaire will define which account category you are in."
+        "answer":"Due to regulatory requirements we will have to ask you a few questions to assess your experience and profile for trading.\nPlease read each question carefully. The outcome of your questionnaire will define which account category you are in."
     },
     "KYC_start_Warning":{
         "answer":"Please answer honestly and carefully, especially when it comes to questions relevant to your knowledge, investment objectives, financial situation; depending on the answers given, you may not have access to copy trading, have limited access, or even have your account rejected all-together, since it is our obligation to evaluate your answers and assess the suitability of the service, in our aim to provide investor protection."

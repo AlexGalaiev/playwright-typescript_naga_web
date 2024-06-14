@@ -68,5 +68,12 @@ export class PriceAlert{
     };
     async getEmptyPriceAlertTabDescription(){
         return await this.emptyTabPriceAlertDescription.textContent()
+    };
+    async cleanPriceAlerts(){
+        await this.page.waitForTimeout(2000)
+        const removePriceAlerts = await this.page.$$("//i[contains(@class,'icn-trash')]");
+        for(let icon of removePriceAlerts){
+            if(await icon.isVisible()){
+                await icon.click()
+            }else{}}}
     }
-}

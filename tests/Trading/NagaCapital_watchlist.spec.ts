@@ -1,3 +1,4 @@
+import { expect } from "@playwright/test";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
@@ -18,39 +19,48 @@ test.describe("NagaCapital", async()=>{
         let tradeInstrument = "EUR/USD"
         let localization = new getLocalization(localization_trading)
         let watchlist = new AllInstruments(page);
+        await test.step("Check watchlist and clean", async()=>{
+            await watchlist.openWatclistTab();
+            await watchlist.cleanWatchlist()
+        })
         await test.step("Choose instrument and add to warchlist", async()=>{
             await watchlist.searchInstrument(tradeInstrument);
             await watchlist.addToWatchlist(tradeInstrument)
         })
         await test.step("Check watchlist", async()=>{
             await watchlist.openWatclistTab();
-            await watchlist.getWatchlistedInstrumentName() === tradeInstrument;
+            expect(await watchlist.getWatchlistedInstrumentName()).toEqual(tradeInstrument);
             await watchlist.removeInstrumentFromWatclist();
-            await localization.getLocalizationText("Empty_watchlist_header") === await watchlist.getEmptyWatchlistHeader()
-            await localization.getLocalizationText("Empty_watchlist_text") === await watchlist.getEmptyWatchlistText()
+            expect(await localization.getLocalizationText("Empty_watchlist_header")).toEqual(await watchlist.getEmptyWatchlistHeader())
+            expect(await localization.getLocalizationText("Empty_watchlist_text")).toEqual(await watchlist.getEmptyWatchlistText())
         })
     })
-    test("@23678 Price alerts", async({page})=>{
+    test("@23678 Price alerts", async({page, NagaCapital})=>{
         let tradeInstrument = "EUR/USD"
         let localization = new getLocalization(localization_trading)
         let watchlist = new AllInstruments(page);
         let priceAlert = new PriceAlert(page)
+        await test.step("Check price alert and clean", async()=>{
+            await new SighIn(page).goto(NagaCapital, "price-alerts");
+            await priceAlert.cleanPriceAlerts()
+            await new MainPage(page).chooseTradeMenuPoint();
+        })
         await test.step("Choose instrument and add price alert", async()=>{
             await watchlist.searchInstrument(tradeInstrument);
             await watchlist.addPriceAlertToInstrumnet();
         })
         await test.step("Set up price alert", async()=>{
-            await priceAlert.getInstrumentName() === tradeInstrument
+            expect(await priceAlert.getInstrumentName()).toContain(tradeInstrument)
             await priceAlert.installPriceAlertParameters();
             await priceAlert.installRisesBy();
             await priceAlert.clickSetPriceAlert()
         })
         await test.step("Check price alert tab", async()=>{
-            await priceAlert.getInstrumentNameFromTab() === tradeInstrument
-            await priceAlert.getAlertType() === "It raises by 100%"
+            expect(await priceAlert.getInstrumentNameFromTab()).toContain(tradeInstrument)
+            expect(await priceAlert.getAlertType()).toContain("It raises by 100%")
             await priceAlert.removePriceAlert()
-            await priceAlert.getEmptyPriceAlertTabHeader() === await localization.getLocalizationText("EmptyPriceAlertTab_Header")
-            await priceAlert.getEmptyPriceAlertTabDescription() === await localization.getLocalizationText("EmptyPriceAlertTab_Description")
+            expect(await priceAlert.getEmptyPriceAlertTabHeader()).toEqual(await localization.getLocalizationText("EmptyPriceAlertTab_Header"))
+            expect(await priceAlert.getEmptyPriceAlertTabDescription()).toEqual(await localization.getLocalizationText("EmptyPriceAlertTab_Description"))
         })
     })
 })

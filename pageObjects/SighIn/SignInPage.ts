@@ -28,7 +28,7 @@ export class SighIn{
         await this.signBtn.click();
     };
     async forgotPasswordClick(){
-        return this.forgotPasswordLink.click();
+        await this.forgotPasswordLink.click();
     };
     async getRedirectionNoticeMsg(){
         return await this.redirectionNotice.textContent();
@@ -38,13 +38,13 @@ export class SighIn{
         await this.page.waitForTimeout(1500);
     };
     async getSighInHeaderText(){
-        return this.sighInHeaderName.textContent();
+        return await this.sighInHeaderName.textContent();
     };
     async getLoginErrorMsg(){
-        return this.incorrectCredentialsMsg.textContent();
+        return await this.incorrectCredentialsMsg.textContent();
     };
     async clickSignInBtn(){
-        return this.signBtn.click();
+        await this.signBtn.click();
     };
     async goto(MainPage: string, pageTest: string){
         await this.page.goto(`${MainPage}/${pageTest}`);

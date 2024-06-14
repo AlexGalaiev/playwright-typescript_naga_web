@@ -11,12 +11,14 @@ export class NewPosition{
     readonly shortAtSpecificRate: Locator;
     readonly plusBtn: Locator;
     readonly submitBtn: Locator;
+    readonly longAtSpecificRate: Locator;
 
     constructor(page: Page){
         this.page = page
         this.instrumentName = page.locator(".open-trade__symbol__name")
         this.shortAtCurrentPrice = page.locator("//label[text()='Short at Current Price']")
         this.shortAtSpecificRate = page.locator("//label[text()='Short at Specific Rate']")
+        this.longAtSpecificRate = page.locator("//label[text()='Long at Specific Rate']")
         this.plusBtn = page.locator("//div[contains(@class, 'undefined')]//i[contains(@class, 'icn-circle-add')]")
         this.longAtCurrentPrice = page.locator("//label[text()='Long at Current Price']")
         this.investmentTab = page.locator("//div[@class='investment-section ']//label[text()='Investment ($)']")
@@ -28,9 +30,12 @@ export class NewPosition{
     async openPosition(){
         await this.shortAtCurrentPrice.click()
     };
-    async openOrder(){
+    async openShortOrder(){
         await this.shortAtSpecificRate.click()
     };
+    async openLongOrder(){
+        await this.longAtSpecificRate.click()
+    }
     async increaseInvestmentValue(){
         await this.plusBtn.waitFor({state:"visible"})
         await this.plusBtn.click();

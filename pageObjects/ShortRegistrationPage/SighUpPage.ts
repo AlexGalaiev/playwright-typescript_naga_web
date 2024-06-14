@@ -57,9 +57,9 @@ export class SignUp{
         } else {}
     };
     async getRiskWarningText(){
-        return this.riskWarning.textContent();
+        return await this.riskWarning.textContent();
     };
     async getSighUpTittleText(){
-        return this.sighUpTittle.textContent();
+        return await this.sighUpTittle.textContent();
     };
 }

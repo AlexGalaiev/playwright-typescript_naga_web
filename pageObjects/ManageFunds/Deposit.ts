@@ -16,6 +16,7 @@ export class Deposit{
     readonly wireTransferDeposit: Locator;
     readonly bankTransferHeader: Locator;
     readonly bankTransferOprions: Locator;
+    readonly iframeName: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -33,6 +34,7 @@ export class Deposit{
         this.cryptoDepositIframe = page.locator("//div[@class='paydev-modal_inner']")
         this.bankTransferHeader = page.locator(".bank-transfer__header__title")
         this.bankTransferOprions = page.locator("//div[@class='bank-transfer-options ']")
+        this.iframeName = page.locator("//div[@id='cashier-block']//iframe")
     }
     async performDeposit(){
         await this.depositInputValuePoopup.waitFor({state:"visible"});
@@ -43,10 +45,9 @@ export class Deposit{
         await this.creditCardDeposit.click()
     }
     async checkNameOfIframe(){
-        await this.page.waitForTimeout(3000)
-        let creditCardIframe = await this.page.frame("#_cashier_iframe");
-        let nameOfframe = await creditCardIframe?.locator("//div[@class='pay-with-title-box']");
-        return await nameOfframe?.textContent();
+        await this.page.waitForTimeout(5000)
+        let frameName = await this.iframeName.getAttribute("id")
+        return await frameName
     }
     async choosePerfectMoneyDeposit(){
         await this.perfectMoneyDeposit.click();

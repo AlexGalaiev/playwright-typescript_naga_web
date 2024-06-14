@@ -18,7 +18,7 @@ test("@24917 NAGA Capital full registration user", async({ page, NagaCapital })=
     });
     await test.step('Check trading accounts on main Page', async()=>{
         await mainPage.mainPageIsDownLoaded();
-        await mainPage.getTradingAccountStatus() === 'DEMO'
+        expect(await mainPage.getTradingAccountStatus()).toEqual('DEMO')
         await mainPage.openTradingAssountsMenu();
         expect(await mainPage.getNumberOfTradingAccounts()).toEqual(1)
     })
