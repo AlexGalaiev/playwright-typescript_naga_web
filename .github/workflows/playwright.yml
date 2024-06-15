@@ -37,7 +37,7 @@ jobs:
           cat .env       
     - name: Run Playwright tests
       id: playwright_tests
-      run: npx playwright test --project=${{ github.head_ref || github.ref_name }} --workers=1
+      run: ENV=${{ github.head_ref || github.ref_name }} npx playwright test --project=${{ github.head_ref || github.ref_name }} --workers=1
     - uses: actions/upload-artifact@v3
       if: always()
       with:
