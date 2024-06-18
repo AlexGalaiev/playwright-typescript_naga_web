@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { SighIn } from "../../pageObjects/SighIn/SignInPage"
 import { HelpPage } from "../../pageObjects/Support/HelpPage";
-import {test} from "..//..//test-options"
+import {test} from "../../test-options"
 test.describe('NagaCapital. Support links', async()=>{
 
     test.beforeEach("Login to platform", async({page, NagaCapital})=>{
