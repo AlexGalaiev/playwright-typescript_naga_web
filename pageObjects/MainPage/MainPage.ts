@@ -20,6 +20,7 @@ export class MainPage{
     readonly UpgradeButton: Locator;
     readonly TradeHeaderMenuPoint: Locator;
     readonly myTradesMenuPoint: Locator;
+    readonly faqMenuPoint: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -39,6 +40,7 @@ export class MainPage{
         this.UpgradeButton = page.locator("//button[@type='button']//span[text()='Upgrade Now']")
         this.TradeHeaderMenuPoint = page.locator("//a[@href='/markets']")
         this.myTradesMenuPoint = page.locator("//span[text()='My Trades']")
+        this.faqMenuPoint = page.locator("//span[text()='F.A.Q']")
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
@@ -92,5 +94,10 @@ export class MainPage{
     };
     async chooseMyTradesMenuPoint(){
         await this.myTradesMenuPoint.click();
+    };
+    async openFAQMenuPoint(){
+        await this.faqMenuPoint.scrollIntoViewIfNeeded();
+        await this.page.waitForTimeout(750);
+        await this.faqMenuPoint.click()
     }
 }
