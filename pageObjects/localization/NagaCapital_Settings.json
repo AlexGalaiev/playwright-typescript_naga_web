@@ -1,0 +1,5 @@
+{
+    "ChangePasswordSuccessPopup":{
+        "answer":"Your password has been successfully changed. You'll be redirected to login screen to sign in using new password."
+    }
+}

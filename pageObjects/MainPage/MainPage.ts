@@ -46,6 +46,10 @@ export class MainPage{
         await this.sideBar.waitFor({timeout: 10000});
         await this.verifyHeaders.waitFor({timeout:3000})
     }
+    async checkMainPage(){
+        await this.sideBar.waitFor({timeout: 10000});
+        return await this.verifyHeaders.isVisible()
+    }
     async proceedRegistration(){
         // await this.CompleatRegistration.waitFor({timeout:2000})
         await this.CompleatRegistration.click();
@@ -99,5 +103,6 @@ export class MainPage{
         await this.faqMenuPoint.scrollIntoViewIfNeeded();
         await this.page.waitForTimeout(750);
         await this.faqMenuPoint.click()
-    }
+    };
+
 }

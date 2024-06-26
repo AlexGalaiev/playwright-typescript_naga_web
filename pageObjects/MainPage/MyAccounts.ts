@@ -16,4 +16,8 @@ export class MyAccounts{
     async userLogOut(){
         await this.myAccountsLogOut.click();
     };
+    async openMyAccountsMenuItem(nameOfItem: string){
+        let menuItem = await this.page.locator(`//i[contains(@class, '${nameOfItem}')]`)
+        await menuItem.click()
+    }
 }

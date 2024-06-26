@@ -66,7 +66,7 @@ test.describe("NagaCapital. Deposit", async()=>{
         let deposit = new Deposit(page);
         await test.step("Check crypto deposit", async()=>{
             await deposit.chooseWireTransfer();
-            await deposit.getbankTransferHeaderTittle() === "Fund via Bank Transfer"
+            expect(await deposit.getbankTransferHeaderTittle()).toEqual("Fund via Bank Transfer")
             expect(await deposit.getWireTransferBankDetails())
         })
     })

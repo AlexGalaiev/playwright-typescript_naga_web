@@ -23,6 +23,7 @@ export class SighIn{
         this.incorrectCredentialsMsg = page.locator(".login-form__error");
     }
     async sigInUserToPlatform(UserEmail: string, UserPassword: string){
+        await this.signInName.waitFor({state:"visible"})
         await this.signInName.pressSequentially(UserEmail);
         await this.signInPassword.pressSequentially(UserPassword);
         await this.signBtn.click();
