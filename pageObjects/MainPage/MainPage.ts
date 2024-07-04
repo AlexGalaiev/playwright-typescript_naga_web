@@ -51,7 +51,6 @@ export class MainPage{
         return await this.verifyHeaders.isVisible()
     }
     async proceedRegistration(){
-        // await this.CompleatRegistration.waitFor({timeout:2000})
         await this.CompleatRegistration.click();
     };
     async updateUserLevel(){
@@ -104,5 +103,8 @@ export class MainPage{
         await this.page.waitForTimeout(750);
         await this.faqMenuPoint.click()
     };
-
+    async openHeaderMenuPoint(NameOfMenuPoint: string){
+        let menuPoint = await this.page.locator(".header__menu__nav-item", {hasText:NameOfMenuPoint})
+        await menuPoint.click();
+    }
 }
