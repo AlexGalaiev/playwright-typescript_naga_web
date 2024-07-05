@@ -80,6 +80,7 @@ export class MainPage{
         await this.page.waitForTimeout(1000)
         await this.manageFunds.click();
     };
+
     async getVerifyBannerContent(){
         return await this.verifyBanner.textContent()
     };
