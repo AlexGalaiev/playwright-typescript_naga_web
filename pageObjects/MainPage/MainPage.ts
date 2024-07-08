@@ -74,12 +74,10 @@ export class MainPage{
         await this.faqMenuPoint.scrollIntoViewIfNeeded();
         await this.page.waitForTimeout(750);
         await this.faqMenuPoint.click()
+    }
 
     async getVerifyBannerContent(){
         return await this.verifyBanner.textContent()
-    };
-    async getVerifyBannerDisclaimerText(){
-        return await this.verifyBannerDisclaimer.textContent()
     };
     //Naga Markets
     async clickIUnderstanBtn(){
@@ -91,9 +89,7 @@ export class MainPage{
     async getVerifyBannerDisclaimerText(){
         return await this.verifyBannerDisclaimer.textContent()
     };
-    async getVerifyBannerContent(){
-        return await this.verifyBanner.textContent()
-    };
+
     //new
     async openHeaderMenuPoint(NameOfMenuPoint: string){
         let menuPoint = await this.page.locator(".header__menu__nav-item")
