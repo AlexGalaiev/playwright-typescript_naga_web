@@ -12,5 +12,8 @@ export class VerificationPopup{
         await this.verificationPopup.waitFor({timeout:1500});
         return this.verificationPopup
     }
+    async skipVerificationStep(){
+        await this.page.getByRole('button', {name: 'Skip'}).click()
+    }
     
 }

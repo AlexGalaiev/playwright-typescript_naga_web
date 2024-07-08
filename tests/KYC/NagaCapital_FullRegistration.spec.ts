@@ -12,31 +12,40 @@ import { VerificationPopup } from "../../pageObjects/VerificationCenter/verifica
 test("@24917 NAGA Capital full registration user", async({ page, NagaCapital })=>{
     let sighUp = new SignUp(page);
     let mainPage = new MainPage(page);
+    let phoneVerification = new PhoneVerification(page);
+    let verificationPopup = new VerificationPopup(page);
     await test.step('Short registration of lead user', async ()=>{
         await sighUp.goto(NagaCapital, 'register');
         await sighUp.createCFDUser("Ukraine");
     });
-    await test.step('Check trading accounts on main Page', async()=>{
+    await test.step('Check trading accounts', async()=>{
         await mainPage.mainPageIsDownLoaded();
-        expect(await mainPage.getTradingAccountStatus()).toEqual('DEMO')
+        expect(await mainPage.getActiveTradingAccountType()).toEqual('DEMO')
         await mainPage.openTradingAssountsMenu();
         expect(await mainPage.getNumberOfTradingAccounts()).toEqual(1)
+    })
+    await test.step('Check header step view', async()=>{
+        expect(await mainPage.getStatusOfHeaderStep(1)).toEqual('To do');
+        expect(await mainPage.getStatusTextOfHeaderStep(1)).toEqual('Complete now')
     })
     await test.step('Redirect to main page and begin FR process', async ()=>{
         await mainPage.proceedRegistration();
         await new StartKYCPopup(page).startKYC();
     });
     await test.step('Verification of phone number', async() =>{
-        let phoneVerification = new PhoneVerification(page);
         await phoneVerification.insertTestPhoneNumber();
         await phoneVerification.insertVerificationCode();
-    })
+    });
     await test.step('Fill personal information step', async() =>{
         await new PersonalInformation(page).fillPersonalInformation();
         await new AllSetPopup(page).clickDepositNow();
-    })
+    });
     await test.step("Check number of accounts", async()=>{
         expect(await mainPage.getNumberOfTradingAccounts()).toEqual(2)
+    });
+    await test.step('Check status on second step', async()=>{
+        expect(await mainPage.getStatusOfHeaderStep(2)).toEqual('To do')
+        expect(await mainPage.getStatusTextOfHeaderStep(2)).toEqual('Verify identity')
     })
     await test.step('Update account to next level', async()=>{
         await mainPage.updateUserLevel();
@@ -44,7 +53,9 @@ test("@24917 NAGA Capital full registration user", async({ page, NagaCapital })=
         await new UdpateAccount(page).clickFinishBtn();
     });
     await test.step('Check verification popup', async()=>{
-        let verificationPopup = new VerificationPopup(page);
         expect(await verificationPopup.verificationPoupIsDisplyed()).toBeVisible()
+        await verificationPopup.skipVerificationStep();
+        expect(await mainPage.getStatusOfHeaderStep(3)).toEqual('To do')
+        expect(await mainPage.getStatusTextOfHeaderStep(3)).toEqual('Complete Progress level and verify address')
     })
 })

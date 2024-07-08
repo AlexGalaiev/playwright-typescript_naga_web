@@ -19,10 +19,10 @@ test.describe("Naga Capital. Trading", async()=>{
             await sighIn.sigInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
         })
         await test.step("Check previously opened positions", async()=>{
-            await new MainPage(page).chooseMyTradesMenuPoint();
+            await new MainPage(page).openHeaderMenuPoint('my-trades');
             await new MyTrades(page).closePositionsIfExist()
         })
-        await mainPage.chooseTradeMenuPoint();
+        await mainPage.openHeaderMenuPoint('markets');
     })
 
     test("@23675 Open short position+Stop loss", async({page})=>{
@@ -43,7 +43,7 @@ test.describe("Naga Capital. Trading", async()=>{
             await newPosition.submitPosition()
         })
         await test.step("Check My-trades", async()=>{
-            await new MainPage(page).chooseMyTradesMenuPoint();
+            await new MainPage(page).openHeaderMenuPoint('my-trades');
             expect(await myTrades.checkActiveTradesHasAttribute()).toContain('active')
         })
         await test.step("Check change limit of opened position and close position", async()=>{
@@ -95,7 +95,7 @@ test.describe("Naga Capital. Trading", async()=>{
             await newPosition.submitPosition()
         })
         await test.step("Check My-trades", async()=>{
-            await new MainPage(page).chooseMyTradesMenuPoint();
+            await new MainPage(page).openHeaderMenuPoint('my-trades');
             expect(await myTrades.checkActiveTradesHasAttribute()).toContain('active')
         })
         await test.step("Check change limit of opened position and close position", async()=>{

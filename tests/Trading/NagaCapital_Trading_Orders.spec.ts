@@ -20,11 +20,11 @@ test.describe("Naga Capital. Trading", async()=>{
             await sighIn.sigInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
         })
         await test.step("Check previously opened orders", async()=>{
-            await new MainPage(page).chooseMyTradesMenuPoint();
+            await new MainPage(page).openHeaderMenuPoint('my-trades');
             await myTraders.openActivePendingOrdersTab()
             await myTraders.removeOrdersIfExist()
         })
-        await mainPage.chooseTradeMenuPoint();
+        await mainPage.openHeaderMenuPoint('markets');
     })
 
     test("@25016 Open pending Short order+stop loss", async({page})=>{
@@ -45,7 +45,7 @@ test.describe("Naga Capital. Trading", async()=>{
             await newPosition.submitPosition()
         })
         await test.step("Check My-trades", async()=>{
-            await new MainPage(page).chooseMyTradesMenuPoint();
+            await new MainPage(page).openHeaderMenuPoint('my-trades');
             await myTrades.openActivePendingOrdersTab();
             expect(await myTrades.checkActiveOrdersHasAttribute()).toContain('active')
         })
@@ -93,7 +93,7 @@ test.describe("Naga Capital. Trading", async()=>{
                 await newPosition.submitPosition()
             })
             await test.step("Check My-trades", async()=>{
-                await new MainPage(page).chooseMyTradesMenuPoint();
+                await new MainPage(page).openHeaderMenuPoint('my-trades');
                 await myTrades.openActivePendingOrdersTab();
                 expect(await myTrades.checkActiveOrdersHasAttribute()).toContain('active')
             })

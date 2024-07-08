@@ -45,7 +45,7 @@ test.describe("Naga Capital. Feed", async()=>{
         await test.step('Check user profile and delete post', async()=>{
             await feed.checkUserPage(feedUser);
             expect(await userProfile.getUserNameText()).toEqual(feedUser)
-            await new MainPage(page).openHeaderMenuPoint("Feed")
+            await new MainPage(page).openHeaderMenuPoint("feed")
             await feed.deleteExistedPost(feedUser)
         })
     })

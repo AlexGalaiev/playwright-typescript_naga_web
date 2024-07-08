@@ -13,10 +13,10 @@ test.describe("NagaCapital. Trading", async()=>{
             await sighIn.sigInUserToPlatform("testTrading3", process.env.USER_PASSWORD || '');
         })
         await test.step("Check previously opened positions", async()=>{
-            await new MainPage(page).chooseMyTradesMenuPoint();
+            await new MainPage(page).openHeaderMenuPoint('my-trades');
             await new MyTrades(page).closePositionsIfExist()
         })
-        await mainPage.chooseTradeMenuPoint();
+        await mainPage.openHeaderMenuPoint('markets');
     })
     test.skip("@25018 Open position without funds", async({page})=>{
         let tradingInstrument = "BTCEUR"

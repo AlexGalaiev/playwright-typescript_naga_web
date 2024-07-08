@@ -13,7 +13,7 @@ test.describe("NagaCapital", async()=>{
         let sighIn = new SighIn(page);
         await sighIn.goto(NagaCapital, "login");
         await sighIn.sigInUserToPlatform("testTrading", process.env.USER_PASSWORD || '');
-        await new MainPage(page).chooseTradeMenuPoint();
+        await new MainPage(page).openHeaderMenuPoint('markets');
     })
     test("@23674 Add to watchlist", async({page})=>{
         let tradeInstrument = "EUR/USD"
@@ -43,7 +43,7 @@ test.describe("NagaCapital", async()=>{
         await test.step("Check price alert and clean", async()=>{
             await new SighIn(page).goto(NagaCapital, "price-alerts");
             await priceAlert.cleanPriceAlerts()
-            await new MainPage(page).chooseTradeMenuPoint();
+            await new MainPage(page).openHeaderMenuPoint('markets');
         })
         await test.step("Choose instrument and add price alert", async()=>{
             await watchlist.searchInstrument(tradeInstrument);
