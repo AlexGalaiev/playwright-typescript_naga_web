@@ -63,5 +63,22 @@ test.describe("NagaCapital - User profile", async()=>{
         })
     })
 
-    test.skip("Account switching", async({page, NagaCapital})=>{})
+    test("@25130 Account switching", async({page, NagaCapital})=>{
+        let sighIn = new SighIn(page);
+        let mainPage = new MainPage(page)
+        await test.step("Login to platform", async()=>{
+            await sighIn.goto(NagaCapital,'login');
+            await sighIn.sigInUserToPlatform("userWithAccounts@i.ua", process.env.USER_PASSWORD || '');
+        })
+        await test.step("Check account switching", async()=>{
+            await mainPage.openTradingAssountsMenu();
+            let notActiveAccountId = await mainPage.getNotActiveTradingAccountId()
+            await mainPage.switchUserToNotActiveAccount();
+            expect(await mainPage.getActiveTradingAccountId()).toEqual(notActiveAccountId)
+        })
+        await test.step("Switch back", async()=>{
+            await mainPage.openTradingAssountsMenu();
+            await mainPage.switchUserToNotActiveAccount();
+        })
+    })
   })

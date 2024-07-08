@@ -5,8 +5,6 @@ export class MainPage{
     readonly CompleatRegistration: Locator;
     readonly GuestLogin: Locator;
     readonly GuestRegistration: Locator;
-    readonly currentAccount: Locator;
-    readonly realTradingAccount: Locator;
     readonly tradingAccount: Locator;
     readonly sideBar: Locator;
     readonly verifyHeaders: Locator;
@@ -17,12 +15,14 @@ export class MainPage{
     readonly IUnderstandBtn: Locator;
     readonly UpgradeButton: Locator;
     readonly faqMenuPoint: Locator;
+    readonly notActiveTradingAccount: Locator
 
     constructor(page: Page){
         this.page = page;
         this.GuestLogin = page.locator("//button[contains(@class, 'guest-mode-header-actions__buttons__login')]");
         this.GuestRegistration = page.locator("//button[contains(@class, 'guest-mode-header-actions__buttons__register')]");
         this.tradingAccount = page.locator("//div[contains(@class, 'sidebar-trading-account__wrapper')]")
+        this.notActiveTradingAccount = page.locator("//div[@class='sidebar-trading-account'][2]")
         this.sideBar = page.locator('.sidebar__wrapper');
         this.verifyHeaders = page.locator("//div[@class = 'header-verify-account-levels']");
         this.CompleatRegistration = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
@@ -59,6 +59,7 @@ export class MainPage{
     };
     async openTradingAssountsMenu(){
         await this.tradingAccount.click();
+        await this.page.waitForTimeout(500);
     };
     async getNumberOfTradingAccounts(){
         await this.page.waitForTimeout(4000)
@@ -116,5 +117,13 @@ export class MainPage{
         let step = await this.page.locator(`[data-testid='complete-level-${numberOfStep}']`)
         let achievments = await step.locator("//span[contains(@class, 'checkbox__description_wrapper__text')]").textContent();
         return achievments
+    };
+    async getNotActiveTradingAccountId(){
+        let id = await this.notActiveTradingAccount.locator("//span[contains(@class, 'info-item--login')]");
+        return await id.textContent();
+    }
+    async switchUserToNotActiveAccount(){
+        await this.notActiveTradingAccount.click()
+        await this.page.waitForTimeout(4000)
     }
 }
