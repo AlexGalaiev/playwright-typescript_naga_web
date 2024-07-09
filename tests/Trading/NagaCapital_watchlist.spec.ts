@@ -12,7 +12,7 @@ test.describe("NagaCapital", async()=>{
     test.beforeEach("Login by trading account", async({page, NagaCapital})=>{
         let sighIn = new SighIn(page);
         await sighIn.goto(NagaCapital, "login");
-        await sighIn.sigInUserToPlatform("testTrading", process.env.USER_PASSWORD || '');
+        await sighIn.sigInUserToPlatform("testTrading3", process.env.USER_PASSWORD || '');
         await new MainPage(page).openHeaderMenuPoint('markets');
     })
     test("@23674 Add to watchlist", async({page})=>{

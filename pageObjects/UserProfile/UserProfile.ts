@@ -12,6 +12,7 @@ export class UserProfile{
     readonly aboutMeTextInput: Locator;
     readonly aboutMeSaveBtn: Locator;
     readonly aboutMeEditedDescription: Locator;
+    readonly createPostForm: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -24,6 +25,7 @@ export class UserProfile{
         this.aboutMeTextInput = page.locator(".user-about-me__input")
         this.aboutMeSaveBtn = page.locator("//button[contains(text(), 'Save')]")
         this.aboutMeEditedDescription = page.locator("//div[@class='user-about-me__description']");
+        this.createPostForm = page.locator(".feed-status-post__actions-input")
     }
 
     async changeName(NewName: string){
@@ -50,6 +52,24 @@ export class UserProfile{
     }
     async getEditedAboutMe(){
         return await this.aboutMeEditedDescription.textContent();
+    }
+    async addTextToPost(textOfPost: string){
+        await this.createPostForm.click()
+        await this.page.waitForTimeout(250)
+        await this.page.locator('#feed_comment_input_textarea').pressSequentially(textOfPost)
+        await this.page.waitForTimeout(250);
+        await this.page.locator('#post_status_button').click()
+    };
+    async getPostTextMessage(){
+        let post = await this.page.locator('.feed-item');
+        let postText = await post.locator('.user-message-header__description').textContent();
+        return postText
+    };
+    async deletePost(){
+        await this.page.locator('.user-message-header__options').click();
+        await this.page.locator('[data-cy="delete-post"]').click()
+        //await this.page.getByRole('presentation', {name: 'Delete this post'}).click()
+        await this.page.getByRole('button', {name:"Yes, Delete"}).click()
     }
 
 

@@ -19,6 +19,7 @@ test.describe("Naga Capital. Withdrawal.", async()=>{
             await new Withdrawal(page).chooseWithdrawalMenu();
         });
     })
+    
     test("@24097 Withdrawal via credtit card", async({page})=>{
         let withdrawal = new Withdrawal(page);
         await test.step('Make withdrawal via credit card', async()=>{

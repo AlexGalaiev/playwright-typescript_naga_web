@@ -37,6 +37,13 @@ export default defineConfig<TestOptions>({
         ...devices['Desktop Chrome'],
         NagaMarkets:'https://sxdevmarkets.com',
         NagaCapital:'https://sxdevcap.com'}
-  },
+      },
+      {
+        name: 'production',
+      use: { 
+        ...devices['Desktop Chrome'],
+        NagaMarkets:'https://nagamarkets.com',
+        NagaCapital:'https://nagacap.com'}
+      }
   ]
 });

@@ -107,5 +107,15 @@ export class Feed {
     await this.page.getByRole('button', {name:'Share'}).click();
     await this.page.getByRole('button', {name: 'Ok'}).click();
   }
+  async clickOnPostZone(){
+    await this.createPostTextArea.click()
+  }
+  async getMessageForNotverifiedUser(){
+    return await this.page.locator("//div[@class='prompt__content__message']").textContent();
+  };
+  async checkRedirectToVerification(){
+    let verifyBtn = await this.page.getByRole('button', {name:'Verify Account'})
+    await verifyBtn.click();
+  }
 
 }

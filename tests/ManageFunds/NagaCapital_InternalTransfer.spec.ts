@@ -10,7 +10,7 @@ test("@23961 Internal transfer funds", async({page, NagaCapital})=>{
     let internalTransfer = new InternalTransfer(page);
     await test.step("Login to platform", async()=>{
         await sighIn.goto(NagaCapital,'login');
-        await sighIn.sigInUserToPlatform("testTrading", process.env.USER_PASSWORD || '');
+        await sighIn.sigInUserToPlatform("testTrading3", process.env.USER_PASSWORD || '');
     });
     await test.step("Make internal transfer", async()=>{
         await mainPage.openManageFunds();

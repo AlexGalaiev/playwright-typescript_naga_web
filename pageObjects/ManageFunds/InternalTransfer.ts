@@ -40,7 +40,7 @@ export class InternalTransfer{
         await this.submitBtn.click()
     }
     async checkSuccessPopupText(){
-        await this.successPopup.waitFor({timeout:1000})
+        await this.successPopup.waitFor({timeout:3000})
         expect(this.successPopupHeader.textContent()).toEqual("Internal transfer")
         return await this.successPopupText.textContent()
     }

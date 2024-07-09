@@ -12,7 +12,7 @@ test.describe("NagaCapital. Deposit", async()=>{
         let mainPage = new MainPage(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
             await sighIn.goto(NagaCapital,'login');
-            await sighIn.sigInUserToPlatform("n.mucibabic+testcap2@naga.com", process.env.USER_PASSWORD || '');
+            await sighIn.sigInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
             await mainPage.openManageFunds();
         });
     })

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "debug_production": "npx playwright test --grep \"@dev\" --project=production --headed"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
