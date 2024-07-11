@@ -108,12 +108,13 @@ export class MainPage{
         return status;
     };
     async getStatusOfHeaderStep(numberOfStep: number){
-        await this.page.waitForTimeout(2250);
+        await this.page.waitForTimeout(3000);
         let step = await this.page.locator(`[data-testid='complete-level-${numberOfStep}']`)
         let achievments = await step.locator("//span[contains(@class, 'checkbox__description_wrapper__round')]").textContent();
         return achievments
     };
     async getStatusTextOfHeaderStep(numberOfStep: number){
+        await this.page.waitForTimeout(3000)
         let step = await this.page.locator(`[data-testid='complete-level-${numberOfStep}']`)
         let achievments = await step.locator("//span[contains(@class, 'checkbox__description_wrapper__text')]").textContent();
         return achievments

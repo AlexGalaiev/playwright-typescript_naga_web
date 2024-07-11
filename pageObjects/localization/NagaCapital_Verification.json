@@ -1,0 +1,8 @@
+{
+    "MyDocuments_RequestedDocuments_NoData":{
+        "answer":"Please upload your identification and/or address verification documents to complete the verification of your account."
+    },
+    "MyDocuments_DocumentUploadHistory_NoData":{
+        "answer":"There is no document upload history information at this moment."
+    }
+}

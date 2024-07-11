@@ -17,7 +17,7 @@ export class MyAccounts{
         await this.myAccountsLogOut.click();
     };
     async openMyAccountsMenuItem(nameOfItem: string){
-        let menuItem = await this.page.locator(`//li[contains(@class, '${nameOfItem}')]`)
-        await menuItem.click()
+        let menuItem = await this.page.locator("//ul[contains(@class, 'dropdown-menu')]")
+        await menuItem.locator(`//span[text()='${nameOfItem}']`).click()
     }
 }
