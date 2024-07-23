@@ -2,7 +2,7 @@ import { expect } from "playwright/test";
 import { Feed } from "../../pageObjects/Feed/Feed";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
-import {test} from "..//..//test-options"
+import {test} from "../../test-options"
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";

@@ -10,7 +10,7 @@ import { KYC_Start } from "../../pageObjects/FullRegistration/NAGAMarkets-KYCSta
 import { FullRegistration } from "../../pageObjects/FullRegistration/NagaMarkets_FullRegistration";
 import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep";
 
-test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
+test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry})=>{
     let KYC_Localization = "/pageObjects/localization/NagaMarkets_KYC_localization.json"
         let localiztion = new getLocalization(KYC_Localization)
         let sighUp = new SignUp(page);
@@ -20,7 +20,7 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets})=>{
         let kycStart = new KYC_Start(page);
         await test.step('Short registration of lead user', async ()=>{
             await sighUp.goto(NagaMarkets, 'register');
-            await sighUp.create_NM_CFDUser("France");
+            await sighUp.create_NM_CFDUser(NMCountry);
         });
         await test.step("Fill personal information, phone verification", async()=>{
             await personalInfo.fillPersonalInformation()

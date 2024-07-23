@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import {test} from '..//..//test-options'
 
 export class SighIn{
     readonly page: Page;
@@ -50,5 +51,14 @@ export class SighIn{
     async goto(MainPage: string, pageTest: string){
         await this.page.goto(`${MainPage}/${pageTest}`);
     };
-
+    async chooseBrand(tag: string){
+        let project = await test.info().project;
+        if(tag === '@NS'){
+            return await project['use']['NagaCapital']
+        } else if (tag === '@NM'){
+            return await project['use']['NagaMarkets']
+        } else if (tag === '@NA'){
+            return await project['use']['NagaAxon']
+        } else {}
+    }
 }

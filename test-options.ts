@@ -7,12 +7,16 @@ export type TestOptions = {
     NagaCapital: string;
     baseUrl: string;
     browserContext: BrowserContext;
-    testInfo: TestInfo
+    testInfo: TestInfo;
+    NSCountry: string;
+    NMCountry: string;
 }
 
 export const test = base.extend<TestOptions>({
     NagaMarkets:['', {option: true}],
     NagaCapital:['', {option: true}],
+    NSCountry:['', {option: true}],
+    NMCountry:['', {option: true}],
     baseUrl:['', {option: true}],
     browserContext: async({}, use)=>{
         let browser = await baseChromium.launch();

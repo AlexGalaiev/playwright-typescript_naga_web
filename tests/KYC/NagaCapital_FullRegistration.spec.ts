@@ -9,14 +9,14 @@ import { AllSetPopup } from "../../pageObjects/common/allSetPopup(KYC)/allSetPop
 import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-UpdateAccount";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 
-test("@24917 NAGA Capital full registration user", async({ page, NagaCapital })=>{
+test("@24917 NAGA Capital full registration user", async({ page, NagaCapital, NSCountry })=>{
     let sighUp = new SignUp(page);
     let mainPage = new MainPage(page);
     let phoneVerification = new PhoneVerification(page);
     let verificationPopup = new VerificationPopup(page);
     await test.step('Short registration of lead user', async ()=>{
         await sighUp.goto(NagaCapital, 'register');
-        await sighUp.createCFDUser("Ukraine");
+        await sighUp.createCFDUser(NSCountry);
     });
     await test.step('Check trading accounts', async()=>{
         await mainPage.mainPageIsDownLoaded();

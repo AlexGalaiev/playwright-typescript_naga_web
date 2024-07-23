@@ -14,14 +14,14 @@ import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
 test.describe("NagaCapital - User profile", async()=>{
     
-  test("@23922 Create 2nd live account", async({page, NagaCapital})=>{
+  test("@23922 Create 2nd live account", async({page, NagaCapital, NSCountry})=>{
         let sighUp = new SignUp(page);
         let mainPage = new MainPage(page);
         let addAccount = new AddAcountForm(page);
         let headerMenu = new HeaderMenuUserProfile(page);
         await test.step('Create account with filled personal information', async ()=>{
             await sighUp.goto(NagaCapital, 'register');
-            await sighUp.createCFDUser("Ukraine");
+            await sighUp.createCFDUser(NSCountry);
             await mainPage.mainPageIsDownLoaded();
             await mainPage.proceedRegistration();
             await new StartKYCPopup(page).startKYC();

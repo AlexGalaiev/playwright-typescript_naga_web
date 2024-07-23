@@ -4,14 +4,19 @@ export class PageAfterLogout{
     readonly page: Page;
     readonly AppPage: Locator;
     readonly SignInBtn: Locator;
+    readonly logOutFormAppsTittle: Locator
 
     constructor(page: Page){
         this.page = page;
         this.AppPage = page.locator(".logout-form__wrapper");
-        this.SignInBtn = page.locator("//button[text()='Sign In']")
+        this.SignInBtn = page.locator("//button[text()='Sign In']");
+        this.logOutFormAppsTittle =page.locator('.logout-form__title')
     }
     async pageAfterLogOutSignIn(){
         await this.SignInBtn.click();
+    }
+    async getLogOutPageTittle(){
+        return await this.logOutFormAppsTittle.textContent()
     }
 
 }
