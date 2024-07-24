@@ -18,5 +18,9 @@ export class PageAfterLogout{
     async getLogOutPageTittle(){
         return await this.logOutFormAppsTittle.textContent()
     }
+    async redirectToSighIn(){
+        await this.page.getByRole('button', {name: 'Sign In'}).click();
+        await this.page.waitForTimeout(300)
+    }
 
 }

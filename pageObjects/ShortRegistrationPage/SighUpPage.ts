@@ -1,7 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 import { RandomUser } from "../common/testUserCredentials/randomUser";
 
-export class SignUp{
+export class SighUp{
     page: Page;
     readonly email: Locator;
     readonly password: Locator;
@@ -18,7 +18,7 @@ export class SignUp{
         this.password = page.locator("[name='password']");
         this.country = page.locator("[data-testid='naga-dropdown-input']");
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
-        this.riskWarning = page.locator(".registration-form__risk-warning");
+        this.riskWarning = page.locator("//div[contains(@class, 'registration-form__risk-warning')]");
         this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
         this.NM_checkboxPrivacyPolicy = page.locator("//div[@class='custom-checkbox'][1]");
         this.NM_checkbox_yearsConfirmeation = page.locator("//div[@class='custom-checkbox'][2]");

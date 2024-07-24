@@ -61,4 +61,14 @@ export class SighIn{
             return await project['use']['NagaAxon']
         } else {}
     }
+async chooseBrandCountry(tag: string){
+    let project = await test.info().project;
+        if(tag === '@NS'){
+            return await project['use']['NSCountry']
+        } else if (tag === '@NM'){
+            return await project['use']['NMCountry']
+        } else if (tag === '@NA'){
+            return await project['use']['NACountry']
+        } else {}
+}
 }

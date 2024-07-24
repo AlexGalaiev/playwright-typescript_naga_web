@@ -6,6 +6,7 @@ import {test} from "..//..//test-options"
 
 
 test.describe("NagaCapital. Deposit", async()=>{
+    //testTrading2Markets 
     
     test.beforeEach("Login by trade user", async({page, NagaCapital })=>{
         let sighIn = new SighIn(page);

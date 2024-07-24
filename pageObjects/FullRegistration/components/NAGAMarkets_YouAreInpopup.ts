@@ -20,7 +20,8 @@ export class YouAreInNagaMarkets{
         return await this.openRealAccount.click();
     }
     async clickExplorePlatform(){
-        return await this.explorePlatform.click();
+        await this.explorePlatform.click();
+        await this.page.waitForTimeout(500)
     }
     async openNagaPlatform(){
         await this.explorePlatform.click()

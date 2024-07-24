@@ -10,6 +10,7 @@ import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
 test.describe("Naga Capital. Feed", async()=>{
     const feedUser = 'testFeedUser'
+    const feedUserMarkets = 'testFeedUserMarkets'
         
     test.beforeEach("Login to platform", async({page, NagaCapital})=>{
         let sighIn = new SighIn(page);

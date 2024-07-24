@@ -16,5 +16,11 @@
     },
     "AccountBlockDescriptionLastTry":{
         "answer":"Incorrect password. You have exceeded the number of login attempts, your account is blocked for 2 hours."
+    },
+    "ForgotPasswordDescription":{
+        "answer":"Enter the email address associated with your account, and we will email you a link to reset your password"
+    },
+    "ForgotPasswordEmailSendDisclaimerText":{
+        "answer":"We’ve sent your password reset instructions to:"
     }
 }
