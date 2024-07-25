@@ -88,7 +88,7 @@ test.describe('Naga Markets. Sigh in', async()=>{
             expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
         })});
 
-    test("@23915 Account locking", async({page})=>{
+    test("@23896 Account locking", async({page})=>{
         let sighIn = new SighIn(page);
         await test.step("Check account blocking functionality", async()=>{
             await sighIn.sigInUserToPlatform(testUser, "111Test123")
