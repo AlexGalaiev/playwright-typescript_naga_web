@@ -72,7 +72,7 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
 }
 
 const testFeedCommentParams: testFeedtypes[] = [
-    {testRailId: '@25128', brand: '@NS', user: 'testFeedUser'},
+    {testRailId: '@25124', brand: '@NS', user: 'testFeedUser'},
     {testRailId: '@25145', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
@@ -130,7 +130,7 @@ for(const{testRailId, brand, user}of testShareCommentParams){
 }
 
 const testParamsUserCabinet: testFeedtypes[] = [
-    {testRailId: '@23132', brand: '@NS', user: 'testFeedUser'},
+    {testRailId: '@25132', brand: '@NS', user: 'testFeedUser'},
     {testRailId: '@25147', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){

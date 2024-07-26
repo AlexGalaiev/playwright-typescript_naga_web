@@ -3,13 +3,13 @@ import { getLocalization } from "../../pageObjects/localization/getText"
 import { MainPage } from "../../pageObjects/MainPage/MainPage"
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 import { SettingsPage } from "../../pageObjects/Settings/SettingsPage"
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
+import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "..//..//test-options"
 import { SighIn } from "../../pageObjects/SighIn/SignInPage"
 
 test.describe("NagaCapital. Settings", async()=>{
     test("@23920 Change password via settings", async({page, NagaCapital})=>{
-        let sighUp = new SignUp(page);
+        let sighUp = new SighUp(page);
         let sighIn = new SighIn(page)
         let mainPage = new MainPage(page);
         let myAccounts = new MyAccounts(page)
