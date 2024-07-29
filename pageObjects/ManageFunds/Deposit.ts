@@ -19,7 +19,7 @@ export class Deposit{
         this.submitDeposit = page.locator("//button[@type='submit']")
         this.creditCardCashier = page.locator("#_cashier_iframe")
         this.praxisHeaderTittle = page.locator(".praxis-funding__header__title")
-        this.praxisHeaderTittleNM = page.locator('.credit-card__header__title')
+        this.praxisHeaderTittleNM = page.locator("//span[contains(@class, 'header__title')]")
         this.cryptoDepositIframe = page.locator("//div[@class='paydev-modal_inner']")
         this.iframeName = page.locator("//div[@id='cashier-block']//iframe")
         this.iframeNameNM = page.locator("//div[@class='Loader__content']//iframe")

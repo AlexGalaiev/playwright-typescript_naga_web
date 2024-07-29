@@ -17,6 +17,7 @@ export class Withdrawal{
     readonly iframeName: Locator;
     readonly ewalletWithdrawalAmount: Locator;
     readonly titleOnCashier: Locator;
+    readonly titleOnNagaMarketsPopup: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -35,6 +36,7 @@ export class Withdrawal{
         this.iframeName = page.locator("//div[@class='praxis-withdrawal']//iframe")
         this.ewalletWithdrawalAmount = page.locator("//div[@class='ewallet-withdrawal-form__info__amount']//span[contains(@class, 'amount')]")
         this.titleOnCashier = page.locator("//p[contains(@class, 'title')]")
+        this.titleOnNagaMarketsPopup = page.locator("//div[@class='modal-body']//p[1]")
     };
 
     async clickMenuPoint(methodName: string){
@@ -44,6 +46,7 @@ export class Withdrawal{
     async clickPaymentMethod(paymentMethod: string){
         await this.page.waitForTimeout(500)
         let method = await this.page.locator(`//div[contains(@class,'ewallet-selection__list__item')]//img[contains(@src, '${paymentMethod}')]`)
+        await this.page.waitForTimeout(1500)
         return await method.click()
     }
     async chooseWithdrawalMenu(){
@@ -100,4 +103,7 @@ export class Withdrawal{
     async checkCryptoSuccessPopupText(){
         return await this.cryptoSuccessPopupText.textContent();
     };
+    async getNagaMarketsWithdrawalPopupTitle(){
+        return await this.titleOnNagaMarketsPopup.textContent();
+    }
 }
