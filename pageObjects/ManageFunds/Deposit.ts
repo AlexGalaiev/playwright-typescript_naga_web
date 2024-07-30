@@ -11,6 +11,7 @@ export class Deposit{
     readonly iframeName: Locator;
     readonly iframeNameNM: Locator;
     readonly praxisHeaderTittleNM: Locator;
+    readonly MNBankTransferForm: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -23,11 +24,14 @@ export class Deposit{
         this.cryptoDepositIframe = page.locator("//div[@class='paydev-modal_inner']")
         this.iframeName = page.locator("//div[@id='cashier-block']//iframe")
         this.iframeNameNM = page.locator("//div[@class='Loader__content']//iframe")
+        this.MNBankTransferForm = page.locator('.truelayer-provider-form')
     }
-    async performDeposit(){
+    async performDeposit(value: string){
+        await this.page.waitForTimeout(1000)
         await this.depositInputValuePoopup.waitFor({state:"visible"});
-        await this.inputFieldDepositPopup.pressSequentially("100");
+        await this.inputFieldDepositPopup.pressSequentially(value);
         await this.submitDeposit.click();
+        await this.page.waitForTimeout(5000)
     }
     async checkNameOfIframe(){
         await this.page.waitForTimeout(5000)
@@ -50,8 +54,22 @@ export class Deposit{
     }
 //new 
     async chooseDepositMethod(methodName: string){
+        await this.page.waitForTimeout(1500)
         let depositMethod = await this.page.locator('.funding-method-table-body__info')
         .filter({has: await this.page.locator(`//img[contains(@src, '${methodName}')]`)})
+        await depositMethod.scrollIntoViewIfNeeded()
         await depositMethod.click();
+        await this.page.waitForTimeout(1500)
+    }
+    async getCurrentUrl(){
+        return await this.page.url();
+    }
+    async getBankTransferForm(){
+        return await this.MNBankTransferForm
+    }
+    async getWireTransferBankInfo(bankName: string){
+        let bankInfo = await this.page.locator('.bank-transfer-option')
+        .filter({has: await this.page.locator(`//span[text()='${bankName}']`)})
+        return await bankInfo
     }
 }

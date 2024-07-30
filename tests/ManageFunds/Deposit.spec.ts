@@ -31,7 +31,7 @@ for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParamete
         });
         await test.step("Check credit card deposit", async()=>{
             await deposit.chooseDepositMethod(depositName);
-            await deposit.performDeposit();
+            await deposit.performDeposit('100');
             expect(await deposit.getPraxisHeaderTittle()).toContain(pageTittle)
             expect(await deposit.checkNameOfIframe()).toContain("_cashier_iframe")
         })
@@ -48,7 +48,7 @@ test("@24068 Deposit via Crypto", async({page, NagaCapital })=>{
     });
     await test.step("Check crypto deposit", async()=>{
         await deposit.chooseDepositMethod('crypto');
-        await deposit.performDeposit();
+        await deposit.performDeposit('100');
         expect(await deposit.checkCryptoIframeDeposit())
     })})})
     
@@ -60,6 +60,20 @@ test.describe('Naga Markets. Deposit', async()=>{
         await sighIn.goto(NagaMarkets,'login');
         await sighIn.sigInUserToPlatform('depositTestMarkets', process.env.USER_PASSWORD || '');
         await mainPage.openManageFunds();
+    })
+
+    test('@23995 Pay pal deposit', async({page})=>{
+        let deposit = new Deposit(page);
+        await deposit.chooseDepositMethod('paypal');
+        await deposit.performDeposit('1000');
+        expect(await deposit.getCurrentUrl()).toContain('paypal.com')
+    })
+
+    test('@25150 Bank Transfer deposit', async({page})=>{
+        let deposit = new Deposit(page);
+        await deposit.chooseDepositMethod('sepa-credit')
+        await deposit.performDeposit('1000');
+        expect(await deposit.getBankTransferForm()).toBeVisible();
     })
 
 })
@@ -81,7 +95,6 @@ for(const{testRailId, brand, user, depositName, pageTittle} of NMdepositTestPara
         });
         await test.step("Check credit card deposit", async()=>{
             await deposit.chooseDepositMethod(depositName);
-            // await deposit.performDeposit();
             expect(await deposit.getPraxisHeaderTittleNM()).toContain(pageTittle)
             expect(await deposit.checkNameOfiframeNM()).toContain("iframe_container")
         })

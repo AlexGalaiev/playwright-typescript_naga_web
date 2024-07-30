@@ -41,7 +41,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
         })});
 
-    test.skip("@23896 Account locking functionality", async({page})=>{
+    test("@23896 Account locking functionality", async({page})=>{
         let sighIn = new SighIn(page);
         await test.step("Check login to platform with incorrect password", async()=>{
             await sighIn.sigInUserToPlatform(testUser, "111Test123")
