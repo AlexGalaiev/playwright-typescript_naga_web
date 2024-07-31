@@ -49,8 +49,8 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
 }
 
 const priceAlertParameters: testTypes[] = [
-    {testRailId: '@23952', brand: '@NS', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'}
-   // {testRailId: '@23678', brand: '@NM', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
+    {testRailId: '@23952', brand: '@NS', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
+    {testRailId: '@23678', brand: '@NM', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{testRailId, brand, user, localization}of priceAlertParameters){
     test(`${testRailId} Price alerts ${brand} ${user} ${localization}`, async({page})=>{
