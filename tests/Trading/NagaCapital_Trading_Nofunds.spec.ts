@@ -23,7 +23,7 @@ test.describe("NagaCapital. Trading", async()=>{
         let instruments = new AllInstruments(page)
         await test.step("Choose instrument", async()=>{
             await instruments.searchInstrument(tradingInstrument);
-            await instruments.openShortPosition();
+            await instruments.openPosition('Short');
         })
 
     })

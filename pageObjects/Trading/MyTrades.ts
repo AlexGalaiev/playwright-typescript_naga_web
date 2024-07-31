@@ -4,8 +4,8 @@ export class MyTrades{
     page: Page;
     readonly activeTradesTab: Locator;
     readonly activePendingOrdersTab: Locator;
-    readonly depositValue: Locator;
-    readonly units: Locator;
+    readonly openedPosition: Locator;
+    //old
     readonly tp: Locator;
     readonly sl: Locator;
     readonly dropdownActions: Locator;
@@ -21,7 +21,7 @@ export class MyTrades{
     readonly gotItBtn: Locator;
     readonly removeNOrders: Locator;
     readonly accptanceOfRemovingOrders: Locator;
-    readonly orderUnits: Locator;
+    //readonly orderUnits: Locator;
     readonly orderTakeProfit: Locator;
     readonly orderStopLoss: Locator;
     
@@ -30,12 +30,12 @@ export class MyTrades{
         this.activeTradesTab = page.locator("#my-active-trades")
         this.activePendingOrdersTab = page.locator("#my-pending-trades")
         //position values
-        this.depositValue = page.locator("//div[contains(@class, 'my-trades-table__deposit')]//span[contains(@class, 'amount')]")
-        this.units = page.locator("//div[contains(@class, 'my-trades-table__row')]//div[contains(@class, 'units-active')]")
+        this.openedPosition = page.locator("//div[contains(@class, 'my-trades-table__row')]")
+
         this.tp = page.locator("//div[contains(@class, 'limits-active')]")
         this.sl = page.locator("//div[contains(@class, 'entry-price-active')]//span[@class='not-set']")
         //orders values
-        this.orderUnits = page.locator("//div[contains(@class, 'my-trades-table__row')]//div[contains(@class, 'units-pending')]")
+        //this.orderUnits = page.locator("//div[contains(@class, 'my-trades-table__row')]//div[contains(@class, 'units-pending')]")
         this.orderTakeProfit = page.locator("//div[contains(@class, 'my-trades-table__row')]//div[contains(@class, 'limits-pending')]")
         this.orderStopLoss = page.locator("//div[contains(@class, 'my-trades-table__limits entry-price-pending')]")
         //dropdown actions
@@ -54,21 +54,58 @@ export class MyTrades{
         this.emptyPage = page.locator(".no-data__title");
         this.gotItBtn = page.locator("//button[text()='Got it']")
     }
-    async checkActiveTradesHasAttribute(){
-        let attributes = await this.activeTradesTab.getAttribute("class")
-        return attributes
-    }
-    async checkActiveOrdersHasAttribute(){
-        return await this.activePendingOrdersTab.getAttribute("class")
+    // new
+    async closePositionsIfExist(){
+        await this.page.waitForTimeout(5000)
+        let existPosition = await this.itemList.isVisible()
+        if(existPosition === true){
+            await this.closeMultiplePositions.click();
+            await this.selectAll.click();
+            await this.closeNTrades.click();
+            await this.accptanceOfClosingPositions.waitFor({state:"visible"});
+            await this.accptanceOfClosingPositions.click()
+            await this.gotItBtn.click()
+        }else{
+            await this.getEmptyPageText() === "No Active Trades"
+        }
+    };
+    async checkStatusOfElement(element: Locator){
+        return await element.getAttribute('class')
     }
     async getDepositValue(){
-        await this.depositValue.waitFor({state:"visible"})
-        return await this.depositValue.textContent();
+        await this.openedPosition.waitFor({state:"visible"})
+        return await this.openedPosition.locator("//div[contains(@class, 'deposit-active')]//span//span").textContent();
     };
     async getUnits(){
-        await this.units.waitFor({state:"visible"})
-        return await this.units.textContent()
+        await this.openedPosition.waitFor({state:"visible"})
+        return await this.openedPosition.locator("//div[contains(@class, 'units-active')]").textContent();
     }
+    async closePosition(){
+        await this.page.locator("//i[contains(@class, 'trade-actions__close')]").click()
+        await this.page.waitForSelector('#confirm_close_trade');
+        await this.page.locator('#confirm_close_trade').click()
+    }
+    async openActivePendingOrdersTab(){
+        await this.activePendingOrdersTab.click()
+    };
+    async getRate(){
+        await this.openedPosition.waitFor({state:"visible"})
+        return await this.openedPosition.locator("//div[contains(@class, 'my-trades-table__entry-price')]//span//span").textContent()
+    }
+    async deleteOrder(){
+        await this.page.locator("//i[contains(@class, 'trade-actions__close')]").click()
+        await this.page.waitForSelector('#confirm_close_trade')
+        await this.page.locator('#confirm_close_trade').click();
+    }
+    async getOrderUnits(){
+        await this.openedPosition.waitFor({state:"visible"})
+        return await this.openedPosition.locator("//div[contains(@class, 'units-pending')]").textContent()
+    }
+    async getOrdersRate(){
+        await this.openedPosition.waitFor({state:"visible"})
+        return await this.openedPosition.locator("//div[contains(@class, 'my-trades-table__entry-price')]//span//span").textContent()
+    }
+    //old
     async getTakeProfit(){
         return await this.tp.textContent()
     };
@@ -86,23 +123,7 @@ export class MyTrades{
     async getEmptyPageText(){
         return await this.emptyPage.textContent()
     }
-    async closePositionsIfExist(){
-        await this.page.waitForTimeout(5000)
-        let existPosition = await this.itemList.isVisible()
-        if(existPosition === true){
-            await this.closeMultiplePositions.click();
-            await this.selectAll.click();
-            await this.closeNTrades.click();
-            await this.accptanceOfClosingPositions.waitFor({state:"visible"});
-            await this.accptanceOfClosingPositions.click()
-            await this.gotItBtn.click()
-        }else{
-            await this.getEmptyPageText() === "No Active Trades"
-        }
-    };
-    async openActivePendingOrdersTab(){
-        await this.activePendingOrdersTab.click()
-    };
+    
     async removeOrdersIfExist(){
         await this.page.waitForTimeout(5000)
         let existPosition = await this.itemList.isVisible()
@@ -117,9 +138,7 @@ export class MyTrades{
             await this.getEmptyPageText() === "No Active Trades"
         }
     };
-    async getOrderUnits(){
-        return await this.orderUnits.textContent()
-    }
+    
     async getOrderTakeProfit(){
         return await this.orderTakeProfit.textContent();
     };

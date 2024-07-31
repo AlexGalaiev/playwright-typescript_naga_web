@@ -16,8 +16,6 @@ export class AllInstruments{
     readonly emptyWatchlistHeader: Locator;
     readonly emptyWatchlistText: Locator;
     readonly addPriceAlert: Locator;
-    readonly sellBtn: Locator;
-    readonly buyBtn: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -33,8 +31,6 @@ export class AllInstruments{
         this.emptyWatchlistHeader = page.locator("//div[@class='no-data__title']")
         this.emptyWatchlistText = page.locator("//div[@class='no-data__description']")
         this.addPriceAlert = page.locator("//div[@class='symbol-row']//i[contains(@class,'icn-price-alert')]")
-        this.sellBtn = page.locator("//div[@data-type='SELL']")
-        this.buyBtn = page.locator("//div[@data-type='BUY']")
     }
 
     async searchInstrument(NameOfInstrument: string){
@@ -66,17 +62,18 @@ export class AllInstruments{
         await this.addPriceAlert.click();
         await this.page.waitForTimeout(500)
     };
-    async openShortPosition(){
-        await this.sellBtn.click()
-    };
-    async openLongPosition(){
-        await this.buyBtn.click()
-    };
-    async cleanWatchlist(){
-        const removeIcons = await this.page.$$("//i[contains(@class, 'remove-favorites')]");
-        for(let icon of removeIcons){
-            if(await icon.isVisible()){
-                await icon.click()
-            }else{}}}
 
+//new 
+
+    async openPosition(investmentType: string){
+        let button = await this.page.locator("//button[contains(@class, 'btn-sm')]", {hasText: investmentType})
+        await button.click()
+    }
+    async cleanWatchlist(){
+        const removeIcon = await this.page.locator("//i[contains(@class, 'remove-favorites')]").first();
+        while(await removeIcon.isVisible()){
+            await removeIcon.click()
+            await this.page.waitForTimeout(1500)
+        }
+    }
 }

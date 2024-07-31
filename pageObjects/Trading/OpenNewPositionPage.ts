@@ -44,5 +44,26 @@ export class NewPosition{
     async submitPosition(){
         await this.submitBtn.scrollIntoViewIfNeeded()
         await this.submitBtn.click()
+        await this.page.waitForTimeout(3000)
+    }
+
+    //new
+    //tabs of investments directions (Short or Long)
+
+    async getStatusOfBtn(Btn: Locator){
+        return await Btn.getAttribute('class')
+    }
+    async chooseBtn(Btn: Locator){
+        await Btn.click()
+    }
+    async investmentDirectionBtn(investmentType: string){
+        let buttonsTab = await this.page.locator('.buy-sell-toggle')
+        let button = await buttonsTab.locator("//label[contains(@class, 'btn-default')]", {hasText: investmentType})
+        return await button
+    }
+    async ratePositionBtn(positionDiewctionWithRate: string){
+        let rateBtns = await this.page.locator('.blue-toggle__group')
+        let rateBtn = await rateBtns.locator("//label[contains(@class, 'btn-default')]", {hasText:positionDiewctionWithRate})
+        return await rateBtn
     }
 }

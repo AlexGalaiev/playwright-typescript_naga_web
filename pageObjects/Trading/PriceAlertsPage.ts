@@ -71,9 +71,14 @@ export class PriceAlert{
     };
     async cleanPriceAlerts(){
         await this.page.waitForTimeout(2000)
-        const removePriceAlerts = await this.page.$$("//i[contains(@class,'icn-trash')]");
-        for(let icon of removePriceAlerts){
-            if(await icon.isVisible()){
-                await icon.click()
-            }else{}}}
+        const removePriceAlert = await this.page.locator("//i[contains(@class,'icn-trash')]").first();
+        while(await removePriceAlert.isVisible()){
+            await removePriceAlert.click();
+            await this.page.waitForTimeout(1500)
+        }
+    }   
+        // for(let icon of removePriceAlerts){
+        //     if(await icon.isVisible()){
+        //         await icon.click()
+        //     }else{}}}
     }

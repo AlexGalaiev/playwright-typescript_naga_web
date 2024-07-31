@@ -41,7 +41,7 @@ test.describe("Naga Capital. Trading", async () => {
     let successPopup = new ClosePositionSuccessPopup(page);
     await test.step("Choose instrument", async () => {
       await instruments.searchInstrument(tradingInstrument);
-      await instruments.openShortPosition();
+      await instruments.openPosition('Short');
     });
     await test.step("Open short pending order", async () => {
       await newPosition.openShortOrder();
@@ -50,9 +50,7 @@ test.describe("Naga Capital. Trading", async () => {
     await test.step("Check My-trades", async () => {
       await new MainPage(page).openHeaderMenuPoint("my-trades");
       await myTrades.openActivePendingOrdersTab();
-      expect(await myTrades.checkActiveOrdersHasAttribute()).toContain(
-        "active"
-      );
+      expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
     });
     await test.step("Check change limit of opened position and close position", async () => {
       let units = await myTrades.getOrderUnits();
@@ -98,7 +96,7 @@ test.describe("Naga Capital. Trading", async () => {
     let successPopup = new ClosePositionSuccessPopup(page);
     await test.step("Choose instrument", async () => {
       await instruments.searchInstrument(tradingInstrument);
-      await instruments.openLongPosition();
+      await instruments.openPosition('Long');
     });
     await test.step("Open short pending order", async () => {
       await newPosition.openLongOrder();
@@ -107,7 +105,7 @@ test.describe("Naga Capital. Trading", async () => {
     await test.step("Check My-trades", async () => {
       await new MainPage(page).openHeaderMenuPoint("my-trades");
       await myTrades.openActivePendingOrdersTab();
-      expect(await myTrades.checkActiveOrdersHasAttribute()).toContain(
+      expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain(
         "active"
       );
     });

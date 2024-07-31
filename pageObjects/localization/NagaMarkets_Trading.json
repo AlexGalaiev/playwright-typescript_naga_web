@@ -1,0 +1,14 @@
+{
+    "Empty_watchlist_header":{
+        "answer":"No Symbols Added"
+    },
+    "Empty_watchlist_text":{
+        "answer":"In order to add symbol to a favourites, please select one of the provided Symbol groups on the left and press the star sign."
+    },
+    "EmptyPriceAlertTab_Header":{
+        "answer":"No Price Alerts"
+    },
+    "EmptyPriceAlertTab_Description":{
+        "answer":"You haven't created any price alerts yet"
+    }
+}
