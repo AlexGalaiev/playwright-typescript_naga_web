@@ -18,7 +18,7 @@ let investmentValue;
 let units;
 let rate;
 
-test.describe("Trading Positions/Orders", async () => {
+test.describe("Trading Positions/Orders with Stop Loss/Take profit", async () => {
 const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@25159', brand: '@NS', user:'testTrading2', investDirection:'Short'},
   {testRailId: '@25163', brand: '@NS', user:'testTrading2', investDirection:"Long"},
@@ -107,4 +107,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
       expect(await successfullClosePopup.getRate()).toEqual(rate);
       expect(await successfullClosePopup.getLots()).toContain(units)
     })
-})}})
+})}
+})
+
+

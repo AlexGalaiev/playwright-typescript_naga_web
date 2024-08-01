@@ -6,8 +6,8 @@ export class MyTrades{
     readonly activePendingOrdersTab: Locator;
     readonly openedPosition: Locator;
     //old
-    readonly tp: Locator;
-    readonly sl: Locator;
+    //readonly tp: Locator;
+    //readonly sl: Locator;
     readonly dropdownActions: Locator;
     readonly optionDropdown: Locator;
     readonly changeLimits: Locator;
@@ -32,8 +32,8 @@ export class MyTrades{
         //position values
         this.openedPosition = page.locator("//div[contains(@class, 'my-trades-table__row')]")
 
-        this.tp = page.locator("//div[contains(@class, 'limits-active')]")
-        this.sl = page.locator("//div[contains(@class, 'entry-price-active')]//span[@class='not-set']")
+        //this.tp = page.locator("//div[contains(@class, 'limits-active')]")
+        //this.sl = page.locator("//div[contains(@class, 'entry-price-active')]//span[@class='not-set']")
         //orders values
         //this.orderUnits = page.locator("//div[contains(@class, 'my-trades-table__row')]//div[contains(@class, 'units-pending')]")
         this.orderTakeProfit = page.locator("//div[contains(@class, 'my-trades-table__row')]//div[contains(@class, 'limits-pending')]")
@@ -80,10 +80,15 @@ export class MyTrades{
         await this.openedPosition.waitFor({state:"visible"})
         return await this.openedPosition.locator("//div[contains(@class, 'units-active')]").textContent();
     }
+    async getProtectionValue(NameOfProtection: string){
+        await this.openedPosition.waitFor({state:"visible"})
+        return await this.openedPosition.locator(`//div[@class='${NameOfProtection}']`).textContent()
+    }
     async closePosition(){
         await this.page.locator("//i[contains(@class, 'trade-actions__close')]").click()
         await this.page.waitForSelector('#confirm_close_trade');
         await this.page.locator('#confirm_close_trade').click()
+        await this.page.waitForTimeout(1000)
     }
     async openActivePendingOrdersTab(){
         await this.activePendingOrdersTab.click()
@@ -106,12 +111,12 @@ export class MyTrades{
         return await this.openedPosition.locator("//div[contains(@class, 'my-trades-table__entry-price')]//span//span").textContent()
     }
     //old
-    async getTakeProfit(){
-        return await this.tp.textContent()
-    };
-    async getStopLoss(){
-        return await this.sl.textContent()
-    };
+    // async getTakeProfit(){
+    //     return await this.tp.textContent()
+    // };
+    // async getStopLoss(){
+    //     return await this.sl.textContent()
+    // };
     async openChangeLimitPopup(){
         await this.optionDropdown.click();
         await this.changeLimits.click();
