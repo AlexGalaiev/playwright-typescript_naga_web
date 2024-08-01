@@ -8,7 +8,7 @@ import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
 import { MyTrades } from "../../pageObjects/Trading/MyTrades";
 import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 import { TradeDetails } from "../../pageObjects/Trading/TradeDetails";
-import { test } from "..//..//test-options";
+import { test } from "../../test-options";
 
 test.describe("Trading + trading protection", async () => {
 type tradingTypesWithProtection = {
@@ -29,7 +29,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25017', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
-  test(`${testRailId} Open/Close position + Protection ${brand} ${user} ${investDirection} ${protection} ${tradeField}`, async ({ page}) => {
+  test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${user} ${investDirection} ${protection} ${tradeField}`, async ({ page}) => {
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);
@@ -47,7 +47,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     await test.step("Choose instrument and open position", async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.searchInstrument(tradingInstrument);
-      await instruments.openPosition('Short');
+      await instruments.openPosition(investDirection);
     });
     await test.step("Open short position + Stop Loss", async () => {
       await newPosition.enableProtection(protection)
@@ -63,63 +63,52 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       await myTrades.closePosition()
       await successPopup.acceptPopup()
     })
-})
+  })}
 
-}})
-//   test("@25015 Open pending Long order + Take profit", async ({ page }) => {
-//     let tradingInstrument = "Dogecoin/EUR";
-//     let instruments = new AllInstruments(page);
-//     let newPosition = new NewPosition(page);
-//     let myTrades = new MyTrades(page);
-//     let changeLimitPopup = new ChangeLimitsPopup(page);
-//     let changeLimitPopupResult = new ChangeLimitSuccessPopup(page);
-//     let tradeDetails = new TradeDetails(page);
-//     let successPopup = new ClosePositionSuccessPopup(page);
-//     await test.step("Choose instrument", async () => {
-//       await instruments.searchInstrument(tradingInstrument);
-//       await instruments.openPosition('Long');
-//     });
-//     await test.step("Open short pending order", async () => {
-//       await newPosition.openLongOrder();
-//       await newPosition.submitPosition();
-//     });
-//     await test.step("Check My-trades", async () => {
-//       await new MainPage(page).openHeaderMenuPoint("my-trades");
-//       await myTrades.openActivePendingOrdersTab();
-//       expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain(
-//         "active"
-//       );
-//     });
-//     await test.step("Check change limit of opened position and close position", async () => {
-//       let units = await myTrades.getOrderUnits();
-//       let stopLoss = await myTrades.getOrderTakeProfit();
-//       await test.step("Check change limit popup and enable Stop Loss", async () => {
-//         await myTrades.openChangeLimitPopup();
-//         expect(await changeLimitPopup.getInstrumentName()).toContain(
-//           tradingInstrument
-//         );
-//         await changeLimitPopup.enableTakeProgit();
-//       });
-//       await test.step("Check change limit popup", async () => {
-//         expect(await changeLimitPopupResult.getDirection()).toEqual(
-//           "BUY LIMITPrice will rise"
-//         );
-//         expect(await changeLimitPopupResult.getLotsAmount()).toContain(units);
-//         expect(await changeLimitPopupResult.getTakeProfitValue()).not.toEqual(
-//           stopLoss
-//         );
-//         await changeLimitPopupResult.acceptPopup();
-//       });
-//       await test.step("Check trade details", async () => {
-//         await myTrades.openTradeDetails();
-//         expect(await tradeDetails.getLots()).toEqual(units);
-//         await tradeDetails.clickCloseTrade();
-//         await tradeDetails.clickCloseTradeConfirm();
-//       });
-//       await test.step("Check success popup", async () => {
-//         expect(await successPopup.getLots()).toContain(units);
-//         await successPopup.acceptPopup();
-//       });
-//     });
-//   });
-// });
+  const tradingParametersOrders: tradingTypesWithProtection[] = [
+    {testRailId: '@25167', brand: '@NS', user:'testTrading2', investDirection:'Short', protection: 'Stop Loss',tradeField: 'sl'},
+    {testRailId: '@25169', brand: '@NS', user:'testTrading2', investDirection:"Long", protection: 'Take profit',tradeField: 'tp'},
+    {testRailId: '@25171', brand: '@NM', user:'testTrading2Markets', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
+    {testRailId: '@25170', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'}
+  ]
+  for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
+    test(`${testRailId} Open/Close pending Short/Long posiotion+StopLoss/TakeProfit`, async({page})=>{
+      let sighIn = new SighIn(page);
+      let mainPage = new MainPage(page);
+      let myTrades = new MyTrades(page);
+      let instruments = new AllInstruments(page);
+      let newPosition = new NewPosition(page);
+      let successPopup = new ClosePositionSuccessPopup(page);
+      await test.step("Login to platfotm", async () => {
+        await sighIn.goto(await sighIn.chooseBrand(brand), "login");
+        await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || "");
+      });
+      await test.step("Check previously opened orders and close if they exist", async () => {
+        await mainPage.openHeaderMenuPoint("my-trades");
+        await myTrades.openActivePendingOrdersTab();
+        await myTrades.removeOrdersIfExist();
+      });
+      await test.step("Choose instrument and open position", async () => {
+        await mainPage.openHeaderMenuPoint("markets");
+        await instruments.searchInstrument(tradingInstrument);
+        await instruments.openPosition(investDirection);
+      });
+      await test.step("Open short position + Stop Loss", async () => {
+        await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
+        await newPosition.enableProtection(protection)
+        NagaProtectionValue = await newPosition.getProtectionValue(protection)
+        await newPosition.submitPosition();
+      });
+      await test.step("Check My-trades popup", async () => {
+        await mainPage.openHeaderMenuPoint("my-trades");
+        await myTrades.openActivePendingOrdersTab();
+        expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
+        expect(await myTrades.getProtectionValue(tradeField)).toContain(NagaProtectionValue)
+      });
+      await test.step('Close position and check sucses popup', async()=>{
+        await myTrades.closePosition()
+        await successPopup.acceptPopup()
+      })
+      })
+  }
+})
