@@ -111,4 +111,5 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       })
       })
   }
+  
 })
