@@ -21,6 +21,10 @@ type tradingTypesWithProtection = {
 }
 let tradingInstrument = "Dogecoin/USD";
 let NagaProtectionValue;
+let SL; 
+let TP;
+let deposit;
+let units;
 
 const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25165', brand: '@NS', user:'testTrading2', investDirection:'Short', protection: 'Stop Loss',tradeField: 'sl'},
@@ -111,5 +115,84 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       })
       })
   }
-  
-})
+
+type changeLimittypes = {
+  testRailId: string,
+  brand: string, 
+  user: string,
+  investDirection: string,
+  protectionSL: string,
+  protectionTP: string,
+  tradeFieldSL: string,
+  tradeFieldsTP: string
+}
+
+const tradingParametersSLTP: changeLimittypes[] = [
+  {testRailId: '@25173', brand: '@NS', user:'testTrading2', investDirection:'Short', protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp'},
+  {testRailId: '@25172', brand: '@NM', user:'testTrading2Markets', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp'}
+]
+for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP} of tradingParametersSLTP){
+  test(`${testRailId} Edit position popup with SL/TP`, async({page})=>{
+    let sighIn = new SighIn(page);
+    let mainPage = new MainPage(page);
+    let myTrades = new MyTrades(page)
+    let instruments = new AllInstruments(page);
+    let newPosition = new NewPosition(page);
+    let changeLimits = new ChangeLimitsPopup(page);
+    let changeLimitsSuccessPopup = new ChangeLimitSuccessPopup(page)
+    let successfullClosePopup = new ClosePositionSuccessPopup(page)
+    await test.step("Login to platfotm", async () => {
+      await sighIn.goto(await sighIn.chooseBrand(brand), "login");
+      await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || "");
+    });
+    await test.step("Check previously opened positions. Close it if exist", async () => {
+      await mainPage.openHeaderMenuPoint("my-trades");
+      await myTrades.closePositionsIfExist();
+    });
+    await test.step("Choose instrument for trading. Open new position page", async () => {
+      await mainPage.openHeaderMenuPoint("markets");
+      await instruments.searchInstrument(tradingInstrument);
+      await instruments.openPosition(investDirection)
+    });
+    await test.step("Check parameters and open short position", async () => {
+      await newPosition.submitPosition();
+    });
+    await test.step("Check My-trades", async () => {
+      await mainPage.openHeaderMenuPoint("my-trades");
+      expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
+      deposit = await myTrades.getDepositValue();
+      units = await myTrades.getUnits();
+    })
+    await test.step('Open change limit popup and install SL', async()=>{
+      await myTrades.openChangeLimitPopup()
+      await changeLimits.enableStopLoss();
+      SL = await changeLimits.getProtectionValue(protectionSL)
+      await changeLimits.updatePosition()
+    })
+    await test.step('Check change limit successfull popup', async()=>{
+      expect(await changeLimitsSuccessPopup.getLotsAmount()).toContain(units)
+      expect(await changeLimitsSuccessPopup.getInvesctmentsAmount()).toEqual(deposit)
+      expect(await changeLimitsSuccessPopup.getProtectionValue(protectionSL)).toContain(SL)
+      await changeLimitsSuccessPopup.acceptPopup()
+    })
+    await test.step('Check my traders Stop Loss', async()=>{
+      expect(await myTrades.getProtectionValue(tradeFieldSL)).toContain(SL)
+    })
+    await test.step('Enable take profit and check result', async()=>{
+      await myTrades.openChangeLimitPopup();
+      await changeLimits.enableStopLoss();
+      await changeLimits.enableTakeProgit();
+      TP = await changeLimits.getProtectionValue(protectionTP)
+      await changeLimits.updatePosition()
+    })
+    await test.step('Check change limit succesfull popup', async()=>{
+      expect(await changeLimitsSuccessPopup.getProtectionValue(protectionTP)).toContain(TP)
+      await changeLimitsSuccessPopup.acceptPopup()
+    })
+    await test.step('Check my traders Stop Loss and Take profit', async()=>{
+      expect(await myTrades.getProtectionValue(tradeFieldsTP)).toContain(TP)
+      await myTrades.closePosition()
+      await successfullClosePopup.acceptPopup()
+    })
+  })
+}})

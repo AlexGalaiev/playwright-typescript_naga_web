@@ -1,14 +1,14 @@
 import { expect } from "@playwright/test";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { HeaderMenuUserProfile } from "../../pageObjects/UserProfile/HeaderUserProfile";
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
 import {test} from "..//..//test-options";
 
 test.describe("NagaCapital - User profile", async()=>{
     test("@23573 User profile. General", async({page, NagaCapital})=>{
-        let sighUp = new SignUp(page);
+        let sighUp = new SighUp(page);
         let mainPage = new MainPage(page);
         let userProfile = new UserProfile(page);
         let headerMenu = new HeaderMenuUserProfile(page);

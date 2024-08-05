@@ -29,16 +29,19 @@ export class ChangeLimitsPopup{
     };
     async enableStopLoss(){
         await this.stopLossSwitcher.click()
-        await this.page.waitForTimeout(250);
-        await this.updateBtn.click()
+        await this.page.waitForTimeout(1250);
     };
     async enableTakeProgit(){
         await this.takeProfit.click()
-        await this.page.waitForTimeout(250);
-        await this.updateBtn.click()
+        await this.page.waitForTimeout(1250);
     };
     async updatePosition(){
         return await this.updateBtn.click();
+    };
+    async getProtectionValue(protectionType: string){
+        let mainElement = await this.page.locator(".limit-value__type", {hasText: protectionType})
+        let element = await mainElement.locator("//span[contains(@class, 'limit-value__type__oposite-value')]")
+        return await element.textContent()
     }
 
 }

@@ -10,5 +10,8 @@
     },
     "EmptyPriceAlertTab_Description":{
         "answer":"You haven't created any price alerts yet"
+    },
+    "RealStock_OpenShortPosition":{
+        "answer":"You are trading the real share of this company. There is no leverage or margin trading and you can only buy, but not short sell. If you want to go short (trade on a falling price), hedge your positions or use leverage simply trade the CFD on this asset by tapping below."
     }
 }

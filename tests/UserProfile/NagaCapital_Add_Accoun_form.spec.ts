@@ -5,7 +5,7 @@ import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCP
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { AddAcountForm } from "../../pageObjects/UserProfile/AddTradingAccount";
 import { HeaderMenuUserProfile } from "../../pageObjects/UserProfile/HeaderUserProfile";
 import {test} from "../../test-options";
@@ -15,7 +15,7 @@ import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 test.describe("NagaCapital - User profile", async()=>{
     
   test("@23922 Create 2nd live account", async({page, NagaCapital, NSCountry})=>{
-        let sighUp = new SignUp(page);
+        let sighUp = new SighUp(page);
         let mainPage = new MainPage(page);
         let addAccount = new AddAcountForm(page);
         let headerMenu = new HeaderMenuUserProfile(page);

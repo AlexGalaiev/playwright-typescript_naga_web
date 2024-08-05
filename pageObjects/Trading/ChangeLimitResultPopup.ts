@@ -41,4 +41,8 @@ export class ChangeLimitSuccessPopup{
     async getDirection(){
         return await this.direction.textContent()
     }
+    async getProtectionValue(protectionType: string){
+        let element = await this.page.locator('.modal-trade-summary__price-notice', {hasText: protectionType})
+        return await element.textContent()
+    }
 } 

@@ -110,13 +110,6 @@ export class MyTrades{
         await this.openedPosition.waitFor({state:"visible"})
         return await this.openedPosition.locator("//div[contains(@class, 'my-trades-table__entry-price')]//span//span").textContent()
     }
-    //old
-    // async getTakeProfit(){
-    //     return await this.tp.textContent()
-    // };
-    // async getStopLoss(){
-    //     return await this.sl.textContent()
-    // };
     async openChangeLimitPopup(){
         await this.optionDropdown.click();
         await this.changeLimits.click();

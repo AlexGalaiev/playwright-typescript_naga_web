@@ -6,6 +6,8 @@ import { MyTrades } from "../../pageObjects/Trading/MyTrades";
 import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 import { test } from "../../test-options";
 import { ClosePositionSuccessPopup } from "../../pageObjects/Trading/closePositionSuccessPopup";
+import { getLocalization } from "../../pageObjects/localization/getText";
+import { RealStockPopup } from "../../pageObjects/Trading/realStockShortPosition";
 
 type tradingTypes = {
   testRailId: string,
@@ -14,6 +16,7 @@ type tradingTypes = {
   investDirection: string
 }
 const tradingInstrument = "Dogecoin/USD";
+const realStockInstrument = 'Adidas Salomon'
 let investmentValue;
 let units;
 let rate;
@@ -108,6 +111,36 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
       expect(await successfullClosePopup.getLots()).toContain(units)
     })
 })}
+
+const tradingParameters: tradingTypes[] = [
+  {testRailId: '@25175', brand: '@NS', user:'testTrading2', investDirection:'Short'},
+  {testRailId: '@25174', brand: '@NM', user:'testTrading2Markets', investDirection:"Short"},
+]
+for(const{testRailId, brand, user, investDirection}of tradingParameters){
+  test(`${testRailId} Open short position of real stock`, async({page})=>{
+    let sighIn = new SighIn(page);
+    let mainPage = new MainPage(page);
+    let myTrades = new MyTrades(page);
+    let instruments = new AllInstruments(page);
+    let realStockPopup = new RealStockPopup(page)
+    let localization = new getLocalization('/pageObjects/localization/NagaCapital_Trading.json')
+    await test.step("Login to platfotm", async () => {
+      await sighIn.goto(await sighIn.chooseBrand(brand), "login");
+      await sighIn.sigInUserToPlatform(user,process.env.USER_PASSWORD || "");
+    });
+    await test.step("Check previously opened positions. Close it if exist", async () => {
+      await mainPage.openHeaderMenuPoint("my-trades");
+      await myTrades.closePositionsIfExist();
+    });
+    await test.step("Choose instrument for trading. Open new position page", async () => {
+      await mainPage.openHeaderMenuPoint("markets");
+      await instruments.searchInstrument(realStockInstrument);
+      await instruments.openPosition(investDirection)
+      expect(await realStockPopup.getPopupText()).toEqual(await localization.getLocalizationText('RealStock_OpenShortPosition'))
+    });
+  })
+}
+
 })
 
 
