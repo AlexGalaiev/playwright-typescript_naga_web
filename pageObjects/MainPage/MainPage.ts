@@ -127,4 +127,7 @@ export class MainPage{
         await this.notActiveTradingAccount.click()
         await this.page.waitForTimeout(4000)
     }
+    async getUrl(){
+        return await this.page.url()
+    }
 }

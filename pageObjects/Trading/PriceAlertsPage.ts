@@ -77,8 +77,4 @@ export class PriceAlert{
             await this.page.waitForTimeout(1500)
         }
     }   
-        // for(let icon of removePriceAlerts){
-        //     if(await icon.isVisible()){
-        //         await icon.click()
-        //     }else{}}}
     }
