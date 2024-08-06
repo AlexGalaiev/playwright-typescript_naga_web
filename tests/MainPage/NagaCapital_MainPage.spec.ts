@@ -5,7 +5,7 @@ import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterL
 import { expect } from "@playwright/test"
 
 
-test.describe('Naga Capital. Main Page elements', async()=>{
+test.describe('Main Page elements', async()=>{
     type testTypes = {
         testrailId: string;
         brand: string;
@@ -16,7 +16,7 @@ test.describe('Naga Capital. Main Page elements', async()=>{
         { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
     ]
     for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} login to platform ${brand}` , async({page, NagaCapital, NagaMarkets})=>{
+        test(`${testrailId} login to platform ${brand}` , async({page})=>{
             let sighIn = new SighIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)

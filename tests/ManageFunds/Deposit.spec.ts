@@ -11,7 +11,7 @@ type NStestTypes = {
     depositName: string,
     pageTittle: string,
 }
-test.describe("NagaCapital. Deposit", async()=>{
+test.describe("Deposit", async()=>{
 
 const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24082', brand: '@NS', user: 'testTrading2', depositName: 'credit-cards', pageTittle:'Fund via Credit Card'}, 
@@ -20,7 +20,7 @@ const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'skrill', pageTittle:'Fund via Skrill'},
 ]
 for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParameters){
-    test(`${testRailId} Check deposit method ${brand} ${user} ${depositName} ${pageTittle}`, async({page})=>{
+    test(`${testRailId} Check deposit method ${brand} ${depositName}`, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);
@@ -84,7 +84,7 @@ const NMdepositTestParams: NStestTypes[] = [
     {testRailId: '@25151', brand: '@NM', user: 'depositTestMarkets', depositName: 'ewallets', pageTittle: 'Fund via E-Wallets'},
 ]
 for(const{testRailId, brand, user, depositName, pageTittle} of NMdepositTestParams){    
-    test(`${testRailId} Check ewallet methods ${brand} ${user} ${depositName} ${pageTittle}`, async({page})=>{
+    test(`${testRailId} Check ewallet methods ${brand} ${depositName}`, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);

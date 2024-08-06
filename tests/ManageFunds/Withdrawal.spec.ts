@@ -5,7 +5,7 @@ import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText";
 
-test.describe("Naga Capital. Withdrawal.", async()=>{
+test.describe("Naga Capital. Withdrawal", async()=>{
     const ManageFunds_Withdrawal = "/pageObjects/localization/ManageFunds_Withdrawal.json";
     let amountValueToWithrawal = '9.83'
 
@@ -117,7 +117,7 @@ const testWithdrawalParameters: testWithdrawalTypes[] = [
     {testRailId: '@24089', brand: '@NS', user: 'testTrading2', menuPoint: 'eWallet', paymentMethod: 'perfectmoney', withdrawalPageTitle:'Perfect Money'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}of testWithdrawalParameters){
-    test(`${testRailId} Check withdrawal different payments ${paymentMethod} ${brand} ${user} ${menuPoint} ${withdrawalPageTitle}`, async({page})=>{
+    test(`${testRailId} Check withdrawal different payments ${paymentMethod} ${brand}`, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
@@ -148,7 +148,7 @@ const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
     {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle:'Perfect Money'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}of testWithdrawalParametersMarkets){
-    test(`${testRailId} NagaMarkets.Check withdrawal with different methods`, async({page})=>{
+    test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);

@@ -64,6 +64,14 @@ export class AllInstruments{
     };
 
 //new 
+    async openPositionOfInstrument(instrumentName: string, positionType: string){
+        await this.searchInstrumentField.pressSequentially(instrumentName)
+        await this.page.waitForTimeout(500);
+        let instrumentContainer = await this.page.locator(".symbol-row", 
+            {has: await this.page.locator(`//div[@class = 'symbol-name-container']//div[text()='${instrumentName}']`)})
+        let position = await instrumentContainer.locator(`//button[text()='${positionType}']`)
+        await position.click()
+    }
 
     async openPosition(investmentType: string){
         let button = await this.page.locator("//button[contains(@class, 'btn-sm')]", {hasText: investmentType})

@@ -116,7 +116,7 @@ const testParams: testTypes[] = [
     {testRailId: '@23569', brandStart: '@NM', brandRedirect: '@NS', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ]
 for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-    test(`${testRailId} Entity redirection ${brandStart} ${localization} ${brandRedirect}`, async({page})=>{
+    test(`${testRailId} Entity redirection ${brandStart}`, async({page})=>{
         let localizationPage = new getLocalization(localization);
         let sighInPage = new SighIn(page);
         await test.step('Open login page and input email from different regulation', async()=>{
@@ -138,7 +138,7 @@ const testParamsGuestMode: testTypesGuestMode[] = [
     {testRailId: '@24936', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
-    test(`${testRailId} Open platform in Guest mode ${brand} ${localization}`, async({page})=>{
+    test(`${testRailId} Open platform in Guest mode ${brand}`, async({page})=>{
         let localizationPage = new getLocalization(localization);
         let signUp = new SighUp(page);
         let sighIn = new SighIn(page);

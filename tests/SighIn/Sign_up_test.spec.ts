@@ -19,7 +19,7 @@ test.describe("Naga Capital. Sigh up page", async()=>{
         {testRailId: '@25141', brandStart: '@NM', brandRedirect: '@NS', localization: '/pageObjects/localization/SignUpPage.json'}
     ]
     for(const{testRailId, brandStart, localization, brandRedirect} of testParamsChangeBrandPopup){
-        test(`${testRailId} Change brand popup ${brandStart} ${localization}`, async({page})=>{
+        test(`${testRailId} Change brand popup ${brandStart}`, async({page})=>{
             let localizationText = new getLocalization(localization)
             let sighUp = new SighUp(page);
             let changeBrandPopup = new ChangeBrandPopup(page);
@@ -46,7 +46,7 @@ test.describe("Naga Capital. Sigh up page", async()=>{
         {testRailId: '@25142', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighUp.json'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand} ${localization}`, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, async({page})=>{
             let localizationText = new getLocalization(SighUpPage_localization)
             let sighUp = new SighUp(page);
             await sighUp.goto(await new SighIn(page).chooseBrand(brand), "register")

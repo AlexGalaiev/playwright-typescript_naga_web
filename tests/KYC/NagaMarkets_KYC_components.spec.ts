@@ -22,7 +22,6 @@ test("@23575 Upgrade account banner", async({page})=>{
     await test.step("Check upgrade banner", async()=>{
         expect(await mainPage.getVerifyBannerContent()).toContain(await localization_MainPage.getLocalizationText("UpgradeAccountBannerContent"))
         await mainPage.clickUpgradeBtn()
-        console.log(await new startVerification_NagaMarkets(page).getKycIntroductionText())
         expect(await localization_KYC_start.getLocalizationText("KYC_start_introduction")).toContain(await new startVerification_NagaMarkets(page).getKycIntroductionText())
     })
 })

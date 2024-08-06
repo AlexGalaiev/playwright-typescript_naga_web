@@ -33,7 +33,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25017', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
-  test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${user} ${investDirection} ${protection} ${tradeField}`, async ({ page}) => {
+  test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${investDirection}`, async ({ page}) => {
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);
@@ -50,8 +50,9 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     });
     await test.step("Choose instrument and open position", async () => {
       await mainPage.openHeaderMenuPoint("markets");
-      await instruments.searchInstrument(tradingInstrument);
-      await instruments.openPosition(investDirection);
+      await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
+      // await instruments.searchInstrument(tradingInstrument);
+      // await instruments.openPosition(investDirection);
     });
     await test.step("Open short position + Stop Loss", async () => {
       await newPosition.enableProtection(protection)
@@ -76,7 +77,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25170', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'}
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
-    test(`${testRailId} Open/Close pending Short/Long posiotion+StopLoss/TakeProfit`, async({page})=>{
+    test(`${testRailId} Open/Close pending Short/Long posiotion+StopLoss/TakeProfit ${brand} ${investDirection}`, async({page})=>{
       let sighIn = new SighIn(page);
       let mainPage = new MainPage(page);
       let myTrades = new MyTrades(page);
@@ -94,8 +95,9 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       });
       await test.step("Choose instrument and open position", async () => {
         await mainPage.openHeaderMenuPoint("markets");
-        await instruments.searchInstrument(tradingInstrument);
-        await instruments.openPosition(investDirection);
+        await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
+        // await instruments.searchInstrument(tradingInstrument);
+        // await instruments.openPosition(investDirection);
       });
       await test.step("Open short position + Stop Loss", async () => {
         await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
@@ -132,7 +134,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
   {testRailId: '@25172', brand: '@NM', user:'testTrading2Markets', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp'}
 ]
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP} of tradingParametersSLTP){
-  test(`${testRailId} Edit position popup with SL/TP`, async({page})=>{
+  test(`${testRailId} Edit position popup with SL/TP ${brand} ${investDirection}`, async({page})=>{
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
@@ -151,8 +153,9 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     });
     await test.step("Choose instrument for trading. Open new position page", async () => {
       await mainPage.openHeaderMenuPoint("markets");
-      await instruments.searchInstrument(tradingInstrument);
-      await instruments.openPosition(investDirection)
+      await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
+      // await instruments.searchInstrument(tradingInstrument);
+      // await instruments.openPosition(investDirection)
     });
     await test.step("Check parameters and open short position", async () => {
       await newPosition.submitPosition();
