@@ -4,17 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "debug_production": "npx playwright test --grep \"@dev\" --project=production --headed"
+    "debug": "npx playwright test --grep \"@dev\" --project=production --headed"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@playwright/test": "^1.43.1",
     "@types/node": "^20.11.20"
   },
   "dependencies": {
     "@dlenroc/testrail": "^1.9.1",
+    "axios": "^1.7.3",
     "browsers": "^1.0.2",
     "dotenv": "^16.4.5",
     "image-js": "^0.35.5",

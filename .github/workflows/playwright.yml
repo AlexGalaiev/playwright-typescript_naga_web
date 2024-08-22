@@ -52,9 +52,9 @@ jobs:
       with:
         apiToken: ${{ secrets.CLOUDFLARE_API_TKN }}
         accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID_KWG }}
-        projectName: playwright-naga-report-qa
+        projectName: playwright-naga-report-${{ github.head_ref || github.ref_name }}
         directory: playwright-report
-        branch: main
+        branch: master
     - name: Extract deployment URL
       if: always()
       id: extract_url

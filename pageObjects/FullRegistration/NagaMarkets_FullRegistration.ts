@@ -69,7 +69,7 @@ export class FullRegistration{
         await question.textContent() === await quiz.getQuizText(QuestionName)
         let answer = await quiz.getQuizAnswer(QuestionName)
         let answerQuiz = await this.page.locator(`//button[text()='${answer}']`)
-        await this.page.waitForTimeout(1500);
+        await this.page.waitForTimeout(4000);
         await answerQuiz.click();
         
     }

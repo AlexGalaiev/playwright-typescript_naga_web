@@ -1,5 +1,5 @@
 import {test} from "../../test-options"
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
@@ -8,15 +8,18 @@ import { expect } from "@playwright/test";
 import { AllSetPopup } from "../../pageObjects/common/allSetPopup(KYC)/allSetPopup";
 import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-UpdateAccount";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
+import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
 test("@24917 NAGA Capital full registration user", async({ page, NagaCapital, NSCountry })=>{
-    let sighUp = new SignUp(page);
+    let sighUp = new SighUp(page);
+    let sighIn = new SighIn(page)
     let mainPage = new MainPage(page);
     let phoneVerification = new PhoneVerification(page);
     let verificationPopup = new VerificationPopup(page);
     await test.step('Short registration of lead user', async ()=>{
-        await sighUp.goto(NagaCapital, 'register');
-        await sighUp.createCFDUser(NSCountry);
+        let email = await sighUp.createLeadUserApiNagaCapital('BA')
+        await sighIn.goto(NagaCapital, 'login');
+        await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
     });
     await test.step('Check trading accounts', async()=>{
         await mainPage.mainPageIsDownLoaded();

@@ -90,6 +90,10 @@ export class MainPage{
     async getVerifyBannerDisclaimerText(){
         return await this.verifyBannerDisclaimer.textContent()
     };
+    async getVerifyBannerMiddleScore(){
+        let middleText = await this.page.locator('.user-status-box__desc-text').textContent();
+        return middleText
+    }
 
     //new
     async openHeaderMenuPoint(NameOfMenuPoint: string){

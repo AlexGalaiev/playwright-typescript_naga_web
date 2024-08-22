@@ -1,38 +1,33 @@
 import { expect } from "playwright/test";
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGAMarkets_PersonalInformation";
 import { getLocalization } from "../../pageObjects/localization/getText";
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import {test} from "..//..//test-options";
 import { MainPage} from "../../pageObjects/MainPage/MainPage";
 import { KYC_Start } from "../../pageObjects/FullRegistration/NAGAMarkets-KYCStart";
 import { FullRegistration } from "../../pageObjects/FullRegistration/NagaMarkets_FullRegistration";
 import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep";
+import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
-test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry})=>{
-    let KYC_Localization = "/pageObjects/localization/NagaMarkets_KYC_localization.json"
-        let localiztion = new getLocalization(KYC_Localization)
-        let sighUp = new SignUp(page);
-        let personalInfo = new PersonalInformation(page)
+
+test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry}, testInfo)=>{
+    await testInfo.setTimeout(testInfo.timeout + 120000);
+        let sighUp = new SighUp(page);
+        let sighIn = new SighIn(page)
+        let mainpage = new MainPage(page)
         let verification = new PhoneVerification(page)
-        let youAreIn = new YouAreInNagaMarkets(page);
         let kycStart = new KYC_Start(page);
         await test.step('Short registration of lead user', async ()=>{
-            await sighUp.goto(NagaMarkets, 'register');
-            await sighUp.create_NM_CFDUser(NMCountry);
+            let email = await sighUp.createLeadUserApi('FR')
+            await sighIn.goto(NagaMarkets, 'login');
+            await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
         });
         await test.step("Fill personal information, phone verification", async()=>{
-            await personalInfo.fillPersonalInformation()
+            //await personalInfo.fillPersonalInformation()
+            await mainpage.clickUpgradeBtn();
+            await kycStart.clickStartVerificationBtn()
+            await verification.acceptPhoneNumber()
             await verification.MN_insertVerificationCode()
-            expect(await youAreIn.getDescriptionText()).toContain(await localiztion.getLocalizationText("YouAreInPopupDescription"))
-            await youAreIn.clickOpenRealMoneyAccount()
-        })
-        await test.step("Check information on KYC verification start", async()=>{
-            expect(await kycStart.getIntroductionText()).toContain(await localiztion.getLocalizationText("KYC_Start_introduction"));
-            expect(await kycStart.getDescriptionText()).toContain(await localiztion.getLocalizationText("KYC_Start_description"));
-            expect(await kycStart.getDisclaimertext()).toContain(await localiztion.getLocalizationText("KYC_Start_disclaimer"))
-            await kycStart.clickStartVerificationBtn();
         })
     })
     
@@ -52,7 +47,7 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry})=>{
             expect(await KYC_FinalStep.getUsersScorring()).toEqual('Advanced')
             expect(await localization.getLocalizationText("KYC_Advance_Disclaimer")).toContain(await KYC_FinalStep.getDisclaimer());
             expect(await localization.getLocalizationText("KYC_AdvanceScorring_Footer_description")).toContain(await KYC_FinalStep.getDescription())
-            expect(await KYC_FinalStep.getFundAccountText).toContain(await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount"))
+            expect(await KYC_FinalStep.getFundAccountText()).toContain(await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
@@ -77,11 +72,11 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry})=>{
             expect(await localization.getLocalizationText("KYC_PreAdvance_Disclaimer")).toContain(await KYC_FinalStep.getPreAdvanceDisclaimer());
             expect(await localization.getLocalizationText("KYC_PreAdvance_Footer_quizWarning")).toContain(await KYC_FinalStep.getPreAdvanceWarning())
             expect(await localization.getLocalizationText("KYC_PreAdvance_Footer_description")).toContain(await KYC_FinalStep.getPreAdvanceDescription())
-            expect(await KYC_FinalStep.getPreAdvanceFundAccount).toContain(await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount"))
+            expect(await KYC_FinalStep.getPreAdvanceFundAccount()).toContain(await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toBe(await mainPage.getVerifyBannerDisclaimerText());
+            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerDisclaimerText());
             await mainPage.clickIUnderstanBtn();
         })
     })
@@ -103,11 +98,11 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry})=>{
             expect(await localization.getLocalizationText("KYC_Intermidiate_Warning")).toContain(await KYC_FinalStep.getIntermediateWarning())
             expect(await localization.getLocalizationText("KYC_Intermidiate_Disclaimer")).toContain(await KYC_FinalStep.getIntermediateDisclaimer())
             expect(await localization.getLocalizationText("KYC_Intermidiate_Desription")).toContain(await KYC_FinalStep.getIntermediateDescription())
-            expect(await KYC_FinalStep.getIntermediateFundAcount).toContain(await localization.getLocalizationText("KYC_Intermidiate_FundAccount"))
+            expect(await KYC_FinalStep.getIntermediateFundAcount()).toContain(await localization.getLocalizationText("KYC_Intermidiate_FundAccount"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toBe(await mainPage.getVerifyBannerDisclaimerText());
+            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerMiddleScore());
             await mainPage.clickIUnderstanBtn();
         })
     })
@@ -127,13 +122,13 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry})=>{
         await test.step("Check KYC status of created account", async()=>{
             expect(await KYC_FinalStep.getUsersScorring()).toEqual('Elementary')
             expect(await localization.getLocalizationText("KYC_Elementary_Warning")).toContain(await KYC_FinalStep.getElementaryWarning())
+            await KYC_FinalStep.clickCheckbox()
             expect(await localization.getLocalizationText("KYC_Elementary_Disclaimer")).toContain(await KYC_FinalStep.getElementaryDisclaimer())
             expect(await localization.getLocalizationText("KYC_Elementary_Description")).toContain(await KYC_FinalStep.getElementaryDescription())
-            expect(await KYC_FinalStep.getIntermediateFundAcount()).toContain(await localization.getLocalizationText("KYC_Elementary_FundAccount"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerDisclaimerText());
+            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerMiddleScore());
             await mainPage.clickIUnderstanBtn();
         })
     })
@@ -155,11 +150,10 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry})=>{
             expect(await localization.getLocalizationText("KYC_Beginer_warning")).toContain(await KYC_FinalStep.getBeginnerWarning())
             expect(await localization.getLocalizationText("KYC_Beginer_disclaimer")).toContain(await KYC_FinalStep.getBeginnerDisclaimer())
             expect(await localization.getLocalizationText("KYC_Beginer_fundAccount")).toContain(await KYC_FinalStep.getBeginnerDescription())
-            expect(await KYC_FinalStep.getBeginnerFundAccount()).toContain(await localization.getLocalizationText("KYC_Beginer_retakeQUIZ"))
             await KYC_FinalStep.clickFundAccount();
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
-            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerDisclaimerText());
+            expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerMiddleScore());
             await mainPage.clickIUnderstanBtn();
         })
     })

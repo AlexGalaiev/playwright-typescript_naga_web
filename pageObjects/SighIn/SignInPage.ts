@@ -28,6 +28,7 @@ export class SighIn{
         await this.signInName.pressSequentially(UserEmail);
         await this.signInPassword.pressSequentially(UserPassword);
         await this.signBtn.click();
+        await this.page.waitForSelector('.header__menu',{state:'visible'})
     };
     async forgotPasswordClick(){
         await this.forgotPasswordLink.click();
@@ -50,6 +51,7 @@ export class SighIn{
     };
     async goto(MainPage: string, pageTest: string){
         await this.page.goto(`${MainPage}/${pageTest}`);
+        await this.page.waitForSelector('.login-form', {timeout: 5000})
     };
     async chooseBrand(tag: string){
         let project = await test.info().project;

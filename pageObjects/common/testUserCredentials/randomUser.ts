@@ -11,7 +11,8 @@ export class RandomUser {
     };
     public randomUserName(){
         const randomNumber = Math.floor(Math.random() * (99999 - 10 + 1)) + 10;
-        return `user_${randomNumber}`;
+        let userName = `user_${randomNumber}`
+        return userName;
     }
 
 }

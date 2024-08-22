@@ -7,7 +7,7 @@ import { getLocalization } from "../../pageObjects/localization/getText";
 
 test.describe("Naga Capital. Withdrawal", async()=>{
     const ManageFunds_Withdrawal = "/pageObjects/localization/ManageFunds_Withdrawal.json";
-    let amountValueToWithrawal = '9.83'
+    let amountValueToWithrawal = '55'
 
     test.beforeEach("Login by trade user", async({page, NagaCapital })=>{
         let sighIn = new SighIn(page);

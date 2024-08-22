@@ -48,13 +48,13 @@
         "answer":"You can already fund up to €2,000 to your account without account verification. However we will ask you to verify your account within 15 days."
     },
     "KYC_Elementary_Warning":{
-        "answer":"You can fund your account and trade real stocks but can't use Autocopy"
+        "answer":"Thank you for interest in the services and products of the Company. Based on the answers you provided together with the risks associated with CFD trading, we do not consider that a CFD account is appropriate for you. If, after further consideration, you still wish to open a CFD account you should be aware that you may be exposing yourself to risks since the product may fall outside your knowledge and experience."
     },
     "KYC_Elementary_Disclaimer":{
-        "answer":"You may prepare and re-take the questionnaire to unlock more features in 15 days."
+        "answer":"You should use and trade with the demo account available on our platform and read all information and risk disclosure statement for CFDs on our website before deciding to commence trading. You may also wish to seek independent financial advice. CFDs are leveraged products, which carry a high level of risk to capital. Prices may move rapidly against you and you could lose your entire trading account balance. If you have any queries, please do not hesitate to contact us."
     },
     "KYC_Elementary_Description":{
-        "answer":"Trading in Contract for Difference (CFDs) involves a high level of risk and may not be suitable for all investors. The leveraged nature of CFDs can result in substantial financial losses that exceed your initial investment. Before engaging in CFD trading, it is imperative that you carefully consider your risk tolerance and investment objectives. You may proceed further with your trading experience, by accepting this risk."
+        "answer":"Trading in Contract for Difference (CFDs) involves a high level of risk and may not be suitable for all investors. The leveraged nature of CFDs can result in substantial financial losses that exceed your initial investment. Before engaging in CFD trading, it is imperative that you carefully consider your risk tolerance and investment objectives."
     },
     "KYC_Elementary_FundAccount":{
         "answer":"You can already fund up to €2,000 to your account without account verification. However we will ask you to verify your account within 15 days."

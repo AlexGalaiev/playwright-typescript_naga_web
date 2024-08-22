@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { RandomUser } from "../common/testUserCredentials/randomUser";
+import {faker, fakerEN} from '@faker-js/faker'
 
 export class SighUp{
     page: Page;
@@ -35,6 +36,7 @@ export class SighUp{
         await this.password.pressSequentially("Test123!")
         await this.checkCountry(Country)
         await this.submitBtn.click();
+        await this.page.waitForSelector('.header__menu',{state:'visible'})
         return randomEmail;
     };
     async create_NM_CFDUser(Country: string){
@@ -46,6 +48,7 @@ export class SighUp{
         await this.NM_checkboxPrivacyPolicy.click();
         await this.NM_checkbox_yearsConfirmeation.click();
         await this.submitBtn.click();
+        await this.page.waitForSelector('.header__menu',{state:'visible'})
         return randomEmail;
     }
 
@@ -62,4 +65,105 @@ export class SighUp{
     async getSighUpTittleText(){
         return await this.sighUpTittle.textContent();
     };
+    async addUserApi(email: string, country: string, userName: string){
+        let firstName = await fakerEN.person.firstName()
+        let lastName = await fakerEN.person.lastName()
+        const axios = require('axios');
+        let data = JSON.stringify({
+        "p_email": email,
+        "p_user_name": userName,
+        "p_plain_password": "Test123!",
+        "p_tel": "+387603039647",
+        "is_flexible": true,
+        "p_app_language": "en",
+        "p_country": country,
+        "p_first_name":firstName,
+        "p_last_name": lastName,
+        "site": {
+            "type": "FACEBOOK"
+        }
+        });
+        
+        let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://api-v2.naga.com/user/registration/register',
+        headers: {
+            'accept-version': '2.*',
+            'platform': 'web-trader',
+            'Content-Type': 'application/json',
+        },
+        data : data
+        };
+        
+        axios.request(config)
+        .then((response) => {
+        console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+        console.log(error);
+        });
+    }
+    async addUserApiNagaCapital(email: string, country: string,){
+        const axios = require('axios');
+        let data = JSON.stringify({
+        "p_app_language":"en",
+        "p_department":"ns",
+        "p_user_name": null,
+        "p_email": email,
+        "p_plain_password": "Test123!",
+        "p_tel": "+387603039647",
+        "is_flexible": true,
+        "p_country": country,
+        "p_first_name":"",
+        "p_last_name": "",
+        "p_webinar":"web-trader",
+        "site": {
+            "type": "FACEBOOK"
+        }
+        });
+        
+        let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://api-v2.naga.com/user/registration/register',
+        headers: {
+            'accept-version': '2.*',
+            'platform': 'web-trader',
+            'Content-Type': 'application/json',
+        },
+        data : data
+        };
+        
+        axios.request(config)
+        .then((response) => {
+        console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+        console.log(error);
+        });
+    }
+    async createLead(country: string){
+        let user = new RandomUser();
+        let randomEmail = user.getRandomUserEmail(); 
+        let randomUserName = user.randomUserName()
+        await this.addUserApi(randomEmail, country, randomUserName);
+        return randomEmail;
+    }
+    public randomUserName(){
+        const randomNumber = Math.floor(Math.random() * (999 - 10 + 1)) + 10;
+        let userName = `user${randomNumber}`
+        return userName;
+    }
+    async createLeadUserApi(country: string){
+        let randomEmail = new RandomUser().getRandomUserEmail(); 
+        await this.addUserApi(randomEmail, country, this.randomUserName())
+        return randomEmail
+    }
+
+    async createLeadUserApiNagaCapital(country: string){
+        let randomEmail = new RandomUser().getRandomUserEmail(); 
+        await this.addUserApiNagaCapital(randomEmail, country)
+        return randomEmail
+    }
 }

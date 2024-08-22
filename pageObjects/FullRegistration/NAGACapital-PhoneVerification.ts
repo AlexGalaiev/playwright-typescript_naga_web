@@ -41,12 +41,17 @@ export class PhoneVerification{
     };
 
     async MN_insertVerificationCode(){
+        await this.page.getByText('Send to SMS').click()
         await this.page.waitForTimeout(2000);
         for(const otpCode of await this.verificationCode.all()){
             await otpCode.pressSequentially('1');
         }
         await this.page.waitForTimeout(500)
-        await this.MN_verifyCode.click()
-        await this.page.waitForSelector("//div[@class='modal-content']", {state:"visible", timeout: 15000})
+        await this.page.locator("//footer//button[text()='Verify']").click();
+        await this.page.waitForSelector("//p[text()='Personal Details']", {state:'visible', timeout:25000})
+    }
+    async acceptPhoneNumber(){
+        await this.page.locator("//button[contains(@class, 'kyc-live-account_submitButton')]").click()
+        await this.page.waitForSelector("//div[contains(@class, 'phone-verification-modal__body__kyc')]")
     }
 }

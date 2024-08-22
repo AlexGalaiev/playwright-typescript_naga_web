@@ -22,10 +22,12 @@ export class FinalStep{
     readonly BeginnerDisclaimer: Locator;
     readonly BeginnerDescription: Locator;
     readonly BeginnerFundAccount: Locator;
+    readonly customCheckbox: Locator;
 
     constructor(page: Page){
         this.page = page;
         this.scorringLevel = page.locator("//p[contains(@class, 'descriptionHeader')][2]")
+        this.customCheckbox = page.locator("//label[contains(@class, 'consentCheckbox')]")
         //Advance
         this.AdvanceDisclaimer = page.locator("//p[contains(@class, 'descriptionAdvanced')]");
         this.AdvanceDescription = page.locator("//p[contains(@class, 'descriptionFooter')][1]")
@@ -41,7 +43,7 @@ export class FinalStep{
         this.IntermediateDescription = page.locator("//p[contains(@class, 'descriptionFooter')][2]")
         this.IntermediateFundAccount = page.locator("//p[contains(@class, 'descriptionFooter')][3]")
         //Elementary
-        this.ElementaryWarning = page.locator("//p[contains(@class, 'descriptionBeginner')]")
+        this.ElementaryWarning = page.locator("//p[contains(@class, 'categoryDescription')]")
         this.ElementaryDisclaimer = page.locator("//p[contains(@class, 'descriptionFooter')][1]")
         this.ElementaryDescription = page.locator("//p[contains(@class, 'descriptionFooter')][2]")
         this.ElementaryFundAccount = page.locator("//p[contains(@class, 'descriptionFooter')][3]")
@@ -65,7 +67,8 @@ export class FinalStep{
         return await this.AdvanceFundAccount.textContent()
     }
     async clickFundAccount(){
-        return await this.fundAccountBtn.click()
+        await this.fundAccountBtn.click()
+        await this.page.waitForTimeout(4000)
     };
     //preadvance disclaimer
     async getPreAdvanceDisclaimer(){
@@ -105,6 +108,10 @@ export class FinalStep{
     }
     async getElementaryFundAccount(){
         return await this.ElementaryFundAccount.textContent()
+    }
+    async clickCheckbox(){
+        await this.customCheckbox.scrollIntoViewIfNeeded()
+        await this.customCheckbox.click()
     }
     //Beginner
     async getBeginnerWarning(){
