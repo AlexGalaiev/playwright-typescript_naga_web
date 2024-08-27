@@ -28,7 +28,7 @@ export class SighIn{
         await this.signInName.pressSequentially(UserEmail);
         await this.signInPassword.pressSequentially(UserPassword);
         await this.signBtn.click();
-        await this.page.waitForSelector('.header__menu',{state:'visible'})
+        //await this.page.waitForSelector('.header__menu',{state:'visible'})
     };
     async forgotPasswordClick(){
         await this.forgotPasswordLink.click();
@@ -44,6 +44,7 @@ export class SighIn{
         return await this.sighInHeaderName.textContent();
     };
     async getLoginErrorMsg(){
+        await this.page.waitForTimeout(1500)
         return await this.incorrectCredentialsMsg.textContent();
     };
     async clickSignInBtn(){

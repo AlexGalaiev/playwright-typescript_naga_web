@@ -7,6 +7,7 @@ export class ForgotPassword{
     readonly forgotPasswordEmailField: Locator;
     readonly forgotPasswordSendBtn: Locator;
     readonly forgotPasswordConfirmation: Locator;
+    readonly forgotPasswordhead: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -14,6 +15,7 @@ export class ForgotPassword{
         this.forgotPasswordEmailField = page.locator("[name='emailOrUsername']");
         this.forgotPasswordSendBtn = page.locator("//button[contains(@class, 'forgot-password-form__submit-button')]");
         this.forgotPasswordConfirmation = page.locator("//div[contains(@class, 'forgot-password-form__description-confirmation')]")
+        this.forgotPasswordhead = page.locator('.forgot-password-form__headline')
     }
 
     async getForgotPasswordDescription(){
@@ -26,7 +28,10 @@ export class ForgotPassword{
         await this.page.waitForTimeout(250)
         await this.forgotPasswordEmailField.pressSequentially(Email);
         await this.page.waitForTimeout(250)
-        await this.forgotPasswordSendBtn.click();
+        await this.forgotPasswordSendBtn.click();   
+    }
+    async getForgotPasswordHeadText(){
+        return await this.forgotPasswordhead.textContent();
     }
 
 

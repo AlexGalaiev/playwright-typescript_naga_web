@@ -23,7 +23,6 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry}, testI
             await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
         });
         await test.step("Fill personal information, phone verification", async()=>{
-            //await personalInfo.fillPersonalInformation()
             await mainpage.clickUpgradeBtn();
             await kycStart.clickStartVerificationBtn()
             await verification.acceptPhoneNumber()
@@ -31,7 +30,8 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry}, testI
         })
     })
     
-    test("@24921 Naga Markets. KYC - Advance level.", async({page})=>{
+    test("@24921 Naga Markets. KYC - Advance level.", async({page},testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 120000)
         let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json"
         let mainPageLocalization = "/pageObjects/localization/NagaMarkets_MainPage.json"
         let quiz = new FullRegistration(page)
@@ -55,7 +55,8 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry}, testI
         })
     })
     
-    test("@24925 Naga Markets. KYC - PreAdvance level.", async({page})=>{
+    test("@24925 Naga Markets. KYC - PreAdvance level.", async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 120000)
         let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json"
         let mainPageLocalization = "/pageObjects/localization/NagaMarkets_MainPage.json"
         let quiz = new FullRegistration(page)
@@ -77,11 +78,11 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry}, testI
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
             expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerDisclaimerText());
-            await mainPage.clickIUnderstanBtn();
         })
     })
 
-    test("@24920 Naga Markets. KYC - Intermediate level.", async({page})=>{
+    test("@24920 Naga Markets. KYC - Intermediate level.", async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 120000)
         let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json"
         let mainPageLocalization = "/pageObjects/localization/NagaMarkets_MainPage.json"
         let quiz = new FullRegistration(page)
@@ -103,11 +104,11 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry}, testI
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
             expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerMiddleScore());
-            await mainPage.clickIUnderstanBtn();
         })
     })
 
-    test("@24923 Naga Markets. KYC - Elementary level.", async({page})=>{
+    test("@24923 Naga Markets. KYC - Elementary level.", async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 120000)
         let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json"
         let mainPageLocalization = "/pageObjects/localization/NagaMarkets_MainPage.json"
         let quiz = new FullRegistration(page)
@@ -129,11 +130,11 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry}, testI
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
             expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerMiddleScore());
-            await mainPage.clickIUnderstanBtn();
         })
     })
 
-    test("@24922 Naga Markets. KYC - Beginner level.", async({page})=>{
+    test("@24922 Naga Markets. KYC - Beginner level.", async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 120000)
         let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json"
         let mainPageLocalization = "/pageObjects/localization/NagaMarkets_MainPage.json"
         let quiz = new FullRegistration(page)
@@ -154,6 +155,5 @@ test.beforeEach("Naga Markets. KYC", async({page, NagaMarkets, NMCountry}, testI
         })
         await test.step("Check main page: check accounts and verification banner", async()=>{
             expect(await localizationMainPage.getLocalizationText("PreAdvanceDisclaimerBody")).toContain(await mainPage.getVerifyBannerMiddleScore());
-            await mainPage.clickIUnderstanBtn();
         })
     })

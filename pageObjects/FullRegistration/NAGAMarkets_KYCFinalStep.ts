@@ -68,7 +68,7 @@ export class FinalStep{
     }
     async clickFundAccount(){
         await this.fundAccountBtn.click()
-        await this.page.waitForTimeout(4000)
+        await this.page.waitForTimeout(3000)
     };
     //preadvance disclaimer
     async getPreAdvanceDisclaimer(){

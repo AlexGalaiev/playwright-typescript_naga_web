@@ -98,7 +98,7 @@ export class SighUp{
         
         axios.request(config)
         .then((response) => {
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
         console.log(error);
@@ -143,13 +143,13 @@ export class SighUp{
         console.log(error);
         });
     }
-    async createLead(country: string){
-        let user = new RandomUser();
-        let randomEmail = user.getRandomUserEmail(); 
-        let randomUserName = user.randomUserName()
-        await this.addUserApi(randomEmail, country, randomUserName);
-        return randomEmail;
-    }
+    // async createLead(country: string){
+    //     let user = new RandomUser();
+    //     let randomEmail = user.getRandomUserEmail(); 
+    //     let randomUserName = user.randomUserName()
+    //     await this.addUserApi(randomEmail, country, randomUserName);
+    //     return randomEmail;
+    // }
     public randomUserName(){
         const randomNumber = Math.floor(Math.random() * (999 - 10 + 1)) + 10;
         let userName = `user${randomNumber}`

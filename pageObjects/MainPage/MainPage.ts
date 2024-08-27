@@ -78,6 +78,7 @@ export class MainPage{
     }
 
     async getVerifyBannerContent(){
+        await this.page.waitForSelector('.header__verify__content', {state: 'visible'})
         return await this.verifyBanner.textContent()
     };
     //Naga Markets
@@ -85,12 +86,15 @@ export class MainPage{
         return await this.IUnderstandBtn.click()
     };
     async clickUpgradeBtn(){
+        await this.UpgradeButton.waitFor({state:'visible'})
         await this.UpgradeButton.click()
     };
     async getVerifyBannerDisclaimerText(){
+        await this.page.waitForSelector('".user-status-box__desc-text')
         return await this.verifyBannerDisclaimer.textContent()
     };
     async getVerifyBannerMiddleScore(){
+        await this.page.waitForSelector('.user-status-box__desc-text', {state:'visible'})
         let middleText = await this.page.locator('.user-status-box__desc-text').textContent();
         return middleText
     }

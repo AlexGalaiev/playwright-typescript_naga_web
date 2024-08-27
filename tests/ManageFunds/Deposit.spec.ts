@@ -11,7 +11,7 @@ type NStestTypes = {
     depositName: string,
     pageTittle: string,
 }
-test.describe("Deposit", async()=>{
+test.describe("Naga Capital.Deposit", async()=>{
 
 const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24082', brand: '@NS', user: 'testTrading2', depositName: 'credit-cards', pageTittle:'Fund via Credit Card'}, 

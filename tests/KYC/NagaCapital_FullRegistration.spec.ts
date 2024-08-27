@@ -17,7 +17,7 @@ test("@24917 NAGA Capital full registration user", async({ page, NagaCapital, NS
     let phoneVerification = new PhoneVerification(page);
     let verificationPopup = new VerificationPopup(page);
     await test.step('Short registration of lead user', async ()=>{
-        let email = await sighUp.createLeadUserApiNagaCapital('BA')
+        let email = await sighUp.createLeadUserApi('BA')
         await sighIn.goto(NagaCapital, 'login');
         await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
     });

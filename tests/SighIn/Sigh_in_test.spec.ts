@@ -7,9 +7,7 @@ import {test} from "../../test-options"
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout";
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGAMarkets_PersonalInformation";
-import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
+import { IncorrectPasswordPopup } from "../../pageObjects/SighIn/IncorrectPassword";
 
 
 test.describe("Naga Capital. SignIn Page", async()=>{
@@ -56,21 +54,17 @@ test.describe("Naga Capital. SignIn Page", async()=>{
     })
 })
 test.describe('Naga Markets. Sigh in', async()=>{
-    let testUser: string = '';
+    let testUser;
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_SighInPage.json');
 
     test.beforeEach('Create lead user for tests', async({page, NagaMarkets, NMCountry})=>{
         let sighUp = new SighUp(page)
         let myAccountsMenu = new MyAccounts(page)
-        let personalInfo = new PersonalInformation(page)
-        let phoneVerification = new PhoneVerification(page);
-        let youAreIn = new YouAreInNagaMarkets(page);
+        let sighIn = new SighIn(page)
         await test.step("Create lead user", async()=>{
-            await sighUp.goto(NagaMarkets, "register");
-            testUser = await sighUp.createCFDUser(NMCountry);
-            await personalInfo.fillPersonalInformation();
-            await phoneVerification.MN_insertVerificationCode();
-            await youAreIn.clickExplorePlatform();
+            testUser = await sighUp.createLeadUserApi('FR')
+            await sighIn.goto(NagaMarkets, 'login');
+            await sighIn.sigInUserToPlatform(testUser, process.env.USER_PASSWORD || "")
         })
         await test.step('Log out from platform ', async()=>{
             await myAccountsMenu.openUserMenu();
@@ -90,6 +84,8 @@ test.describe('Naga Markets. Sigh in', async()=>{
 
     test("@23896 Account locking", async({page})=>{
         let sighIn = new SighIn(page);
+        let incorrectPasPopup = new IncorrectPasswordPopup(page);
+        let forgotPassword = new ForgotPassword(page);
         await test.step("Check account blocking functionality", async()=>{
             await sighIn.sigInUserToPlatform(testUser, "111Test123")
             expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_1try"));
@@ -98,7 +94,9 @@ test.describe('Naga Markets. Sigh in', async()=>{
             await sighIn.clickSignInBtn();
             expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescription"));
             await sighIn.clickSignInBtn();
-            expect(await sighIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescriptionLastTry"));
+            expect(await incorrectPasPopup.getPopupText()).toEqual(await localization.getLocalizationText("AccountBlockDescriptionLastTry"));
+            await incorrectPasPopup.openForgotPasswordForm();
+            expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Forgot your password?')
         })
     })
 })

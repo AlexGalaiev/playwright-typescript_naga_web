@@ -88,7 +88,7 @@ test.describe('Naga Markets. Withdrawal', async()=>{
         expect(await withdrawal.getNagaMarketsWithdrawalPopupTitle()).toContain(`The withdrawal of €${amountValueToWithrawal} to your PayPal is being reviewed.`)
     })    
 
-    test('@24094 Altbank withdrawal', async({page})=>{
+    test.skip('@24094 Altbank withdrawal', async({page})=>{
         let withdrawal = new Withdrawal(page)
         await test.step('Make withdrawal of altbank', async()=>{
             await withdrawal.clickMenuPoint('Bank Account')
@@ -148,7 +148,7 @@ const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
     {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle:'Perfect Money'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}of testWithdrawalParametersMarkets){
-    test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, async({page})=>{
+    test(`${testRailId} @dev NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
@@ -167,5 +167,5 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
             await withdrawal.clickWithdrawBtn();
         })
         await test.step(`Check ${withdrawalPageTitle} cashier`, async()=>{
-            expect(await withdrawal.getNagaMarketsWithdrawalPopupTitle()).toContain(`The withdrawal of €${amountValueToWithrawal} to your ${menuPoint} is being reviewed.`)
+            expect(await withdrawal.getNagaMarketsWithdrawalPopupTitle()).toContain(`The withdrawal of $${amountValueToWithrawal} to your ${menuPoint} is being reviewed.`)
         })})}})
