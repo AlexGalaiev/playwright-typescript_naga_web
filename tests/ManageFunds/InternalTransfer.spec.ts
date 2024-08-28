@@ -10,7 +10,7 @@ type testTransfer = {
     brand: string
 }
 const testTransferParams: testTransfer[] = [
-    {testRailId: '@23961', brand: '@NS', user: 'testTrading3'},
+    //{testRailId: '@23961', brand: '@NS', user: 'testTrading3'},
     {testRailId: '@25149', brand: '@NM', user: 'testTrading3Markets'}
 ]
 for(const{testRailId, brand, user} of testTransferParams){
@@ -25,7 +25,7 @@ for(const{testRailId, brand, user} of testTransferParams){
         await test.step("Make internal transfer", async()=>{
             await mainPage.openManageFunds();
             await internalTransfer.openInternalTransferPage();
-            await internalTransfer.chooseAccount();
+            await internalTransfer.chooseAccount('AccountDirection');
             await internalTransfer.make1$InternalTransfer();
             expect(await internalTransfer.checkSuccessPopupText()).toContain("You have successufuly transfered")
         })

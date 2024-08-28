@@ -38,8 +38,8 @@ export class AllInstruments{
         await this.page.waitForTimeout(500);
     };
     async addToWatchlist(NameOfInstrument: string){
-        await this.foundInstrumentName.textContent() === NameOfInstrument;
-        await this.foundInstrumentAddtoWatchlist.click();
+        //await this.foundInstrumentName.textContent() === NameOfInstrument;
+        await this.foundInstrumentAddtoWatchlist.first().click();
         await this.page.waitForTimeout(1000)
     };
     async openWatclistTab(){
@@ -59,7 +59,7 @@ export class AllInstruments{
         return await this.emptyWatchlistText.textContent();
     };
     async addPriceAlertToInstrumnet(){
-        await this.addPriceAlert.click();
+        await this.addPriceAlert.first().click();
         await this.page.waitForTimeout(500)
     };
 
@@ -71,7 +71,7 @@ export class AllInstruments{
             {has: await this.page.locator(`//div[@class = 'symbol-name-container']//div[text()='${instrumentName}']`)})
         let instrument = await instrumentContainer.first();
         let position = await instrument.locator(`//button[text()='${positionType}']`)
-        await position.click();
+        await position.first().click();
     }
 
     async openPosition(investmentType: string){
