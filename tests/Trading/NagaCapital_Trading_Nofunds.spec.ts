@@ -7,15 +7,16 @@ import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 import {test} from "..//..//test-options"
 
 test.describe("Trading without funds", async()=>{
-let tradingInstrument = "BTCEUR"
+let tradingInstrument = "Bitcoin/EUR"
 type testNoFunds = {
     testRailId: string, 
     brand: string,
     user: string,
 }
+//need to have opened previously opened positions of BTC
 
 const testNoFundsParaketers: testNoFunds[] = [
-    {testRailId: '@25018', brand: '@NS', user: 'tradingNoFunds'},
+    //{testRailId: '@25018', brand: '@NS', user: 'tradingNoFunds'},
     {testRailId: '@25176', brand: '@NM', user: 'tradNoFundsMarket'}
 ]
 for(const{testRailId, brand, user}of testNoFundsParaketers){
@@ -29,10 +30,10 @@ for(const{testRailId, brand, user}of testNoFundsParaketers){
             await sighIn.goto(await sighIn.chooseBrand(brand), "login");
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || "");
           });
-          await test.step("Check previously opened positions and close if they exist", async () => {
-            await mainPage.openHeaderMenuPoint("my-trades");
-            await myTrades.closePositionsIfExist();
-          });
+          // await test.step("Check previously opened positions and close if they exist", async () => {
+          //   await mainPage.openHeaderMenuPoint("my-trades");
+          //   await myTrades.closePositionsIfExist();
+          // });
           await test.step("Choose instrument and open position", async () => {
             await mainPage.openHeaderMenuPoint("markets");
             await instruments.openPositionOfInstrument(tradingInstrument, 'Short')

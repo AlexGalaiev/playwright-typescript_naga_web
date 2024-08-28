@@ -33,6 +33,7 @@ export class VerificationPopup{
     async redirectToVerificationCenter(){
         await this.page.getByRole('button', {name:'Upload'}).click()
     }
-
-    
+    async getUrl(){
+        return await this.page.url();
+    }
 }

@@ -184,7 +184,7 @@ for(const{testRailId, brand, user, localization}of testNotVerifieduser){
             await feed.clickOnPostZone()
             expect(await feed.getMessageForNotverifiedUser()).toEqual(await feedLocalization.getLocalizationText('NotVerifiedUserPopupMessage'))
             await feed.checkRedirectToVerification();
-            expect(await verificationPopup.verificationPoupIsDisplyed()).toBeVisible()
+            expect(await verificationPopup.getUrl()).toContain('verification')
         })
     })
 }
