@@ -104,20 +104,25 @@ export class SighUp{
         console.log(error);
         });
     }
-    async addUserApiNagaCapital(email: string, country: string,){
+
+    async addUserApiNagaCapital(email: string, country: string){
         const axios = require('axios');
         let data = JSON.stringify({
         "p_app_language":"en",
-        "p_department":"ns",
         "p_user_name": null,
         "p_email": email,
         "p_plain_password": "Test123!",
-        "p_tel": "+387603039647",
+        // "p_tel": "+387603039647",
+        // 'phone_number_confirmed': true,
         "is_flexible": true,
         "p_country": country,
         "p_first_name":"",
         "p_last_name": "",
+        "legal_documents_accepted_code":"ns_legal_docs_accepted",
+        "personal_data_processing_and_communication_accepted":true,
+        "us_citizen_or_resident":false,
         "p_webinar":"web-trader",
+        "p_department":"ns",
         "site": {
             "type": "FACEBOOK"
         }
@@ -126,7 +131,8 @@ export class SighUp{
         let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://api-v2.naga.com/user/registration/register',
+        //url: 'https://api-v2.naga.com/user/registration/register',
+        url: 'https://api-v2-canary.sxdev.io/user/registration/register',
         headers: {
             'accept-version': '2.*',
             'platform': 'web-trader',
@@ -137,19 +143,13 @@ export class SighUp{
         
         axios.request(config)
         .then((response) => {
-        console.log(JSON.stringify(response.data));
+        console.log('response data before phone', JSON.stringify(response.data));
         })
         .catch((error) => {
         console.log(error);
         });
     }
-    // async createLead(country: string){
-    //     let user = new RandomUser();
-    //     let randomEmail = user.getRandomUserEmail(); 
-    //     let randomUserName = user.randomUserName()
-    //     await this.addUserApi(randomEmail, country, randomUserName);
-    //     return randomEmail;
-    // }
+
     public randomUserName(){
         const randomNumber = Math.floor(Math.random() * (999 - 10 + 1)) + 10;
         let userName = `user${randomNumber}`
@@ -161,9 +161,36 @@ export class SighUp{
         return randomEmail
     }
 
-    async createLeadUserApiNagaCapital(country: string){
+    async createLeadUserApiNagaCapital(country: string, page: Page){
         let randomEmail = new RandomUser().getRandomUserEmail(); 
         await this.addUserApiNagaCapital(randomEmail, country)
         return randomEmail
+    }
+
+    async makePhoneVerifed(page){
+    await page.route('*/**/user/info', async route => {
+        const response = await route.fetch();
+        let body = await response.json();
+        console.log(body)
+        body.data.company_id = '1';
+        body.data.phone_number_confirmed = 'Y'
+        body.data.phone_number = "+387603039647";
+        body.data.kyc_beginner_risk_accepted = true;
+        await route.fulfill({
+            response,
+            body: JSON.stringify(body),
+            headers: {
+            ...response.headers(),
+            },
+        });
+        });}
+
+    async checkUserInfo(page){
+        await page.route('*/**/user/info', async route => {
+            const response = await route.fetch();
+            let body = await response.json();
+            console.log('body after changing', body)
+            console.log('end')
+        })
     }
 }

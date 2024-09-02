@@ -36,6 +36,7 @@ export default defineConfig<TestOptions>({
         ...devices["Desktop Chrome"],
         //NagaMarkets: "https://sxdevmarkets.com",
         NagaMarkets: "https://nagamarkets.com",
+        //NagaCapital: "https://nagacap.com",
         NagaCapital: "https://sxdevcap.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",

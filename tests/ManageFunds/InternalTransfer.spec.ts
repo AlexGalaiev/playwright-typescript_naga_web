@@ -10,7 +10,7 @@ type testTransfer = {
     brand: string
 }
 const testTransferParams: testTransfer[] = [
-    //{testRailId: '@23961', brand: '@NS', user: 'testTrading3'},
+    {testRailId: '@23961', brand: '@NS', user: 'testTrading3'},
     {testRailId: '@25149', brand: '@NM', user: 'testTrading3Markets'}
 ]
 for(const{testRailId, brand, user} of testTransferParams){
