@@ -14,14 +14,16 @@ test("@24917 NAGA Capital full registration user", async({ page, NagaCapital, NS
     let sighUp = new SighUp(page);
     let sighIn = new SighIn(page)
     let mainPage = new MainPage(page);
+    let startKyc = new StartKYCPopup(page)
     let phoneVerification = new PhoneVerification(page);
     let verificationPopup = new VerificationPopup(page);
     await test.step('Short registration of lead user', async ()=>{
-        let email = await sighUp.createLeadUserApi('BA')
+        let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
         await sighIn.goto(NagaCapital, 'login');
         await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
     });
     await test.step('Check trading accounts', async()=>{
+        await sighUp.makePhoneVerifed(page)
         await mainPage.mainPageIsDownLoaded();
         expect(await mainPage.getActiveTradingAccountType()).toEqual('DEMO')
         await mainPage.openTradingAssountsMenu();
@@ -33,11 +35,8 @@ test("@24917 NAGA Capital full registration user", async({ page, NagaCapital, NS
     })
     await test.step('Redirect to main page and begin FR process', async ()=>{
         await mainPage.proceedRegistration();
-        await new StartKYCPopup(page).startKYC();
-    });
-    await test.step('Verification of phone number', async() =>{
-        await phoneVerification.insertTestPhoneNumber();
-        await phoneVerification.insertVerificationCode();
+        await startKyc.startKYC();
+        await startKyc.proceedVerification();
     });
     await test.step('Fill personal information step', async() =>{
         await new PersonalInformation(page).fillPersonalInformation();

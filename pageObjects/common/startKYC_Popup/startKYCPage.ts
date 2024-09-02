@@ -10,7 +10,10 @@ export class StartKYCPopup{
     };
 
     async startKYC(){
-        return this.continueBtn.click();
+        await this.continueBtn.click();
+    }
+    async proceedVerification(){
+        await this.page.locator("//button[@type='submit']").click()
     }
 
     

@@ -25,7 +25,7 @@ export class MainPage{
         this.notActiveTradingAccount = page.locator("//div[@class='sidebar-trading-account'][2]")
         this.sideBar = page.locator('.sidebar__wrapper');
         this.verifyHeaders = page.locator("//div[@class = 'header-verify-account-levels']");
-        this.CompleatRegistration = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
+        this.CompleatRegistration = page.locator('//div[@data-testid="complete-level-1"]//span[text()="To do"]')
         this.verifyStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
         this.manageFunds = page.locator("//span[text()='Manage Funds']")
         this.verifyBanner = page.locator(".header__verify__content")
@@ -43,7 +43,7 @@ export class MainPage{
         return await this.verifyHeaders.isVisible()
     }
     async proceedRegistration(){
-        await this.CompleatRegistration.click();
+        await this.page.locator("//span[text()='Complete now']").click();
     };
     async updateUserLevel(){
         await this.verifyStepHeader.click();
