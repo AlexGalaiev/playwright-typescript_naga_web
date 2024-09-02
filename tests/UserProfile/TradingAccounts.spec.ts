@@ -1,0 +1,140 @@
+
+import { expect } from "@playwright/test";
+import { AllSetPopup } from "../../pageObjects/common/allSetPopup(KYC)/allSetPopup";
+import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
+import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
+import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
+import { MainPage } from "../../pageObjects/MainPage/MainPage";
+import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { AddAcountForm } from "../../pageObjects/UserProfile/AddTradingAccount";
+import { HeaderMenuUserProfile } from "../../pageObjects/UserProfile/HeaderUserProfile";
+import {test} from "../../test-options";
+import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { KYC_Start } from "../../pageObjects/FullRegistration/NAGAMarkets-KYCStart";
+import { FullRegistration } from "../../pageObjects/FullRegistration/NagaMarkets_FullRegistration";
+import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep";
+
+test.describe("NagaCapital - Trading Accounts", async()=>{
+    
+  test("@23922 Create 2nd live account", async({page, NagaCapital})=>{
+        let sighUp = new SighUp(page);
+        let mainPage = new MainPage(page);
+        let addAccount = new AddAcountForm(page);
+        let headerMenu = new HeaderMenuUserProfile(page);
+        let sighIn = new SighIn(page)
+        let startKYC = new StartKYCPopup(page)
+        await test.step('Create account with filled personal information', async ()=>{
+            let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
+            await sighIn.goto(NagaCapital, 'login');
+            await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
+            await sighUp.makePhoneVerifed(page)
+            await mainPage.mainPageIsDownLoaded();
+            await mainPage.proceedRegistration();
+            await startKYC.startKYC();
+            await startKYC.proceedVerification();
+            await new PersonalInformation(page).fillPersonalInformation();
+            await new AllSetPopup(page).clickDepositNow();
+        })
+        await test.step('Add second live account', async()=>{
+            await headerMenu.openAddNewTradingAccount();
+            await addAccount.create_USD_LiveAccount();
+            expect(await addAccount.checkNewLiveAccount()).toBeTruthy
+        })
+        await test.step('Add second demo account', async()=>{
+            await headerMenu.openAddNewTradingAccount();
+            await addAccount.create_EUR_DemoAccount();
+            expect(await addAccount.checkNewDemoAccount()).toBeTruthy
+        })
+    })
+
+    type tradingAcTypes = {
+        testRailId: string,
+        brand: string,
+        user: string,
+    }
+    const testTrAccountsParams: tradingAcTypes[] = [
+        {testRailId: '@23930', brand: '@NS', user: 'userWithAccounts@i.ua'},
+        {testRailId: '@23602', brand: '@NM', user: 'userWithAccounts2@i.ua'}
+    ]
+    for(const{testRailId, brand, user} of testTrAccountsParams){
+        test(`${testRailId} Edit trading accounts`, async({page})=>{
+        let sighIn = new SighIn(page);
+        let mainPage = new MainPage(page);
+        let addAccountForm = new AddAcountForm(page);
+        await test.step("Login to platform", async()=>{
+            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
+            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        })
+        await test.step('Check possibility to change account name', async()=>{
+            await new HeaderMenuUserProfile(page).openAddNewTradingAccount();
+            await addAccountForm.editAccountName('Default_Live_account')
+            expect(await addAccountForm.getDefaultAccountName()).toEqual('Default_Live_account')
+            await addAccountForm.editAccountName('NAGA - USD');
+        })
+        await test.step('Check possibility to show password', async()=>{
+            await addAccountForm.openShowPasswordPopup();
+            expect(await addAccountForm.checkPasswordContainerIsVisibel()).toBeTruthy()
+        })
+    })
+}
+
+const testAccountSwitchingParams: tradingAcTypes[] = [
+    {testRailId: '@23930', brand: '@NS', user: 'userWithAccounts@i.ua'},
+    {testRailId: '@23602', brand: '@NM', user: 'userWithAccounts2@i.ua'}
+]
+for(const{testRailId, brand, user} of testAccountSwitchingParams){
+    test(`${testRailId} Account switching`, async({page})=>{
+        let sighIn = new SighIn(page);
+        let mainPage = new MainPage(page)
+        await test.step("Login to platform", async()=>{
+            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
+            await sighIn.sigInUserToPlatform("userWithAccounts@i.ua", process.env.USER_PASSWORD || '');
+        })
+        await test.step("Check account switching", async()=>{
+            await mainPage.openTradingAssountsMenu();
+            let notActiveAccountId = await mainPage.getNotActiveTradingAccountId()
+            await mainPage.switchUserToNotActiveAccount();
+            expect(await mainPage.getActiveTradingAccountId()).toEqual(notActiveAccountId)
+        })
+        await test.step("Switch back", async()=>{
+            await mainPage.openTradingAssountsMenu();
+            await mainPage.switchUserToNotActiveAccount();
+        })})}})
+
+test.describe('NagaMarkets - Trading accounts', async()=>{
+    test('@23600 Create 2nd live account', async({page, NagaMarkets}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 120000);
+        let KYC_Advance = "Advance";
+        let sighIn = new SighIn(page)
+        let sighUp = new SighUp(page)
+        let mainPage = new MainPage(page)
+        let kycStart = new KYC_Start(page)
+        let verification = new PhoneVerification(page);
+        let quiz = new FullRegistration(page);
+        let KYC_FinalStep = new FinalStep(page);
+        let addAccount = new AddAcountForm(page);
+        let headerMenu = new HeaderMenuUserProfile(page);
+        await test.step("Create new fully registered user", async () => {
+            let email = await sighUp.createLeadUserApi("FR");
+            await sighIn.goto(NagaMarkets, "login");
+            await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "");
+            await mainPage.clickUpgradeBtn();
+            await kycStart.clickStartVerificationBtn();
+            await verification.acceptPhoneNumber();
+            await verification.MN_insertVerificationCode();
+            await quiz.fill_KYC(KYC_Advance);
+            expect(await KYC_FinalStep.getUsersScorring()).toEqual("Advanced");
+            await KYC_FinalStep.clickFundAccount()
+        })
+        await test.step('Add second live account', async()=>{
+            await headerMenu.openAddNewTradingAccount();
+            await addAccount.create_USD_LiveAccount();
+            expect(await addAccount.checkNewLiveAccount()).toBeTruthy
+        })
+        await test.step('Add second demo account', async()=>{
+            await headerMenu.openAddNewTradingAccount();
+            await addAccount.create_EUR_DemoAccount();
+            expect(await addAccount.checkNewDemoAccount()).toBeTruthy
+        })
+})
+})

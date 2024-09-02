@@ -16,7 +16,7 @@ type tradingTypes = {
   investDirection: string
 }
 const tradingInstrument = "Dogecoin/USD";
-const realStockInstrument = 'Adidas Salomon'
+const realStockInstrument = 'Agilent Technologies'
 let investmentValue;
 let units;
 let rate;
@@ -139,7 +139,7 @@ for(const{testRailId, brand, user, investDirection}of tradingParameters){
     });
     await test.step("Choose instrument for trading. Open new position page", async () => {
       await mainPage.openHeaderMenuPoint("markets");
-      await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
+      await instruments.openPositionOfInstrument(realStockInstrument, investDirection)
       // await instruments.searchInstrument(realStockInstrument);
       // await instruments.openPosition(investDirection)
       expect(await realStockPopup.getPopupText()).toEqual(await localization.getLocalizationText('RealStock_OpenShortPosition'))

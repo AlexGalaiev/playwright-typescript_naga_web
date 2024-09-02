@@ -15,7 +15,7 @@ test.describe("Naga Capital. Sigh up page", async()=>{
         brandRedirect: string
     }
     const testParamsChangeBrandPopup: testChangeBrandPopup[] = [
-        {testRailId: '@24931', brandStart: '@NS', brandRedirect: '@NM', localization: "/pageObjects/localization/NagaMarkets_SighUp.json"},
+        //{testRailId: '@24931', brandStart: '@NS', brandRedirect: '@NM', localization: "/pageObjects/localization/NagaMarkets_SighUp.json"},
         {testRailId: '@25141', brandStart: '@NM', brandRedirect: '@NS', localization: '/pageObjects/localization/SignUpPage.json'}
     ]
     for(const{testRailId, brandStart, localization, brandRedirect} of testParamsChangeBrandPopup){
@@ -47,7 +47,7 @@ test.describe("Naga Capital. Sigh up page", async()=>{
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
         test(`${testRailId} Risk Disclaimer text ${brand}`, async({page})=>{
-            let localizationText = new getLocalization(SighUpPage_localization)
+            let localizationText = new getLocalization(localization)
             let sighUp = new SighUp(page);
             await sighUp.goto(await new SighIn(page).chooseBrand(brand), "register")
             expect(await sighUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))

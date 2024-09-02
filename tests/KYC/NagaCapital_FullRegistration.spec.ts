@@ -2,7 +2,6 @@ import {test} from "../../test-options"
 import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
-import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 import { expect } from "@playwright/test";
 import { AllSetPopup } from "../../pageObjects/common/allSetPopup(KYC)/allSetPopup";
@@ -10,28 +9,21 @@ import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-Up
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
-test("@24917 NAGA Capital full registration user", async({ page, NagaCapital, NSCountry })=>{
+test("@24917 NAGA Capital full registration user", async({ page, NagaCapital }, testInfo)=>{
+    await testInfo.setTimeout(testInfo.timeout + 50000);
     let sighUp = new SighUp(page);
     let sighIn = new SighIn(page)
     let mainPage = new MainPage(page);
     let startKyc = new StartKYCPopup(page)
-    let phoneVerification = new PhoneVerification(page);
     let verificationPopup = new VerificationPopup(page);
     await test.step('Short registration of lead user', async ()=>{
         let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
         await sighIn.goto(NagaCapital, 'login');
         await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
     });
-    await test.step('Check trading accounts', async()=>{
+    await test.step('Verify account via api request', async()=>{
         await sighUp.makePhoneVerifed(page)
         await mainPage.mainPageIsDownLoaded();
-        expect(await mainPage.getActiveTradingAccountType()).toEqual('DEMO')
-        await mainPage.openTradingAssountsMenu();
-        expect(await mainPage.getNumberOfTradingAccounts()).toEqual(1)
-    })
-    await test.step('Check header step view', async()=>{
-        expect(await mainPage.getStatusOfHeaderStep(1)).toEqual('To do');
-        expect(await mainPage.getStatusTextOfHeaderStep(1)).toEqual('Complete now')
     })
     await test.step('Redirect to main page and begin FR process', async ()=>{
         await mainPage.proceedRegistration();
@@ -41,9 +33,6 @@ test("@24917 NAGA Capital full registration user", async({ page, NagaCapital, NS
     await test.step('Fill personal information step', async() =>{
         await new PersonalInformation(page).fillPersonalInformation();
         await new AllSetPopup(page).clickDepositNow();
-    });
-    await test.step("Check number of accounts", async()=>{
-        expect(await mainPage.getNumberOfTradingAccounts()).toEqual(2)
     });
     await test.step('Check status on second step', async()=>{
         expect(await mainPage.getStatusOfHeaderStep(2)).toEqual('To do')

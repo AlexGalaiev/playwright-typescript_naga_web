@@ -16,12 +16,15 @@ test.describe("Naga Capital. SignIn Page", async()=>{
 
     test.beforeEach('Create lead user for tests', async({page, NagaCapital, NSCountry})=>{
         let sighUp = new SighUp(page)
+        let sighIn = new SighIn(page)
         let mainPage = new MainPage(page);
         let myAccountsMenu = new MyAccounts(page)
         await test.step("Create lead user", async()=>{
-            await sighUp.goto(NagaCapital, "register");
-            testUser = await sighUp.createCFDUser(NSCountry);
+            testUser = await sighUp.createLeadUserApiNagaCapital('BA', page)
+            await sighIn.goto(NagaCapital, 'login');
+            await sighIn.sigInUserToPlatform(testUser, process.env.USER_PASSWORD || "")
             await mainPage.mainPageIsDownLoaded()
+            await sighUp.makePhoneVerifed(page)
         })
         await test.step('Log out from platform ', async()=>{
             await myAccountsMenu.openUserMenu();
@@ -29,7 +32,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             await new PageAfterLogout(page).redirectToSighIn();
         })})
 
-    test("@23916 Forgot password link test. @smoke", async({page})=>{
+    test("@23916 Forgot password link test", async({page})=>{
         let signInPage = new SighIn(page);
         let forgotPassword = new ForgotPassword(page);
         await test.step('Check forgot password messages on UI', async()=>{

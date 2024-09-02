@@ -35,8 +35,8 @@ export class InternalTransfer{
     };
 
     async checkAccount(nameOfSourceAccount: string){
-        let sourceAc = await this.page.locator(`//div[@data-testid="transfer-from"]//span[contains(text(), ${nameOfSourceAccount})]`)
-        if(sourceAc){}else{
+        let sourceAc = await this.page.locator("//div[@data-testid='transfer-from']//span[@class='internal-transfer__select-option-login']").textContent()
+        if(await sourceAc?.includes(nameOfSourceAccount)){}else{
             await this.sourceAccount.click()
             await this.page.keyboard.press('ArrowDown')
             await this.page.keyboard.press('Enter'); 

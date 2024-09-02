@@ -121,7 +121,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
-        let amountValueToWithrawal = '9.83'
+        let amountValueToWithrawal = '50'
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
             await sighIn.goto(await sighIn.chooseBrand(brand),'login');
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
@@ -148,7 +148,7 @@ const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
     {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle:'Perfect Money'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}of testWithdrawalParametersMarkets){
-    test(`${testRailId} @dev NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, async({page})=>{
+    test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);

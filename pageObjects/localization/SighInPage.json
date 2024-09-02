@@ -15,13 +15,13 @@
         "answer":"Unfortunately, the password you entered is not correct. Please try again. You have 4 more attemtps left."
     },
     "incorrectPassword_2try":{
-        "answer":"Unfortunately, the password you entered is not correct. Please try again. You have 4 more attemtps left."
+        "answer":"The password you entered is not correct. Please try again or reset your password if you forgot it. You have 3 more attempts left."
     },
     "AccountBlockDescription":{
         "answer":"The password you entered is not correct. Please try again or reset your password if you forgot it. You have 3 more attempts left."
     },
     "AccountBlockDescriptionLastTry":{
-        "answer":"The password you entered is not correct. Please try again or reset your password if you forgot it. You have 3 more attempts left."
+        "answer":"The password you entered is not correct. Please try again or reset your password if you forgot it. You have 2 more attempts left."
     }
     
 }
