@@ -131,8 +131,8 @@ export class SighUp{
         let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        //url: 'https://api-v2.naga.com/user/registration/register',
-        url: 'https://api-v2-canary.sxdev.io/user/registration/register',
+        url: 'https://api-v2.naga.com/user/registration/register',
+        //url: 'https://api-v2-canary.sxdev.io/user/registration/register',
         headers: {
             'accept-version': '2.*',
             'platform': 'web-trader',
@@ -184,13 +184,4 @@ export class SighUp{
             },
         });
         });}
-
-    async checkUserInfo(page){
-        await page.route('*/**/user/info', async route => {
-            const response = await route.fetch();
-            let body = await response.json();
-            console.log('body after changing', body)
-            console.log('end')
-        })
-    }
 }
