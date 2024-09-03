@@ -73,16 +73,18 @@ export class AddAcountForm{
     async checkNewDemoAccount(){
         return this.newDemoEURAccount.isVisible();
     };
-    async editAccountName(AccountName: string){
-        await this.accountEditMenu.click();
-        await this.editAccountBtn.waitFor({timeout:1000});
-        await this.editAccountBtn.click();
+    async editLiveAccountName(AccountName: string){
+        let account = await this.page.locator('.trading-account-item', {hasText: 'Live'})
+        await account.locator("#dd-edit-account").click();
+        let editBtn = await account.locator("//li[@role='presentation']", 
+            {has: await this.page.locator("//a[text()='Edit Account']")})
+        await editBtn.click()
         await this.addAccountPopup.waitFor({timeout:1500});
         await this.accountName.clear()
         await this.accountName.pressSequentially(AccountName);
         await this.saveEditPopupBtn.click();
+        await this.page.locator("//span[text()='Ok']").click()
         await this.successAddingAccountBtn.waitFor({timeout:2000})
-        await this.successAddingAccountBtn.click();
     };
 
     async getDefaultAccountName(){

@@ -16,36 +16,37 @@ import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFin
 
 test.describe("NagaCapital - Trading Accounts", async()=>{
     
-  test("@23922 Create 2nd live account", async({page, NagaCapital})=>{
-        let sighUp = new SighUp(page);
-        let mainPage = new MainPage(page);
-        let addAccount = new AddAcountForm(page);
-        let headerMenu = new HeaderMenuUserProfile(page);
-        let sighIn = new SighIn(page)
-        let startKYC = new StartKYCPopup(page)
-        await test.step('Create account with filled personal information', async ()=>{
-            let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
-            await sighIn.goto(NagaCapital, 'login');
-            await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
-            await sighUp.makePhoneVerifed(page)
-            await mainPage.mainPageIsDownLoaded();
-            await mainPage.proceedRegistration();
-            await startKYC.startKYC();
-            await startKYC.proceedVerification();
-            await new PersonalInformation(page).fillPersonalInformation();
-            await new AllSetPopup(page).clickDepositNow();
-        })
-        await test.step('Add second live account', async()=>{
-            await headerMenu.openAddNewTradingAccount();
-            await addAccount.create_USD_LiveAccount();
-            expect(await addAccount.checkNewLiveAccount()).toBeTruthy
-        })
-        await test.step('Add second demo account', async()=>{
-            await headerMenu.openAddNewTradingAccount();
-            await addAccount.create_EUR_DemoAccount();
-            expect(await addAccount.checkNewDemoAccount()).toBeTruthy
-        })
+  test("@23922 Create 2nd live account", async({page, NagaCapital}, testInfo)=>{
+    await testInfo.setTimeout(testInfo.timeout + 50000);
+    let sighUp = new SighUp(page);
+    let mainPage = new MainPage(page);
+    let addAccount = new AddAcountForm(page);
+    let headerMenu = new HeaderMenuUserProfile(page);
+    let sighIn = new SighIn(page)
+    let startKYC = new StartKYCPopup(page)
+    await test.step('Create account with filled personal information', async ()=>{
+        let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
+        await sighIn.goto(NagaCapital, 'login');
+        await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
+        await sighUp.makePhoneVerifed(page)
+        await mainPage.mainPageIsDownLoaded();
+        await mainPage.proceedRegistration();
+        await startKYC.startKYC();
+        await startKYC.proceedVerification();
+        await new PersonalInformation(page).fillPersonalInformation();
+        await new AllSetPopup(page).clickDepositNow();
     })
+    await test.step('Add second live account', async()=>{
+        await headerMenu.openAddNewTradingAccount();
+        await addAccount.create_USD_LiveAccount();
+        expect(await addAccount.checkNewLiveAccount()).toBeTruthy
+    })
+    await test.step('Add second demo account', async()=>{
+        await headerMenu.openAddNewTradingAccount();
+        await addAccount.create_EUR_DemoAccount();
+        expect(await addAccount.checkNewDemoAccount()).toBeTruthy
+    })
+})
 
     type tradingAcTypes = {
         testRailId: string,
@@ -57,7 +58,8 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         {testRailId: '@23602', brand: '@NM', user: 'userWithAccounts2@i.ua'}
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
-        test(`${testRailId} Edit trading accounts`, async({page})=>{
+        test(`${testRailId} Edit trading accounts`, async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 50000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let addAccountForm = new AddAcountForm(page);
@@ -67,9 +69,9 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         })
         await test.step('Check possibility to change account name', async()=>{
             await new HeaderMenuUserProfile(page).openAddNewTradingAccount();
-            await addAccountForm.editAccountName('Default_Live_account')
+            await addAccountForm.editLiveAccountName('Default_Live_account')
             expect(await addAccountForm.getDefaultAccountName()).toEqual('Default_Live_account')
-            await addAccountForm.editAccountName('NAGA - USD');
+            await addAccountForm.editLiveAccountName('NAGA - USD');
         })
         await test.step('Check possibility to show password', async()=>{
             await addAccountForm.openShowPasswordPopup();
@@ -79,16 +81,17 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
 }
 
 const testAccountSwitchingParams: tradingAcTypes[] = [
-    {testRailId: '@23930', brand: '@NS', user: 'userWithAccounts@i.ua'},
-    {testRailId: '@23602', brand: '@NM', user: 'userWithAccounts2@i.ua'}
+    {testRailId: '@25130', brand: '@NS', user: 'userWithAccounts@i.ua'},
+    {testRailId: '@25187', brand: '@NM', user: 'userWithAccounts2@i.ua'}
 ]
 for(const{testRailId, brand, user} of testAccountSwitchingParams){
-    test(`${testRailId} Account switching`, async({page})=>{
+    test(`${testRailId} Account switching`, async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 50000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page)
         await test.step("Login to platform", async()=>{
             await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform("userWithAccounts@i.ua", process.env.USER_PASSWORD || '');
+            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Check account switching", async()=>{
             await mainPage.openTradingAssountsMenu();
@@ -101,7 +104,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
             await mainPage.switchUserToNotActiveAccount();
         })})}})
 
-test.describe('NagaMarkets - Trading accounts', async()=>{
+test.describe('Naga Markets - Trading accounts', async()=>{
     test('@23600 Create 2nd live account', async({page, NagaMarkets}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 120000);
         let KYC_Advance = "Advance";

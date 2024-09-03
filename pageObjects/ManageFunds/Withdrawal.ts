@@ -98,7 +98,8 @@ export class Withdrawal{
         await this.cryptoPopupWithdrawalBtn.click()
     };
     async checkCryptoWithdrawalSuccessPopup(){
-        return await this.cryptoWithdrawalSuccessPopup
+        await this.cryptoWithdrawalSuccessPopup.waitFor()
+        return await this.cryptoWithdrawalSuccessPopup.isVisible()
     };
     async checkCryptoSuccessPopupText(){
         return await this.cryptoSuccessPopupText.textContent();

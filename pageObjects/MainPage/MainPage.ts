@@ -50,7 +50,7 @@ export class MainPage{
     }
     //Naga Capital
     async openLoginFromGuestMode(){
-        await this.GuestLogin.waitFor({timeout:1500})
+        await this.GuestLogin.waitFor()
         return this.GuestLogin.click();
     };
     async openRegistrationFromGuestMode(){

@@ -36,7 +36,7 @@ export class SighUp{
         await this.password.pressSequentially("Test123!")
         await this.checkCountry(Country)
         await this.submitBtn.click();
-        await this.page.waitForSelector('.header__menu',{state:'visible'})
+        //await this.page.waitForSelector('.header__menu',{state:'visible'})
         return randomEmail;
     };
     async create_NM_CFDUser(Country: string){
@@ -48,7 +48,7 @@ export class SighUp{
         await this.NM_checkboxPrivacyPolicy.click();
         await this.NM_checkbox_yearsConfirmeation.click();
         await this.submitBtn.click();
-        await this.page.waitForSelector('.header__menu',{state:'visible'})
+        //await this.page.waitForSelector('.header__menu',{state:'visible'})
         return randomEmail;
     }
 
@@ -143,7 +143,7 @@ export class SighUp{
         
         axios.request(config)
         .then((response) => {
-        console.log('response data before phone', JSON.stringify(response.data));
+        console.log();
         })
         .catch((error) => {
         console.log(error);

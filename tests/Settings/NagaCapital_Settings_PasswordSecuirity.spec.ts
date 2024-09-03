@@ -15,19 +15,44 @@ test.describe("NagaCapital. Settings", async()=>{
         let myAccounts = new MyAccounts(page)
         let settings = new SettingsPage(page)
         let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
-        await sighUp.goto(NagaCapital, 'register');
-        let userEmail = await sighUp.createCFDUser("Ukraine");
+        let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
+        await sighIn.goto(NagaCapital, 'login');
+        await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
         await test.step("Change password", async()=>{
             await myAccounts.openUserMenu();
-            await myAccounts.openMyAccountsMenuItem('settings')
+            await myAccounts.openMyAccountsMenuItem('Settings')
             await settings.openSettingsMenuItem('Password & Security')
             await settings.changePasswordToNew("Test12345!")
             expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
             await settings.acceptSuccessPopup()
         })
         await test.step("Login to platform with new password", async()=>{
-            await sighIn.sigInUserToPlatform(userEmail, "Test12345!");
+            await sighIn.sigInUserToPlatform(email, "Test12345!");
             expect(await mainPage.checkMainPage()).toBe(true);
-        })
-    })
+        })})
 })
+
+test.describe('Naga Markets. Settings', async()=>{
+    test("@23598 Change password via settings", async({page, NagaMarkets})=>{
+        let sighUp = new SighUp(page);
+        let sighIn = new SighIn(page)
+        let mainPage = new MainPage(page);
+        let myAccounts = new MyAccounts(page)
+        let settings = new SettingsPage(page)
+        let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
+        let email = await sighUp.createLeadUserApi('FR')
+        await sighIn.goto(NagaMarkets, 'login');
+        await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
+        await test.step("Change password", async()=>{
+            await myAccounts.openUserMenu();
+            await myAccounts.openMyAccountsMenuItem('Settings')
+            await settings.openSettingsMenuItem('Password & Security')
+            await settings.changePasswordToNew("Test12345!")
+            expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
+            await settings.acceptSuccessPopup()
+        })
+        await test.step("Login to platform with new password", async()=>{
+            await sighIn.sigInUserToPlatform(email, "Test12345!");
+        })})
+})
+

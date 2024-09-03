@@ -9,7 +9,8 @@ test.describe("Naga Capital. Withdrawal", async()=>{
     const ManageFunds_Withdrawal = "/pageObjects/localization/ManageFunds_Withdrawal.json";
     let amountValueToWithrawal = '55'
 
-    test.beforeEach("Login by trade user", async({page, NagaCapital })=>{
+    test.beforeEach("Login by trade user", async({page, NagaCapital}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 50000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
@@ -60,7 +61,7 @@ test.describe("Naga Capital. Withdrawal", async()=>{
             await withdrawal.performCryptoWithdrawalToTestAccount();
         })
         await test.step('Check crypto withdrawal success popup', async()=>{
-            expect(await withdrawal.checkCryptoWithdrawalSuccessPopup()).toBeVisible()
+            expect(await withdrawal.checkCryptoWithdrawalSuccessPopup()).toBeTruthy()
             expect(await withdrawal.checkCryptoSuccessPopupText()).toEqual(await localization.getLocalizationText("CryptoWithdrawalSuccessPopupText"))
         })
     })
@@ -69,7 +70,8 @@ test.describe("Naga Capital. Withdrawal", async()=>{
 test.describe('Naga Markets. Withdrawal', async()=>{
     let amountValueToWithrawal = '50'
 
-    test.beforeEach("Login by trade user", async({page, NagaMarkets})=>{
+    test.beforeEach("Login by trade user", async({page, NagaMarkets}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 50000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{

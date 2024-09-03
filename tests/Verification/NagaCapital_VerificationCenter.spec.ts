@@ -1,7 +1,7 @@
 import { expect } from "playwright/test";
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { test } from "..//..//test-options";
 import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
@@ -10,26 +10,28 @@ import { AllSetPopup } from "../../pageObjects/common/allSetPopup(KYC)/allSetPop
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-UpdateAccount";
+import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
 test.describe("Naga Capital. Verification", async() => {
   
   test.beforeEach("Create lead", async ({ page, NagaCapital }) => {
-    let sighUp = new SignUp(page);
+    let sighUp = new SighUp(page);
+    let sighIn = new SighIn(page)
     let mainPage = new MainPage(page);
-    let phoneVerification = new PhoneVerification(page);
-    await test.step("Short registration of lead user", async () => {
-      await sighUp.goto(NagaCapital, "register");
-      await sighUp.createCFDUser("Ukraine");
-    });
-    await test.step("Fill personal information", async()=>{
+    let startKYC = new StartKYCPopup(page)
+    await test.step('Create fully registered user', async()=>{
+      let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
+        await sighIn.goto(NagaCapital, 'login');
+        await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
+        await sighUp.makePhoneVerifed(page)
         await mainPage.proceedRegistration();
-        await new StartKYCPopup(page).startKYC();
-        await phoneVerification.insertTestPhoneNumber();
-        await phoneVerification.insertVerificationCode();
+        await startKYC.startKYC();
+        await startKYC.proceedVerification();
         await new PersonalInformation(page).fillPersonalInformation();
         await new AllSetPopup(page).clickDepositNow();
     })
   });
+
   test('@23599 Check my documents page', async({page})=>{
     let myAccounts = new MyAccounts(page);
     let mainPage = new MainPage(page)

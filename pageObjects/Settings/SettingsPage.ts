@@ -47,5 +47,6 @@ export class SettingsPage{
     }
     async acceptSuccessPopup(){
         await this.acceptPopup.click();
+        await this.page.waitForTimeout(6000)
     }
 }

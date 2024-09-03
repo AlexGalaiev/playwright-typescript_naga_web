@@ -23,7 +23,7 @@ export class ChangeBrandPopup{
         return this.popupText.textContent();
     };
     async proceedRegistration(){
-        await this.proceedRegistrationBtn.click();
+        await this.page.locator("//button[text()='Proceed with registration']").click();
         await this.page.waitForTimeout(1500);
     };
 }
