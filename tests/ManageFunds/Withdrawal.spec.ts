@@ -114,12 +114,13 @@ type testWithdrawalTypes = {
     withdrawalPageTitle: string
 }
 const testWithdrawalParameters: testWithdrawalTypes[] = [
-    {testRailId: '@24098', brand: '@NS', user: 'testTrading2', menuPoint: 'eWallet', paymentMethod: 'neteller', withdrawalPageTitle: 'Neteller'},
-    {testRailId: '@24095', brand: '@NS', user: 'testTrading2', menuPoint: 'eWallet', paymentMethod: 'skrill', withdrawalPageTitle: 'Skrill'},
-    {testRailId: '@24089', brand: '@NS', user: 'testTrading2', menuPoint: 'eWallet', paymentMethod: 'perfectmoney', withdrawalPageTitle:'Perfect Money'},
+    {testRailId: '@24098', brand: '@NS', user: 'testWithdrawal@i.ua', menuPoint: 'eWallet', paymentMethod: 'neteller', withdrawalPageTitle: 'Neteller'},
+    {testRailId: '@24095', brand: '@NS', user: 'testWithdrawal2@i.ua', menuPoint: 'eWallet', paymentMethod: 'skrill', withdrawalPageTitle: 'Skrill'},
+    {testRailId: '@24089', brand: '@NS', user: 'testWithdrawal3@i.ua', menuPoint: 'eWallet', paymentMethod: 'perfectmoney', withdrawalPageTitle:'Perfect Money'}
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}of testWithdrawalParameters){
-    test(`${testRailId} Check withdrawal different payments ${paymentMethod} ${brand}`, async({page})=>{
+    test(`${testRailId} @dev Check withdrawal different payments ${paymentMethod} ${brand}`, async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 50000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);

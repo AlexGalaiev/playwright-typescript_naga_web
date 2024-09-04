@@ -101,7 +101,7 @@ export class SighUp{
         //console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
-        console.log(error);
+        //console.log(error);
         });
     }
 
@@ -146,7 +146,7 @@ export class SighUp{
         console.log();
         })
         .catch((error) => {
-        console.log(error);
+        //console.log(error);
         });
     }
 

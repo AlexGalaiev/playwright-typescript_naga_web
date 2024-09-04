@@ -50,5 +50,11 @@ export class HelpPage{
     };
     async checkOpenedChat(){
         return await this.openedChat
+    };
+    async getNMContactInfo(contactName: string){
+        let fieldInfo = await this.page.locator('.call-us__global-info__row', {hasText: contactName})
+        let value = await fieldInfo.locator('.call-us__global-info__row__value').textContent()
+        return await value
     }
+       
 }

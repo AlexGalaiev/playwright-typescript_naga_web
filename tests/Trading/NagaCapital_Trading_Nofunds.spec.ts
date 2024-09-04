@@ -16,29 +16,22 @@ type testNoFunds = {
 //need to have opened previously opened positions of BTC
 
 const testNoFundsParaketers: testNoFunds[] = [
-    //{testRailId: '@25018', brand: '@NS', user: 'tradingNoFunds'},
+    {testRailId: '@25018', brand: '@NS', user: 'tradingNoFunds'},
     {testRailId: '@25176', brand: '@NM', user: 'tradNoFundsMarket'}
 ]
 for(const{testRailId, brand, user}of testNoFundsParaketers){
     test(`${testRailId} Open position without funds ${brand}`, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page)
-        let myTrades = new MyTrades(page)
         let instruments = new AllInstruments(page);
         let newPosition = new NewPosition(page)
         await test.step("Login to platfotm", async () => {
             await sighIn.goto(await sighIn.chooseBrand(brand), "login");
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || "");
           });
-          // await test.step("Check previously opened positions and close if they exist", async () => {
-          //   await mainPage.openHeaderMenuPoint("my-trades");
-          //   await myTrades.closePositionsIfExist();
-          // });
           await test.step("Choose instrument and open position", async () => {
             await mainPage.openHeaderMenuPoint("markets");
             await instruments.openPositionOfInstrument(tradingInstrument, 'Short')
-            // await instruments.searchInstrument(tradingInstrument);
-            // await instruments.openPosition('Short');
           });
           await test.step('Check new position messages', async()=>{
             expect(await newPosition.getNotEnoughFundsMsg()).toEqual('You have insufficient funds to trade at the moment')
@@ -48,6 +41,4 @@ for(const{testRailId, brand, user}of testNoFundsParaketers){
           })
     })
 }
-
-   
 })

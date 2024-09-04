@@ -25,3 +25,31 @@ test.describe('NagaCapital. Support links', async()=>{
         expect(await helpPage.checkOpenedChat()).toBeVisible()
     })
 })
+
+test.describe('Naga Markets. Support links', async()=>{
+    
+    test.beforeEach("Login to platform", async({page, NagaMarkets})=>{
+        let sighIn = new SighIn(page);
+        await sighIn.goto(NagaMarkets, 'login');
+        await sighIn.sigInUserToPlatform("testSupportMarkets@i.ua", process.env.USER_PASSWORD || '')
+        await new MainPage(page).openFAQMenuPoint();
+    })
+
+    test("@23623 Call us links", async({page})=>{
+        let helpPage = new HelpPage(page)
+        await helpPage.openCallUsPage();
+        expect(await helpPage.getNMContactInfo('General Support Line')).toEqual('+49 40 74305833')
+        expect(await helpPage.getNMContactInfo('Dealing Desk')).toEqual("+357 25 041 412")
+        expect(await helpPage.getNMContactInfo('Fax Number')).toEqual("+357 25 211 680")
+        expect(await helpPage.getNMContactInfo('Email')).toEqual("support@nagamarkets.com")
+    })
+
+    test("@23622 Chat with us page", async({page})=>{
+        let helpPage = new HelpPage(page)
+        await helpPage.openChat();
+        expect(await helpPage.checkOpenedChat()).toBeVisible()
+    })
+
+
+
+})

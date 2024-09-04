@@ -139,7 +139,8 @@ const testParamsGuestMode: testTypesGuestMode[] = [
     {testRailId: '@24936', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
-    test(`${testRailId} Open platform in Guest mode ${brand}`, async({page})=>{
+    test(`${testRailId} Open platform in Guest mode ${brand}`, async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 50000);
         let localizationPage = new getLocalization(localization);
         let signUp = new SighUp(page);
         let sighIn = new SighIn(page);

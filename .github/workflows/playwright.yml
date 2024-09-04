@@ -3,6 +3,8 @@ on:
   push:
     branches: [ qa, production ]
   workflow_dispatch:
+  schedule:
+    - cron: '30 4 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
