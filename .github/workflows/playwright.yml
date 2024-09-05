@@ -40,8 +40,8 @@ jobs:
       id: playwright_tests
       run: |
         ENV=${{ github.head_ref || github.ref_name }} 
-        if [ "$ENV" = "smoke"]; then
-          ENV=${{ github.head_ref || github.ref_name }} npx playwright test --grep "@smoke" --project=${{ github.head_ref || github.ref_name }} --workers=1;
+        if [ "$ENV" = "smoke" ]; then
+          ENV=${{ github.head_ref || github.ref_name }} npx playwright test --grep @smoke --project=${{ github.head_ref || github.ref_name }} --workers=1;
         else 
           ENV=${{ github.head_ref || github.ref_name }} npx playwright test --project=${{ github.head_ref || github.ref_name }} --workers=1
         fi

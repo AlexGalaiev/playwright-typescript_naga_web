@@ -75,7 +75,7 @@ test.describe('Naga Markets. Sigh in', async()=>{
             await new PageAfterLogout(page).redirectToSighIn();
         })})
     
-    test("@23574 Forgot password link test @smoke", async({page})=>{
+    test("@23574 Forgot password link test", {tag:'@smoke'}, async({page})=>{
         let signInPage = new SighIn(page);
         let forgotPassword = new ForgotPassword(page);
         await test.step("Check forgot password functionality", async()=>{
