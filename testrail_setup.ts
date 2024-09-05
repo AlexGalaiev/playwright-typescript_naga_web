@@ -61,8 +61,8 @@ export class TestRailIntegration{
     //function that filter all test cases via priority, type and TITLE 
     private async getTestCasesSmoke(priority: number, type: number, title: string){
         let cases = await this.TestRail.getCases(1,{
-            priority_id:priority,
-            type_id: type,
+            // priority_id:priority,
+            // type_id: type,
             filter: title
         });
         return cases;
