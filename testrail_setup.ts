@@ -21,9 +21,9 @@ export class TestRailIntegration{
     // create automation test run
     async AddAutomationRun(){
         if(process.env.ENV === 'smoke'){
-            const cases = await this.getTestCases(4,3)
-        } else {
             const cases = await this.getTestCasesSmoke(4,3,'smoke')
+        } else {
+            const cases = await this.getTestCases(4,3)
         }
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
