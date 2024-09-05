@@ -20,12 +20,13 @@ export class TestRailIntegration{
     };
     // create automation test run
     async AddAutomationRun(){
+        let cases: any
         if(process.env.ENV === 'smoke'){
-            const cases = await this.getTestCasesSmoke(4,3,'smoke')
+            cases = await this.getTestCasesSmoke(4,3,'smoke')
         } else {
-            const cases = await this.getTestCases(4,3)
+            cases = await this.getTestCases(4,3)
         }
-        const cases = await this.getTestCases(4,3)
+        //const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
             name:`Naga_AT_${process.env.ENV}_${momentTime.toLocaleDateString()}`,
