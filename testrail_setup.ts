@@ -20,6 +20,11 @@ export class TestRailIntegration{
     };
     // create automation test run
     async AddAutomationRun(){
+        if(process.env.ENV === 'smoke'){
+            const cases = await this.getTestCases(4,3)
+        } else {
+            const cases = await this.getTestCasesSmoke(4,3,'smoke')
+        }
         const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
@@ -49,6 +54,16 @@ export class TestRailIntegration{
         let cases = await this.TestRail.getCases(1,{
             priority_id:priority,
             type_id: type
+        });
+        return cases;
+    }; 
+
+    //function that filter all test cases via priority, type and TITLE 
+    private async getTestCasesSmoke(priority: number, type: number, title: string){
+        let cases = await this.TestRail.getCases(1,{
+            priority_id:priority,
+            type_id: type,
+            filter: title
         });
         return cases;
     }; 

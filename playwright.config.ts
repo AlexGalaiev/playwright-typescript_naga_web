@@ -53,6 +53,16 @@ export default defineConfig<TestOptions>({
       },
     },
     {
+      name: "smoke",
+      use: {
+        ...devices["Desktop Chrome"],
+        NagaMarkets: "https://nagamarkets.com",
+        NagaCapital: "https://nagacap.com",
+        NSCountry: "Bosnia and Herzegovina",
+        NMCountry: "France",
+      },
+    },
+    {
       name: "main",
       use: {
         ...devices["Desktop Chrome"],
