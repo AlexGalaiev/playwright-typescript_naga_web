@@ -62,7 +62,7 @@ jobs:
         accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID_KWG }}
         projectName: playwright-naga-report-${{ github.head_ref || github.ref_name }}
         directory: playwright-report
-        branch: master
+        branch: [ master, smoke, production ]
     - name: Extract deployment URL
       if: always()
       id: extract_url
