@@ -99,8 +99,16 @@ export class TestRailIntegration{
     };
     //Check AT run is correct and return correct AT run
     async getTestRunId(){
+        let testATruns: any
         let allRuns = await this.TestRail.getRuns(1);
-        let testATruns = _.filter(allRuns, item=> _.includes(item.name, "Naga_AT"));
+        if(process.env.ENV === 'smoke'){
+            testATruns = _.filter(allRuns, item=> _.includes(item.name, "smoke"));
+            //return testATruns
+        } else {
+            testATruns = _.filter(allRuns, item=> _.includes(item.name, "Naga_AT"));
+            //return testATruns
+        }
+        //let testATruns = _.filter(allRuns, item=> _.includes(item.name, "Naga_AT"));
         let currentRun = _.orderBy(testATruns, ['id']['desc'])
         return currentRun[0].id
     };

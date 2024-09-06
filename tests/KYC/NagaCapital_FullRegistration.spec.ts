@@ -9,7 +9,7 @@ import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-Up
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
-test("@24917 NAGA Capital full registration user", async({ page, NagaCapital }, testInfo)=>{
+test("@24917 NAGA Capital full registration user",{tag:'@smoke'}, async({ page, NagaCapital }, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 50000);
     let sighUp = new SighUp(page);
     let sighIn = new SighIn(page)

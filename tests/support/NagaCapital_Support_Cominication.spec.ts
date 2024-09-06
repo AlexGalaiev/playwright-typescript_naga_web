@@ -12,14 +12,14 @@ test.describe('NagaCapital. Support links', async()=>{
         await new MainPage(page).openFAQMenuPoint();
     })
 
-    test("@23983 Call us links", async({page})=>{
+    test("@23983 Call us links", {tag:'@smoke'}, async({page})=>{
         let helpPage = new HelpPage(page)
         await helpPage.openCallUsPage();
         expect(await helpPage.getPhoneValue()).toEqual("+248 4 671 946")
         expect(await helpPage.getEmailValue()).toEqual("support@nagacap.com")
     })
 
-    test("@23982 Chat with us page", async({page})=>{
+    test("@23982 Chat with us page", {tag:'@smoke'},async({page})=>{
         let helpPage = new HelpPage(page)
         await helpPage.openChat();
         expect(await helpPage.checkOpenedChat()).toBeVisible()
@@ -35,7 +35,7 @@ test.describe('Naga Markets. Support links', async()=>{
         await new MainPage(page).openFAQMenuPoint();
     })
 
-    test("@23623 Call us links", async({page})=>{
+    test("@23623 Call us links", {tag:'@smoke'}, async({page})=>{
         let helpPage = new HelpPage(page)
         await helpPage.openCallUsPage();
         expect(await helpPage.getNMContactInfo('General Support Line')).toEqual('+49 40 74305833')
@@ -44,7 +44,7 @@ test.describe('Naga Markets. Support links', async()=>{
         expect(await helpPage.getNMContactInfo('Email')).toEqual("support@nagamarkets.com")
     })
 
-    test("@23622 Chat with us page", async({page})=>{
+    test("@23622 Chat with us page", {tag:'@smoke'},async({page})=>{
         let helpPage = new HelpPage(page)
         await helpPage.openChat();
         expect(await helpPage.checkOpenedChat()).toBeVisible()

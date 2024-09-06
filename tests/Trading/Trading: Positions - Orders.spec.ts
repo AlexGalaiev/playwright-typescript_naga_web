@@ -29,7 +29,7 @@ const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'},
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
-  test(`${testRailId} Open and close trading position ${brand} ${investDirection}`, async ({ page }, testInfo) => {
+  test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:'@smoke'}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 120000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
@@ -76,7 +76,7 @@ const tradingParamsOrders: tradingTypes[] = [
   {testRailId: '@25015', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'},
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
-  test(`${testRailId} Open and close pending trading position ${brand} ${investDirection}`, async ({ page }, testInfo) => {
+  test(`${testRailId} Open and close pending trading position ${brand} ${investDirection}`,{tag:'@smoke'}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 120000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
@@ -121,7 +121,7 @@ const tradingParameters: tradingTypes[] = [
   {testRailId: '@25174', brand: '@NM', user:'testTrading2Markets', investDirection:"Short"},
 ]
 for(const{testRailId, brand, user, investDirection}of tradingParameters){
-  test(`${testRailId} Open short position of real stock ${brand}`, async({page}, testInfo)=>{
+  test(`${testRailId} Open short position of real stock ${brand}`,{tag:'@smoke'}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 120000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);

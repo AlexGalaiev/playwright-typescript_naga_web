@@ -32,7 +32,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             await new PageAfterLogout(page).redirectToSighIn();
         })})
 
-    test("@23916 Forgot password link test", async({page})=>{
+    test("@23916 Forgot password link test",{tag:'@smoke'}, async({page})=>{
         let signInPage = new SighIn(page);
         let forgotPassword = new ForgotPassword(page);
         await test.step('Check forgot password messages on UI', async()=>{
@@ -117,7 +117,7 @@ const testParams: testTypes[] = [
     {testRailId: '@23569', brandStart: '@NM', brandRedirect: '@NS', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ]
 for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-    test(`${testRailId} Entity redirection ${brandStart}`, async({page})=>{
+    test(`${testRailId} Entity redirection ${brandStart}`, {tag:'@smoke'}, async({page})=>{
         let localizationPage = new getLocalization(localization);
         let sighInPage = new SighIn(page);
         await test.step('Open login page and input email from different regulation', async()=>{
@@ -139,7 +139,7 @@ const testParamsGuestMode: testTypesGuestMode[] = [
     {testRailId: '@24936', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
-    test(`${testRailId} Open platform in Guest mode ${brand}`, async({page}, testInfo)=>{
+    test(`${testRailId} Open platform in Guest mode ${brand}`, {tag:'@smoke'}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let localizationPage = new getLocalization(localization);
         let signUp = new SighUp(page);

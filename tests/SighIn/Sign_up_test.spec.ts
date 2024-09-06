@@ -8,7 +8,9 @@ import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 test.describe("Naga Capital. Sigh up page", async()=>{
     let SighUpPage_localization = "/pageObjects/localization/SignUpPage.json"
 
-    test(`@24931 Change brand popup from NS to NM`, async({page,NagaCapital, NagaMarkets, NMCountry})=>{
+
+    //need to check for dublication for entity redirection
+    test.skip(`@24931 Change brand popup from NS to NM`, async({page,NagaCapital, NagaMarkets, NMCountry})=>{
         let localizationText = new getLocalization('/pageObjects/localization/SignUpPage.json')
         let sighUp = new SighUp(page);
         let changeBrandPopup = new ChangeBrandPopup(page);
@@ -24,7 +26,7 @@ test.describe("Naga Capital. Sigh up page", async()=>{
         })
     });
 
-    test(`@25141 Change brand popup from NM to NS`, async({page, NagaCapital, NagaMarkets, NSCountry})=>{
+    test.skip(`@25141 Change brand popup from NM to NS`, async({page, NagaCapital, NagaMarkets, NSCountry})=>{
         let localizationText = new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json')
         let sighUp = new SighUp(page);
         let changeBrandPopup = new ChangeBrandPopup(page);
@@ -50,7 +52,7 @@ test.describe("Naga Capital. Sigh up page", async()=>{
         {testRailId: '@25142', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighUp.json'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:'@smoke'}, async({page})=>{
             let localizationText = new getLocalization(localization)
             let sighUp = new SighUp(page);
             await sighUp.goto(await new SighIn(page).chooseBrand(brand), "register")
