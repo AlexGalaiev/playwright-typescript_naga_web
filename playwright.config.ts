@@ -63,7 +63,7 @@ export default defineConfig<TestOptions>({
       },
     },
     {
-      name: "main",
+      name: "master",
       use: {
         ...devices["Desktop Chrome"],
         NagaMarkets: "https://nagamarkets.com",
