@@ -32,7 +32,7 @@ export class Withdrawal{
         this.cryptoWalletAdress = page.locator("//input[@name='address']");
         this.cryptoPopupWithdrawalBtn = page.locator("//div[contains(@class, 'actions')]//button[@type='submit']");
         this.cryptoWithdrawalSuccessPopup = page.locator("//div[@class='modal-content']")
-        this.cryptoSuccessPopupText = page.locator("//div[@class='modal-body']")
+        this.cryptoSuccessPopupText = page.locator("//div[@class='modal-body']//p[1]")
         this.iframeName = page.locator("//div[@class='praxis-withdrawal']//iframe")
         this.ewalletWithdrawalAmount = page.locator("//div[@class='ewallet-withdrawal-form__info__amount']//span[contains(@class, 'amount')]")
         this.titleOnCashier = page.locator("//p[contains(@class, 'title')]")
