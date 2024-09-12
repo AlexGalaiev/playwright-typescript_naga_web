@@ -3,17 +3,17 @@ on:
   push:
     branches: [ qa, production ]
   workflow_dispatch:
-  schedule:
-    - cron: '30 4 * * 0-6'
-  inputs:
-    environment:
-      type: choice
-      option:
-        -smoke
-        -production
+    inputs:
+      environment:
+        type: choice
+        options:
+          - smoke
+          - production
       tag:
         type: string
         required: true
+  schedule:
+    - cron: '30 4 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -45,7 +45,7 @@ jobs:
           echo TESTRAIL_PASSWORD=${{ secrets.TESTRAIL_PASSWORD }} >> .env
           echo USER_PASSWORD=${{ secrets.USER_PASSWORD }} >> .env
           echo ENVIRONMENT=${{inputs.environment}}
-          echo TAGS=${{inputs.tags}}
+          echo TAGS=${{ inputs.tag }}
           cat .env       
     - name: Run Playwright tests
       id: playwright_tests
