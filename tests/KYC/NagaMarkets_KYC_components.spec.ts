@@ -12,7 +12,6 @@ test.beforeEach("login by lead user", async({page, NagaMarkets})=>{
     await test.step("Login by lead user", async()=>{
         await signIn.goto(NagaMarkets, "login");
         await signIn.sigInUserToPlatform(testUser, process.env.USER_PASSWORD || '')
-//        await new PersonalInformation(page).waitPersonalInfoBlock();
     })
 })
 test("@23575 Upgrade account banner",{tag:'@smoke'}, async({page})=>{

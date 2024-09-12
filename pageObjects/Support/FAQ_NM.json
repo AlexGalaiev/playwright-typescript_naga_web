@@ -1,0 +1,81 @@
+{
+    "Getting Started":{
+        "Supported platforms":"supported-platforms",
+        "How to upgrade your Account to LIVE?":"how-to-upgrade-your-account-to-live"
+    },
+    "Community":{
+        "What is the NAGA Feed?":"what-is-the-naga-feed",
+        "What happens when I “share” a trade?":"what-happens-when-i-share-a-trade",
+        "How do I publish a new post?":"how-do-i-publish-a-new-post"
+    },
+    "Deposits":{
+        "How to verify payment method?":"how-to-verify-payment-method",
+        "I made a deposit but why can’t I see it in my trading account?":"i-made-a-deposit-but-why-can-t-i-see-it-in-my-trading-account",
+        "How to deposit funds to NAGA?":"how-to-deposit-funds-to-naga"
+    },
+    "Withdrawals":{
+        "How can I cancel my withdrawal?":"how-can-i-cancel-my-withdrawal",
+        "How can I transfer funds between my accounts?":"how-can-i-transfer-funds-between-my-accounts",
+        "What withdrawal methods are supported?":"what-withdrawal-methods-are-supported"
+    },
+    "Trading":{
+        "How to close a trade?":"how-to-close-a-trade",
+        "What is leverage?":"what-is-leverage",
+        "What is Forex?":"what-is-forex",
+        "What is CFD?":"what-is-cfd",
+        "What is a Market Order?":"what-is-a-market-order",
+        "What is a margin call?":"what-is-a-margin-call",
+        "What is a Limit Order?":"what-is-a-limit-order"
+    },
+    "Copy trading":{
+        "Can I close a Lead Trader's copied position?":"can-i-close-a-lead-trader-s-copied-position",
+        "How does Autocopy work?":"how-does-autocopy-work",
+        "How can I Autocopy?":"how-can-i-autocopy",
+        "What is Copy Premium?":"what-is-copy-premium"
+    },
+    "Account Verification":{
+        "How to upgrade your Account to LIVE (NAGA CAPITAL)":"how-to-upgrade-your-account-to-live-naga-capital",
+        "What should I do if my account has been suspended?":"what-should-i-do-if-my-account-has-been-suspended",
+        "Why do I need to verify my account?":"why-do-i-need-to-verify-my-account",
+        "How can I delete my uploaded documents?":"how-can-i-delete-my-uploaded-documents"
+    },
+    "Settings & Security":{
+        "How can I change my username?":"how-can-i-change-my-username",
+        "How can I change my password?":"how-can-i-change-my-password",
+        "How can I change my email address?":"how-can-i-change-my-email-address"
+    },
+    "NAGA Pay":{
+        "How to send money via Bank Transfer?":"how-to-send-money-via-bank-transfer",
+        "What are the Selfie requirements? | NAGA Pay":"what-are-the-selfie-requirements-naga-pay",
+        "How can I fund my trading account using my NAGA Pay funds? | NAGA Pay":"how-can-i-fund-my-trading-account-using-my-naga-pay-funds-naga-pay",
+        "How can I Top-Up my NAGA Pay using the funds from my trading account? | NAGA Pay":"how-can-i-top-up-my-naga-pay-using-the-funds-from-my-trading-account-naga-pay",
+        "How to view your PIN?":"how-to-view-your-pin",
+        "How to upgrade to a trading account? | NAGA Pay":"how-to-upgrade-to-a-trading-account-naga-pay",
+        "Can I transfer my account from/to another broker? | NAGA Pay":"can-i-transfer-my-account-from-to-another-broker-naga-pay",
+        "How can I fund my trading account? | NAGA Pay":"how-can-i-fund-my-trading-account-naga-pay",
+        "How to transfer funds between trading accounts? | NAGA Pay":"how-to-transfer-funds-between-trading-accounts-naga-pay",
+        "Why should I provide details about my income and occupation to trade? | NAGA Pay":"why-should-i-provide-details-about-my-income-and-occupation-to-trade-naga-pay",
+        "What are the limits for my NAGA Pay account?":"what-are-the-limits-for-my-naga-pay-account",
+        "What are the fees for a Premium yearly NAGA Pay account?":"what-are-the-fees-for-a-premium-yearly-naga-pay-account",
+        "What are the fees for a Premium monthly NAGA Pay account?":"what-are-the-fees-for-a-premium-monthly-naga-pay-account",
+        "What are the fees for a Basic monthly NAGA Pay account?":"what-are-the-fees-for-a-basic-monthly-naga-pay-account",
+        "How can I change my password? | NAGA Pay":"how-can-i-change-my-password-naga-pay",
+        "How can I set up my 2FA? | NAGA Pay":"how-can-i-set-up-my-2fa-naga-pay",
+        "How can I change my email address? | NAGA Pay":"how-can-i-change-my-email-address-naga-pay",
+        "Are my funds and data safe? | NAGA Pay":"are-my-funds-and-data-safe-naga-pay",
+        "How long does NAGA Pay store my data for? | NAGA Pay":"how-long-does-naga-pay-store-my-data-for-naga-pay",
+        "What if I want NAGA Pay to erase all my data? | NAGA Pay":"what-if-i-want-naga-pay-to-erase-all-my-data-naga-pay",
+        "How to view transaction details? | NAGA Pay":"how-to-view-transaction-details-naga-pay",
+        "How to find a transaction? | NAGA Pay":"how-to-find-a-transaction-naga-pay",
+        "How to send money to other NAGA Pay users? | NAGA Pay":"how-to-send-money-to-other-naga-pay-users-naga-pay"
+    },
+    "Regulations & Legal":{
+        "Is NAGA a regulated company?":"is-naga-a-regulated-company"
+    },
+    "Metatrader":{
+        "How to update your MetaTrader":"how-to-update-your-metatrader",
+        "What is the difference between MT4 and MT5?":"what-is-the-difference-between-mt4-and-mt5",
+        "How can I see and/or change my MT4/MT5 account password?":"how-can-i-see-and-or-change-my-mt4-mt5-account-password",
+        "How can I connect my account with MT4/5?":"how-can-i-connect-my-account-with-mt4-5"
+    }
+}

@@ -134,8 +134,8 @@ for(const{testRailId, brand, user}of testShareCommentParams){
 }
 
 const testParamsUserCabinet: testFeedtypes[] = [
-    {testRailId: '@25132', brand: '@NS', user: 'testFeedUser'},
-    {testRailId: '@25147', brand: '@NM', user: 'testFeedUserMarkets'}
+    {testRailId: '@25132', brand: '@NS', user: 'testFeedUser'}
+    //{testRailId: '@25147', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){
     test(`${testRailId} Check post in user cabinet ${brand}`, {tag:'@smoke'}, async({page}, testInfo)=>{

@@ -171,7 +171,6 @@ export class SighUp{
     await page.route('*/**/user/info', async route => {
         const response = await route.fetch();
         let body = await response.json();
-        console.log(body)
         body.data.company_id = '1';
         body.data.phone_number_confirmed = 'Y'
         body.data.phone_number = "+387603039647";

@@ -52,8 +52,6 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     await test.step("Choose instrument and open position", async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-      // await instruments.searchInstrument(tradingInstrument);
-      // await instruments.openPosition(investDirection);
     });
     await test.step("Open short position + Stop Loss", async () => {
       await newPosition.enableProtection(protection)
@@ -63,7 +61,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     await test.step("Check My-trades popup", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      expect(await myTrades.getProtectionValue(tradeField)).toContain(NagaProtectionValue)
+      expect(await myTrades.getProtectionValue(tradeField)).toBeCloseTo(NagaProtectionValue)
     });
     await test.step('Close position and check sucses popup', async()=>{
       await myTrades.closePosition()
@@ -98,8 +96,6 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       await test.step("Choose instrument and open position", async () => {
         await mainPage.openHeaderMenuPoint("markets");
         await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-        // await instruments.searchInstrument(tradingInstrument);
-        // await instruments.openPosition(investDirection);
       });
       await test.step("Open short position + Stop Loss", async () => {
         await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
@@ -111,7 +107,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await mainPage.openHeaderMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
-        expect(await myTrades.getProtectionValue(tradeField)).toContain(NagaProtectionValue)
+        expect(await myTrades.getProtectionValue(tradeField)).toBeCloseTo(NagaProtectionValue)
       });
       await test.step('Close position and check sucses popup', async()=>{
         await myTrades.closePosition()

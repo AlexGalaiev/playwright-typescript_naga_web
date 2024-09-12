@@ -148,7 +148,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle,
 const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
     {testRailId: '@25156', brand: '@NM', user: 'depositTestMarkets', menuPoint: 'eWallet', paymentMethod: 'sofort', withdrawalPageTitle: 'Neteller', amount: '50'},
     {testRailId: '@25157', brand: '@NM', user: 'depositTestMarkets1', menuPoint: 'eWallet', paymentMethod: 'giropay', withdrawalPageTitle: 'Skrill', amount: '50'},
-    {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle:'Perfect Money', amount: '40'},
+    {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle:'Perfect Money', amount: '60'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParametersMarkets){
     test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, async({page})=>{
