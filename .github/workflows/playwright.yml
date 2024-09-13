@@ -6,7 +6,7 @@ on:
     inputs:
       tag:
         description: 'Choose functionality to test'
-        default: 'none'
+        default: all
         type: choice
         required: false
         options:
@@ -18,6 +18,7 @@ on:
           - manageFunds
           - feed
           - other
+          - all
   schedule:
     - cron: '30 4 * * 0-6'
 jobs:
@@ -56,12 +57,12 @@ jobs:
       id: playwright_tests
       run: |
           ENV=${{ github.head_ref || github.ref_name }}
-          if [ "$ENV" = "smoke" ] && [ "$TAGS" = 'none' ]; then
+          if [ "$ENV" = "smoke" ] && [ "$TAGS" = 'all' ]; then
             ENV=${{ github.head_ref || github.ref_name }} npx playwright test --grep @smoke --project=${{ github.head_ref || github.ref_name }} --workers=1;
-          elif [ "$ENV" = "smoke" ] && [ "$TAGS" != 'none' ]; then 
-            ENV=${{ github.head_ref || github.ref_name }} npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
-          elif [ "$ENV" = "production" ] && [ "$TAGS" != 'none' ]; then
-            ENV=${{ github.head_ref || github.ref_name }} npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
+          elif [ "$ENV" = "smoke" ] && [ "$TAGS" != 'all' ]; then 
+            ENV=${{ github.head_ref || github.ref_name }} npx playwright test --grep @"$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
+          elif [ "$ENV" = "production" ] && [ "$TAGS" != 'all' ]; then
+            ENV=${{ github.head_ref || github.ref_name }} npx playwright test --grep @"$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           else 
             ENV=${{ github.head_ref || github.ref_name }} npx playwright test --project=${{ github.head_ref || github.ref_name }} --workers=1;
           fi
