@@ -52,11 +52,11 @@ jobs:
           echo TESTRAIL_PASSWORD=${{ secrets.TESTRAIL_PASSWORD }} >> .env
           echo USER_PASSWORD=${{ secrets.USER_PASSWORD }} >> .env
           echo TAGS=${{ inputs.tag }}
+          echo ENV=${{ github.head_ref || github.ref_name }}
           cat .env       
     - name: Run Playwright tests
       id: playwright_tests
       run: |
-          ENV=${{ github.head_ref || github.ref_name }}
           if [ "$ENV" = "smoke" ] && [ "$TAGS" = "@all" ]; then
             ENV=${{ github.head_ref || github.ref_name }} npx playwright test --grep @smoke --project=${{ github.head_ref || github.ref_name }} --workers=1;
           elif [ "$ENV" = "smoke" ] && [ "$TAGS" != "@all" ]; then 
