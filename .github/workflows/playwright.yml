@@ -51,7 +51,7 @@ jobs:
           echo TESTRAIL_USERNAME=${{ secrets.TESTRAIL_USERNAME }} >> .env
           echo TESTRAIL_PASSWORD=${{ secrets.TESTRAIL_PASSWORD }} >> .env
           echo USER_PASSWORD=${{ secrets.USER_PASSWORD }} >> .env
-          echo TAGS=${{ inputs.tag }}
+          echo TAGS=${{ inputs.tag }} >> .env
           cat .env       
     - name: Run Playwright tests
       id: playwright_tests
