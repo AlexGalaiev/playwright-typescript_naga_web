@@ -29,7 +29,7 @@ export class TestRailIntegration{
         //const cases = await this.getTestCases(4,3)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:`Naga_AT_${process.env.ENV}_${momentTime.toLocaleDateString()}`,
+            name:`Naga_AT_${process.env.ENV}_${process.env.TAGS}_${momentTime.toLocaleDateString()}`,
             description:'Naga Automation test cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
@@ -43,7 +43,7 @@ export class TestRailIntegration{
         const cases = await this.getTestCases(3,13)
         const addRunId = await this.TestRail.addRun(1, {
             suite_id:7,
-            name:`Naga_manual_${process.env.ENV}_${momentTime.toLocaleDateString()}`,
+            name:`Naga_manual_${process.env.ENV}_${process.env.TAGS}_${momentTime.toLocaleDateString()}`,
             description:'Naga manual cases for all brands',
             include_all:false,
             case_ids: cases.map(testCase => testCase.id)
