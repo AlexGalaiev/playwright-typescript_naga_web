@@ -8,7 +8,7 @@ import {test} from "..//..//test-options";
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
 test.describe("NagaCapital - User profile", async()=>{
-    test("@23573 User profile. General", async({page, NagaCapital})=>{
+    test("@23573 User profile. General", {tag:'@settings'},async({page, NagaCapital})=>{
         let sighUp = new SighUp(page);
         let sighIn = new SighIn(page)
         let userProfile = new UserProfile(page);

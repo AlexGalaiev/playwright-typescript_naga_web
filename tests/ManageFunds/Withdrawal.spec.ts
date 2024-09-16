@@ -21,7 +21,7 @@ test.describe("Naga Capital. Withdrawal", async()=>{
         });
     })
     
-    test("@24097 Withdrawal via credit card", async({page})=>{
+    test("@24097 Withdrawal via credit card", {tag: "@withdrawal"},async({page})=>{
         let withdrawal = new Withdrawal(page);
         await test.step('Make withdrawal via credit card', async()=>{
             await withdrawal.clickMenuPoint('Credit Card');
@@ -34,7 +34,7 @@ test.describe("Naga Capital. Withdrawal", async()=>{
             expect(await withdrawal.checkNameOfIframe()).toEqual('_cashier_iframe')
         })
     })
-    test("@24932 Withdrawal validation rulls", async({page})=>{
+    test("@24932 Withdrawal validation rulls", {tag: "@withdrawal"},async({page})=>{
         let withdrawal = new Withdrawal(page);
         let valueToWithrawal = '10'
         await test.step('Input NOT valid amount for withdrawal', async()=>{
@@ -47,7 +47,7 @@ test.describe("Naga Capital. Withdrawal", async()=>{
             expect(await withdrawal.checkModalPopup()).toBeVisible()
         })
     });
-    test("@24091 Check Crypto withdrawal", async({page})=>{
+    test("@24091 Check Crypto withdrawal", {tag: "@withdrawal"},async({page})=>{
         let withdrawal = new Withdrawal(page);
         let localization = new getLocalization(ManageFunds_Withdrawal);
         await test.step("Make crypto withdrawal", async()=>{
@@ -82,7 +82,7 @@ test.describe('Naga Markets. Withdrawal', async()=>{
         });
     })
 
-    test('@24093 PayPal withdrawal', async({page})=>{
+    test('@24093 PayPal withdrawal', {tag: "@withdrawal"},async({page})=>{
         let withdrawal = new Withdrawal(page)
         await withdrawal.clickMenuPoint('PayPal')
         await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
@@ -90,7 +90,7 @@ test.describe('Naga Markets. Withdrawal', async()=>{
         expect(await withdrawal.getNagaMarketsWithdrawalPopupTitle()).toContain(`The withdrawal of €${amountValueToWithrawal} to your PayPal is being reviewed.`)
     })    
 
-    test.skip('@24094 Altbank withdrawal', async({page})=>{
+    test.skip('@24094 Altbank withdrawal', {tag: "@withdrawal"},async({page})=>{
         let withdrawal = new Withdrawal(page)
         await test.step('Make withdrawal of altbank', async()=>{
             await withdrawal.clickMenuPoint('Bank Account')
@@ -120,7 +120,7 @@ const testWithdrawalParameters: testWithdrawalTypes[] = [
     {testRailId: '@24089', brand: '@NS', user: 'testWithdrawal3@i.ua', menuPoint: 'eWallet', paymentMethod: 'perfectmoney', withdrawalPageTitle:'Perfect Money', amount: '50'}
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParameters){
-    test(`${testRailId} Check withdrawal different payments ${paymentMethod} ${brand}`, async({page}, testInfo)=>{
+    test(`${testRailId} Check withdrawal different payments ${paymentMethod} ${brand}`, {tag: "@withdrawal"}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
@@ -151,7 +151,7 @@ const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
     {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle:'Perfect Money', amount: '60'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParametersMarkets){
-    test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, async({page})=>{
+    test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, {tag: "@withdrawal"},async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);

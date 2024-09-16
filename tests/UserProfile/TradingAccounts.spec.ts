@@ -58,7 +58,7 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         {testRailId: '@23602', brand: '@NM', user: 'userWithAccounts2@i.ua'}
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
-        test(`${testRailId} Edit trading accounts`, {tag:'@smoke'}, async({page}, testInfo)=>{
+        test(`${testRailId} Edit trading accounts`, {tag:['@smoke', '@secondAccount']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
@@ -85,7 +85,7 @@ const testAccountSwitchingParams: tradingAcTypes[] = [
     {testRailId: '@25187', brand: '@NM', user: 'userWithAccounts2@i.ua'}
 ]
 for(const{testRailId, brand, user} of testAccountSwitchingParams){
-    test(`${testRailId} Account switching`, {tag:'@smoke'}, async({page}, testInfo)=>{
+    test(`${testRailId} Account switching`, {tag:['@smoke', '@secondAccount']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page)
@@ -105,7 +105,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
         })})}})
 
 test.describe('Naga Markets - Trading accounts', async()=>{
-    test('@23600 Create 2nd live account', {tag:'@smoke'}, async({page, NagaMarkets}, testInfo)=>{
+    test('@23600 Create 2nd live account', {tag:['@smoke', '@secondAccount']}, async({page, NagaMarkets}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 120000);
         let KYC_Advance = "Advance";
         let sighIn = new SighIn(page)

@@ -20,7 +20,7 @@ const testNoFundsParaketers: testNoFunds[] = [
     {testRailId: '@25176', brand: '@NM', user: 'tradNoFundsMarket'}
 ]
 for(const{testRailId, brand, user}of testNoFundsParaketers){
-    test(`${testRailId} Open position without funds ${brand}`, {tag:'@smoke'}, async({page})=>{
+    test(`${testRailId} Open position without funds ${brand}`, {tag:['@smoke','trading']}, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page)
         let instruments = new AllInstruments(page);

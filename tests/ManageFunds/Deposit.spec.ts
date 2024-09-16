@@ -20,7 +20,7 @@ const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'skrill', pageTittle:'Fund via Skrill'},
 ]
 for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParameters){
-    test(`${testRailId} Check deposit method ${brand} ${depositName}`, async({page})=>{
+    test(`${testRailId} Check deposit method ${brand} ${depositName}`, {tag:'@deposit'},async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);
@@ -37,7 +37,7 @@ for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParamete
         })
     })
 }   
-test("@24068 Deposit via Crypto", async({page, NagaCapital })=>{
+test("@24068 Deposit via Crypto", {tag:'@deposit'},async({page, NagaCapital })=>{
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let deposit = new Deposit(page);
@@ -62,14 +62,14 @@ test.describe('Naga Markets. Deposit', async()=>{
         await mainPage.openManageFunds();
     })
 
-    test('@23995 Pay pal deposit', async({page})=>{
+    test('@23995 Pay pal deposit', {tag:'@deposit'},async({page})=>{
         let deposit = new Deposit(page);
         await deposit.chooseDepositMethod('paypal');
         await deposit.performDeposit('1000');
         expect(await deposit.getCurrentUrl()).toContain('paypal.com')
     })
 
-    test('@25150 Bank Transfer deposit', async({page})=>{
+    test('@25150 Bank Transfer deposit', {tag:'@deposit'},async({page})=>{
         let deposit = new Deposit(page);
         await deposit.chooseDepositMethod('sepa-credit')
         await deposit.performDeposit('1000');
@@ -84,7 +84,7 @@ const NMdepositTestParams: NStestTypes[] = [
     {testRailId: '@25151', brand: '@NM', user: 'depositTestMarkets', depositName: 'ewallets', pageTittle: 'Fund via E-Wallets'},
 ]
 for(const{testRailId, brand, user, depositName, pageTittle} of NMdepositTestParams){    
-    test(`${testRailId} Check ewallet methods ${brand} ${depositName}`, async({page})=>{
+    test(`${testRailId} Check ewallet methods ${brand} ${depositName}`, {tag:'@deposit'}, async({page})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);

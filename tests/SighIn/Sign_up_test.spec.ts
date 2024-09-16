@@ -18,7 +18,7 @@ test.describe("Naga Capital. Sigh up page", async()=>{
         {testRailId: '@25142', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighUp.json'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:'@smoke'}, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@smoke', '@signIn']}, async({page})=>{
             let localizationText = new getLocalization(localization)
             let sighUp = new SighUp(page);
             await sighUp.goto(await new SighIn(page).chooseBrand(brand), "register")

@@ -14,10 +14,13 @@ on:
           - "@trading"
           - "@signIn"
           - "@withdrawal"
+          - "@verification"
           - "@deposit"
           - "@manageFunds"
           - "@feed"
-          - "@other"
+          - "@settings"
+          - "@support"
+          - "@secondAccount"
           - "@all"
   schedule:
     - cron: '30 4 * * 0-6'

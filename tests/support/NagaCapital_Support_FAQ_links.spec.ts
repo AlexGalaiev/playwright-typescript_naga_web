@@ -17,12 +17,12 @@ type faqTypes = {
 }
 
 const testFAQParams: faqTypes[] = [
-    //{testRailId: '@23621', brand: '@NM', user: "testSupportMarkets@i.ua", categories: FAQ_NM},
+    {testRailId: '@23621', brand: '@NM', user: "testSupportMarkets@i.ua", categories: FAQ_NM},
     {testRailId: '@23981', brand: '@NS', user: "testSupport@i.ua", categories: FAQ_NM}
 ]
 
 for(const{testRailId, brand, user, categories} of testFAQParams){
-    test(`${testRailId} FAQ support links ${brand}`, async({page}, testInfo)=>{
+    test(`${testRailId} FAQ support links ${brand}`, {tag:'@support'},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 40000);
         let sighIn = new SighIn(page)
         let faq = new FAQ(page, categories)
@@ -43,14 +43,3 @@ for(const{testRailId, brand, user, categories} of testFAQParams){
     })
 }
 })
-
-// "What you need to get started":"what-you-need-to-get-started",
-        //"NAGA VIP User Levels and Benefits":"naga-vip-user-levels-and-benefits",
-       // "What is social trading?":"what-is-social-trading",
-        //"What can you trade?":"what-can-you-trade",
-        // "Supported platforms":"supported-platforms",
-        // "How to upgrade your Account to LIVE?":"how-to-upgrade-your-account-to-live"
-        //"Demo account vs Live account":"demo-account-vs-live-account"
-
-
-

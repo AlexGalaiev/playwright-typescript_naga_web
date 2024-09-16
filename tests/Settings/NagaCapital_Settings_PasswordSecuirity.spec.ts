@@ -8,7 +8,7 @@ import {test} from "..//..//test-options"
 import { SighIn } from "../../pageObjects/SighIn/SignInPage"
 
 test.describe("NagaCapital. Settings", async()=>{
-    test("@23920 Change password via settings", {tag:'@smoke'}, async({page, NagaCapital})=>{
+    test("@23920 Change password via settings", {tag:['@smoke','@settings']}, async({page, NagaCapital})=>{
         let sighUp = new SighUp(page);
         let sighIn = new SighIn(page)
         let mainPage = new MainPage(page);
@@ -33,7 +33,7 @@ test.describe("NagaCapital. Settings", async()=>{
 })
 
 test.describe('Naga Markets. Settings', async()=>{
-    test("@23598 Change password via settings",{tag:'@smoke'}, async({page, NagaMarkets})=>{
+    test("@23598 Change password via settings",{tag:['@smoke','@settings']}, async({page, NagaMarkets})=>{
         let sighUp = new SighUp(page);
         let sighIn = new SighIn(page)
         let mainPage = new MainPage(page);

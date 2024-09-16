@@ -20,7 +20,7 @@ const testFeedParams: testFeedtypes[] = [
     {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParams){
-    test(`${testRailId} Create , edit and delete actions for post ${brand}`,{tag:'@smoke'}, async({page}, testInfo)=>{
+    test(`${testRailId} Create , edit and delete actions for post ${brand}`,{tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let sighIn = new SighIn(page);
         let feed = new Feed(page)
@@ -46,7 +46,7 @@ const testFeedParamsActions: testFeedtypes[] = [
     {testRailId: '@25144', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
-    test(`${testRailId} Post actions - like action ${brand}`,{tag:'@smoke'}, async({page}, testInfo)=>{
+    test(`${testRailId} Post actions - like action ${brand}`,{tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 20000);
     let sighIn = new SighIn(page);
     let feed = new Feed(page)
@@ -78,7 +78,7 @@ const testFeedCommentParams: testFeedtypes[] = [
     {testRailId: '@25145', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
-    test(`${testRailId} Comment a post ${brand}`, {tag:'@smoke'},async({page}, testInfo)=>{
+    test(`${testRailId} Comment a post ${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let feed = new Feed(page);
         let sighIn = new SighIn(page);
@@ -109,7 +109,7 @@ const testShareCommentParams: testFeedtypes[] = [
     {testRailId: '@25146', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
-    test(`${testRailId} Shared a post ${brand}`, {tag:'@smoke'},async({page}, testInfo)=>{
+    test(`${testRailId} Shared a post ${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let feed = new Feed(page);
         let sighIn = new SighIn(page);
@@ -134,11 +134,11 @@ for(const{testRailId, brand, user}of testShareCommentParams){
 }
 
 const testParamsUserCabinet: testFeedtypes[] = [
-    {testRailId: '@25132', brand: '@NS', user: 'testFeedUser'}
-    //{testRailId: '@25147', brand: '@NM', user: 'testFeedUserMarkets'}
+    {testRailId: '@25132', brand: '@NS', user: 'testFeedUser'},
+    {testRailId: '@25147', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){
-    test(`${testRailId} Check post in user cabinet ${brand}`, {tag:'@smoke'}, async({page}, testInfo)=>{
+    test(`${testRailId} Check post in user cabinet ${brand}`, {tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let myAccounts = new MyAccounts(page);
         let userProfile = new UserProfile(page)
@@ -175,7 +175,7 @@ const testNotVerifieduser: testFeedNotVeried[] = [
     {testRailId: '@25148', brand: '@NM', user: 'testNotVerifiesUser', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
-    test(`${testRailId} post with not verified user ${brand}`, {tag:'@smoke'},async({page}, testInfo)=>{
+    test(`${testRailId} post with not verified user ${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let sighIn = new SighIn(page);
         let feed = new Feed(page)

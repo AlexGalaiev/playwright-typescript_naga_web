@@ -29,7 +29,7 @@ const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'},
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
-  test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:'@smoke'}, async ({ page }, testInfo) => {
+  test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:['@smoke','trading']}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 120000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
@@ -48,8 +48,6 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
     await test.step("Choose instrument for trading. Open new position page", async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-      // await instruments.searchInstrument(tradingInstrument);
-      // await instruments.openPosition(investDirection)
     });
     await test.step("Check parameters and open short position", async () => {
       expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(investDirection))).toContain('active')
@@ -76,7 +74,7 @@ const tradingParamsOrders: tradingTypes[] = [
   {testRailId: '@25015', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'},
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
-  test(`${testRailId} Open and close pending trading position ${brand} ${investDirection}`,{tag:'@smoke'}, async ({ page }, testInfo) => {
+  test(`${testRailId} Open and close pending trading position ${brand} ${investDirection}`,{tag:['@smoke','trading']}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 120000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
@@ -96,8 +94,6 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
     await test.step("Choose instrument for trading. Open new position page", async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-      // await instruments.searchInstrument(tradingInstrument);
-      // await instruments.openPosition(investDirection)
     });
     await test.step('Open order', async()=>{
       await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
@@ -121,7 +117,7 @@ const tradingParameters: tradingTypes[] = [
   {testRailId: '@25174', brand: '@NM', user:'testTrading2Markets', investDirection:"Short"},
 ]
 for(const{testRailId, brand, user, investDirection}of tradingParameters){
-  test(`${testRailId} Open short position of real stock ${brand}`,{tag:'@smoke'}, async({page}, testInfo)=>{
+  test(`${testRailId} Open short position of real stock ${brand}`,{tag:['@smoke','trading']}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 120000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
@@ -140,8 +136,6 @@ for(const{testRailId, brand, user, investDirection}of tradingParameters){
     await test.step("Choose instrument for trading. Open new position page", async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(realStockInstrument, investDirection)
-      // await instruments.searchInstrument(realStockInstrument);
-      // await instruments.openPosition(investDirection)
       expect(await realStockPopup.getPopupText()).toEqual(await localization.getLocalizationText('RealStock_OpenShortPosition'))
     });
   })

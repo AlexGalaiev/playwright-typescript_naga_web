@@ -18,7 +18,7 @@ test.describe("Verification", async() => {
   ]
 
   for(const{testRailId, user, brand}of testVerificatrionParams){
-    test(`${testRailId} ${brand} check documents page`, async({page})=>{
+    test(`${testRailId} ${brand} check documents page`, {tag:"@verification"},async({page})=>{
       let sighIn = new SighIn(page);
       let myAccounts = new MyAccounts(page);
       let verificationPopup = new VerificationPopup(page);
