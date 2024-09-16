@@ -16,7 +16,7 @@ import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFin
 
 test.describe("NagaCapital - Trading Accounts", async()=>{
     
-  test("@23922 Create 2nd live account", {tag:'@smoke'},async({page, NagaCapital}, testInfo)=>{
+  test("@23922 Create 2nd live account", {tag:['@smoke', '@secondAccount']},async({page, NagaCapital}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 50000);
     let sighUp = new SighUp(page);
     let mainPage = new MainPage(page);
