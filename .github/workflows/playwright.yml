@@ -62,7 +62,7 @@ jobs:
             ENV="$ENV" TAGS="$TAGS" npx playwright test --grep @smoke --project=${{ github.head_ref || github.ref_name }} --workers=1;
           elif [ "$ENV" = "smoke" ] && [ "$TAGS" != "@all" ]; then 
             echo "Running $ENV tests with tag $TAGS"
-            ENV="$ENV" TAGS="$TAGS" TAGS npx playwright test --grep "@smoke.*$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
+            ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "@smoke.*$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           elif [ "$ENV" = "production" ] && [ "$TAGS" != "@all" ]; then
             echo "Running $ENV tests with tag $TAGS"
             ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
