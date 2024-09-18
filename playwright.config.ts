@@ -33,7 +33,7 @@ export default defineConfig<TestOptions>({
     {
       name: "qa",
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices["Desktop Safari"],
         //NagaMarkets: "https://sxdevmarkets.com",
         NagaMarkets: "https://nagamarkets.com",
         NagaCapital: "https://nagacap.com",

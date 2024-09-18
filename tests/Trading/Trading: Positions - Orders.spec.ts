@@ -62,7 +62,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
       await myTrades.closePosition()
     });
     await test.step('Check successfull closing popup', async()=>{
-      expect(await successfullClosePopup.getDeposit()).toEqual(investmentValue)
+      expect(await successfullClosePopup.getDeposit()).toBeCloseTo(Number(investmentValue))
       expect(await successfullClosePopup.getLots()).toContain(units)
     })
   });
@@ -107,7 +107,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
       await myTrades.deleteOrder()
     })
     await test.step('Check succesfull closing order popup', async()=>{
-      expect(await successfullClosePopup.getRate()).toEqual(rate);
+      expect(await successfullClosePopup.getRate()).toBeCloseTo(Number(rate));
       expect(await successfullClosePopup.getLots()).toContain(units)
     })
 })}

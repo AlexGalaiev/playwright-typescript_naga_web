@@ -1,4 +1,4 @@
-import {test as base, BrowserContext, chromium as baseChromium, TestInfo} from "@playwright/test";
+import {test as base, BrowserContext, chromium as baseChromium, webkit as webBrowser, TestInfo} from "@playwright/test";
 import { TestRailIntegration } from "./testrail_setup";
 import { TestError } from "playwright/types/testReporter";
 
@@ -19,6 +19,7 @@ export const test = base.extend<TestOptions>({
     NMCountry:['', {option: true}],
     baseUrl:['', {option: true}],
     browserContext: async({}, use)=>{
+        //let browser = await webBrowser.launch();
         let browser = await baseChromium.launch();
         let context = await browser.newContext();
         //await context.addCookies([{name: 'testCookie', domain: '.test.com', 'path':'/', value: '1000000'}]);

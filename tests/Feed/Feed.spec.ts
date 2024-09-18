@@ -24,10 +24,17 @@ for(const{testRailId, brand, user}of testFeedParams){
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let sighIn = new SighIn(page);
         let feed = new Feed(page)
+        let myAccounts = new MyAccounts(page)
         await test.step("login and clean feed", async()=>{
             await sighIn.goto(await sighIn.chooseBrand(brand),'login');
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await feed.closeOpenedPost(user);
+        })
+        await test.step("Closed opened posts is they exist", async()=>{
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountsMenuItem('Profile')
+            await feed.closeOpenedPost(user);
+            await new MainPage(page).openHeaderMenuPoint('feed')
         })
         await feed.openCreatePostForm()
         await test.step("Create and edit post", async()=>{
@@ -51,10 +58,16 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
     let sighIn = new SighIn(page);
     let feed = new Feed(page)
     let userProfile = new UserProfile(page)
+    let myAccounts = new MyAccounts(page)
     await test.step("login by user and clean feed", async()=>{
         await sighIn.goto(await sighIn.chooseBrand(brand),'login');
         await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+    })
+    await test.step("Closed opened posts is they exist", async()=>{
+        await myAccounts.openUserMenu()
+        await myAccounts.openMyAccountsMenuItem('Profile')
         await feed.closeOpenedPost(user);
+        await new MainPage(page).openHeaderMenuPoint('feed')
     })
     await test.step("Add post to feed", async()=>{
         await feed.openCreatePostForm()
@@ -82,10 +95,16 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let feed = new Feed(page);
         let sighIn = new SighIn(page);
+        let myAccounts = new MyAccounts(page)
         await test.step("login by user and clean feed", async()=>{
             await sighIn.goto(await sighIn.chooseBrand(brand),'login');
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        })
+        await test.step("Closed opened posts is they exist", async()=>{
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountsMenuItem('Profile')
             await feed.closeOpenedPost(user);
+            await new MainPage(page).openHeaderMenuPoint('feed')
         })
         await test.step("Create post with text", async()=>{
             await feed.openCreatePostForm()
@@ -113,10 +132,16 @@ for(const{testRailId, brand, user}of testShareCommentParams){
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let feed = new Feed(page);
         let sighIn = new SighIn(page);
+        let myAccounts = new MyAccounts(page)
         await test.step("login by user and clean feed", async()=>{
             await sighIn.goto(await sighIn.chooseBrand(brand),'login');
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        })
+        await test.step("Closed opened posts is they exist", async()=>{
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountsMenuItem('Profile')
             await feed.closeOpenedPost(user);
+            await new MainPage(page).openHeaderMenuPoint('feed')
         })
         await test.step("Create post with text", async()=>{
             await feed.openCreatePostForm()
@@ -148,11 +173,11 @@ for(const{testRailId, brand, user}of testParamsUserCabinet){
         await test.step("login by user and clean feed", async()=>{
             await sighIn.goto(await sighIn.chooseBrand(brand),'login');
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await feed.closeOpenedPost(user);
         })
-        await test.step("Open user profile cabinet", async()=>{
+        await test.step("Open user profile cabinet and close previously created posts", async()=>{
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountsMenuItem('Profile')
+            await feed.closeOpenedPost(user);
         })
         await test.step('Add post from user profile', async()=>{
             await userProfile.addTextToPost(textForPost);

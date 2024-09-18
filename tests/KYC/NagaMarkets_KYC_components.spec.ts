@@ -36,6 +36,6 @@ test("@23943 KYC categorizations", {tag:['@smoke', '@kyc']},async({page})=>{
     })
     await test.step("Check KYC categorization", async()=>{
         await kycStart.openKYCKategorizationBanner();
-        expect(await page).toHaveScreenshot()
+        await expect(page).toHaveScreenshot('KYC_Categorization.png')
     })
 })

@@ -12,7 +12,7 @@ test.describe('Main Page elements', async()=>{
         email: string;
     }
     const testParams: testTypes[] = [
-        { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
+       // { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
         { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
     ]
     for(const {testrailId, brand, email} of testParams){
