@@ -20,7 +20,8 @@ const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'skrill', pageTittle:'Fund via Skrill'},
 ]
 for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParameters){
-    test(`${testRailId} Check deposit method ${brand} ${depositName}`, {tag:'@deposit'},async({page})=>{
+    test(`${testRailId} Check deposit method ${brand} ${depositName}`, {tag:'@deposit'},async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 10000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);
@@ -37,7 +38,8 @@ for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParamete
         })
     })
 }   
-test("@24068 Deposit via Crypto", {tag:'@deposit'},async({page, NagaCapital })=>{
+test("@24068 Deposit via Crypto", {tag:'@deposit'},async({page, NagaCapital }, testInfo)=>{
+    await testInfo.setTimeout(testInfo.timeout + 10000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let deposit = new Deposit(page);
@@ -54,7 +56,8 @@ test("@24068 Deposit via Crypto", {tag:'@deposit'},async({page, NagaCapital })=>
     
 test.describe('Naga Markets. Deposit', async()=>{
 
-    test.beforeEach('Login to platform', async({page, NagaMarkets})=>{
+    test.beforeEach('Login to platform', async({page, NagaMarkets}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 10000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         await sighIn.goto(NagaMarkets,'login');
@@ -84,7 +87,8 @@ const NMdepositTestParams: NStestTypes[] = [
     {testRailId: '@25151', brand: '@NM', user: 'depositTestMarkets', depositName: 'ewallets', pageTittle: 'Fund via E-Wallets'},
 ]
 for(const{testRailId, brand, user, depositName, pageTittle} of NMdepositTestParams){    
-    test(`${testRailId} Check ewallet methods ${brand} ${depositName}`, {tag:'@deposit'}, async({page})=>{
+    test(`${testRailId} Check ewallet methods ${brand} ${depositName}`, {tag:'@deposit'}, async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 10000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);

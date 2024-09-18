@@ -61,7 +61,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     await test.step("Check My-trades popup", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      expect(await myTrades.getProtectionValue(tradeField)).toBeCloseTo(Number(NagaProtectionValue))
+      expect(await myTrades.getProtectionValue(tradeField)).toEqual(NagaProtectionValue)
     });
     await test.step('Close position and check sucses popup', async()=>{
       await myTrades.closePosition()
@@ -107,7 +107,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await mainPage.openHeaderMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
-        expect(await myTrades.getProtectionValue(tradeField)).toBeCloseTo(Number(NagaProtectionValue))
+        expect(await myTrades.getProtectionValue(tradeField)).toEqual(NagaProtectionValue)
       });
       await test.step('Close position and check sucses popup', async()=>{
         await myTrades.closePosition()
@@ -170,8 +170,8 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       await changeLimits.updatePosition()
     })
     await test.step('Check change limit successfull popup', async()=>{
-      expect(await changeLimitsSuccessPopup.getLotsAmount()).toBeCloseTo(Number(units))
-      expect(await changeLimitsSuccessPopup.getInvesctmentsAmount()).toBeCloseTo(Number(deposit))
+      expect(await changeLimitsSuccessPopup.getLotsAmount()).toEqual(units)
+      expect(await changeLimitsSuccessPopup.getInvesctmentsAmount()).toEqual(deposit)
       expect(await changeLimitsSuccessPopup.getProtectionValue(protectionSL)).toContain(SL)
       await changeLimitsSuccessPopup.acceptPopup()
     })

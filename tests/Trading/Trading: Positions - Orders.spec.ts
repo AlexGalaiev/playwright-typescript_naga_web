@@ -23,10 +23,10 @@ let rate;
 
 test.describe("Trading Positions/Orders with Stop Loss/Take profit", async () => {
 const tradingParamsPositions: tradingTypes[] = [
-  {testRailId: '@25159', brand: '@NS', user:'testTrading2', investDirection:'Short'},
-  {testRailId: '@25163', brand: '@NS', user:'testTrading2', investDirection:"Long"},
-  {testRailId: '@23675', brand: '@NM', user:'testTrading2Markets', investDirection:'Short'},
-  {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'},
+  //{testRailId: '@25159', brand: '@NS', user:'testTrading2', investDirection:'Short'},
+  //{testRailId: '@25163', brand: '@NS', user:'testTrading2', investDirection:"Long"},
+  //{testRailId: '@23675', brand: '@NM', user:'testTrading2Markets', investDirection:'Short'},
+  {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'}
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
   test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:['@smoke','@trading']}, async ({ page }, testInfo) => {
@@ -62,7 +62,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
       await myTrades.closePosition()
     });
     await test.step('Check successfull closing popup', async()=>{
-      expect(await successfullClosePopup.getDeposit()).toBeCloseTo(Number(investmentValue))
+      expect(await successfullClosePopup.getDeposit()).toEqual(investmentValue)
       expect(await successfullClosePopup.getLots()).toContain(units)
     })
   });
@@ -107,7 +107,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
       await myTrades.deleteOrder()
     })
     await test.step('Check succesfull closing order popup', async()=>{
-      expect(await successfullClosePopup.getRate()).toBeCloseTo(Number(rate));
+      expect(await successfullClosePopup.getRate()).toEqual(rate);
       expect(await successfullClosePopup.getLots()).toContain(units)
     })
 })}

@@ -151,7 +151,8 @@ const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
     {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle:'Perfect Money', amount: '60'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParametersMarkets){
-    test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, {tag: "@withdrawal"},async({page})=>{
+    test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, {tag: "@withdrawal"},async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 10000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);

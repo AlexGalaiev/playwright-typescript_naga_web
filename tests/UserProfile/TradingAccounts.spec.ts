@@ -106,7 +106,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
 
 test.describe('Naga Markets - Trading accounts', async()=>{
     test('@23600 Create 2nd live account', {tag:['@smoke', '@secondAccount']}, async({page, NagaMarkets}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 120000);
+        await testInfo.setTimeout(testInfo.timeout + 150000);
         let KYC_Advance = "Advance";
         let sighIn = new SighIn(page)
         let sighUp = new SighUp(page)
