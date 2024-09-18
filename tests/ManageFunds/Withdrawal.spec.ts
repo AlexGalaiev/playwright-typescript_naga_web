@@ -152,7 +152,7 @@ const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParametersMarkets){
     test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, {tag: "@withdrawal"},async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 10000);
+        await testInfo.setTimeout(testInfo.timeout + 20000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);

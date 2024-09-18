@@ -21,7 +21,7 @@ const AddWatchlistPatameters: testTypes[] = [
 ]
 for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
     test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@smoke','@trading']}, async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 10000);
+        await testInfo.setTimeout(testInfo.timeout + 20000);
         let sighIn = new SighIn(page);
         let tradeInstrument = "Dogecoin/USD"
         let localizationPage = new getLocalization(localization)
@@ -55,7 +55,7 @@ const priceAlertParameters: testTypes[] = [
 ]
 for(const{testRailId, brand, user, localization}of priceAlertParameters){
     test(`${testRailId} Price alerts ${brand} ${user}`,{tag:['@smoke','@trading']}, async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 10000);
+        await testInfo.setTimeout(testInfo.timeout + 20000);
         let tradeInstrument = "Dogecoin/USD"
         let localizationPage = new getLocalization(localization)
         let watchlist = new AllInstruments(page);

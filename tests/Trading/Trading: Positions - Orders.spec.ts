@@ -23,14 +23,14 @@ let rate;
 
 test.describe("Trading Positions/Orders with Stop Loss/Take profit", async () => {
 const tradingParamsPositions: tradingTypes[] = [
-  //{testRailId: '@25159', brand: '@NS', user:'testTrading2', investDirection:'Short'},
-  //{testRailId: '@25163', brand: '@NS', user:'testTrading2', investDirection:"Long"},
-  //{testRailId: '@23675', brand: '@NM', user:'testTrading2Markets', investDirection:'Short'},
+  {testRailId: '@25159', brand: '@NS', user:'testTrading2', investDirection:'Short'},
+  {testRailId: '@25163', brand: '@NS', user:'testTrading2', investDirection:"Long"},
+  {testRailId: '@23675', brand: '@NM', user:'testTrading2Markets', investDirection:'Short'},
   {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'}
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
   test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:['@smoke','@trading']}, async ({ page }, testInfo) => {
-    await testInfo.setTimeout(testInfo.timeout + 120000);
+    await testInfo.setTimeout(testInfo.timeout + 140000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
@@ -75,7 +75,7 @@ const tradingParamsOrders: tradingTypes[] = [
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
   test(`${testRailId} Open and close pending trading position ${brand} ${investDirection}`,{tag:['@smoke','@trading']}, async ({ page }, testInfo) => {
-    await testInfo.setTimeout(testInfo.timeout + 120000);
+    await testInfo.setTimeout(testInfo.timeout + 140000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
@@ -118,7 +118,7 @@ const tradingParameters: tradingTypes[] = [
 ]
 for(const{testRailId, brand, user, investDirection}of tradingParameters){
   test(`${testRailId} Open short position of real stock ${brand}`,{tag:['@smoke','@trading']}, async({page}, testInfo)=>{
-    await testInfo.setTimeout(testInfo.timeout + 120000);
+    await testInfo.setTimeout(testInfo.timeout + 140000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);

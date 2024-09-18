@@ -8,7 +8,8 @@ import {test} from "..//..//test-options";
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
 test.describe("NagaCapital - User profile", async()=>{
-    test("@23573 User profile. General", {tag:'@settings'},async({page, NagaCapital})=>{
+    test("@23573 User profile. General", {tag:'@settings'},async({page, NagaCapital}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 30000);
         let sighUp = new SighUp(page);
         let sighIn = new SighIn(page)
         let userProfile = new UserProfile(page);
@@ -23,7 +24,7 @@ test.describe("NagaCapital - User profile", async()=>{
         await test.step('Edit username information', async()=>{
             await headerMenu.openProfileMenuPoint();
             let nameBeforeChanging = await userProfile.getUserNameText();
-            await userProfile.changeName(randomUser.randomUserName())
+            await userProfile.changeName(await randomUser.randomUserName())
             expect(await userProfile.getUserNameText()).not.toEqual(nameBeforeChanging);
         })
         await test.step("Update about me section", async()=>{

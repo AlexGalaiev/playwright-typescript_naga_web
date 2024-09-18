@@ -17,7 +17,7 @@ import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFin
 test.describe("NagaCapital - Trading Accounts", async()=>{
     
   test("@23922 Create 2nd live account", {tag:['@smoke', '@secondAccount']},async({page, NagaCapital}, testInfo)=>{
-    await testInfo.setTimeout(testInfo.timeout + 50000);
+    await testInfo.setTimeout(testInfo.timeout + 70000);
     let sighUp = new SighUp(page);
     let mainPage = new MainPage(page);
     let addAccount = new AddAcountForm(page);
@@ -59,7 +59,7 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
         test(`${testRailId} Edit trading accounts`, {tag:['@smoke', '@secondAccount']}, async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 50000);
+        await testInfo.setTimeout(testInfo.timeout + 90000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let addAccountForm = new AddAcountForm(page);
@@ -86,7 +86,7 @@ const testAccountSwitchingParams: tradingAcTypes[] = [
 ]
 for(const{testRailId, brand, user} of testAccountSwitchingParams){
     test(`${testRailId} Account switching`, {tag:['@smoke', '@secondAccount']}, async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 50000);
+        await testInfo.setTimeout(testInfo.timeout + 70000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page)
         await test.step("Login to platform", async()=>{

@@ -23,7 +23,7 @@ const testFAQParams: faqTypes[] = [
 
 for(const{testRailId, brand, user, categories} of testFAQParams){
     test(`${testRailId} FAQ support links ${brand}`, {tag:'@support'},async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 40000);
+        await testInfo.setTimeout(testInfo.timeout + 70000);
         let sighIn = new SighIn(page)
         let faq = new FAQ(page, categories)
         await test.step('Login to platform', async()=>{

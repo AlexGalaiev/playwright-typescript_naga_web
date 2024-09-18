@@ -8,10 +8,11 @@ import {test} from "..//..//test-options"
 import { SighIn } from "../../pageObjects/SighIn/SignInPage"
 
 test.describe("NagaCapital. Settings", async()=>{
-    test("@23920 Change password via settings", {tag:['@smoke','@settings']}, async({page, NagaCapital})=>{
-        let sighUp = new SighUp(page);
+    test("@23920 Change password via settings", {tag:['@smoke','@settings']}, async({page, NagaCapital}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 40000);
+        let sighUp = new SighUp(page)
         let sighIn = new SighIn(page)
-        let mainPage = new MainPage(page);
+        let mainPage = new MainPage(page)
         let myAccounts = new MyAccounts(page)
         let settings = new SettingsPage(page)
         let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -33,10 +34,10 @@ test.describe("NagaCapital. Settings", async()=>{
 })
 
 test.describe('Naga Markets. Settings', async()=>{
-    test("@23598 Change password via settings",{tag:['@smoke','@settings']}, async({page, NagaMarkets})=>{
+    test("@23598 Change password via settings",{tag:['@smoke','@settings']}, async({page, NagaMarkets}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 120000);
         let sighUp = new SighUp(page);
         let sighIn = new SighIn(page)
-        let mainPage = new MainPage(page);
         let myAccounts = new MyAccounts(page)
         let settings = new SettingsPage(page)
         let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")

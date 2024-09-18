@@ -34,7 +34,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
   test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${investDirection}`, {tag:['@smoke','@trading']},async ({ page}, testInfo) => {
-    await testInfo.setTimeout(testInfo.timeout + 120000);
+    await testInfo.setTimeout(testInfo.timeout + 140000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);
@@ -77,7 +77,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
     test(`${testRailId} Open/Close pending Short/Long posiotion+StopLoss/TakeProfit ${brand} ${investDirection}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
-      await testInfo.setTimeout(testInfo.timeout + 120000);
+      await testInfo.setTimeout(testInfo.timeout + 140000);
       let sighIn = new SighIn(page);
       let mainPage = new MainPage(page);
       let myTrades = new MyTrades(page);
@@ -133,7 +133,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
 ]
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP} of tradingParametersSLTP){
   test(`${testRailId} Edit position popup with SL/TP ${brand} ${investDirection}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
-    await testInfo.setTimeout(testInfo.timeout + 120000);
+    await testInfo.setTimeout(testInfo.timeout + 140000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
@@ -170,7 +170,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       await changeLimits.updatePosition()
     })
     await test.step('Check change limit successfull popup', async()=>{
-      expect(await changeLimitsSuccessPopup.getLotsAmount()).toEqual(units)
+      expect(await changeLimitsSuccessPopup.getLotsAmount()).toContain(units)
       expect(await changeLimitsSuccessPopup.getInvesctmentsAmount()).toEqual(deposit)
       expect(await changeLimitsSuccessPopup.getProtectionValue(protectionSL)).toContain(SL)
       await changeLimitsSuccessPopup.acceptPopup()

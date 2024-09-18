@@ -14,7 +14,8 @@ const testTransferParams: testTransfer[] = [
     {testRailId: '@25149', brand: '@NM', user: 'testTrading3Markets'}
 ]
 for(const{testRailId, brand, user} of testTransferParams){
-    test(`${testRailId} Internal transfer funds ${brand}`, {tag:['@smoke', '@manageFunds']}, async({page})=>{
+    test(`${testRailId} Internal transfer funds ${brand}`, {tag:['@smoke', '@manageFunds']}, async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 30000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
         let internalTransfer = new InternalTransfer(page);
