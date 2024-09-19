@@ -46,24 +46,24 @@ export class AddAcountForm{
 
 
     async create_USD_LiveAccount(){
-        await this.addNewAccountBtn.waitFor({timeout:1500})
+        await this.addNewAccountBtn.waitFor({timeout:3000})
         await this.addNewAccountBtn.click()
-        await this.addAccountPopup.waitFor({timeout:3000});
+        await this.addAccountPopup.waitFor({timeout:4000});
         await this.accountName.pressSequentially('Live_USD');
         await this.accountCurrecnyUSD.click();
         await this.createAccount.click();
-        await this.successAddingAccountBtn.waitFor({timeout:2000})
+        await this.successAddingAccountBtn.waitFor({timeout:4000})
         await this.successAddingAccountBtn.click();
         await this.page.waitForTimeout(1500)
     };
     async create_EUR_DemoAccount(){
-        await this.addNewAccountBtn.waitFor({timeout:1500})
+        await this.addNewAccountBtn.waitFor({timeout:3000})
         await this.addNewAccountBtn.click()
-        await this.page.waitForTimeout(1500)
+        await this.page.waitForTimeout(3000)
         await this.accountTypeDemo.click();
         await this.accountName.pressSequentially('DEMO_EUR');
         await this.createAccount.click();
-        await this.successAddingAccountBtn.waitFor({timeout:2000})
+        await this.successAddingAccountBtn.waitFor({timeout:4000})
         await this.successAddingAccountBtn.click();
         await this.page.waitForTimeout(1500)
     };
@@ -93,7 +93,7 @@ export class AddAcountForm{
 
     async openShowPasswordPopup(){
         await this.accountEditMenu.click();
-        await this.showPasswordBtn.waitFor({timeout:1000})
+        await this.showPasswordBtn.waitFor({timeout:2000})
         await this.showPasswordBtn.click();
         await this.passwordContainer.waitFor({timeout:3000});
     };

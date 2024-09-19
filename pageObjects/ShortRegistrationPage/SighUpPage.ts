@@ -112,8 +112,6 @@ export class SighUp{
         "p_user_name": null,
         "p_email": email,
         "p_plain_password": "Test123!",
-        // "p_tel": "+387603039647",
-        // 'phone_number_confirmed': true,
         "is_flexible": true,
         "p_country": country,
         "p_first_name":"",
@@ -156,13 +154,13 @@ export class SighUp{
         return userName;
     }
     async createLeadUserApi(country: string){
-        let randomEmail = new RandomUser().getRandomUserEmail(); 
+        let randomEmail = await new RandomUser().getRandomUserEmail(); 
         await this.addUserApi(randomEmail, country, this.randomUserName())
         return randomEmail
     }
 
     async createLeadUserApiNagaCapital(country: string, page: Page){
-        let randomEmail = new RandomUser().getRandomUserEmail(); 
+        let randomEmail = await new RandomUser().getRandomUserEmail(); 
         await this.addUserApiNagaCapital(randomEmail, country)
         return randomEmail
     }

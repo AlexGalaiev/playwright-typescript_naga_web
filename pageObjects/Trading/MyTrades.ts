@@ -74,7 +74,8 @@ export class MyTrades{
     }
     async getDepositValue(){
         await this.openedPosition.waitFor({state:"visible"})
-        return await this.openedPosition.locator("//div[contains(@class, 'deposit-active')]//span//span").textContent();
+        let value = await this.openedPosition.locator("//div[contains(@class, 'deposit-active')]//span//span").textContent();
+        return await value?.replace('$', '')
     };
     async getUnits(){
         await this.openedPosition.waitFor({state:"visible"})

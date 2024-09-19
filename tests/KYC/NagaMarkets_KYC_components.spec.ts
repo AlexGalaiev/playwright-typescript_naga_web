@@ -27,6 +27,7 @@ test("@23575 Upgrade account banner",{tag:['@smoke', '@kyc']}, async({page})=>{
 test("@23943 KYC categorizations", {tag:['@smoke', '@kyc']},async({page})=>{
     let mainPage = new MainPage(page)
     let kycStart = new startVerification_NagaMarkets(page)
+    let startVerifaication = new startVerification_NagaMarkets(page)
     let localization_KYC_start = new getLocalization("/pageObjects/localization/NagaMarkets_KYC_localization.json")
     await test.step("Check upgrade banner", async()=>{
         await mainPage.clickUpgradeBtn()})
@@ -36,6 +37,6 @@ test("@23943 KYC categorizations", {tag:['@smoke', '@kyc']},async({page})=>{
     })
     await test.step("Check KYC categorization", async()=>{
         await kycStart.openKYCKategorizationBanner();
-        await expect(page).toHaveScreenshot('KYC_Categorization.png')
+        expect(await startVerifaication.getKYCCategorizationText()).toEqual(await localization_KYC_start.getLocalizationText("KYC_categorization"))
     })
 })

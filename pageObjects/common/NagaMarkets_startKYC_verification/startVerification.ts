@@ -7,6 +7,7 @@ export class startVerification_NagaMarkets{
     readonly kycContent: Locator;
     readonly kycWarning: Locator;
     readonly kycCategorizationPopup: Locator;
+    readonly KycCategorizationText: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -15,6 +16,7 @@ export class startVerification_NagaMarkets{
         this.kycContent = page.locator(".kyc-introduction__content")
         this.kycWarning = page.locator("//div[@class='kyc-introduction__warning']//p")
         this.kycCategorizationPopup = page.locator("//div[contains(@class, 'types-modal__header')]")
+        this.KycCategorizationText = page.locator(".kyc-account-types-modal__description")
     }
     async getKycIntroductionText(){
         return await this.kycIntroduction.innerText()
@@ -30,5 +32,8 @@ export class startVerification_NagaMarkets{
     }
     async getKYCCategorizationPopup(){
         return await this.kycCategorizationPopup
+    }
+    async getKYCCategorizationText(){
+        return await this.KycCategorizationText.textContent()
     }
 }

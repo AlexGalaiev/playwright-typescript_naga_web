@@ -79,5 +79,8 @@
     },
     "KYC_start_Warning":{
         "answer":"Please answer honestly and carefully, especially when it comes to questions relevant to your knowledge, investment objectives, financial situation; depending on the answers given, you may not have access to copy trading, have limited access, or even have your account rejected all-together, since it is our obligation to evaluate your answers and assess the suitability of the service, in our aim to provide investor protection."
+    },
+    "KYC_categorization":{
+        "answer":"Due to regulatory requierements, NAGA uses an automated scoring system to evaulate your replies and categorize your knowledge and suitability for trading. Once you complete the questionaire, you will see the scoring result. After 15 days you can be re-assessed and get a higher  score. In short, these are the major differences for you in each category:"
     }
 }

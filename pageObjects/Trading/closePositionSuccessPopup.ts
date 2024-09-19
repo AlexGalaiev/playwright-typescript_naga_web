@@ -18,7 +18,8 @@ export class ClosePositionSuccessPopup{
         this.acceptBtn = page.locator("#ot_ok_thx")
     };
     async getDeposit(){
-        return await this.popupInvestmentValue.textContent()
+        let value = await this.popupInvestmentValue.textContent()
+        return await value?.replace('$', '')
     };
     async getLots(){
         return await this.lots.textContent()

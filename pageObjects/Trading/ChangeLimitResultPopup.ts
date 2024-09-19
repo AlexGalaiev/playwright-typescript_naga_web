@@ -24,7 +24,8 @@ export class ChangeLimitSuccessPopup{
     }
     async getInvesctmentsAmount(){
         await this.popupBody.waitFor({state:"visible"})
-        return await this.investmentAmount.textContent();
+        let amount =  await this.investmentAmount.textContent();
+        return await amount?.replace('$', '')
     };
     async getLotsAmount(){
         return await this.lots.textContent()

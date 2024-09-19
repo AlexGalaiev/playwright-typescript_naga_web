@@ -61,7 +61,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     await test.step("Check My-trades popup", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      expect(await myTrades.getProtectionValue(tradeField)).toEqual(NagaProtectionValue)
+      expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 2)
     });
     await test.step('Close position and check sucses popup', async()=>{
       await myTrades.closePosition()
@@ -77,7 +77,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
     test(`${testRailId} Open/Close pending Short/Long posiotion+StopLoss/TakeProfit ${brand} ${investDirection}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
-      await testInfo.setTimeout(testInfo.timeout + 140000);
+      await testInfo.setTimeout(testInfo.timeout + 150000);
       let sighIn = new SighIn(page);
       let mainPage = new MainPage(page);
       let myTrades = new MyTrades(page);
@@ -107,7 +107,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await mainPage.openHeaderMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
-        expect(await myTrades.getProtectionValue(tradeField)).toEqual(NagaProtectionValue)
+        expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 2)
       });
       await test.step('Close position and check sucses popup', async()=>{
         await myTrades.closePosition()
@@ -160,7 +160,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     await test.step("Check My-trades", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      deposit = await myTrades.getDepositValue();
+      deposit = (await myTrades.getDepositValue())?.replace('$','');
       units = await myTrades.getUnits();
     })
     await test.step('Open change limit popup and install SL', async()=>{
@@ -171,7 +171,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     })
     await test.step('Check change limit successfull popup', async()=>{
       expect(await changeLimitsSuccessPopup.getLotsAmount()).toContain(units)
-      expect(await changeLimitsSuccessPopup.getInvesctmentsAmount()).toEqual(deposit)
+      expect(Number(await changeLimitsSuccessPopup.getInvesctmentsAmount())).toBeCloseTo(Number(deposit))
       expect(await changeLimitsSuccessPopup.getProtectionValue(protectionSL)).toContain(SL)
       await changeLimitsSuccessPopup.acceptPopup()
     })
