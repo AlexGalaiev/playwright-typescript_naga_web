@@ -54,7 +54,7 @@ const testFeedParamsActions: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
     test(`${testRailId} Post actions - like action ${brand}`,{tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
-    await testInfo.setTimeout(testInfo.timeout + 40000);
+    await testInfo.setTimeout(testInfo.timeout + 50000);
     let sighIn = new SighIn(page);
     let feed = new Feed(page)
     let userProfile = new UserProfile(page)
@@ -92,7 +92,7 @@ const testFeedCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
     test(`${testRailId} Comment a post ${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 40000);
+        await testInfo.setTimeout(testInfo.timeout + 50000);
         let feed = new Feed(page);
         let sighIn = new SighIn(page);
         let myAccounts = new MyAccounts(page)

@@ -107,7 +107,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
       await myTrades.deleteOrder()
     })
     await test.step('Check succesfull closing order popup', async()=>{
-      expect(Number(await successfullClosePopup.getRate())).toBeCloseTo(rate, 3);
+      expect(Number(await successfullClosePopup.getRate())).toBeCloseTo(Number(rate), 3);
       expect(await successfullClosePopup.getLots()).toContain(units)
     })
 })}
