@@ -1,5 +1,6 @@
 import { SighIn } from "../../pageObjects/SighIn/SignInPage"
-import {test} from "..//..//test-options"
+import {MainPage} from "../../pageObjects/MainPage/MainPage"
+import {test} from "../../test-options"
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout"
 import { expect } from "@playwright/test"
@@ -12,8 +13,8 @@ test.describe('Main Page elements', async()=>{
         email: string;
     }
     const testParams: testTypes[] = [
-       // { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
-        { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
+       { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
+       { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
     ]
     for(const {testrailId, brand, email} of testParams){
         test(`${testrailId} login to platform ${brand}`, {tag:['@smoke', '@signIn']}, async({page})=>{
@@ -31,5 +32,19 @@ test.describe('Main Page elements', async()=>{
             })
         })
     }
-   
+    type testpBannerTypes = {
+        email: string;
+        nameOfStep: string;
+    }
+    const testBannerParams: testpBannerTypes[] = [
+        {email: "testUserLead@i.ua", nameOfStep: "Complete now"},
+        {email: "userHalfRegistered@i.ua", nameOfStep: "Verify identity"},
+        {email: "testUserUpgraded@i.ua", nameOfStep:"Complete Progress level and verify address"}
+
+    ]
+for(const {email, nameOfStep} of testBannerParams){
+    test('@23926 Start step names', async({page})=>{
+
+    })
+}
 })

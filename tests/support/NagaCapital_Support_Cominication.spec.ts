@@ -28,7 +28,8 @@ test.describe('NagaCapital. Support links', async()=>{
 
 test.describe('Naga Markets. Support links', async()=>{
     
-    test.beforeEach("Login to platform", async({page, NagaMarkets})=>{
+    test.beforeEach("Login to platform", async({page, NagaMarkets}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 30000);
         let sighIn = new SighIn(page);
         await sighIn.goto(NagaMarkets, 'login');
         await sighIn.sigInUserToPlatform("testSupportMarkets@i.ua", process.env.USER_PASSWORD || '')

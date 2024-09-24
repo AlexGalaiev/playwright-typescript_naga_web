@@ -16,8 +16,8 @@ type testFeedtypes = {
     user: string
 }
 const testFeedParams: testFeedtypes[] = [
-    {testRailId: '@25122', brand: '@NS', user: 'testFeedUser'},
-    {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'}
+   {testRailId: '@25122', brand: '@NS', user: 'testFeedUser'},
+   {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParams){
     test(`${testRailId} Create , edit and delete actions for post ${brand}`,{tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
@@ -28,7 +28,7 @@ for(const{testRailId, brand, user}of testFeedParams){
         await test.step("login and clean feed", async()=>{
             await sighIn.goto(await sighIn.chooseBrand(brand),'login');
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await feed.closeOpenedPost(user);
+            //await feed.closeOpenedPost(user);
         })
         await test.step("Closed opened posts is they exist", async()=>{
             await myAccounts.openUserMenu()
@@ -41,7 +41,7 @@ for(const{testRailId, brand, user}of testFeedParams){
             let previousText = await feed.addTextToPost('Hello World')
             await feed.editExistedPost(user);
             let modifiedTex = await feed.addTextToPost('Bye Bye')
-            expect(previousText).not.toEqual(modifiedTex)
+            expect(await previousText).not.toEqual(modifiedTex)
         })
         await test.step("Delete post", async()=>{
             await feed.deleteExistedPost(user)
@@ -80,8 +80,7 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
     await test.step('Check user profile and delete post', async()=>{
         await feed.checkUserPage(user);
         expect(await userProfile.getUserNameText()).toEqual(user)
-        await new MainPage(page).openHeaderMenuPoint("feed")
-        await feed.deleteExistedPost(user)
+        await feed.closeOpenedPost(user);
     })
 })
 }
@@ -118,6 +117,8 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
             await feed.closeTab()
         })
         await test.step("Close post ", async()=>{
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountsMenuItem('Profile')
             await feed.closeOpenedPost(user);
         })
     })

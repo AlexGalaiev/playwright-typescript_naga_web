@@ -16,6 +16,7 @@ export class MainPage{
     readonly UpgradeButton: Locator;
     readonly faqMenuPoint: Locator;
     readonly notActiveTradingAccount: Locator
+    readonly bannerName: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -33,6 +34,7 @@ export class MainPage{
         this.IUnderstandBtn = page.locator("//button[text()='I understand']")
         this.UpgradeButton = page.locator("//button[@type='button']//span[text()='Upgrade Now']")
         this.faqMenuPoint = page.locator("//span[text()='F.A.Q']")
+        this.bannerName = page.locator('.header-verify-account-levels__checkbox__description_wrapper__text')
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
@@ -81,6 +83,9 @@ export class MainPage{
         await this.page.waitForSelector('.header__verify__content', {state: 'visible'})
         return await this.verifyBanner.textContent()
     };
+    async getStepName(){
+        return await this.bannerName.textContent()
+    }
     //Naga Markets
     async clickIUnderstanBtn(){
         return await this.IUnderstandBtn.click()

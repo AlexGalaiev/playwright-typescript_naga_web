@@ -31,8 +31,10 @@ export class Feed {
     let post = await this.page.locator(".user-message-header__top", {
       hasText: userName,
     });
+    await post.scrollIntoViewIfNeeded()
     await post.locator(".user-message-header__options").click();
     await this.deletePostBtn.click();
+    await this.page.waitForTimeout(250)
     await this.page.getByRole("button", { name: "Yes, Delete" }).click();
   }
 
@@ -61,7 +63,7 @@ export class Feed {
   async addTextToPost(postText: string) {
     await this.postTextArea.clear();
     await this.postTextArea.pressSequentially(postText);
-    await this.page.waitForTimeout(250);
+    await this.page.waitForTimeout(500);
     await this.postBtn.click();
     return postText;
   }
@@ -70,12 +72,14 @@ export class Feed {
     let post = await this.page.locator(".user-message-header__top", {
       hasText: userName,
     });
+    await post.scrollIntoViewIfNeeded()
     await post.locator(".user-message-header__options").click();
     await post.locator('[data-cy="edit-post"]').click();
   }
 
   async likePost(userName: string) {
     let post = await this.page.locator(".feed-item", { hasText: userName });
+    await post.scrollIntoViewIfNeeded()
     await post.locator(".feed-item-like").click();
   }
 
@@ -112,6 +116,7 @@ export class Feed {
     let text = await comment
       .locator(".feed-item-comment-list__item__comment")
       .textContent();
+    await this.page.waitForTimeout(500)
     return text;
   }
   async closeTab() {
