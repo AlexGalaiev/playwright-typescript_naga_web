@@ -4,6 +4,7 @@ import {test} from "../../test-options"
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout"
 import { expect } from "@playwright/test"
+import { getLocalization } from "../../pageObjects/localization/getText"
 
 
 test.describe('Main Page elements', async()=>{
@@ -31,20 +32,56 @@ test.describe('Main Page elements', async()=>{
                 expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
             })
         })
-    }
+    }})
+test.describe('Naga Capital', async()=>{
     type testpBannerTypes = {
         email: string;
-        nameOfStep: string;
+        numberOfStep: number;
+        textOfStep:string
     }
     const testBannerParams: testpBannerTypes[] = [
-        {email: "testUserLead@i.ua", nameOfStep: "Complete now"},
-        {email: "userHalfRegistered@i.ua", nameOfStep: "Verify identity"},
-        {email: "testUserUpgraded@i.ua", nameOfStep:"Complete Progress level and verify address"}
-
+        {email: "testUserLead@i.ua", numberOfStep: 1, textOfStep:"Complete now"},
+        {email: "userHalfRegistered@i.ua", numberOfStep: 2, textOfStep:"Verify identity"},
+        {email: "testUserUpgraded@i.ua", numberOfStep:3, textOfStep:"Complete Progress level and verify address"}
     ]
-for(const {email, nameOfStep} of testBannerParams){
-    test('@23926 Start step names', async({page})=>{
-
-    })
-}
+    for(const {email, numberOfStep, textOfStep} of testBannerParams){
+    test(`@23926 Status on banner #${numberOfStep}`,{tag:'@signIn'},  async({page, NagaCapital})=>{
+        let sighIn = new SighIn(page);
+        let mainPage = new MainPage(page)
+        await test.step('Login to platform', async()=>{
+            await sighIn.goto(NagaCapital, 'login')
+            await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || '')
+        })
+        await test.step('Check name of first step', async()=>{
+            expect(await mainPage.getStatusTextOfHeaderStep(numberOfStep)).toEqual(textOfStep)
+        })})}
 })
+
+test.describe('Naga Markets', async()=>{
+    type testpBannerTypes = {
+        email: string;
+        textOfStep:string;
+        level: string
+    }
+    const testBannerParams: testpBannerTypes[] = [
+        {email: "testUserLeadMarkets@i.ua", textOfStep:"UpgradeAccountBannerContent", level: 'Lead'},
+        {email: "testUserLowScore@i.ua", textOfStep:"PreAdvanceDisclaimerBody", level: 'Advance'},
+        {email: "testUserPreAdvance@i.ua", textOfStep:"VerifyBanner_TextContent", level: 'Low'}
+    ]
+    for(const{email, textOfStep, level} of testBannerParams){
+        test(`@25190 Naga start login banner ${level}`, async({page, NagaMarkets})=>{
+            let sighIn = new SighIn(page);
+            let mainPage = new MainPage(page);
+            let localization = new getLocalization('pageObjects/localization/NagaMarkets_MainPage.json')
+            await test.step('Login to platform', async()=>{
+                await sighIn.goto(NagaMarkets, 'login')
+                await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || '')
+            })
+            await test.step('Check different scorring banners', async()=>{
+                expect(await mainPage.getVerifyBannerContent()).toEqual(await localization.getLocalizationText(textOfStep))
+            })
+        })
+    }
+
+})
+

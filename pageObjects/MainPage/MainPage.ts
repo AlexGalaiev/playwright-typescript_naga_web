@@ -17,6 +17,7 @@ export class MainPage{
     readonly faqMenuPoint: Locator;
     readonly notActiveTradingAccount: Locator
     readonly bannerName: Locator;
+    readonly leadMarketsBanner: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -35,6 +36,7 @@ export class MainPage{
         this.UpgradeButton = page.locator("//button[@type='button']//span[text()='Upgrade Now']")
         this.faqMenuPoint = page.locator("//span[text()='F.A.Q']")
         this.bannerName = page.locator('.header-verify-account-levels__checkbox__description_wrapper__text')
+        this.leadMarketsBanner = page.locator('.header__verify__content')
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
