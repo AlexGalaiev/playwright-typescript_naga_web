@@ -101,7 +101,7 @@ export class MainPage{
         return await this.verifyBannerDisclaimer.textContent()
     };
     async getVerifyBannerMiddleScore(){
-        await this.page.waitForSelector('.user-status-box__desc-text', {state:'visible'})
+        //await this.page.waitForSelector('.user-status-box__desc-text', {state:'visible'})
         let middleText = await this.page.locator('.user-status-box__desc-text').textContent();
         return middleText
     }

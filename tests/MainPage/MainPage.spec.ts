@@ -52,7 +52,7 @@ test.describe('Naga Capital', async()=>{
             await sighIn.goto(NagaCapital, 'login')
             await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || '')
         })
-        await test.step('Check name of first step', async()=>{
+        await test.step('Check statuses of steps', async()=>{
             expect(await mainPage.getStatusTextOfHeaderStep(numberOfStep)).toEqual(textOfStep)
         })})}
 })
@@ -65,8 +65,8 @@ test.describe('Naga Markets', async()=>{
     }
     const testBannerParams: testpBannerTypes[] = [
         {email: "testUserLeadMarkets@i.ua", textOfStep: "UpgradeAccountBannerContent", level: 'Lead'},
-        {email: "testUserLowScore@i.ua", textOfStep:"PreAdvanceDisclaimerBody", level: 'Advance'},
-        {email: "testUserPreAdvance@i.ua", textOfStep:"VerifyBanner_TextContent", level: 'Low'}
+        {email: "user949", textOfStep:"PreAdvanceDisclaimerBody", level: 'PreAdvance'},
+        {email: "user460", textOfStep:"PreAdvanceDisclaimerBody", level: 'Beginner'},
     ]
     for(const{email, textOfStep, level} of testBannerParams){
         test(`@25190 Naga start login banner ${level}`, async({page, NagaMarkets})=>{
@@ -77,8 +77,12 @@ test.describe('Naga Markets', async()=>{
                 await sighIn.goto(NagaMarkets, 'login')
                 await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
-            await test.step('Check different scorring banners', async()=>{
-                expect(await mainPage.getVerifyBannerContent()).toEqual(await localization.getLocalizationText(textOfStep))
+            await test.step('Check banners with different scorrings', async()=>{
+                if(level == 'Lead'){
+                    expect(await mainPage.getVerifyBannerContent()).toEqual(await localization.getLocalizationText(textOfStep))
+                }else{
+                    expect(await mainPage.getVerifyBannerMiddleScore()).toEqual(await localization.getLocalizationText(textOfStep))
+                }
             })
         })
     }

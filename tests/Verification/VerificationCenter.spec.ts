@@ -1,10 +1,10 @@
 import { expect } from "playwright/test";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
-import { test } from "..//..//test-options";
+import { test } from "../../test-options";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 import { SighIn } from "../../pageObjects/SighIn/SignInPage";
 
-test.describe("Verification", async() => {
+test.describe("Verification center", async() => {
   
   type VerificationTypes = {
     testRailId: string,
@@ -25,7 +25,7 @@ test.describe("Verification", async() => {
       await test.step('Login by user', async()=>{
         await sighIn.goto(await sighIn.chooseBrand(brand), "login");
         await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-      await test.step('Check header steps, My Documents', async()=>{
+      await test.step('Check statuses of documents in My Accounts', async()=>{
         await myAccounts.openUserMenu()
         await myAccounts.openMyAccountsMenuItem('My Documents')
         expect(await verificationPopup.getStatusOdDocuments()).toEqual('Requested')

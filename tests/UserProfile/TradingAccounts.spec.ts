@@ -58,7 +58,7 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         {testRailId: '@23602', brand: '@NM', user: 'userWithAccounts2@i.ua'}
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
-        test(`${testRailId} Edit trading accounts`, {tag:['@smoke', '@secondAccount']}, async({page}, testInfo)=>{
+        test(`${testRailId} Edit trading account information`, {tag:['@smoke', '@secondAccount']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 90000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);
@@ -93,13 +93,13 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
             await sighIn.goto(await sighIn.chooseBrand(brand),'login');
             await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
-        await test.step("Check account switching", async()=>{
+        await test.step("Check account switching to outher live account", async()=>{
             await mainPage.openTradingAssountsMenu();
             let notActiveAccountId = await mainPage.getNotActiveTradingAccountId()
             await mainPage.switchUserToNotActiveAccount();
             expect(await mainPage.getActiveTradingAccountId()).toEqual(notActiveAccountId)
         })
-        await test.step("Switch back", async()=>{
+        await test.step("Switch back to main account", async()=>{
             await mainPage.openTradingAssountsMenu();
             await mainPage.switchUserToNotActiveAccount();
         })})}})

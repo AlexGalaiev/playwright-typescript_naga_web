@@ -4,7 +4,7 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage"
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 import { SettingsPage } from "../../pageObjects/Settings/SettingsPage"
 import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
-import {test} from "..//..//test-options"
+import {test} from "../../test-options"
 import { SighIn } from "../../pageObjects/SighIn/SignInPage"
 
 test.describe("NagaCapital. Settings", async()=>{
