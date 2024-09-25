@@ -64,7 +64,7 @@ test.describe('Naga Markets', async()=>{
         level: string
     }
     const testBannerParams: testpBannerTypes[] = [
-        {email: "testUserLeadMarkets@i.ua", textOfStep:"UpgradeAccountBannerContent", level: 'Lead'},
+        {email: "testUserLeadMarkets@i.ua", textOfStep: "UpgradeAccountBannerContent", level: 'Lead'},
         {email: "testUserLowScore@i.ua", textOfStep:"PreAdvanceDisclaimerBody", level: 'Advance'},
         {email: "testUserPreAdvance@i.ua", textOfStep:"VerifyBanner_TextContent", level: 'Low'}
     ]
@@ -72,7 +72,7 @@ test.describe('Naga Markets', async()=>{
         test(`@25190 Naga start login banner ${level}`, async({page, NagaMarkets})=>{
             let sighIn = new SighIn(page);
             let mainPage = new MainPage(page);
-            let localization = new getLocalization('pageObjects/localization/NagaMarkets_MainPage.json')
+            let localization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
             await test.step('Login to platform', async()=>{
                 await sighIn.goto(NagaMarkets, 'login')
                 await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || '')
