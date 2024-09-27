@@ -23,7 +23,7 @@ on:
           - "@secondAccount"
           - "@all"
   schedule:
-    - cron: '30 4 * * 0-6'
+    - cron: '30 1 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
