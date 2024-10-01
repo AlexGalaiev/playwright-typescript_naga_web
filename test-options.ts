@@ -5,18 +5,22 @@ import { TestError } from "playwright/types/testReporter";
 export type TestOptions = {
     NagaMarkets: string;
     NagaCapital: string;
+    NagaAxon: string;
     baseUrl: string;
     browserContext: BrowserContext;
     testInfo: TestInfo;
     NSCountry: string;
     NMCountry: string;
+    NACountry: string
 }
 
 export const test = base.extend<TestOptions>({
     NagaMarkets:['', {option: true}],
     NagaCapital:['', {option: true}],
+    NagaAxon: ['', {option: true}],
     NSCountry:['', {option: true}],
     NMCountry:['', {option: true}],
+    NACountry:['', {option: true}],
     baseUrl:['', {option: true}],
     browserContext: async({}, use)=>{
         //let browser = await webBrowser.launch();

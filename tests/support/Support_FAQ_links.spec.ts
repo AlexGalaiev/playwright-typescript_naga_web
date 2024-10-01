@@ -38,7 +38,6 @@ for(const{testRailId, brand, user, categories} of testFAQParams){
             await faq.checkSubcategory("Withdrawals")
             await faq.checkSubcategory("Trading")
             await faq.checkSubcategory("Account")
-
         })
     })
 }

@@ -37,9 +37,11 @@ export default defineConfig<TestOptions>({
         //NagaMarkets: "https://sxdevmarkets.com",
         NagaMarkets: "https://nagamarkets.com",
         NagaCapital: "https://nagacap.com",
+        NagaAxon: 'https://naga.eu',
         //NagaCapital: "https://sxdevcap.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
+        NACountry: "Greece"
       },
     },
     {
@@ -48,8 +50,10 @@ export default defineConfig<TestOptions>({
         ...devices["Desktop Chrome"],
         NagaMarkets: "https://nagamarkets.com",
         NagaCapital: "https://nagacap.com",
+        NagaAxon: 'https://naga.eu',
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
+        NACountry: "Greece"
       },
     },
     {
@@ -58,8 +62,10 @@ export default defineConfig<TestOptions>({
         ...devices["Desktop Chrome"],
         NagaMarkets: "https://nagamarkets.com",
         NagaCapital: "https://nagacap.com",
+        NagaAxon: 'https://naga.eu',
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
+        NACountry: "Greece"
       },
     },
     {
@@ -68,8 +74,10 @@ export default defineConfig<TestOptions>({
         ...devices["Desktop Chrome"],
         NagaMarkets: "https://nagamarkets.com",
         NagaCapital: "https://nagacap.com",
+        NagaAxon: 'https://naga.eu',
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
+        NACountry: "Greece"
       },
     },
   ],

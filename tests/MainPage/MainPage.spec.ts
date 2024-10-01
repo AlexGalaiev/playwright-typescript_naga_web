@@ -15,10 +15,11 @@ test.describe('Main Page elements', async()=>{
     }
     const testParams: testTypes[] = [
        { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
-       { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
+       { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"},
+       { testrailId: "@25191", brand: '@NA', email: "testLeadUserAxon@i.ua"}
     ]
     for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} login to platform ${brand}`, {tag:['@smoke', '@signIn']}, async({page})=>{
+        test(`${testrailId} login/logout to platform ${brand}`, {tag:['@smoke', '@signIn']}, async({page})=>{
             let sighIn = new SighIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)
