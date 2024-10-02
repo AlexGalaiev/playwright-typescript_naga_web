@@ -33,7 +33,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25017', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
-  test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${investDirection}`, {tag:['@smoke','@trading']},async ({ page}, testInfo) => {
+  test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${investDirection}`, {tag:['@smoke','@trading','@prodSanity']},async ({ page}, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);

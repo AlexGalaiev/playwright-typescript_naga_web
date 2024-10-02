@@ -20,7 +20,7 @@ const AddWatchlistPatameters: testTypes[] = [
     {testRailId: '@23674', brand: '@NM', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
-    test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@smoke','@trading']}, async({page}, testInfo)=>{
+    test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@smoke','@trading','@prodSanity']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let sighIn = new SighIn(page);
         let tradeInstrument = "Dogecoin/USD"

@@ -30,7 +30,7 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
   }
 );
 
-test("@24921 Naga Markets. KYC - Advance level.",{tag:['@smoke', '@kyc']}, async ({page}, testInfo) => {
+test("@24921 Naga Markets. KYC - Advance level.",{tag:['@smoke', '@kyc', '@prodSanity']}, async ({page}, testInfo) => {
   await testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let quiz = new FullRegistration(page);

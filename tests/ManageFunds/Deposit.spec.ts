@@ -20,7 +20,7 @@ const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'skrill', pageTittle:'Fund via Skrill'},
 ]
 for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParameters){
-    test(`${testRailId} Check deposit method ${brand} ${depositName}`, {tag:'@deposit'},async({page}, testInfo)=>{
+    test(`${testRailId} Check deposit method ${brand} ${depositName}`, {tag:['@deposit', '@prodSanity']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 10000);
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page);

@@ -19,7 +19,7 @@ test.describe('Main Page elements', async()=>{
        { testrailId: "@25191", brand: '@NA', email: "testLeadUserAxon@i.ua"}
     ]
     for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} login/logout to platform ${brand}`, {tag:['@smoke', '@signIn']}, async({page})=>{
+        test(`${testrailId} login/logout to platform ${brand}`, {tag:['@smoke', '@signIn', '@prodSanity']}, async({page})=>{
             let sighIn = new SighIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)

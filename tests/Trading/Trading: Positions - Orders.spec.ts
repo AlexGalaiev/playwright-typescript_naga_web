@@ -29,7 +29,7 @@ const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'}
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
-  test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:['@smoke','@trading']}, async ({ page }, testInfo) => {
+  test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:['@smoke','@trading', '@prodSanity']}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let sighIn = new SighIn(page);
     let mainPage = new MainPage(page);

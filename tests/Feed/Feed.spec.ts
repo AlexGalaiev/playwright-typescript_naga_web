@@ -20,7 +20,7 @@ const testFeedParams: testFeedtypes[] = [
    {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParams){
-    test(`${testRailId} Create , edit and delete actions for post ${brand}`,{tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
+    test(`${testRailId} Create , edit and delete actions for post ${brand}`,{tag:['@smoke', '@feed', '@prodSanity']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let sighIn = new SighIn(page);
         let feed = new Feed(page)
@@ -129,7 +129,7 @@ const testShareCommentParams: testFeedtypes[] = [
     {testRailId: '@25146', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
-    test(`${testRailId} Shared a post ${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
+    test(`${testRailId} Shared a post ${brand}`, {tag:['@smoke', '@feed', '@prodSanity']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let feed = new Feed(page);
         let sighIn = new SighIn(page);
