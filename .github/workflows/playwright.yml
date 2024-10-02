@@ -24,7 +24,7 @@ on:
           - "@all"
           - "@prodSanity"
   schedule:
-    - cron: '05 9 * * 0-6'
+    - cron: '15 9 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
