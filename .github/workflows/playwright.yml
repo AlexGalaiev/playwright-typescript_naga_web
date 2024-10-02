@@ -24,7 +24,7 @@ on:
           - "@all"
           - "@prodSanity"
   schedule:
-    - cron: '50 8 * * 0-6'
+    - cron: '00 9 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -70,7 +70,7 @@ jobs:
           elif [ "$ENV" = "production" ] && [ "$TAGS" != "@all" ]; then
             echo "Running $ENV tests with tag $TAGS"
             ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
-          elif "$ENV" = "master"; then
+          elif ["$ENV" = "master"]; then
             echo "Running $ENV tests with tag @prodSanity"
             ENV="$ENV" TAGS=@prodSanity npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           else 
