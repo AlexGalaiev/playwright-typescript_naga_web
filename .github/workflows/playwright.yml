@@ -10,19 +10,19 @@ on:
         type: choice
         required: false
         options:
-          - "@kyc"
-          - "@trading"
-          - "@signIn"
-          - "@withdrawal"
-          - "@verification"
-          - "@deposit"
-          - "@manageFunds"
-          - "@feed"
-          - "@settings"
-          - "@support"
-          - "@secondAccount"
-          - "@all"
-          - "@prodSanity"
+          - "kyc"
+          - "trading"
+          - "signIn"
+          - "withdrawal"
+          - "verification"
+          - "deposit"
+          - "manageFunds"
+          - "feed"
+          - "settings"
+          - "support"
+          - "secondAccount"
+          - "all"
+          - "prodSanity"
   schedule:
     - cron: '30 4 * * 0-6'
 jobs:
@@ -60,7 +60,7 @@ jobs:
       id: playwright_tests
       run: |
           ENV=${{ github.head_ref || github.ref_name }}
-          TAGS=${{ inputs.tag }}
+          TAGS=@${{ inputs.tag }}
           if [ "$ENV" = "smoke" ] && [ "$TAGS" = "@all" ]; then
             echo "Running $ENV tests for all tags"
             ENV="$ENV" TAGS="$TAGS" npx playwright test --grep @smoke --project=${{ github.head_ref || github.ref_name }} --workers=1;
