@@ -23,6 +23,17 @@ on:
           - "secondAccount"
           - "all"
           - "prodSanity"
+      trigger_type:
+        description: 'Who triggered (manual/scheduled or jira)'
+        default: "scheduled"
+        type: choice
+        options: 
+         - "manual"
+         - "scheduled"
+         - "jira"
+      ticket_id:
+        description: 'Jira ticket ID (e.g. RG-1234)'
+        type: string
   schedule:
     - cron: '30 4 * * 0-6'
 jobs:
@@ -127,3 +138,8 @@ jobs:
         SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
         SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
         SHOULD_DISPLAY_ACTOR_LABEL: true
+     # when trigger_type equal "jira", send a webhook request to an API and send to it the ticket_id, env.deployment_url, steps.playwright_tests.outcome, steps.set_outcome_title.outputs.title, inputs.tag
+    - name: Notify test result for Jira
+      if: ${{ inputs.trigger_type == 'jira' }}
+      run: |
+        curl -X POST -H "Content-Type: application/json" -d '{"ticket_id": "${{ inputs.ticket_id }}", "deployment_url": "${{ env.deployment_url }}", "outcome": "${{ steps.playwright_tests.outcome }}", "title": "${{ steps.set_outcome_title.outputs.title }}", "tag": "${{ inputs.tag }}"}' https://automation.atlassian.com/pro/hooks/fed5268ffa26ba4c3d60b99ca2c5bf60954af14a?issue=${{ inputs.ticket_id }}
