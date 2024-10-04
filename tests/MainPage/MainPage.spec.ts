@@ -5,6 +5,7 @@ import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout"
 import { expect } from "@playwright/test"
 import { getLocalization } from "../../pageObjects/localization/getText"
+import { UserProfile } from "../../pageObjects/UserProfile/UserProfile"
 
 
 test.describe('Main Page elements', async()=>{
@@ -19,7 +20,7 @@ test.describe('Main Page elements', async()=>{
        { testrailId: "@25191", brand: '@NA', email: "testLeadUserAxon@i.ua"}
     ]
     for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} login/logout to platform ${brand}`, {tag:['@smoke', '@signIn', '@prodSanity']}, async({page})=>{
+        test(`${testrailId} login/logout to platform ${brand}`, {tag:['@smoke', '@signIn', '@prodSanity', '@mainPage']}, async({page})=>{
             let sighIn = new SighIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)
@@ -33,7 +34,37 @@ test.describe('Main Page elements', async()=>{
                 expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
             })
         })
-    }})
+    }
+
+    type searchTypes = {
+        testRailId: string;
+        brand: string;
+        loginUser: string;
+        searchUser: string;
+        flag: string
+    }
+    const searchParams: searchTypes[] = [
+        {testRailId: '@23693', brand: '@NM', loginUser:'testTrading2Markets', searchUser: 'testTrading2', flag:'ba.png'},
+        {testRailId: '@25192', brand: '@NS', loginUser:'testTrading2', searchUser: 'testTrading2Markets', flag:'de.png'}
+    ]
+    for(const{testRailId, brand, loginUser, searchUser, flag} of searchParams){
+        test(`${testRailId} Search different customers`, {tag: ['@signIn', '@mainPage']},async({page})=>{
+            let sighIn = new SighIn(page);
+            let mainPage = new MainPage(page)
+            let userProfile = new UserProfile(page)
+            await test.step('Login to platform', async()=>{
+                await sighIn.goto(await sighIn.chooseBrand(brand), 'login')
+                await sighIn.sigInUserToPlatform(loginUser, process.env.USER_PASSWORD || '')
+            })
+            await test.step('Search and open different user from different platform', async()=>{
+                await mainPage.search(searchUser)
+                await mainPage.getFoundResults(searchUser)
+                expect(await userProfile.getCountryFlag()).toContain(flag)
+            })
+        })
+    }
+
+})
 test.describe('Naga Capital', async()=>{
     type testpBannerTypes = {
         email: string;
@@ -46,7 +77,7 @@ test.describe('Naga Capital', async()=>{
         {email: "testUserUpgraded@i.ua", numberOfStep:3, textOfStep:"Complete Progress level and verify address"}
     ]
     for(const {email, numberOfStep, textOfStep} of testBannerParams){
-    test(`@23926 Status on banner #${numberOfStep}`,{tag:'@signIn'},  async({page, NagaCapital})=>{
+    test(`@23926 Status on banner #${numberOfStep}`,{tag:['@signIn', '@mainPage']},  async({page, NagaCapital})=>{
         let sighIn = new SighIn(page);
         let mainPage = new MainPage(page)
         await test.step('Login to platform', async()=>{

@@ -13,6 +13,7 @@ export class UserProfile{
     readonly aboutMeSaveBtn: Locator;
     readonly aboutMeEditedDescription: Locator;
     readonly createPostForm: Locator;
+    readonly flag: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -26,6 +27,7 @@ export class UserProfile{
         this.aboutMeSaveBtn = page.locator("//button[contains(text(), 'Save')]")
         this.aboutMeEditedDescription = page.locator("//div[@class='user-about-me__description']");
         this.createPostForm = page.locator(".feed-status-post__actions-input")
+        this.flag = page.locator(".user-profile-photo__country")
     }
 
     async changeName(NewName: string){
@@ -70,7 +72,8 @@ export class UserProfile{
         await this.page.locator('[data-cy="delete-post"]').click()
         //await this.page.getByRole('presentation', {name: 'Delete this post'}).click()
         await this.page.getByRole('button', {name:"Yes, Delete"}).click()
+    };
+    async getCountryFlag(){
+        return await this.flag.getAttribute('src')
     }
-
-
 }

@@ -18,6 +18,7 @@ export class MainPage{
     readonly notActiveTradingAccount: Locator
     readonly bannerName: Locator;
     readonly leadMarketsBanner: Locator;
+    readonly searchField: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -37,6 +38,7 @@ export class MainPage{
         this.faqMenuPoint = page.locator("//span[text()='F.A.Q']")
         this.bannerName = page.locator('.header-verify-account-levels__checkbox__description_wrapper__text')
         this.leadMarketsBanner = page.locator('.header__verify__content')
+        this.searchField = page.locator('#global_search_input')
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
@@ -144,5 +146,14 @@ export class MainPage{
     }
     async getUrl(){
         return await this.page.url()
+    }
+    async search(stringToSearch: string){
+        await this.searchField.pressSequentially(stringToSearch)
+        await this.page.waitForTimeout(1500)
+    }
+    async getFoundResults(userName: string){
+        let foundPopup = await this.page.locator('.global-search__results__group')
+        let foundUser = await foundPopup.locator('.global-search__results__group__item-name', {hasText: userName})
+        await foundUser.first().click()
     }
 }
