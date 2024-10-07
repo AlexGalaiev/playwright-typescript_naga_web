@@ -1,5 +1,5 @@
 
-import { SighUp } from '../../ShortRegistrationPage/SighUpPage';
+import { SignUp } from '../../ShortRegistrationPage/SighUpPage';
 
 export class RandomUser {
 

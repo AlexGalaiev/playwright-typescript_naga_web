@@ -9,12 +9,10 @@ export class MainPage{
     readonly sideBar: Locator;
     readonly verifyHeaders: Locator;
     readonly verifyStepHeader: Locator;
-    readonly manageFunds: Locator;
     readonly verifyBanner: Locator;
     readonly verifyBannerDisclaimer: Locator;
     readonly IUnderstandBtn: Locator;
     readonly UpgradeButton: Locator;
-    readonly faqMenuPoint: Locator;
     readonly notActiveTradingAccount: Locator
     readonly bannerName: Locator;
     readonly leadMarketsBanner: Locator;
@@ -30,12 +28,10 @@ export class MainPage{
         this.verifyHeaders = page.locator("//div[@class = 'header-verify-account-levels']");
         this.CompleatRegistration = page.locator('//div[@data-testid="complete-level-1"]//span[text()="To do"]')
         this.verifyStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
-        this.manageFunds = page.locator("//span[text()='Manage Funds']")
         this.verifyBanner = page.locator(".header__verify__content")
         this.verifyBannerDisclaimer = page.locator(".user-status-box__desc-text")
         this.IUnderstandBtn = page.locator("//button[text()='I understand']")
         this.UpgradeButton = page.locator("//button[@type='button']//span[text()='Upgrade Now']")
-        this.faqMenuPoint = page.locator("//span[text()='F.A.Q']")
         this.bannerName = page.locator('.header-verify-account-levels__checkbox__description_wrapper__text')
         this.leadMarketsBanner = page.locator('.header__verify__content')
         this.searchField = page.locator('#global_search_input')
@@ -72,17 +68,6 @@ export class MainPage{
         let numberOfTrdingAccounts = (await this.tradingAccount).count();
         return numberOfTrdingAccounts
     };
-    async openManageFunds(){
-        await this.page.waitForTimeout(1000)
-        await this.manageFunds.click();
-    };
-
-    async openFAQMenuPoint(){
-        await this.faqMenuPoint.scrollIntoViewIfNeeded();
-        await this.page.waitForTimeout(750);
-        await this.faqMenuPoint.click()
-    }
-
     async getVerifyBannerContent(){
         await this.page.waitForSelector('.header__verify__content', {state: 'visible'})
         return await this.verifyBanner.textContent()
@@ -155,5 +140,11 @@ export class MainPage{
         let foundPopup = await this.page.locator('.global-search__results__group')
         let foundUser = await foundPopup.locator('.global-search__results__group__item-name', {hasText: userName})
         await foundUser.first().click()
+    }
+    async openBackMenuPoint(nameOfMenuPoint: string){
+        let element = await this.page.locator(`//span[text()='${nameOfMenuPoint}']`)
+        await element.scrollIntoViewIfNeeded();
+        await element.click()
+        await this.page.waitForTimeout(500)
     }
 }

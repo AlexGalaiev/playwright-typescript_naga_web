@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
 import { PriceAlert } from "../../pageObjects/Trading/PriceAlertsPage";
 import {test} from "../../test-options"
@@ -22,13 +22,13 @@ const AddWatchlistPatameters: testTypes[] = [
 for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
     test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@smoke','@trading','@prodSanity']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let tradeInstrument = "Dogecoin/USD"
         let localizationPage = new getLocalization(localization)
         let watchlist = new AllInstruments(page);
         await test.step('Login to platform', async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await new MainPage(page).openHeaderMenuPoint('markets');
         })        
         await test.step("Check watchlist and clean from opened positions if they exist", async()=>{
@@ -60,14 +60,14 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
         let localizationPage = new getLocalization(localization)
         let watchlist = new AllInstruments(page);
         let priceAlert = new PriceAlert(page)
-        let sighIn = new SighIn(page)
+        let signIn = new SignIn(page)
         await test.step('Login to platform', async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await new MainPage(page).openHeaderMenuPoint('markets');
         })     
         await test.step("Check price alert and clean if they exist", async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand), "price-alerts");
+            await signIn.goto(await signIn.chooseBrand(brand), "price-alerts");
             await priceAlert.cleanPriceAlerts()
             await new MainPage(page).openHeaderMenuPoint('markets');
         })

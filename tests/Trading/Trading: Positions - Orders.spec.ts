@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
 import { MyTrades } from "../../pageObjects/Trading/MyTrades";
 import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
@@ -31,15 +31,15 @@ const tradingParamsPositions: tradingTypes[] = [
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
   test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:['@smoke','@trading', '@prodSanity']}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
-    let sighIn = new SighIn(page);
+    let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
     let instruments = new AllInstruments(page);
     let newPosition = new NewPosition(page);
     let successfullClosePopup = new ClosePositionSuccessPopup(page)
     await test.step("Login to platfotm", async () => {
-      await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-      await sighIn.sigInUserToPlatform(user,process.env.USER_PASSWORD || "");
+      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions. Close it if exist", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
@@ -76,15 +76,15 @@ const tradingParamsOrders: tradingTypes[] = [
 for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
   test(`${testRailId} Open and close pending trading position ${brand} ${investDirection}`,{tag:['@smoke','@trading']}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
-    let sighIn = new SighIn(page);
+    let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
     let instruments = new AllInstruments(page);
     let newPosition = new NewPosition(page);
     let successfullClosePopup = new ClosePositionSuccessPopup(page)
     await test.step("Login to platfotm", async () => {
-      await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-      await sighIn.sigInUserToPlatform(user,process.env.USER_PASSWORD || "");
+      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions. Close it if exist", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
@@ -119,15 +119,15 @@ const tradingParameters: tradingTypes[] = [
 for(const{testRailId, brand, user, investDirection}of tradingParameters){
   test(`${testRailId} Open short position of real stock ${brand}`,{tag:['@smoke','@trading']}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 140000);
-    let sighIn = new SighIn(page);
+    let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);
     let instruments = new AllInstruments(page);
     let realStockPopup = new RealStockPopup(page)
     let localization = new getLocalization('/pageObjects/localization/NagaCapital_Trading.json')
     await test.step("Login to platfotm", async () => {
-      await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-      await sighIn.sigInUserToPlatform(user,process.env.USER_PASSWORD || "");
+      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions. Close it if exist", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");

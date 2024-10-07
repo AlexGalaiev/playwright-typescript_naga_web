@@ -2,7 +2,7 @@ import { expect } from "playwright/test";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { test } from "../../test-options";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 
 test.describe("Verification center", async() => {
   
@@ -18,14 +18,14 @@ test.describe("Verification center", async() => {
   ]
 
   for(const{testRailId, user, brand}of testVerificatrionParams){
-    test(`${testRailId} ${brand} check documents page`, {tag:"@verification"},async({page})=>{
-      let sighIn = new SighIn(page);
+    test(`${testRailId} ${brand} Check My documents(My accounts) page`, {tag:"@verification"},async({page})=>{
+      let signIn = new SignIn(page);
       let myAccounts = new MyAccounts(page);
       let verificationPopup = new VerificationPopup(page);
-      await test.step('Login by user', async()=>{
-        await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-        await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-      await test.step('Check statuses of documents in My Accounts', async()=>{
+      await test.step('Login by fully registered user', async()=>{
+        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+      await test.step('Check statuses of uploaded documents in My Accounts', async()=>{
         await myAccounts.openUserMenu()
         await myAccounts.openMyAccountsMenuItem('My Documents')
         expect(await verificationPopup.getStatusOdDocuments()).toEqual('Requested')

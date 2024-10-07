@@ -1,25 +1,25 @@
 import { expect } from "@playwright/test";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { HeaderMenuUserProfile } from "../../pageObjects/UserProfile/HeaderUserProfile";
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
 import {test} from "..//..//test-options";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 
 test.describe("NagaCapital - User profile", async()=>{
     test("@23573 User profile. General", {tag:'@settings'},async({page, NagaCapital}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
-        let sighUp = new SighUp(page);
-        let sighIn = new SighIn(page)
+        let signUp = new SignUp(page);
+        let signIn = new SignIn(page)
         let userProfile = new UserProfile(page);
         let headerMenu = new HeaderMenuUserProfile(page);
         let randomUser = new RandomUser();
         await test.step('Create lead user', async ()=>{
-            let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
-            await sighIn.goto(NagaCapital, 'login');
-            await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
-            await sighUp.makePhoneVerifed(page)
+            let email = await signUp.createLeadUserApiNagaCapital('BA', page)
+            await signIn.goto(NagaCapital, 'login');
+            await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
+            await signUp.makePhoneVerifed(page)
         })
         await test.step('Edit username information', async()=>{
             await headerMenu.openProfileMenuPoint();

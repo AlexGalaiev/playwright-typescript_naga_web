@@ -1,27 +1,27 @@
 import { expect } from "playwright/test";
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { getLocalization } from "../../pageObjects/localization/getText";
-import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { test } from "..//..//test-options";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { KYC_Start } from "../../pageObjects/FullRegistration/NAGAMarkets-KYCStart";
 import { FullRegistration } from "../../pageObjects/FullRegistration/NagaMarkets_FullRegistration";
 import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 
 test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 120000);
-    let sighUp = new SighUp(page);
-    let sighIn = new SighIn(page);
+    let signUp = new SignUp(page);
+    let signIn = new SignIn(page);
     let mainpage = new MainPage(page);
     let verification = new PhoneVerification(page);
     let kycStart = new KYC_Start(page);
-    await test.step("Short registration of lead user", async () => {
-      let email = await sighUp.createLeadUserApi("FR");
-      await sighIn.goto(NagaMarkets, "login");
-      await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "");
+    await test.step("Create lead user via API", async () => {
+      let email = await signUp.createLeadUserApi("FR");
+      await signIn.goto(NagaMarkets, "login");
+      await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "");
     });
-    await test.step("Fill personal information, phone verification", async () => {
+    await test.step("Phone verifiaction step", async () => {
       await mainpage.clickUpgradeBtn();
       await kycStart.clickStartVerificationBtn();
       await verification.acceptPhoneNumber();
@@ -40,7 +40,7 @@ test("@24921 Naga Markets. KYC - Advance level.",{tag:['@smoke', '@kyc', '@prodS
   await test.step("Fill KYC advance level", async () => {
     await quiz.fill_KYC(KYC_Advance);
   });
-  await test.step("Check KYC status of created account", async () => {
+  await test.step("Check KYC status. Check KYC finish popup texts", async () => {
     expect(await KYC_FinalStep.getUsersScorring()).toEqual("Advanced");
     expect(await localization.getLocalizationText("KYC_Advance_Disclaimer")).toContain(await KYC_FinalStep.getDisclaimer());
     expect(await localization.getLocalizationText("KYC_AdvanceScorring_Footer_description")).toContain(await KYC_FinalStep.getDescription());
@@ -59,7 +59,7 @@ test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@smoke', '@kyc']}, as
   await test.step("Fill KYC Preadvance level", async () => {
     await quiz.fill_KYC(KYC_PreAdvance);
   });
-  await test.step("Check KYC status of created account", async () => {
+  await test.step("Check KYC status. Check KYC finish popup texts", async () => {
     expect(await KYC_FinalStep.getUsersScorring()).toEqual("Pre-Advanced");
     expect(await localization.getLocalizationText("KYC_PreAdvance_Disclaimer")).toContain(await KYC_FinalStep.getPreAdvanceDisclaimer());
     expect(await localization.getLocalizationText("KYC_PreAdvance_Footer_quizWarning")).toContain(await KYC_FinalStep.getPreAdvanceWarning());
@@ -78,7 +78,7 @@ test("@24920 Naga Markets. KYC - Intermediate level.", {tag:['@smoke', '@kyc']},
   await test.step("Fill KYC intermediate level", async () => {
     await quiz.fill_KYC(KYC_Intermediate);
   });
-  await test.step("Check KYC status of created account", async () => {
+  await test.step("Check KYC status. Check KYC finish popup texts", async () => {
     expect(await KYC_FinalStep.getUsersScorring()).toEqual("Intermediate");
     expect(await localization.getLocalizationText("KYC_Intermidiate_Warning")).toContain(await KYC_FinalStep.getIntermediateWarning());
     expect(await localization.getLocalizationText("KYC_Intermidiate_Disclaimer")).toContain(await KYC_FinalStep.getIntermediateDisclaimer());
@@ -99,7 +99,7 @@ test("@24923 Naga Markets. KYC - Elementary level.",{tag:['@smoke', '@kyc']}, as
   await test.step("Fill KYC elementary level", async () => {
     await quiz.fill_KYC(KYC_Elementary);
   });
-  await test.step("Check KYC status of created account", async () => {
+  await test.step("Check KYC status. Check KYC finish popup texts", async () => {
     expect(await KYC_FinalStep.getUsersScorring()).toEqual("Elementary");
     expect(await localization.getLocalizationText("KYC_Elementary_Warning")).toContain(await KYC_FinalStep.getElementaryWarning());
     await KYC_FinalStep.clickCheckbox();
@@ -120,7 +120,7 @@ test("@24922 Naga Markets. KYC - Beginner level.",{tag:['@smoke', '@kyc']}, asyn
   await test.step("Fill KYC beginner level", async () => {
     await quiz.fill_KYC(KYC_Beginner);
   });
-  await test.step("Check KYC status of created account", async () => {
+  await test.step("Check KYC status. Check KYC finish popup texts", async () => {
     expect(await KYC_FinalStep.getUsersScorring()).toEqual("Beginner Account");
     expect(await localization.getLocalizationText("KYC_Beginer_warning")).toContain(await KYC_FinalStep.getBeginnerWarning());
     expect(await localization.getLocalizationText("KYC_Beginer_disclaimer")).toContain(await KYC_FinalStep.getBeginnerDisclaimer());

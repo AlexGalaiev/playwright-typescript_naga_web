@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { Deposit } from "../../pageObjects/ManageFunds/Deposit";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
 
 type NStestTypes = {
@@ -20,15 +20,15 @@ const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'skrill', pageTittle:'Fund via Skrill'},
 ]
 for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParameters){
-    test(`${testRailId} Check deposit method ${brand} ${depositName}`, {tag:['@deposit', '@prodSanity']},async({page}, testInfo)=>{
+    test(`${testRailId} Check deposit methods ${brand} ${depositName}`, {tag:['@deposit', '@prodSanity']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 10000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);
         await test.step('Login by compliant user', async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await mainPage.openBackMenuPoint('Manage Funds');
         });
         await test.step("Check credit card deposit", async()=>{
             await deposit.chooseDepositMethod(depositName);
@@ -40,13 +40,13 @@ for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParamete
 }   
 test("@24068 Deposit via Crypto", {tag:'@deposit'},async({page, NagaCapital }, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 10000);
-    let sighIn = new SighIn(page);
+    let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let deposit = new Deposit(page);
     await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
-        await sighIn.goto(NagaCapital,'login');
-        await sighIn.sigInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
-        await mainPage.openManageFunds();
+        await signIn.goto(NagaCapital,'login');
+        await signIn.signInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
+        await mainPage.openBackMenuPoint('Manage Funds');
     });
     await test.step("Check crypto deposit", async()=>{
         await deposit.chooseDepositMethod('crypto');
@@ -58,11 +58,11 @@ test.describe('Naga Markets. Deposit', async()=>{
 
     test.beforeEach('Login to platform', async({page, NagaMarkets}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 10000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
-        await sighIn.goto(NagaMarkets,'login');
-        await sighIn.sigInUserToPlatform('depositTestMarkets', process.env.USER_PASSWORD || '');
-        await mainPage.openManageFunds();
+        await signIn.goto(NagaMarkets,'login');
+        await signIn.signInUserToPlatform('depositTestMarkets', process.env.USER_PASSWORD || '');
+        await mainPage.openBackMenuPoint('Manage Funds');
     })
 
     test('@23995 Pay pal deposit', {tag:'@deposit'},async({page})=>{
@@ -89,13 +89,13 @@ const NMdepositTestParams: NStestTypes[] = [
 for(const{testRailId, brand, user, depositName, pageTittle} of NMdepositTestParams){    
     test(`${testRailId} Check ewallet methods ${brand} ${depositName}`, {tag:'@deposit'}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 10000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);
         await test.step('Login by compliant user', async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await mainPage.openBackMenuPoint('Manage Funds');
         });
         await test.step("Check credit card deposit", async()=>{
             await deposit.chooseDepositMethod(depositName);

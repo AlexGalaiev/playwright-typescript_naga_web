@@ -1,5 +1,5 @@
 import {test} from "../../test-options"
-import { SighUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
+import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
@@ -7,25 +7,25 @@ import { expect } from "@playwright/test";
 import { AllSetPopup } from "../../pageObjects/common/allSetPopup(KYC)/allSetPopup";
 import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-UpdateAccount";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 
-test("@24917 NAGA Capital full registration user",{tag:['@smoke', '@kyc', '@prodSanity']}, async({ page, NagaCapital }, testInfo)=>{
+test("@24917 NAGA Capital. KYC Advance",{tag:['@smoke', '@kyc', '@prodSanity']}, async({ page, NagaCapital }, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 50000);
-    let sighUp = new SighUp(page);
-    let sighIn = new SighIn(page)
+    let signUp = new SignUp(page);
+    let signIn = new SignIn(page)
     let mainPage = new MainPage(page);
     let startKyc = new StartKYCPopup(page)
     let verificationPopup = new VerificationPopup(page);
-    await test.step('Short registration of lead user', async ()=>{
-        let email = await sighUp.createLeadUserApiNagaCapital('BA', page)
-        await sighIn.goto(NagaCapital, 'login');
-        await sighIn.sigInUserToPlatform(email, process.env.USER_PASSWORD || "")
+    await test.step('Create lead user via API. Login by created lead to platform', async ()=>{
+        let email = await signUp.createLeadUserApiNagaCapital('BA', page)
+        await signIn.goto(NagaCapital, 'login');
+        await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
     });
-    await test.step('Verify account via api request', async()=>{
-        await sighUp.makePhoneVerifed(page)
+    await test.step('Verify phone number via api request', async()=>{
+        await signUp.makePhoneVerifed(page)
         await mainPage.mainPageIsDownLoaded();
     })
-    await test.step('Redirect to main page and begin FR process', async ()=>{
+    await test.step('Redirect to main page and begin register process', async ()=>{
         await mainPage.proceedRegistration();
         await startKyc.startKYC();
         await startKyc.proceedVerification();
@@ -34,7 +34,7 @@ test("@24917 NAGA Capital full registration user",{tag:['@smoke', '@kyc', '@prod
         await new PersonalInformation(page).fillPersonalInformation();
         await new AllSetPopup(page).clickDepositNow();
     });
-    await test.step('Check status on second step', async()=>{
+    await test.step('Check status on second step on header banner', async()=>{
         expect(await mainPage.getStatusOfHeaderStep(2)).toEqual('To do')
         expect(await mainPage.getStatusTextOfHeaderStep(2)).toEqual('Verify identity')
     })
@@ -43,7 +43,7 @@ test("@24917 NAGA Capital full registration user",{tag:['@smoke', '@kyc', '@prod
         await new StartKYCPopup(page).startKYC();
         await new UdpateAccount(page).clickFinishBtn();
     });
-    await test.step('Check verification popup', async()=>{
+    await test.step('Check verification step (header step)', async()=>{
         expect(await verificationPopup.verificationPoupIsDisplyed()).toBeVisible()
         await verificationPopup.skipVerificationStep();
         expect(await mainPage.getStatusOfHeaderStep(3)).toEqual('To do')

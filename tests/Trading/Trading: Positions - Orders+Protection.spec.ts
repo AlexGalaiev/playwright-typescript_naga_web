@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { ChangeLimitSuccessPopup } from "../../pageObjects/Trading/ChangeLimitResultPopup";
 import { ChangeLimitsPopup } from "../../pageObjects/Trading/ChangeLimitsPopup";
 import { ClosePositionSuccessPopup } from "../../pageObjects/Trading/closePositionSuccessPopup";
@@ -35,15 +35,15 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
   test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${investDirection}`, {tag:['@smoke','@trading','@prodSanity']},async ({ page}, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
-    let sighIn = new SighIn(page);
+    let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);
     let instruments = new AllInstruments(page);
     let newPosition = new NewPosition(page);
     let successPopup = new ClosePositionSuccessPopup(page);
     await test.step("Login to platfotm", async () => {
-      await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-      await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || "");
+      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions and close if they exist", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
@@ -78,15 +78,15 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
     test(`${testRailId} Open/Close pending Short/Long posiotion+StopLoss/TakeProfit ${brand} ${investDirection}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 150000);
-      let sighIn = new SighIn(page);
+      let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
       let myTrades = new MyTrades(page);
       let instruments = new AllInstruments(page);
       let newPosition = new NewPosition(page);
       let successPopup = new ClosePositionSuccessPopup(page);
       await test.step("Login to platfotm", async () => {
-        await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-        await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || "");
+        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened orders and close if they exist", async () => {
         await mainPage.openHeaderMenuPoint("my-trades");
@@ -134,7 +134,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP} of tradingParametersSLTP){
   test(`${testRailId} Edit position popup with SL/TP ${brand} ${investDirection}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 140000);
-    let sighIn = new SighIn(page);
+    let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
     let instruments = new AllInstruments(page);
@@ -143,8 +143,8 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     let changeLimitsSuccessPopup = new ChangeLimitSuccessPopup(page)
     let successfullClosePopup = new ClosePositionSuccessPopup(page)
     await test.step("Login to platfotm", async () => {
-      await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-      await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || "");
+      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions. Close it if exist", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");

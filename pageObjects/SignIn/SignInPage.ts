@@ -1,7 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 import {test} from '..//..//test-options'
 
-export class SighIn{
+export class SignIn{
     readonly page: Page;
     readonly signInName: Locator;
     readonly signInPassword: Locator;
@@ -23,7 +23,7 @@ export class SighIn{
         this.sighInHeaderName = page.locator("//h2[contains(@class, 'login-form__headline')]");
         this.incorrectCredentialsMsg = page.locator(".login-form__error");
     }
-    async sigInUserToPlatform(UserEmail: string, UserPassword: string){
+    async signInUserToPlatform(UserEmail: string, UserPassword: string){
         await this.signInName.waitFor({state:"visible"})
         await this.signInName.pressSequentially(UserEmail);
         await this.signInPassword.pressSequentially(UserPassword);
@@ -39,7 +39,7 @@ export class SighIn{
         await this.redirectionButton.click()
         await this.page.waitForTimeout(1500);
     };
-    async getSighInHeaderText(){
+    async getSignInHeaderText(){
         return await this.sighInHeaderName.textContent();
     };
     async getLoginErrorMsg(){

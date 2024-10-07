@@ -1,15 +1,15 @@
 import { expect } from "@playwright/test";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage"
+import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import { HelpPage } from "../../pageObjects/Support/HelpPage";
 import {test} from "../../test-options"
 test.describe('NagaCapital. Support links', async()=>{
 
     test.beforeEach("Login to platform", async({page, NagaCapital})=>{
-        let sighIn = new SighIn(page);
-        await sighIn.goto(NagaCapital, 'login');
-        await sighIn.sigInUserToPlatform("testSupport@i.ua", process.env.USER_PASSWORD || '')
-        await new MainPage(page).openFAQMenuPoint();
+        let signIn = new SignIn(page);
+        await signIn.goto(NagaCapital, 'login');
+        await signIn.signInUserToPlatform("testSupport@i.ua", process.env.USER_PASSWORD || '')
+        await new MainPage(page).openBackMenuPoint('F.A.Q');
     })
 
     test("@23983 Call us links", {tag:['@smoke','@support']}, async({page})=>{
@@ -30,10 +30,10 @@ test.describe('Naga Markets. Support links', async()=>{
     
     test.beforeEach("Login to platform", async({page, NagaMarkets}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
-        let sighIn = new SighIn(page);
-        await sighIn.goto(NagaMarkets, 'login');
-        await sighIn.sigInUserToPlatform("testSupportMarkets@i.ua", process.env.USER_PASSWORD || '')
-        await new MainPage(page).openFAQMenuPoint();
+        let signIn = new SignIn(page);
+        await signIn.goto(NagaMarkets, 'login');
+        await signIn.signInUserToPlatform("testSupportMarkets@i.ua", process.env.USER_PASSWORD || '')
+        await new MainPage(page).openBackMenuPoint('F.A.Q');
     })
 
     test("@23623 Call us links", {tag:['@smoke','@support']}, async({page})=>{

@@ -112,6 +112,7 @@ export class Feed {
   async checkTextOfPost(userName: string) {
     let post = await this.page.locator(".feed-item", { hasText: userName });
     await post.locator(".feed-item-comment__text").first().click();
+    await this.page.waitForTimeout(1500)
     let comment = await this.page.locator(".feed-item-comment-list__item");
     let text = await comment
       .locator(".feed-item-comment-list__item__comment")

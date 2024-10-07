@@ -1,7 +1,7 @@
 import { expect } from "playwright/test";
 import { Feed } from "../../pageObjects/Feed/Feed";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
 import { getLocalization } from "../../pageObjects/localization/getText";
@@ -20,17 +20,16 @@ const testFeedParams: testFeedtypes[] = [
    {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParams){
-    test(`${testRailId} Create , edit and delete actions for post ${brand}`,{tag:['@smoke', '@feed', '@prodSanity']}, async({page}, testInfo)=>{
+    test(`${testRailId} Main actions for post: create, edit, delete ${brand}`,{tag:['@smoke', '@feed', '@prodSanity']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let feed = new Feed(page)
         let myAccounts = new MyAccounts(page)
-        await test.step("login and clean feed", async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            //await feed.closeOpenedPost(user);
+        await test.step("login by existing user", async()=>{
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
-        await test.step("Closed opened posts is they exist", async()=>{
+        await test.step("Delete previously created posts, if exist(in user profile)", async()=>{
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountsMenuItem('Profile')
             await feed.closeOpenedPost(user);
@@ -53,23 +52,23 @@ const testFeedParamsActions: testFeedtypes[] = [
     {testRailId: '@25144', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
-    test(`${testRailId} Post actions - like action ${brand}`,{tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
+    test(`${testRailId} Post actions: like post ${brand}`,{tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 50000);
-    let sighIn = new SighIn(page);
+    let signIn = new SignIn(page);
     let feed = new Feed(page)
     let userProfile = new UserProfile(page)
     let myAccounts = new MyAccounts(page)
-    await test.step("login by user and clean feed", async()=>{
-        await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-        await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+    await test.step("login by exist user", async()=>{
+        await signIn.goto(await signIn.chooseBrand(brand),'login');
+        await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
     })
-    await test.step("Closed opened posts is they exist", async()=>{
+    await test.step("Closed opened posts is they exist(in user profile)", async()=>{
         await myAccounts.openUserMenu()
         await myAccounts.openMyAccountsMenuItem('Profile')
         await feed.closeOpenedPost(user);
         await new MainPage(page).openHeaderMenuPoint('feed')
     })
-    await test.step("Add post to feed", async()=>{
+    await test.step("Add new post to feed with text Hello world", async()=>{
         await feed.openCreatePostForm()
         await feed.addTextToPost('Hello World')
     })
@@ -77,7 +76,7 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
         await feed.likePost(user);
         expect(await feed.checkLike(user)).toEqual(user)
     })
-    await test.step('Check user profile and delete post', async()=>{
+    await test.step('Check user profile(who liked post) and delete post', async()=>{
         await feed.checkUserPage(user);
         expect(await userProfile.getUserNameText()).toEqual(user)
         await feed.closeOpenedPost(user);
@@ -90,35 +89,35 @@ const testFeedCommentParams: testFeedtypes[] = [
     {testRailId: '@25145', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
-    test(`${testRailId} Comment a post ${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
+    test(`${testRailId} Post actions: Comment a post ${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let feed = new Feed(page);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let myAccounts = new MyAccounts(page)
-        await test.step("login by user and clean feed", async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        await test.step("login by existing user", async()=>{
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
-        await test.step("Closed opened posts is they exist", async()=>{
+        await test.step("In user profile, closed opened posts is they exist", async()=>{
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountsMenuItem('Profile')
             await feed.closeOpenedPost(user);
             await new MainPage(page).openHeaderMenuPoint('feed')
         })
-        await test.step("Create post with text", async()=>{
+        await test.step("Add new post to feed with text Hello world", async()=>{
             await feed.openCreatePostForm()
             await feed.addTextToPost('Hello World')
         })
-        await test.step("Comment exist post", async()=>{
+        await test.step("Comment reviously created post", async()=>{
             await feed.addCommentToPost(user, 'test commnet')
         })
-        await test.step('Check text of comment', async()=>{
+        await test.step('In user profile, check text of comment', async()=>{
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountsMenuItem('Profile')
             expect(await feed.checkTextOfPost(user)).toContain('test commnet')
             await feed.closeTab()
         })
         await test.step("Close post ", async()=>{
-            await myAccounts.openUserMenu()
-            await myAccounts.openMyAccountsMenuItem('Profile')
             await feed.closeOpenedPost(user);
         })
     })
@@ -129,26 +128,26 @@ const testShareCommentParams: testFeedtypes[] = [
     {testRailId: '@25146', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
-    test(`${testRailId} Shared a post ${brand}`, {tag:['@smoke', '@feed', '@prodSanity']},async({page}, testInfo)=>{
+    test(`${testRailId} Post actions: Share a post ${brand}`, {tag:['@smoke', '@feed', '@prodSanity']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let feed = new Feed(page);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let myAccounts = new MyAccounts(page)
-        await test.step("login by user and clean feed", async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        await test.step("login by user", async()=>{
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
-        await test.step("Closed opened posts is they exist", async()=>{
+        await test.step("In user profile, close posts if they exist", async()=>{
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountsMenuItem('Profile')
             await feed.closeOpenedPost(user);
             await new MainPage(page).openHeaderMenuPoint('feed')
         })
-        await test.step("Create post with text", async()=>{
+        await test.step("Add new post to feed with text Hello world", async()=>{
             await feed.openCreatePostForm()
             await feed.addTextToPost('Hello World')
         })
-        await test.step("Shared a post function", async()=>{
+        await test.step("Share a post + adding text", async()=>{
             await feed.sharedToNagaFeed(user)
             await feed.addSharedTextToPost("test text")
         })
@@ -164,23 +163,23 @@ const testParamsUserCabinet: testFeedtypes[] = [
     {testRailId: '@25147', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){
-    test(`${testRailId} Check post in user cabinet ${brand}`, {tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
+    test(`${testRailId} Check post in user profile ${brand}`, {tag:['@smoke', '@feed']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let myAccounts = new MyAccounts(page);
         let userProfile = new UserProfile(page)
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let feed = new Feed(page);
         let textForPost = 'Hello World'
-        await test.step("login by user and clean feed", async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        await test.step("login by user", async()=>{
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Open user profile cabinet and close previously created posts", async()=>{
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountsMenuItem('Profile')
             await feed.closeOpenedPost(user);
         })
-        await test.step('Add post from user profile', async()=>{
+        await test.step('Add new post from user profile', async()=>{
             await userProfile.addTextToPost(textForPost);
             expect(await userProfile.getPostTextMessage()).toEqual(textForPost);
         })
@@ -201,15 +200,15 @@ const testNotVerifieduser: testFeedNotVeried[] = [
     {testRailId: '@25148', brand: '@NM', user: 'testNotVerifiesUser', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
-    test(`${testRailId} post with not verified user ${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
+    test(`${testRailId}Not verified user tries to create new post${brand}`, {tag:['@smoke', '@feed']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let feed = new Feed(page)
         let verificationPopup = new VerificationPopup(page);
         let feedLocalization = new getLocalization(localization)
         await test.step("login to platform with not verified user", async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step('User tryes to meke a post without approval', async()=>{
             await feed.openCreatePostForm()

@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { Withdrawal } from "../../pageObjects/ManageFunds/Withdrawal"
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText";
 
@@ -11,12 +11,12 @@ test.describe("Naga Capital. Withdrawal", async()=>{
 
     test.beforeEach("Login by trade user", async({page, NagaCapital}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
-            await sighIn.goto(NagaCapital,'login');
-            await sighIn.sigInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+            await signIn.goto(NagaCapital,'login');
+            await signIn.signInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
+            await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
         });
     })
@@ -72,12 +72,12 @@ test.describe('Naga Markets. Withdrawal', async()=>{
 
     test.beforeEach("Login by trade user", async({page, NagaMarkets}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
-            await sighIn.goto(NagaMarkets,'login');
-            await sighIn.sigInUserToPlatform("depositTestMarkets3", process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+            await signIn.goto(NagaMarkets,'login');
+            await signIn.signInUserToPlatform("depositTestMarkets3", process.env.USER_PASSWORD || '');
+            await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
         });
     })
@@ -122,13 +122,13 @@ const testWithdrawalParameters: testWithdrawalTypes[] = [
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParameters){
     test(`${testRailId} Check withdrawal different payments ${paymentMethod} ${brand}`, {tag: ["@withdrawal", '@prodSanity']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
         });
         await test.step(`Make ${paymentMethod} withdrawal`, async()=>{
@@ -153,14 +153,14 @@ const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParametersMarkets){
     test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, {tag: ["@withdrawal", '@prodSanity']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         //let amountValueToWithrawal = '50'
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openManageFunds();
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
         });
         await test.step(`Make ${paymentMethod} withdrawal`, async()=>{

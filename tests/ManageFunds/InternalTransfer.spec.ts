@@ -1,7 +1,7 @@
 import { expect } from "playwright/test";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { InternalTransfer } from "../../pageObjects/ManageFunds/InternalTransfer";
-import { SighIn } from "../../pageObjects/SighIn/SignInPage";
+import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
 
 type testTransfer = {
@@ -16,15 +16,15 @@ const testTransferParams: testTransfer[] = [
 for(const{testRailId, brand, user} of testTransferParams){
     test(`${testRailId} Internal transfer funds ${brand}`, {tag:['@smoke', '@manageFunds', '@prodSanity']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
-        let sighIn = new SighIn(page);
+        let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let internalTransfer = new InternalTransfer(page);
         await test.step("Login to platform", async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand),'login');
-            await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         });
         await test.step("Make internal transfer", async()=>{
-            await mainPage.openManageFunds();
+            await mainPage.openBackMenuPoint('Manage Funds');
             await internalTransfer.openInternalTransferPage();
             await internalTransfer.chooseAccount('AccountSource');
             await internalTransfer.make1$InternalTransfer();

@@ -1,5 +1,5 @@
 import { MainPage } from "../../pageObjects/MainPage/MainPage"
-import { SighIn } from "../../pageObjects/SighIn/SignInPage"
+import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import { FAQ } from "../../pageObjects/Support/Faq"
 import {test} from "../../test-options"
 
@@ -24,12 +24,12 @@ const testFAQParams: faqTypes[] = [
 for(const{testRailId, brand, user, categories} of testFAQParams){
     test(`${testRailId} FAQ support links ${brand}`, {tag:'@support'},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 70000);
-        let sighIn = new SighIn(page)
+        let signIn = new SignIn(page)
         let faq = new FAQ(page, categories)
         await test.step('Login to platform', async()=>{
-            await sighIn.goto(await sighIn.chooseBrand(brand), 'login')
-            await sighIn.sigInUserToPlatform(user,  process.env.USER_PASSWORD || '')
-            await new MainPage(page).openFAQMenuPoint();
+            await signIn.goto(await signIn.chooseBrand(brand), 'login')
+            await signIn.signInUserToPlatform(user,  process.env.USER_PASSWORD || '')
+            await new MainPage(page).openBackMenuPoint('F.A.Q');
         })
         await test.step('Check FAQ poits', async()=>{
             await faq.checkSubcategory("Getting Started");

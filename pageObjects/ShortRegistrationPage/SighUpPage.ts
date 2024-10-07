@@ -2,7 +2,7 @@ import { Locator, Page } from "@playwright/test";
 import { RandomUser } from "../common/testUserCredentials/randomUser";
 import {faker, fakerEN} from '@faker-js/faker'
 
-export class SighUp{
+export class SignUp{
     page: Page;
     readonly email: Locator;
     readonly password: Locator;
