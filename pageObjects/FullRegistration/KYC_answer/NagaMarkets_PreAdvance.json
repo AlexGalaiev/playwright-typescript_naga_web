@@ -17,15 +17,15 @@
     },
     "trading_experience_in_stocks_bonds_etfs":{
         "text":"Over the last year, how many times have you invested in stocks and/or ETFs?",
-        "answer":"11 - 20 trades"
+        "answer":"11 - 20 "
     },
     "trading_experience_in_contracts":{
         "text":"How many times have you invested in Contracts for Difference and other Leverage Products, over the last year?",
-        "answer":"No trading experience"
+        "answer":"Never"
     },
     "trading_experience_in_crypto":{
         "text":"Over the last year, how many times have you invested in crypto?",
-        "answer":"No trading experience"
+        "answer":"Never"
     },
     "market_moves_by_3_percent":{
         "text":"The market moves by 3%. Trading with which leverage would lead to the largest potential profit or loss?",
@@ -53,7 +53,7 @@
     },
     "employment_type":{
         "text":"What is your occupation - work industry?",
-        "answer":"Non-Profit Organisation"
+        "answer":"Accounting"
     },
     "source_of_income":{
         "text":"What is the origin of funds you plan to invest on NAGA?",
@@ -61,7 +61,7 @@
     },
     "annual_income":{
         "text":"What is your annual net income in EUR?",
-        "answer":"Less than 10,000"
+        "answer":"Less than €10,000"
     },
     "net_worth":{
         "text":"Your Net Worth in EUR (Assets less Liabilities)?",

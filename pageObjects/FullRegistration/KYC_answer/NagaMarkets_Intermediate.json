@@ -17,15 +17,15 @@
     },
     "trading_experience_in_stocks_bonds_etfs":{
         "text":"Over the last year, how many times have you invested in stocks and/or ETFs?",
-        "answer":"1 - 10 trades"
+        "answer":"1 - 10 "
     },
     "trading_experience_in_contracts":{
         "text":"How many times have you invested in Contracts for Difference and other Leverage Products, over the last year?",
-        "answer":"1 - 10 trades"
+        "answer":"1 - 10"
     },
     "trading_experience_in_crypto":{
         "text":"Over the last year, how many times have you invested in crypto?",
-        "answer":"1 - 10 trades"
+        "answer":"1 - 10 "
     },
     "market_moves_by_3_percent":{
         "text":"The market moves by 3%. Trading with which leverage would lead to the largest potential profit or loss?",
@@ -61,7 +61,7 @@
     },
     "annual_income":{
         "text":"What is your annual net income in EUR?",
-        "answer":"From 10,001 - 50,000"
+        "answer":"From €10,001 - €50,000"
     },
     "net_worth":{
         "text":"Your Net Worth in EUR (Assets less Liabilities)?",

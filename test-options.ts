@@ -11,7 +11,8 @@ export type TestOptions = {
     testInfo: TestInfo;
     NSCountry: string;
     NMCountry: string;
-    NACountry: string
+    NACountry: string;
+    WebsiteNagaCom: string
 }
 
 export const test = base.extend<TestOptions>({
@@ -22,6 +23,7 @@ export const test = base.extend<TestOptions>({
     NMCountry:['', {option: true}],
     NACountry:['', {option: true}],
     baseUrl:['', {option: true}],
+    WebsiteNagaCom:['', {option: true}],
     browserContext: async({}, use)=>{
         //let browser = await webBrowser.launch();
         let browser = await baseChromium.launch();

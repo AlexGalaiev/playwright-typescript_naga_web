@@ -41,7 +41,8 @@ export default defineConfig<TestOptions>({
         //NagaCapital: "https://sxdevcap.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
-        NACountry: "Greece"
+        NACountry: "Greece",
+        WebsiteNagaCom: "https://naga.com"
       },
     },
     {
@@ -53,7 +54,8 @@ export default defineConfig<TestOptions>({
         NagaAxon: 'https://naga.eu',
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
-        NACountry: "Greece"
+        NACountry: "Greece",
+        WebsiteNagaCom: "https://naga.com"
       },
     },
     {
@@ -65,7 +67,8 @@ export default defineConfig<TestOptions>({
         NagaAxon: 'https://naga.eu',
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
-        NACountry: "Greece"
+        NACountry: "Greece",
+        WebsiteNagaCom: "https://naga.com"
       },
     },
     {
@@ -77,7 +80,8 @@ export default defineConfig<TestOptions>({
         NagaAxon: 'https://naga.eu',
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
-        NACountry: "Greece"
+        NACountry: "Greece",
+        WebsiteNagaCom: "https://naga.com"
       },
     },
   ],

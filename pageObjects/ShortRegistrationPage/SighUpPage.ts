@@ -103,6 +103,7 @@ export class SignUp{
         .catch((error) => {
         //console.log(error);
         });
+        await this.page.waitForTimeout(250)
     }
 
     async addUserApiNagaCapital(email: string, country: string){
@@ -144,7 +145,7 @@ export class SignUp{
         console.log();
         })
         .catch((error) => {
-        //console.log(error);
+        console.log(error);
         });
     }
 
@@ -155,7 +156,7 @@ export class SignUp{
     }
     async createLeadUserApi(country: string){
         let randomEmail = await new RandomUser().getRandomUserEmail(); 
-        await this.addUserApi(randomEmail, country, this.randomUserName())
+        await this.addUserApi(randomEmail, country, await this.randomUserName())
         return randomEmail
     }
 
