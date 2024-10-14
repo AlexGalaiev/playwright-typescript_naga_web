@@ -25,7 +25,7 @@ for(const{testRailId, brand, user}of testFeedParams){
         let signIn = new SignIn(page);
         let feed = new Feed(page)
         let myAccounts = new MyAccounts(page)
-        await test.step("login by existing user", async()=>{
+        await test.step(`login by existing user ${user}`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
@@ -58,7 +58,7 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
     let feed = new Feed(page)
     let userProfile = new UserProfile(page)
     let myAccounts = new MyAccounts(page)
-    await test.step("login by exist user", async()=>{
+    await test.step(`login by exist user ${user}`, async()=>{
         await signIn.goto(await signIn.chooseBrand(brand),'login');
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
     })
@@ -94,7 +94,7 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
         let feed = new Feed(page);
         let signIn = new SignIn(page);
         let myAccounts = new MyAccounts(page)
-        await test.step("login by existing user", async()=>{
+        await test.step(`login by existing user ${user}`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })

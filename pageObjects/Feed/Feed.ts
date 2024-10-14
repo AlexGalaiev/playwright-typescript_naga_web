@@ -107,6 +107,7 @@ export class Feed {
       .locator("#feed_comment_input_textarea")
       .pressSequentially(commentText);
     await postPopup.locator("//i[contains(@class, 'icn-send')]").click();
+    await this.page.waitForTimeout(1000)
     await postPopup.locator("//button[@class='close']").click();
   }
   async checkTextOfPost(userName: string) {
