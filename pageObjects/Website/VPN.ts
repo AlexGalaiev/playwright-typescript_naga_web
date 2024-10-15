@@ -11,7 +11,7 @@ export class VPN{
         let response = await servers.json(); // arrray of objects with servers
         // get one random server
         let randomServer = response[Math.floor(Math.random() * response.length)];
-        console.log('randomServer?.hostname', randomServer?.hostname);
+        //console.log('randomServer?.hostname', randomServer?.hostname);
         return randomServer?.hostname;
       };
 
