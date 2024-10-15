@@ -23,6 +23,7 @@ on:
           - "secondAccount"
           - "all"
           - "prodSanity"
+          - "website-naga.com"
       ticket_id:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string
