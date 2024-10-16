@@ -72,7 +72,8 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25210', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://nagamarkets.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
-        test(`${testRailId} Redirect from ${baseUrl} to NagaMarkets. Redirect allert popup. From ${type} to ${buttonName} button`, {tag: ['@prodSanity', '@website-naga.com']},async({proxyPage})=>{
+        test(`${testRailId} Redirect from ${baseUrl} to NagaMarkets. Redirect allert popup. From ${type} to ${buttonName} button`, {tag: ['@prodSanity', '@website-naga.com']},async({proxyPage}, testInfo)=>{
+            await testInfo.setTimeout(testInfo.timeout + 10000);
             let website = new NagaCom(proxyPage)
             let localization = new getLocalization('/pageObjects/localization/Website_NagaCom.json')
             await test.step('Open website Naga.com', async()=>{
@@ -108,9 +109,84 @@ test.describe('Naga.com website', async()=>{
                 await website.openLanguages()
                 for(let index in languages){
                     expect(await website.checkVisibileLanguage(languages[index])).toBeTruthy()
-                }
+                }})})
+    }
+
+    type footerTypes = {
+        testRailId: string;
+        type: string;
+    }
+    const EuFooterParams: footerTypes[] = [
+        {testRailId: '@25200', type: 'trade'},
+        {testRailId: '@25202', type: 'invest'}
+    ]
+    for(const{testRailId, type} of EuFooterParams){
+        test(`${testRailId} naga.com/eu footer.${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website", async()=>{
+                await website.open('https://naga.com/eu')
+                await website.checkTradeInstrument(type)
+            })
+            await test.step("Check naga.com/EU footer elements", async()=>{
+                expect(await website.getText(await website.riskWarning_EU)).toEqual(await localization.getLocalizationText("EU_footer_RiskWarning_header"))
+                expect(await website.getText(await website.riskWarning_EU_main)).toEqual(await localization.getLocalizationText("EU_footer_RiskWarning_main"))
+                expect(await website.getText(await website.restrictedRegions_EU)).toEqual(await localization.getLocalizationText("EU_footer_RestrictedRegions"))
+            })})
+    }
+
+    const EnFooterParams: footerTypes[] = [
+        {testRailId: "@25201", type: 'Trade'},
+        {testRailId: "@25203", type: 'Invest'},
+    ]
+    for(const{testRailId, type}of EnFooterParams){
+        test(`${testRailId} naga.com/en footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website", async()=>{
+                await website.open('https://naga.com/en')
+                await website.checkTradeInstrument(type)
+            })
+            await test.step("Check footer naga.com/EN footer elemets", async()=>{
+                expect(await website.getText(await website.riskWarning_EN)).toEqual(await localization.getLocalizationText("EN_footer_RiskWarning"))
+                expect(await website.getText(await website.restrictedRegions_EN)).toEqual(await localization.getLocalizationText("EN_footer_RestrictedRegions"))
             })
         })
     }
+    const EuRiskWarningFooter: footerTypes[] = [
+        {testRailId: '@25199', type: 'trade'},
+        {testRailId: '@25198', type: 'invest'}
+    ]
+    for(const{testRailId, type}of EuRiskWarningFooter){
+        test(`${testRailId} Risk Warning footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website", async()=>{
+                await website.open('https://naga.com/eu')
+                await website.checkTradeInstrument(type)
+            })
+            await test.step('Check risk warning footer', async()=>{
+                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
+            })
+        })
+    }
+
+    type searchTypes = {
+        testRailId: string;
+        type: string;
+        nameOfInstrument: string;
+        redirectTo: string;
+        basePage: string;
+        categoryName: string;
+        buttonName: string;
+    }
+    const EuSearchTypes: searchTypes[] = [
+        {testRailId: '@25214', type: 'trade', nameOfInstrument: "eur/usd", redirectTo: "EURUSD_Pro", basePage:"https://naga.com/eu", categoryName: 'Forex', buttonName:'Trade'},
+        {testRailId: '@25212', type: 'invest', nameOfInstrument: "FACEBOOK", redirectTo: "FB.re", basePage:"https://naga.com/eu", categoryName: 'Real Stock USA', buttonName: 'Invest'},
+    ]
+
+
+
+
     
 })

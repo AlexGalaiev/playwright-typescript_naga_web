@@ -4,11 +4,21 @@ export class NagaCom{
     page: Page;
     languageSwitcher: Locator;
     redirectPopupText: Locator;
+    riskWarning_EU: Locator;
+    riskWarning_EU_main: Locator;
+    restrictedRegions_EU: Locator;
+    riskWarning_EN: Locator;
+    restrictedRegions_EN: Locator;
 
     constructor(page: Page){
         this.page = page
         this.languageSwitcher = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]").first()
         this.redirectPopupText = page.locator("//button//span[text()='OK']//..//..//preceding-sibling::div[1]")
+        this.riskWarning_EU = page.locator("//span[text()='RISK WARNING:']//..//..//p[1]")
+        this.riskWarning_EU_main = page.locator("//span[text()='RISK WARNING:']//..//..//p[2]")
+        this.restrictedRegions_EU = page.locator("//span[text()='Restricted regions:']//..")
+        this.riskWarning_EN = page.locator("//span[text()='RISK WARNING:']//..")
+        this.restrictedRegions_EN = page.locator("//span[text()='Restricted countries:']//..")
     }
 
     async checkTradeInstrument(nameOfInstrument: string){
@@ -52,5 +62,15 @@ export class NagaCom{
     }
     async getName(exampleName: string){
         return await this.page.locator(`//span[text()='${exampleName}']`).first().textContent()
+    }
+    async getText(elementGetText: Locator){
+        await elementGetText.first().scrollIntoViewIfNeeded();
+        return await elementGetText.first().textContent()
+    }
+    async getRiskWarningFooter(){
+        await this.page.waitForTimeout(250)
+        let footer = await this.page.locator("//span[@class='text-primary']//..", {hasText:'RISK WARNING'}).first()
+        console.log(await footer.textContent())
+        return await footer.textContent()
     }
 }
