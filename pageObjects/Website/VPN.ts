@@ -6,17 +6,20 @@ export class VPN{
     }
 
     async getRandomVPNServer(){
-        let countryId = 81
+        //let countryId = 81 //Germany
+        let countryId = 106 //Italy
         let servers = await fetch(`https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={%22country_id%22:${countryId}}`);
-        let response = await servers.json(); // arrray of objects with servers
+        let response = await servers.json();
+        console.log(await response)// arrray of objects with servers
         // get one random server
         let randomServer = response[Math.floor(Math.random() * response.length)];
-        //console.log('randomServer?.hostname', randomServer?.hostname);
+        console.log('randomServer?.hostname', randomServer?.hostname);
         return randomServer?.hostname;
       };
 
       async proxyOptions(username: string, password: string) {
-        let hostName = await this.getRandomVPNServer();
+        //let hostName = await this.getRandomVPNServer();
+        let hostName = "it201.nordvpn.com" //static server
         let server = `https://${username}:${password}@${hostName}:89`
         return server
       }

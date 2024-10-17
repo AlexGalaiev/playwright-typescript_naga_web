@@ -1,4 +1,4 @@
-import {Locator, Page } from "playwright";
+import {Locator, Page, BrowserContext } from "@playwright/test";
 
 export class NagaCom{
     page: Page;
@@ -39,6 +39,7 @@ export class NagaCom{
         await this.page.waitForTimeout(1500)
     }
     async checkUrl(){
+        await this.page.waitForTimeout(1500)
         return await this.page.url()
     }
     async getLanguage(language:string){
@@ -70,7 +71,25 @@ export class NagaCom{
     async getRiskWarningFooter(){
         await this.page.waitForTimeout(250)
         let footer = await this.page.locator("//span[@class='text-primary']//..", {hasText:'RISK WARNING'}).first()
-        console.log(await footer.textContent())
         return await footer.textContent()
+    }
+    async searchInstrument(nameOfInstrument: string, categoryName: string){
+        let searchField = await this.page.locator("//input[@placeholder='Search']")
+        await searchField.scrollIntoViewIfNeeded();
+        await searchField.pressSequentially(nameOfInstrument)
+        await this.page.waitForTimeout(500);
+        await this.page.locator(`//li[text()='${categoryName}']`).click()
+    }
+    async openPosition(buttonName: string):Promise<[Page, instrumentName:any]>{
+        let instrument = await this.page.locator("//ul[contains(@class, 'InstrumentsTableRow')]")
+        let name = await instrument.locator('//span').first();
+        let instrumentName = await name.textContent()
+        let contexts =  await this.page.context()
+        const [newPage] = await Promise.all([
+            contexts.waitForEvent('page'),
+            instrument.locator(`//div[text()='${buttonName}']`).first().click()
+        ])
+        await this.page.waitForTimeout(4000)
+        return [newPage, instrumentName?.replace(/[()]/g, "")]
     }
 }
