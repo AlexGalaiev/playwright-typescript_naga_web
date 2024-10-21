@@ -9,7 +9,7 @@ import {test} from "..//..//test-options"
 test.beforeEach("login by lead user", async({page, NagaMarkets})=>{
     let testUser = "testLeadUser@gmail.com"
     let signIn = new SignIn(page)
-    await test.step("Login by lead user", async()=>{
+    await test.step(`Login by ${testUser} user`, async()=>{
         await signIn.goto(NagaMarkets, "login");
         await signIn.signInUserToPlatform(testUser, process.env.USER_PASSWORD || '')
     })

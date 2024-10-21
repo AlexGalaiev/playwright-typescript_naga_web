@@ -29,7 +29,7 @@ const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'}
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
-  test(`${testRailId} Open and close trading position ${brand} ${investDirection}`,{tag:['@smoke','@trading', '@prodSanity']}, async ({ page }, testInfo) => {
+  test(`${testRailId} Open and close ${investDirection} trading position on ${brand} `,{tag:['@smoke','@trading', '@prodSanity']}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -37,15 +37,15 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
     let instruments = new AllInstruments(page);
     let newPosition = new NewPosition(page);
     let successfullClosePopup = new ClosePositionSuccessPopup(page)
-    await test.step("Login to platfotm", async () => {
+    await test.step(`Login to ${brand} by ${user}`, async () => {
       await signIn.goto(await signIn.chooseBrand(brand), "login");
       await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
     });
-    await test.step("Check previously opened positions. Close it if exist", async () => {
+    await test.step("Check previously opened positions. Close it, if exist", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       await myTrades.closePositionsIfExist();
     });
-    await test.step("Choose instrument for trading. Open new position page", async () => {
+    await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
@@ -82,7 +82,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
     let instruments = new AllInstruments(page);
     let newPosition = new NewPosition(page);
     let successfullClosePopup = new ClosePositionSuccessPopup(page)
-    await test.step("Login to platfotm", async () => {
+    await test.step(`Login to ${brand} by ${user}`, async () => {
       await signIn.goto(await signIn.chooseBrand(brand), "login");
       await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
     });
@@ -91,7 +91,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
       await myTrades.openActivePendingOrdersTab();
       await myTrades.removeOrdersIfExist();
     });
-    await test.step("Choose instrument for trading. Open new position page", async () => {
+    await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
@@ -125,7 +125,7 @@ for(const{testRailId, brand, user, investDirection}of tradingParameters){
     let instruments = new AllInstruments(page);
     let realStockPopup = new RealStockPopup(page)
     let localization = new getLocalization('/pageObjects/localization/NagaCapital_Trading.json')
-    await test.step("Login to platfotm", async () => {
+    await test.step(`Login to ${brand} by ${user}`, async () => {
       await signIn.goto(await signIn.chooseBrand(brand), "login");
       await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
     });
@@ -133,7 +133,7 @@ for(const{testRailId, brand, user, investDirection}of tradingParameters){
       await mainPage.openHeaderMenuPoint("my-trades");
       await myTrades.closePositionsIfExist();
     });
-    await test.step("Choose instrument for trading. Open new position page", async () => {
+    await test.step(`Choose ${realStockInstrument} for trading. Open new position page`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(realStockInstrument, investDirection)
       expect(await realStockPopup.getPopupText()).toEqual(await localization.getLocalizationText('RealStock_OpenShortPosition'))

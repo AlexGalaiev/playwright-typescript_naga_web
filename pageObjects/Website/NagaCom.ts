@@ -9,6 +9,13 @@ export class NagaCom{
     restrictedRegions_EU: Locator;
     riskWarning_EN: Locator;
     restrictedRegions_EN: Locator;
+    euCryptoAdressFooter: Locator;
+    euCryptoRegulationFooter: Locator;
+    euCryptoRiskNotification: Locator;
+    euCryptoRestrictedCountries: Locator;
+    euPayRegistrationNumber: Locator;
+    euPayAddress: Locator;
+    euPayRiskNotification: Locator;
 
     constructor(page: Page){
         this.page = page
@@ -19,6 +26,13 @@ export class NagaCom{
         this.restrictedRegions_EU = page.locator("//span[text()='Restricted regions:']//..")
         this.riskWarning_EN = page.locator("//span[text()='RISK WARNING:']//..")
         this.restrictedRegions_EN = page.locator("//span[text()='Restricted countries:']//..")
+        this.euCryptoAdressFooter = page.locator("//div[@id='disclaimer-container']//p[1]")
+        this.euCryptoRegulationFooter = page.locator("//div[@id='disclaimer-container']//p[2]")
+        this.euCryptoRiskNotification = page.locator("//div[@id='disclaimer-container']//p[4]")
+        this.euCryptoRestrictedCountries = page.locator("//div[@id='disclaimer-container']//p[6]")
+        this.euPayRegistrationNumber = page.locator("//div[@id='disclaimer-container']//ul//li[1]")
+        this.euPayAddress = page.locator("//div[@id='disclaimer-container']//ul//li[2]")
+        this.euPayRiskNotification = page.locator("//div[@id='disclaimer-container']//p[6]")
     }
 
     async checkTradeInstrument(nameOfInstrument: string){

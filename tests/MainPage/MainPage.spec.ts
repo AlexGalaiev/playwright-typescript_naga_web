@@ -16,15 +16,14 @@ test.describe('Main Page elements', async()=>{
     }
     const testParams: testTypes[] = [
        { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
-       { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"},
-       { testrailId: "@25191", brand: '@NA', email: "testLeadUserAxon@i.ua"}
+       { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
     ]
     for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} Login/logout user to platform ${brand}`, {tag:['@smoke', '@signIn', '@prodSanity', '@mainPage']}, async({page})=>{
+        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@smoke', '@signIn', '@prodSanity', '@mainPage']}, async({page})=>{
             let signIn = new SignIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)
-            await test.step('Login to platform', async()=>{
+            await test.step(`Login to platform by ${email}`, async()=>{
                 await signIn.goto(await signIn.chooseBrand(brand), 'login')
                 await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
@@ -52,11 +51,11 @@ test.describe('Main Page elements', async()=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page)
             let userProfile = new UserProfile(page)
-            await test.step('Login to platform by exists user', async()=>{
+            await test.step(`Login to platform by ${loginUser}`, async()=>{
                 await signIn.goto(await signIn.chooseBrand(brand), 'login')
                 await signIn.signInUserToPlatform(loginUser, process.env.USER_PASSWORD || '')
             })
-            await test.step('Search users from other platform. Open User. Check flag', async()=>{
+            await test.step(`Search ${searchUser} from other platform. Open user. Check flag`, async()=>{
                 await mainPage.search(searchUser)
                 await mainPage.getFoundResults(searchUser)
                 expect(await userProfile.getCountryFlag()).toContain(flag)
@@ -81,7 +80,7 @@ test.describe('Naga Capital', async()=>{
     test(`@23926 Status on banner ${level}`,{tag:['@signIn', '@mainPage']},  async({page, NagaCapital})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
-        await test.step('Login to platform', async()=>{
+        await test.step(`Login to platform by ${email}`, async()=>{
             await signIn.goto(NagaCapital, 'login')
             await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
         })

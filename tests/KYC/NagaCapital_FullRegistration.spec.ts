@@ -16,8 +16,8 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@smoke', '@kyc', '@prodSanity']},
     let mainPage = new MainPage(page);
     let startKyc = new StartKYCPopup(page)
     let verificationPopup = new VerificationPopup(page);
-    await test.step('Create lead user via API. Login by created lead to platform', async ()=>{
-        let email = await signUp.createLeadUserApiNagaCapital('BA', page)
+    let email = await signUp.createLeadUserApiNagaCapital('BA', page)
+    await test.step(`Create lead user via API. Login by ${email} to platform`, async ()=>{
         await signIn.goto(NagaCapital, 'login');
         await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
     });

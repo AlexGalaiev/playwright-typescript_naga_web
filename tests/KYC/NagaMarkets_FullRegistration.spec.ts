@@ -16,8 +16,8 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
     let mainpage = new MainPage(page);
     let verification = new PhoneVerification(page);
     let kycStart = new KYC_Start(page);
-    await test.step("Create lead user via API", async () => {
-      let email = await signUp.createLeadUserApi("FR");
+    let email = await signUp.createLeadUserApi("FR");
+    await test.step(`Create lead user via API. Login by ${email} to platform`, async () => {
       await signIn.goto(NagaMarkets, "login");
       await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "");
     });
@@ -37,7 +37,7 @@ test("@24921 Naga Markets. KYC - Advance level.",{tag:['@smoke', '@kyc', '@prodS
   let localization = new getLocalization(kycFinishContent);
   let KYC_Advance = "Advance";
   let KYC_FinalStep = new FinalStep(page);
-  await test.step("Fill KYC advance level", async () => {
+  await test.step(`Fill KYC ${KYC_Advance} level`, async () => {
     await quiz.fill_KYC(KYC_Advance);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {
@@ -56,7 +56,7 @@ test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@smoke', '@kyc']}, as
   let localization = new getLocalization(kycFinishContent);
   let KYC_PreAdvance = "PreAdvance";
   let KYC_FinalStep = new FinalStep(page);
-  await test.step("Fill KYC Preadvance level", async () => {
+  await test.step(`Fill KYC ${KYC_PreAdvance} level`, async () => {
     await quiz.fill_KYC(KYC_PreAdvance);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {
@@ -75,7 +75,7 @@ test("@24920 Naga Markets. KYC - Intermediate level.", {tag:['@smoke', '@kyc']},
   let localization = new getLocalization(kycFinishContent);
   let KYC_Intermediate = "Intermediate";
   let KYC_FinalStep = new FinalStep(page);
-  await test.step("Fill KYC intermediate level", async () => {
+  await test.step(`Fill KYC ${KYC_Intermediate} level`, async () => {
     await quiz.fill_KYC(KYC_Intermediate);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {
@@ -96,7 +96,7 @@ test("@24923 Naga Markets. KYC - Elementary level.",{tag:['@smoke', '@kyc']}, as
   let localization = new getLocalization(kycFinishContent);
   let KYC_Elementary = "Elementary";
   let KYC_FinalStep = new FinalStep(page);
-  await test.step("Fill KYC elementary level", async () => {
+  await test.step(`Fill KYC ${KYC_Elementary} level`, async () => {
     await quiz.fill_KYC(KYC_Elementary);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {
@@ -117,7 +117,7 @@ test("@24922 Naga Markets. KYC - Beginner level.",{tag:['@smoke', '@kyc']}, asyn
   let localization = new getLocalization(kycFinishContent);
   let KYC_Beginner = "Beginner";
   let KYC_FinalStep = new FinalStep(page);
-  await test.step("Fill KYC beginner level", async () => {
+  await test.step(`Fill KYC ${KYC_Beginner} level`, async () => {
     await quiz.fill_KYC(KYC_Beginner);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {

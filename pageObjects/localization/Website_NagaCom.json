@@ -19,5 +19,26 @@
     },
     "EU_riskWarning_footer":{
         "answer":"RISK WARNING: CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. 81.53% of retail investor accounts lose money when trading CFDs with this provider. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money."
+    },
+    "EU_cryptoFooter_address":{
+        "answer":"NAGA is a trademark of The NAGA Group AG, a German based FinTech company publicly listed on the Frankfurt Stock Exchange | WKN: A161NR | ISIN: DE000A161NR7."
+    },
+    "EU_cryptoFooter_regulation":{
+        "answer":"The website is operated by NAGA X LTD which is authorised and regulated by the Cyprus Securities and Exchange Commission under Registration No. 009/23. The registered address of NAGA X LTD is Agias Zonis 11, 3027, Limassol, Cyprus."
+    },
+    "EU_cryptoFooter_riskNotification":{
+        "answer":"Please carefully read the applicable Legal Documents and understand the risk warning before engaging in any cryptocurrency investments. Investing in cryptocurrencies carries inherent risks, and it is crucial that you fully comprehend the potential risks and rewards associated with such investments. We strongly advise consulting with a qualified financial advisor or conducting your own research before making any cryptocurrency investments. Only invest funds that you can afford to lose without significantly impacting your financial well-being."
+    },
+    "EU_cryptoFooter_restrictedCountries":{
+        "answer":"Restricted regions: NAGA X LTD does not offer its services to USA, Canada, Cuba, Sudan, North Korea and other countries."
+    },
+    "EU_payFooter_registrationNumber":{
+        "answer":"Registration No.: HRB162653"
+    },
+    "EU_payFooter_address":{
+        "answer":"Registration Address: Suhrenkamp 59, c/o The Naga Group, 22335 Hamburg, Germany"
+    },
+    "EU_payFooter_riskNotification":{
+        "answer":"The content of our pages has been created with the utmost care. However, we cannot guarantee the content`s accuracy, completeness or topicality. According to statutory provisions, we are furthermore responsible for our own content on these web pages. In this context, please note that we are accordingly not obliged to monitor merely the transmitted or saved information of third parties, or investigate circumstances pointing to illegal activity. Our obligations to remove or block the use of information under generally applicable laws remain unaffected by this as per 8 to 10 of the Telemedia Act (TMG)."
     }
 }

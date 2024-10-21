@@ -63,7 +63,7 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let addAccountForm = new AddAcountForm(page);
-        await test.step("Login to platform by exist user", async()=>{
+        await test.step(`Login to platform by ${user} to ${brand}`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })

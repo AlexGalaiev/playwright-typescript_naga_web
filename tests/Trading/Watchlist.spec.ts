@@ -26,7 +26,7 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
         let tradeInstrument = "Dogecoin/USD"
         let localizationPage = new getLocalization(localization)
         let watchlist = new AllInstruments(page);
-        await test.step('Login to platform', async()=>{
+        await test.step(`Login to ${brand} platform by ${user}`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand), "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await new MainPage(page).openHeaderMenuPoint('markets');
@@ -35,7 +35,7 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
             await watchlist.openWatclistTab();
             await watchlist.cleanWatchlist()
         })
-        await test.step("Choose instrument and add to watchlist", async()=>{
+        await test.step(`Choose ${tradeInstrument} and add to watchlist`, async()=>{
             await watchlist.searchInstrument(tradeInstrument);
             await watchlist.addToWatchlist(tradeInstrument)
         })
@@ -61,7 +61,7 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
         let watchlist = new AllInstruments(page);
         let priceAlert = new PriceAlert(page)
         let signIn = new SignIn(page)
-        await test.step('Login to platform', async()=>{
+        await test.step(`Login to platform ${brand} by ${user}`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand), "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await new MainPage(page).openHeaderMenuPoint('markets');
@@ -71,7 +71,7 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
             await priceAlert.cleanPriceAlerts()
             await new MainPage(page).openHeaderMenuPoint('markets');
         })
-        await test.step("Choose instrument and add price alert", async()=>{
+        await test.step(`Choose ${tradeInstrument} and add price alert`, async()=>{
             await watchlist.searchInstrument(tradeInstrument);
             await watchlist.addPriceAlertToInstrumnet();
         })

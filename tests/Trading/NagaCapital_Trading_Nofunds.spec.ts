@@ -26,15 +26,15 @@ for(const{testRailId, brand, user}of testNoFundsParaketers){
         let mainPage = new MainPage(page)
         let instruments = new AllInstruments(page);
         let newPosition = new NewPosition(page)
-        await test.step("Login to platfotm", async () => {
+        await test.step(`Login to platfotm by ${user} to ${brand} brand`, async () => {
             await signIn.goto(await signIn.chooseBrand(brand), "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
           });
-          await test.step("Choose instrument and open position", async () => {
+          await test.step(`Choose ${tradingInstrument} and open position`, async () => {
             await mainPage.openHeaderMenuPoint("markets");
             await instruments.openPositionOfInstrument(tradingInstrument, 'Short')
           });
-          await test.step('Check new position messages', async()=>{
+          await test.step('Check Not enough money messages', async()=>{
             expect(await newPosition.getNotEnoughFundsMsg()).toEqual('You have insufficient funds to trade at the moment')
             expect(await newPosition.getSubmitBtnText()).toEqual('Fund account now')
             await newPosition.submitPosition()

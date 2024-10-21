@@ -41,7 +41,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     let instruments = new AllInstruments(page);
     let newPosition = new NewPosition(page);
     let successPopup = new ClosePositionSuccessPopup(page);
-    await test.step("Login to platfotm", async () => {
+    await test.step(`Login to platfotm ${brand} by ${user}`, async () => {
       await signIn.goto(await signIn.chooseBrand(brand), "login");
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
@@ -49,11 +49,11 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       await mainPage.openHeaderMenuPoint("my-trades");
       await myTrades.closePositionsIfExist();
     });
-    await test.step("Choose instrument and open position", async () => {
+    await test.step(`Choose ${tradingInstrument} and open position`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
-    await test.step("Open short position + Stop Loss", async () => {
+    await test.step(`Open ${investDirection} position + ${protection}`, async () => {
       await newPosition.enableProtection(protection)
       NagaProtectionValue = await newPosition.getProtectionValue(protection)
       await newPosition.submitPosition();
@@ -76,7 +76,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25170', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'}
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
-    test(`${testRailId} Open/Close pending Short/Long posiotion+StopLoss/TakeProfit ${brand} ${investDirection}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
+    test(`${testRailId} Open/Close pending ${investDirection} posiotion + ${protection} ${brand}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 150000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -84,7 +84,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       let instruments = new AllInstruments(page);
       let newPosition = new NewPosition(page);
       let successPopup = new ClosePositionSuccessPopup(page);
-      await test.step("Login to platfotm", async () => {
+      await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
         await signIn.goto(await signIn.chooseBrand(brand), "login");
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
       });
@@ -93,11 +93,11 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await myTrades.openActivePendingOrdersTab();
         await myTrades.removeOrdersIfExist();
       });
-      await test.step("Choose instrument and open position", async () => {
+      await test.step(`Choose ${tradingInstrument} and open position`, async () => {
         await mainPage.openHeaderMenuPoint("markets");
         await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
-      await test.step("Open short position + Stop Loss", async () => {
+      await test.step(`Open ${investDirection} position + ${protection}`, async () => {
         await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
         await newPosition.enableProtection(protection)
         NagaProtectionValue = await newPosition.getProtectionValue(protection)
@@ -132,7 +132,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
   {testRailId: '@25172', brand: '@NM', user:'testTrading2Markets', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp'}
 ]
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP} of tradingParametersSLTP){
-  test(`${testRailId} Edit position popup with SL/TP ${brand} ${investDirection}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
+  test(`${testRailId} Edit position popup with ${protectionSL}/${protectionTP}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -142,7 +142,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     let changeLimits = new ChangeLimitsPopup(page);
     let changeLimitsSuccessPopup = new ChangeLimitSuccessPopup(page)
     let successfullClosePopup = new ClosePositionSuccessPopup(page)
-    await test.step("Login to platfotm", async () => {
+    await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
       await signIn.goto(await signIn.chooseBrand(brand), "login");
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
@@ -150,12 +150,10 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       await mainPage.openHeaderMenuPoint("my-trades");
       await myTrades.closePositionsIfExist();
     });
-    await test.step("Choose instrument for trading. Open new position page", async () => {
+    await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-    });
-    await test.step("Check parameters and open short position", async () => {
-      await newPosition.submitPosition();
+      await newPosition.submitPosition(); 
     });
     await test.step("Check My-trades", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
@@ -163,7 +161,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       deposit = (await myTrades.getDepositValue())?.replace('$','');
       units = await myTrades.getUnits();
     })
-    await test.step('Open change limit popup and install SL', async()=>{
+    await test.step(`Open change limit popup and install ${protectionSL}`, async()=>{
       await myTrades.openChangeLimitPopup()
       await changeLimits.enableStopLoss();
       SL = await changeLimits.getProtectionValue(protectionSL)
@@ -178,7 +176,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     await test.step('Check my traders Stop Loss', async()=>{
       expect(await myTrades.getProtectionValue(tradeFieldSL)).toContain(SL)
     })
-    await test.step('Enable take profit and check result', async()=>{
+    await test.step(`Enable ${protectionTP} and check result`, async()=>{
       await myTrades.openChangeLimitPopup();
       await changeLimits.enableStopLoss();
       await changeLimits.enableTakeProgit();

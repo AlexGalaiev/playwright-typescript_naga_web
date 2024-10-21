@@ -22,7 +22,7 @@ test.describe("Verification center", async() => {
       let signIn = new SignIn(page);
       let myAccounts = new MyAccounts(page);
       let verificationPopup = new VerificationPopup(page);
-      await test.step('Login by fully registered user', async()=>{
+      await test.step(`Login by ${user} user, to ${brand}`, async()=>{
         await signIn.goto(await signIn.chooseBrand(brand), "login");
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
       await test.step('Check statuses of uploaded documents in My Accounts', async()=>{
