@@ -13,4 +13,8 @@ export class getLocalization{
     async getLocalizationText(elementToGet: string) {
         return this.jsonObj[elementToGet]["answer"]
     };
+    async getTranslation(elementToGet: string){
+        let elements = elementToGet.split(".")
+        return await this.jsonObj[elements[0]][elements[1]]
+    }
 }

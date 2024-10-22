@@ -16,6 +16,7 @@ export class NagaCom{
     euPayRegistrationNumber: Locator;
     euPayAddress: Locator;
     euPayRiskNotification: Locator;
+    userLoginSection: Locator;
 
     constructor(page: Page){
         this.page = page
@@ -33,6 +34,7 @@ export class NagaCom{
         this.euPayRegistrationNumber = page.locator("//div[@id='disclaimer-container']//ul//li[1]")
         this.euPayAddress = page.locator("//div[@id='disclaimer-container']//ul//li[2]")
         this.euPayRiskNotification = page.locator("//div[@id='disclaimer-container']//p[6]")
+        this.userLoginSection = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//..//..//..//..//a[contains(@class, 'ButtonBaseV2_btn')]")
     }
 
     async checkTradeInstrument(nameOfInstrument: string){
@@ -82,6 +84,16 @@ export class NagaCom{
         await elementGetText.first().scrollIntoViewIfNeeded();
         return await elementGetText.first().textContent()
     }
+    async getBtnHeaderText(buttonName: string){
+        let btn = await this.userLoginSection.locator(`//span[text()='${buttonName}']`)
+        await btn.first().scrollIntoViewIfNeeded();
+        return await btn
+    }
+    async getMainPageBtntext(btnName: string){
+        let element = await this.page.locator(`//div[contains(@id, 'panel-money')]//span[text()='${btnName}']`)
+        await element.first().scrollIntoViewIfNeeded()
+        return await element
+    }
     async getRiskWarningFooter(){
         await this.page.waitForTimeout(250)
         let footer = await this.page.locator("//span[@class='text-primary']//..", {hasText:'RISK WARNING'}).first()
@@ -105,5 +117,13 @@ export class NagaCom{
         ])
         await this.page.waitForTimeout(4000)
         return [newPage, instrumentName?.replace(/[()]/g, "")]
+    }
+    async switchLanguageTo(language: string){
+        let langTitle = await this.languageSwitcher.getAttribute('title')
+        if(langTitle?.includes('English')){}else{
+            await this.languageSwitcher.click();
+            await this.page.locator("//a[contains(@id, 'language_menu_item')]", {hasText:language}).click()
+        }
+        await this.page.waitForTimeout(1500)
     }
 }

@@ -254,7 +254,58 @@ test.describe('Naga.com website', async()=>{
                 const[newPage, instrumentName] = await website.openPosition(buttonName)
                 let newWebsite = new NagaCom(newPage)
                 expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
+            })})}
+            
+
+    type translations = {
+        testRailId: string;
+        platform: string;
+        language: string;
+        tradeType: string;
+        investType: string;
+        btn1: string;
+        btn2: string;
+        btn3: string;
+        btn4: string;
+    }
+                    
+    const translationParams: translations[] = [
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'English (Europe)', btn1:'LoginBtn.eng', btn2:"GetStarted.eng", btn3:"Start Investing.eng", btn4:"Start trading.eng"},
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Deutsch', btn1:'LoginBtn.de', btn2:"GetStarted.de", btn3:"Start Investing.de", btn4:"Start trading.de"},
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Italiano', btn1:'LoginBtn.it', btn2:"GetStarted.it", btn3:"Start Investing.it", btn4:"Start trading.it"},
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Español', btn1:'LoginBtn.es', btn2:"GetStarted.es", btn3:"Start Investing.es", btn4:"Start trading.es"},
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Polski', btn1:'LoginBtn.pl', btn2:"GetStarted.pl", btn3:"Start Investing.pl", btn4:"Start trading.pl"},
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Čeština', btn1:'LoginBtn.cz', btn2:"GetStarted.cz", btn3:"Start Investing.cz", btn4:"Start trading.eng"},
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Nederlands', btn1:'LoginBtn.ne', btn2:"GetStarted.ne", btn3:"Start Investing.ne", btn4:"Start trading.ne"},
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Português', btn1:'LoginBtn.po', btn2:"GetStarted.po", btn3:"Start Investing.po", btn4:"Start trading.po"},
+        {testRailId: "@25216", tradeType: 'Trade', investType: 'Invest', platform: "https://naga.com/en", language:'Español (Latam)', btn1:'LoginBtn.lat', btn2:"GetStarted.lat", btn3:"Start Investing.lat", btn4:"Start trading.lat"},
+        {testRailId: "@25216", tradeType: 'Trade', investType: 'Invest', platform: "https://naga.com/en", language:'Português', btn1:'LoginBtn.por', btn2:"GetStarted.por", btn3:"Start Investing.por", btn4:"Start trading.por"},
+        {testRailId: "@25216", tradeType: 'Trade', investType: 'Invest', platform: "https://naga.com/en", language:'العربية', btn1:'LoginBtn.ar', btn2:"GetStarted.ar", btn3:"Start Investing.ar", btn4:"Start trading.ar"},
+        {testRailId: "@25216", tradeType: 'Trade', investType: 'Invest', platform: "https://naga.com/en", language:'Bahasa Indonesia', btn1:'LoginBtn.ind', btn2:"GetStarted.ind", btn3:"Start Investing.ind", btn4:"Start trading.ind"},
+        {testRailId: "@25216", tradeType: 'Trade', investType: 'Invest', platform: "https://naga.com/en", language:'简化字', btn1:'LoginBtn.chi', btn2:"GetStarted.chi", btn3:"Start Investing.chi", btn4:"Start trading.chi"},
+        {testRailId: "@25216", tradeType: 'Trade', investType: 'Invest', platform: "https://naga.com/en", language:'繁體中文', btn1:'LoginBtn.chiGlobal', btn2:"GetStarted.chiGlobal", btn3:"Start Investing.chiGlobal", btn4:"Start trading.chiGlobal"},
+    ]
+    for(const{testRailId,platform,language,btn1,btn2,btn3,btn4,tradeType,investType}of translationParams){
+        test(`${testRailId} Localization of main buttons ${platform}. ${language} language`,{tag: '@website-naga.com'}, async({page}, testInfo)=>{
+            await testInfo.setTimeout(testInfo.timeout + 80000);
+            let website = new NagaCom(page)
+            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
+            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
+                await website.open(platform)
+                await website.switchLanguageTo(language);
             })
+            await test.step(`Check ${tradeType} page buttons`, async()=>{
+                await website.checkTradeInstrument(`${tradeType}`)
+                expect(await website.getBtnHeaderText(await localization.getTranslation(btn1))).toBeVisible()
+                expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
+                expect(await website.getMainPageBtntext(await localization.getTranslation(btn4))).toBeVisible()
+            })
+            await test.step(`Check ${investType} page buttons`, async()=>{
+                await website.checkTradeInstrument(`${investType}`)
+                expect(await website.getBtnHeaderText(await localization.getTranslation(btn1))).toBeVisible()
+                expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
+                expect(await website.getMainPageBtntext(await localization.getTranslation(btn3))).toBeVisible()
+            }) 
         })
     }
 })
