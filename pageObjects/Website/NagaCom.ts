@@ -3,6 +3,7 @@ import {Locator, Page, BrowserContext } from "@playwright/test";
 export class NagaCom{
     page: Page;
     languageSwitcher: Locator;
+    languageSwitcherCrypto: Locator;
     redirectPopupText: Locator;
     riskWarning_EU: Locator;
     riskWarning_EU_main: Locator;
@@ -17,10 +18,11 @@ export class NagaCom{
     euPayAddress: Locator;
     euPayRiskNotification: Locator;
     userLoginSection: Locator;
+    userLoginSectionPay: Locator;
 
     constructor(page: Page){
         this.page = page
-        this.languageSwitcher = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]").first()
+        this.languageSwitcher = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div").first()
         this.redirectPopupText = page.locator("//button//span[text()='OK']//..//..//preceding-sibling::div[1]")
         this.riskWarning_EU = page.locator("//span[text()='RISK WARNING:']//..//..//p[1]")
         this.riskWarning_EU_main = page.locator("//span[text()='RISK WARNING:']//..//..//p[2]")
@@ -35,6 +37,8 @@ export class NagaCom{
         this.euPayAddress = page.locator("//div[@id='disclaimer-container']//ul//li[2]")
         this.euPayRiskNotification = page.locator("//div[@id='disclaimer-container']//p[6]")
         this.userLoginSection = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//..//..//..//..//a[contains(@class, 'ButtonBaseV2_btn')]")
+        this.userLoginSectionPay = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//..//..//..//..//button[contains(@class, 'ButtonBaseV2_btn')]")
+        this.languageSwitcherCrypto = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div[@title]").first()
     }
 
     async checkTradeInstrument(nameOfInstrument: string){
@@ -89,6 +93,11 @@ export class NagaCom{
         await btn.first().scrollIntoViewIfNeeded();
         return await btn
     }
+    async getBtnHeaderTextPay(buttonName: string){
+        let btn = await this.userLoginSectionPay.locator(`//span[text()='${buttonName}']`)
+        await btn.first().scrollIntoViewIfNeeded();
+        return await btn
+    }
     async getMainPageBtntext(btnName: string){
         let element = await this.page.locator(`//div[contains(@id, 'panel-money')]//span[text()='${btnName}']`)
         await element.first().scrollIntoViewIfNeeded()
@@ -119,8 +128,9 @@ export class NagaCom{
         return [newPage, instrumentName?.replace(/[()]/g, "")]
     }
     async switchLanguageTo(language: string){
-        let langTitle = await this.languageSwitcher.getAttribute('title')
-        if(langTitle?.includes('English')){}else{
+        await this.page.waitForTimeout(1000)
+        let langTitle = await this.languageSwitcher.getAttribute('title') || ''
+        if(langTitle.includes(language)){}else{
             await this.languageSwitcher.click();
             await this.page.locator("//a[contains(@id, 'language_menu_item')]", {hasText:language}).click()
         }

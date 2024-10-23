@@ -275,7 +275,7 @@ test.describe('Naga.com website', async()=>{
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Italiano', btn1:'LoginBtn.it', btn2:"GetStarted.it", btn3:"Start Investing.it", btn4:"Start trading.it"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Español', btn1:'LoginBtn.es', btn2:"GetStarted.es", btn3:"Start Investing.es", btn4:"Start trading.es"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Polski', btn1:'LoginBtn.pl', btn2:"GetStarted.pl", btn3:"Start Investing.pl", btn4:"Start trading.pl"},
-        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Čeština', btn1:'LoginBtn.cz', btn2:"GetStarted.cz", btn3:"Start Investing.cz", btn4:"Start trading.eng"},
+        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Čeština', btn1:'LoginBtn.cz', btn2:"GetStarted.cz", btn3:"Start Investing.cz", btn4:"Start trading.cz"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Nederlands', btn1:'LoginBtn.ne', btn2:"GetStarted.ne", btn3:"Start Investing.ne", btn4:"Start trading.ne"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Português', btn1:'LoginBtn.po', btn2:"GetStarted.po", btn3:"Start Investing.po", btn4:"Start trading.po"},
         {testRailId: "@25216", tradeType: 'Trade', investType: 'Invest', platform: "https://naga.com/en", language:'Español (Latam)', btn1:'LoginBtn.lat', btn2:"GetStarted.lat", btn3:"Start Investing.lat", btn4:"Start trading.lat"},
@@ -305,7 +305,66 @@ test.describe('Naga.com website', async()=>{
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn1))).toBeVisible()
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
                 expect(await website.getMainPageBtntext(await localization.getTranslation(btn3))).toBeVisible()
-            }) 
-        })
+            })})}
+
+    type translationsCrypto = {
+        testRailId: string;
+        platform: string;
+        type: string;
+        language: string;
+        btn1: string;
+        btn2: string;
     }
+
+    const cryptoParams: translationsCrypto[] = [
+        {testRailId: '@25215', platform: 'https://naga.com/eu', type: 'crypto', language:'English', btn1: 'LoginBtn.eng', btn2: 'GetStarted.eng'},
+        {testRailId: '@25215', platform: 'https://naga.com/eu', type: 'crypto', language:'Deutsch', btn1: 'LoginBtn.de', btn2: 'GetStarted.de'},
+        {testRailId: '@25215', platform: 'https://naga.com/eu', type: 'crypto', language:'Español', btn1: 'LoginBtn.es', btn2: 'GetStarted.es'},
+        {testRailId: '@25215', platform: 'https://naga.com/eu', type: 'crypto', language:'Italiano', btn1: 'LoginBtn.it', btn2: 'Get started Crypto.it'},
+        {testRailId: '@25215', platform: 'https://naga.com/eu', type: 'crypto', language:'Polski', btn1: 'LoginBtn.pl', btn2: 'Get started Crypto.pl'},
+    ]
+    for(const{testRailId, platform, language, type, btn1, btn2}of cryptoParams){
+        test(`${testRailId} Localization of main buttons, Language-${language} on ${platform}, ${type}`,{tag: '@website-naga.com'}, async({page}, testInfo)=>{
+            await testInfo.setTimeout(testInfo.timeout + 20000);
+            let website = new NagaCom(page)
+            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
+            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
+                await website.open(platform)
+                await website.checkTradeInstrument(`${type}`)
+                await website.switchLanguageTo(language);
+            })
+            await test.step(`Check main button ${type} page`, async()=>{
+                expect(await website.getBtnHeaderText(await localization.getTranslation(btn1))).toBeVisible()
+                expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
+            })})}
+
+    type payTranslations = {
+        testRailId: string,
+        platform: string,
+        type: string,
+        language: string,
+        btn1: string
+    }
+    const payTranslationsParams: payTranslations[] = [
+        {testRailId: "@25215", platform: 'https://naga.com/eu', type:'pay', language:'English (Europe)', btn1:"Get your card.eng"},
+        {testRailId: "@25215", platform: 'https://naga.com/eu', type:'pay', language:'Deutsch', btn1:"Get your card.de"},
+        {testRailId: "@25215", platform: 'https://naga.com/eu', type:'pay', language:'Italiano', btn1:"Get your card.it"},
+        {testRailId: "@25215", platform: 'https://naga.com/eu', type:'pay', language:'Español', btn1:"Get your card.es"},
+        {testRailId: "@25215", platform: 'https://naga.com/eu', type:'pay', language:'Polski', btn1:"Get your card.pl"},
+        {testRailId: "@25215", platform: 'https://naga.com/eu', type:'pay', language:'Čeština', btn1:"Get your card.cz"},
+        {testRailId: "@25215", platform: 'https://naga.com/eu', type:'pay', language:'Português', btn1:"Get your card.po"},
+    ]
+    for(const{testRailId, platform, language, btn1,type}of payTranslationsParams){
+        test(`${testRailId} Localization of main buttons, Language-${language} on ${platform}, Pay page`,{tag: '@website-naga.com'}, async({page}, testInfo)=>{
+            await testInfo.setTimeout(testInfo.timeout + 20000);
+            let website = new NagaCom(page)
+            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
+            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
+                await website.open(platform)
+                await website.checkTradeInstrument(`${type}`)
+                await website.switchLanguageTo(language);
+            })
+            await test.step(`Check main button ${type} page`, async()=>{
+                expect(await website.getBtnHeaderTextPay(await localization.getTranslation(btn1))).toBeVisible()
+            })})}
 })

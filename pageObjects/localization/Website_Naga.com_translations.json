@@ -71,5 +71,9 @@
         "ind":"Mulai berdagang",
         "chi":"开始交易",
         "chiGlobal":"開始交易"
+    }, 
+    "Get started Crypto":{
+        "it":"Inizia",
+        "pl":"Zaczynamy"
     }
 }
