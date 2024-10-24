@@ -32,6 +32,7 @@ export class InternalTransfer{
         await this.checkAccount(nameOfSourceAccount)
         await this.destinationAccount.click();
         await this.page.keyboard.press('Enter')
+        await this.page.waitForTimeout(1000)
     };
 
     async checkAccount(nameOfSourceAccount: string){
@@ -47,7 +48,7 @@ export class InternalTransfer{
     };
     async make1$InternalTransfer(){
         await this.valueInternalTransfer.pressSequentially('1')
-        await this.page.waitForTimeout(500);
+        await this.page.waitForTimeout(1000);
         await this.submitBtn.click()
     }
     async checkSuccessPopupText(){

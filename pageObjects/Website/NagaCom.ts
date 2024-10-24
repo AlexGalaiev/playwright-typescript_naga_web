@@ -59,7 +59,7 @@ export class NagaCom{
         await this.page.waitForTimeout(1500)
     }
     async checkUrl(){
-        await this.page.waitForTimeout(1500)
+        await this.page.waitForTimeout(2500)
         return await this.page.url()
     }
     async getLanguage(language:string){
