@@ -16,5 +16,9 @@ export class getLocalization{
     async getTranslation(elementToGet: string){
         let elements = elementToGet.split(".")
         return await this.jsonObj[elements[0]][elements[1]]
+    };
+    async getDocumentInfo(elementToGet: string){
+        let elements = elementToGet.split(".")
+        return await this.jsonObj[elements[0]][elements[1]][elements[2]]
     }
 }

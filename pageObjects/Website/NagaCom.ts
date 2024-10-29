@@ -1,4 +1,5 @@
 import {Locator, Page, BrowserContext } from "@playwright/test";
+import { getLocalization } from "../localization/getText";
 
 export class NagaCom{
     page: Page;
@@ -135,5 +136,29 @@ export class NagaCom{
             await this.page.locator("//a[contains(@id, 'language_menu_item')]", {hasText:language}).click()
         }
         await this.page.waitForTimeout(1500)
+    }
+    async openLegalDocument(DocumentName: string){
+        let documnet = await this.page.locator('//div[@data-aos="fade-up"]', {hasText:DocumentName})
+        await documnet.scrollIntoViewIfNeeded()
+        await documnet.locator("//span[text()='Download']").click()
+        await this.page.locator('.rpv-core__inner-container').first().waitFor({state:'visible'})
+        await this.page.waitForTimeout(1500)
+    }
+    async getDocumentsHeaderPage(){
+        return await this.page.locator("//span[text()='AML and Account Verification']")
+    }
+    async getPopupHeader(){
+        return await this.page.locator("//div[contains(@class, 'mantine-Modal-header')]").textContent()
+    }
+    async checkDocumentVisibility(type: string, documentName: string, documentField: string){
+        let localization = new getLocalization('/pageObjects/localization/Website_Naga.com_documents.json');
+        let text = await localization.getDocumentInfo(`${type}.${documentName}.${documentField}`)
+        console.log(text)
+        let element = await this.page.locator(`//span[contains(text(), '${text}')]`).first()
+        console.log(element)
+        return await element
+    }
+    async closePopup(){
+        await this.page.locator("//button[contains(@class, 'mantine-CloseButton')]").click()
     }
 }

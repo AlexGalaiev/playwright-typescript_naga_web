@@ -364,4 +364,34 @@ test.describe('Naga.com website', async()=>{
             await test.step(`Check main button ${type} page`, async()=>{
                 expect(await website.getBtnHeaderTextPay(await localization.getTranslation(btn1))).toBeVisible()
             })})}
+
+    type pdfTypes = {
+        testRailId: string;
+        type: string;
+        platform: string;
+        documents: string[]
+    }
+
+    const pdfParams: pdfTypes[] = [
+        {testRailId: '@25217', type:'trade', platform:'https://naga.com/eu/legal-documentation', documents: ["AML and Account Verification Policy", 'Client Agreement','Client Categorization Policy','Cost and Charges Policy','Privacy Policy']},
+        {testRailId: '@25218', type:'Trade', platform:'https://naga.com/en/legal-documentation', documents: ["Client Agreement", 'Privacy Policy','Cost and Charges Policy','FATCA']}
+    ]
+    for(const{testRailId, type, platform, documents}of pdfParams){
+        test(`${testRailId} Check legal documents on ${type} page. Base url ${platform}`,{tag: '@website-naga.com'}, async({page}, testInfo)=>{
+            await testInfo.setTimeout(testInfo.timeout + 40000);
+            let website = new NagaCom(page);
+            await test.step(`Open ${platform}`, async()=>{
+                await website.open(platform)
+            })
+            await test.step('Check documents in popup', async()=>{
+                for(let index in documents){
+                    await website.openLegalDocument(documents[index])
+                    expect(await website.getPopupHeader()).toEqual(documents[index])
+                    expect(await website.checkDocumentVisibility(`${type}`, `${documents[index]}`, 'name')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${type}`, `${documents[index]}`, 'updated')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${type}`, `${documents[index]}`, 'year')).toBeVisible()
+                    await website.closePopup()
+                }})
+        })
+    }
 })
