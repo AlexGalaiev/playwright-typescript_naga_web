@@ -20,9 +20,11 @@ export class NagaCom{
     euPayRiskNotification: Locator;
     userLoginSection: Locator;
     userLoginSectionPay: Locator;
+    headerContainer: Locator;
 
     constructor(page: Page){
         this.page = page
+        this.headerContainer = page.locator("//div[@id='header-container']")
         this.languageSwitcher = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div").first()
         this.redirectPopupText = page.locator("//button//span[text()='OK']//..//..//preceding-sibling::div[1]")
         this.riskWarning_EU = page.locator("//span[text()='RISK WARNING:']//..//..//p[1]")
@@ -37,9 +39,10 @@ export class NagaCom{
         this.euPayRegistrationNumber = page.locator("//div[@id='disclaimer-container']//ul//li[1]")
         this.euPayAddress = page.locator("//div[@id='disclaimer-container']//ul//li[2]")
         this.euPayRiskNotification = page.locator("//div[@id='disclaimer-container']//p[6]")
-        this.userLoginSection = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//..//..//..//..//a[contains(@class, 'ButtonBaseV2_btn')]")
-        this.userLoginSectionPay = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//..//..//..//..//button[contains(@class, 'ButtonBaseV2_btn')]")
+        this.userLoginSection = this.headerContainer.locator("//a[contains(@class, 'ButtonBaseV2_btn')]")
+        this.userLoginSectionPay = this.headerContainer.locator("//button[contains(@class, 'ButtonBaseV2_btn')]")
         this.languageSwitcherCrypto = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div[@title]").first()
+        
     }
 
     async checkTradeInstrument(nameOfInstrument: string){

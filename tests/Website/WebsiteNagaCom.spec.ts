@@ -189,19 +189,34 @@ test.describe('Naga.com website', async()=>{
             })
         })
     }
-    const EuRiskWarningFooter: footerTypes[] = [
-        {testRailId: '@25199', type: 'trade'},
-        {testRailId: '@25198', type: 'invest'}
+    type footerTypeEU = {
+        testRailId: string,
+        type: string,
+        baseUrl: string,
+        page1: string,
+        page2: string,
+    }
+    const EuRiskWarningFooter: footerTypeEU[] = [
+        {testRailId: '@25199', type: 'trade', baseUrl:'https://naga.com/eu', page1:"investing/markets/indices", page2:"contact-us"},
+        {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'pricing-and-terms/deposit-methods', page2:'why-choose-naga'}
     ]
-    for(const{testRailId, type}of EuRiskWarningFooter){
+    for(const{testRailId, type, baseUrl,page1, page2 }of EuRiskWarningFooter){
         test.fixme(`${testRailId} Risk Warning footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step("Open website https://naga.com/eu", async()=>{
-                await website.open('https://naga.com/eu')
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
                 await website.checkTradeInstrument(type)
             })
             await test.step('Check risk warning footer', async()=>{
+                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
+            })
+            await test.step(`Check footer on ${baseUrl}/${page1}`, async()=>{
+                await website.open(`${baseUrl}/${page1}`)
+                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
+            })
+            await test.step(`Check footer on ${baseUrl}/${page2}`, async()=>{
+                await website.open(`${baseUrl}/${page2}`)
                 expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
             })
         })
