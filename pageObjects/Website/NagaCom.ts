@@ -125,7 +125,7 @@ export class NagaCom{
             contexts.waitForEvent('page'),
             instrument.locator(`//div[text()='${buttonName}']`).first().click()
         ])
-        await this.page.waitForTimeout(4000)
+        await this.page.waitForTimeout(7000)
         return [newPage, instrumentName?.replace(/[()]/g, "")]
     }
     async switchLanguageTo(language: string){
@@ -133,6 +133,7 @@ export class NagaCom{
         let langTitle = await this.languageSwitcher.getAttribute('title') || ''
         if(langTitle.includes(language)){}else{
             await this.languageSwitcher.click();
+            await this.page.waitForTimeout(1000)
             await this.page.locator("//a[contains(@id, 'language_menu_item')]", {hasText:language}).click()
         }
         await this.page.waitForTimeout(1500)
@@ -153,9 +154,8 @@ export class NagaCom{
     async checkDocumentVisibility(type: string, documentName: string, documentField: string){
         let localization = new getLocalization('/pageObjects/localization/Website_Naga.com_documents.json');
         let text = await localization.getDocumentInfo(`${type}.${documentName}.${documentField}`)
-        console.log(text)
         let element = await this.page.locator(`//span[contains(text(), '${text}')]`).first()
-        console.log(element)
+        await element.scrollIntoViewIfNeeded()
         return await element
     }
     async closePopup(){
