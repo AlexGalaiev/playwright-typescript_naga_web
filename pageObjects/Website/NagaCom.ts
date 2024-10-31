@@ -21,6 +21,7 @@ export class NagaCom{
     userLoginSection: Locator;
     userLoginSectionPay: Locator;
     headerContainer: Locator;
+    footerContainer: Locator;
 
     constructor(page: Page){
         this.page = page
@@ -42,7 +43,7 @@ export class NagaCom{
         this.userLoginSection = this.headerContainer.locator("//a[contains(@class, 'ButtonBaseV2_btn')]")
         this.userLoginSectionPay = this.headerContainer.locator("//button[contains(@class, 'ButtonBaseV2_btn')]")
         this.languageSwitcherCrypto = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div[@title]").first()
-        
+        this.footerContainer = page.locator("#footer-container")
     }
 
     async checkTradeInstrument(nameOfInstrument: string){
@@ -108,7 +109,7 @@ export class NagaCom{
         return await element
     }
     async getRiskWarningFooter(){
-        await this.page.waitForTimeout(250)
+        await this.page.waitForTimeout(1000)
         let footer = await this.page.locator("//span[@class='text-primary']//..", {hasText:'RISK WARNING'}).first()
         return await footer.textContent()
     }
@@ -163,5 +164,10 @@ export class NagaCom{
     }
     async closePopup(){
         await this.page.locator("//button[contains(@class, 'mantine-CloseButton')]").click()
+    }
+    async openFooterCategory(categoryName: string){
+        await this.footerContainer.scrollIntoViewIfNeeded();
+        let category = await this.footerContainer.locator(`//a[text()='${categoryName}']`)
+        await category.click()
     }
 }

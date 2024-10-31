@@ -195,12 +195,13 @@ test.describe('Naga.com website', async()=>{
         baseUrl: string,
         page1: string,
         page2: string,
+        page3: string,
     }
     const EuRiskWarningFooter: footerTypeEU[] = [
-        {testRailId: '@25199', type: 'trade', baseUrl:'https://naga.com/eu', page1:"investing/markets/indices", page2:"contact-us"},
-        {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'pricing-and-terms/deposit-methods', page2:'why-choose-naga'}
+        {testRailId: '@25199', type: 'trade', baseUrl:'https://naga.com/eu', page1:"Shares", page2:"Contact us", page3:'Daily hot news'},
+        {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'Fees', page2:'IPO', page3:'Privacy Policy'}
     ]
-    for(const{testRailId, type, baseUrl,page1, page2 }of EuRiskWarningFooter){
+    for(const{testRailId, type, baseUrl,page1, page2, page3}of EuRiskWarningFooter){
         test.fixme(`${testRailId} Risk Warning footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
@@ -211,12 +212,16 @@ test.describe('Naga.com website', async()=>{
             await test.step('Check risk warning footer', async()=>{
                 expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
             })
-            await test.step(`Check footer on ${baseUrl}/${page1}`, async()=>{
-                await website.open(`${baseUrl}/${page1}`)
+            await test.step(`Check footer on ${page1} page`, async()=>{
+                await website.openFooterCategory(`${page1}`)
                 expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
             })
-            await test.step(`Check footer on ${baseUrl}/${page2}`, async()=>{
-                await website.open(`${baseUrl}/${page2}`)
+            await test.step(`Check footer on ${page2} page`, async()=>{
+                await website.openFooterCategory(`${page2}`)
+                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
+            })
+            await test.step(`Check footer on ${page3} page`, async()=>{
+                await website.openFooterCategory(`${page3}`)
                 expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
             })
         })
