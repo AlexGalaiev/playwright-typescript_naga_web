@@ -22,10 +22,11 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25194', type: 'pay', buttonName: 'Get your card', baseUrl: 'https://naga.com/eu', redirectTo: 'https://naga.com/eu/pay'},
         {testRailId: '@25208', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://nagamarkets.com/login'},
         {testRailId: '@25208', type: 'Invest', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://nagamarkets.com/login'},
+        {testRailId: '@25220', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/za', redirectTo: 'https://nagamarkets.com/login'},
     
     ]
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
-        test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}.->Click ${buttonName} button`, {tag: ['@prodSanity', '@website-naga.com']}, async({proxyPage})=>{
+        test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, {tag: ['@prodSanity', '@website-naga.com']}, async({proxyPage})=>{
             let website = new NagaCom(proxyPage)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
@@ -50,8 +51,8 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25209', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://nagacap.com/register'},
         {testRailId: '@25209', type: 'Invest', buttonName: 'Login', baseUrl:'https://naga.com/en', redirectTo: 'https://nagacap.com/login'},
         {testRailId: '@25209', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://nagacap.com/register'},
-   
-   
+        {testRailId: '@25219', type: 'Trade', buttonName: 'Login', baseUrl:'https://naga.com/za', redirectTo: 'https://nagacap.com/login'},
+        {testRailId: '@25219', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/za', redirectTo: 'https://nagacap.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
         test(`${testRailId} Redirect from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, {tag: ['@prodSanity', '@website-naga.com']},async({page})=>{
@@ -69,6 +70,7 @@ test.describe('Naga.com website', async()=>{
     const fromENtoNMAllert: RedirectTypes[] = [
         {testRailId: '@25210', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://nagamarkets.com/register'},
         {testRailId: '@25210', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://nagamarkets.com/register'},
+        {testRailId: '@25221', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/za',  redirectTo: 'https://nagamarkets.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
         test.fixme(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, {tag: ['@prodSanity', '@website-naga.com']},async({proxyPage}, testInfo)=>{
@@ -186,9 +188,26 @@ test.describe('Naga.com website', async()=>{
             await test.step("Check footer naga.com/en footer elemets", async()=>{
                 expect(await website.getText(await website.riskWarning_EN)).toEqual(await localization.getLocalizationText("EN_footer_RiskWarning"))
                 expect(await website.getText(await website.restrictedRegions_EN)).toEqual(await localization.getLocalizationText("EN_footer_RestrictedRegions"))
-            })
-        })
+            })})
     }
+
+    const ZA_FooterParams: footerTypes[] = [
+        {testRailId: "@25223", type: 'Trade'},
+    ]
+    for(const{testRailId, type}of ZA_FooterParams){
+        test(`${testRailId} naga.com/za footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website naga.com/za", async()=>{
+                await website.open('https://naga.com/za')
+            })
+            await test.step("Check footer naga.com/en footer elemets", async()=>{
+                expect(await website.getText(await website.zaRiskWarning)).toEqual(await localization.getLocalizationText("ZA_RiskWarning"))
+                expect(await website.getText(await website.zaRegualtion)).toEqual(await localization.getLocalizationText("ZA_Regulation"))
+            })})
+    }
+
+
     type footerTypeEU = {
         testRailId: string,
         type: string,

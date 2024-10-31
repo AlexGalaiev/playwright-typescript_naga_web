@@ -22,6 +22,8 @@ export class NagaCom{
     userLoginSectionPay: Locator;
     headerContainer: Locator;
     footerContainer: Locator;
+    zaRiskWarning: Locator;
+    zaRegualtion: Locator;
 
     constructor(page: Page){
         this.page = page
@@ -44,6 +46,8 @@ export class NagaCom{
         this.userLoginSectionPay = this.headerContainer.locator("//button[contains(@class, 'ButtonBaseV2_btn')]")
         this.languageSwitcherCrypto = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div[@title]").first()
         this.footerContainer = page.locator("#footer-container")
+        this.zaRiskWarning = page.locator("//span[text()='RISK WARNING:']//..").first()
+        this.zaRegualtion = page.locator("//p[text()='Copyright © 2024 – All rights reserved.']//..//p[4]")
     }
 
     async checkTradeInstrument(nameOfInstrument: string){
