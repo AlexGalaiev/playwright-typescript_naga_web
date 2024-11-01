@@ -207,7 +207,6 @@ test.describe('Naga.com website', async()=>{
             })})
     }
 
-
     type footerTypeEU = {
         testRailId: string,
         type: string,
@@ -258,6 +257,7 @@ test.describe('Naga.com website', async()=>{
     const EuSearchTypes: searchTypes[] = [
         {testRailId: '@25214', type: 'trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/eu", categoryName: 'Shares', buttonName:'Trade'},
         {testRailId: '@25212', type: 'invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/eu", categoryName: 'Real Stock USA', buttonName: 'Invest'},
+        {testRailId: '@25224', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/za", categoryName: 'Shares', buttonName:'Trade'},
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,categoryName,buttonName}of EuSearchTypes){
         test(`${testRailId} Redirect from website to platform. Search instrument ${nameOfInstrument} on ${basePage} /${type}.`, {tag: '@website-naga.com'}, async({page})=>{
@@ -409,14 +409,16 @@ test.describe('Naga.com website', async()=>{
         testRailId: string,
         type: string,
         platform: string,
-        documents: string[]
+        documents: string[],
+        regulation: string,
     }
 
     const pdfParams: pdfTypes[] = [
-        {testRailId: "@25218", type:'trade', platform:'https://naga.com/eu/legal-documentation', documents: ["AML and Account Verification Policy", 'Client Agreement', 'Client Categorization Policy','Cost and Charges Policy','Privacy Policy']},
-        {testRailId: "@25217", type:'Trade', platform:'https://naga.com/en/legal-documentation', documents: ["Client Agreement", 'Privacy Policy','Cost and Charges Policy','FATCA']}
+        {testRailId: "@25218", type:'trade',regulation: 'EU', platform:'https://naga.com/eu/legal-documentation', documents: ["AML and Account Verification Policy", 'Client Agreement', 'Client Categorization Policy','Cost and Charges Policy','Privacy Policy']},
+        {testRailId: "@25217", type:'Trade',regulation: 'EN', platform:'https://naga.com/en/legal-documentation', documents: ["Client Agreement", 'Privacy Policy','Cost and Charges Policy','FATCA']},
+        {testRailId: "@25225", type:'Trade',regulation: 'ZA', platform:'https://naga.com/za/legal-documentation', documents: ["Privacy Policy", 'Risk Disclosure and Warning Notice','Terms & Conditions']}
     ]
-    for(const{testRailId, type, platform, documents}of pdfParams){
+    for(const{testRailId, type, platform, documents, regulation}of pdfParams){
         test(`${testRailId} Check legal documents on ${type} page. Base url ${platform}`,{tag: '@website-naga.com'}, async({page}, testInfo)=>{
             await testInfo.setTimeout(testInfo.timeout + 40000);
             let website = new NagaCom(page);
@@ -427,9 +429,9 @@ test.describe('Naga.com website', async()=>{
                 for(let index in documents){
                     await website.openLegalDocument(documents[index])
                     expect(await website.getPopupHeader()).toEqual(documents[index])
-                    expect(await website.checkDocumentVisibility(`${type}`, `${documents[index]}`, 'name')).toBeVisible()
-                    expect(await website.checkDocumentVisibility(`${type}`, `${documents[index]}`, 'updated')).toBeVisible()
-                    expect(await website.checkDocumentVisibility(`${type}`, `${documents[index]}`, 'year')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
                     await website.closePopup()
                 }})})
     }

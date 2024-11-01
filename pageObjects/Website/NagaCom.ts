@@ -147,7 +147,7 @@ export class NagaCom{
         await this.page.waitForTimeout(1500)
     }
     async openLegalDocument(DocumentName: string){
-        let documnet = await this.page.locator('//div[@data-aos="fade-up"]', {hasText:DocumentName})
+        let documnet = await this.page.locator('//div[@data-aos="fade-up"]', {hasText:DocumentName}).first()
         await documnet.scrollIntoViewIfNeeded()
         await documnet.locator("//span[text()='Download']").click()
         await this.page.locator('.rpv-core__inner-container').first().waitFor({state:'visible'})

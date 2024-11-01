@@ -1,5 +1,5 @@
 {
-    "trade":{
+    "EU_trade":{
         "AML and Account Verification Policy":{
             "name":"AML and Account Verification",
             "updated":"October 2023",
@@ -26,7 +26,7 @@
             "year":"202"
         }
     },
-    "Trade":{
+    "EN_Trade":{
         "Client Agreement":{
             "name":"CLIENT AGREEMENT",
             "updated":"August",
@@ -45,6 +45,23 @@
         "FATCA":{
             "name":"FOREIGN ACCOUNT TAX COMPLIANCE ACT ",
             "updated":"September 2024 ",
+            "year":"2024"
+        }
+    },
+    "ZA_Trade":{
+        "Privacy Policy":{
+            "name":"Privacy Policy",
+            "updated":", November ",
+            "year":"2024"
+        },
+        "Risk Disclosure and Warning Notice":{
+            "name":"Risk disclosure and warnings notice",
+            "updated":"November 2024",
+            "year":"2024"
+        },
+        "Terms & Conditions":{
+            "name":"CLIENT AGREEMENT",
+            "updated":"Version 12, October 2024 ",
             "year":"2024"
         }
     }
