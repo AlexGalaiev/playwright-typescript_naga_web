@@ -24,6 +24,9 @@ export class NagaCom{
     footerContainer: Locator;
     zaRiskWarning: Locator;
     zaRegualtion: Locator;
+    aeFooterRiskWarning: Locator;
+    aeFooterDisclaimer: Locator;
+    aeHeaderDisclaimer: Locator;
 
     constructor(page: Page){
         this.page = page
@@ -48,6 +51,9 @@ export class NagaCom{
         this.footerContainer = page.locator("#footer-container")
         this.zaRiskWarning = page.locator("//span[text()='RISK WARNING:']//..").first()
         this.zaRegualtion = page.locator("//p[text()='Copyright © 2024 – All rights reserved.']//..//p[4]")
+        this.aeFooterRiskWarning = page.locator("//span[text()='RISK WARNING:']//..").first()
+        this.aeFooterDisclaimer = page.locator("//span[text()='Disclaimer:']//..").first()
+        this.aeHeaderDisclaimer = page.locator("//div[@id='header-container']//preceding::div[contains(@class, 'block')][1]")
     }
 
     async checkTradeInstrument(nameOfInstrument: string){
@@ -94,7 +100,7 @@ export class NagaCom{
         return await this.page.locator(`//span[text()='${exampleName}']`).first().textContent()
     }
     async getText(elementGetText: Locator){
-        await elementGetText.first().scrollIntoViewIfNeeded();
+        await elementGetText.scrollIntoViewIfNeeded();
         return await elementGetText.first().textContent()
     }
     async getBtnHeaderText(buttonName: string){
@@ -171,7 +177,7 @@ export class NagaCom{
     }
     async openFooterCategory(categoryName: string){
         await this.footerContainer.scrollIntoViewIfNeeded();
-        let category = await this.footerContainer.locator(`//a[text()='${categoryName}']`)
+        let category = await this.footerContainer.locator(`//a[text()='${categoryName}']`).first()
         await category.click()
     }
 }

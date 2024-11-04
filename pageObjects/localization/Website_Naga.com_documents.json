@@ -64,5 +64,27 @@
             "updated":"Version 12, October 2024 ",
             "year":"2024"
         }
+    },
+    "AE_Trade":{
+        "Terms & Conditions":{
+            "name":"CLIENT AGREEMENT",
+            "updated":"October ",
+            "year":"2024"
+        },
+        "Disclaimer":{
+            "name":"Disclaimer",
+            "updated":"November 202",
+            "year":"6"
+        },
+        "W-8 BEN Form":{
+            "name":"Acknowledgment of W8 BEN ",
+            "updated":"November 202",
+            "year":"4"
+        },
+        "Privacy Policy":{
+            "name":"Privacy",
+            "updated":"October 2024 V6",
+            "year":"2024"
+        }
     }
 }
