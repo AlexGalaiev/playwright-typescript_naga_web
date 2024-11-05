@@ -36,8 +36,8 @@ export class NagaCom{
         this.riskWarning_EU = page.locator("//span[text()='RISK WARNING:']//..//..//p[1]")
         this.riskWarning_EU_main = page.locator("//span[text()='RISK WARNING:']//..//..//p[2]")
         this.restrictedRegions_EU = page.locator("//span[text()='Restricted regions:']//..")
-        this.riskWarning_EN = page.locator("//span[text()='RISK WARNING:']//..")
-        this.restrictedRegions_EN = page.locator("//span[text()='Restricted countries:']//..")
+        this.riskWarning_EN = page.locator("//span[text()='RISK WARNING:']//..").first()
+        this.restrictedRegions_EN = page.locator("//span[text()='Restricted countries:']//..").first()
         this.euCryptoAdressFooter = page.locator("//div[@id='disclaimer-container']//p[1]")
         this.euCryptoRegulationFooter = page.locator("//div[@id='disclaimer-container']//p[2]")
         this.euCryptoRiskNotification = page.locator("//div[@id='disclaimer-container']//p[4]")
@@ -179,5 +179,19 @@ export class NagaCom{
         await this.footerContainer.scrollIntoViewIfNeeded();
         let category = await this.footerContainer.locator(`//a[text()='${categoryName}']`).first()
         await category.click()
+    }
+    async openSocialNetwork(networkName: string):Promise<Page>{
+        let icon = await this.page.locator(`//a[contains(@aria-label, '${networkName}')]`).first()
+        await icon.scrollIntoViewIfNeeded();
+        const [newPage] = await Promise.all([
+            this.page.context().waitForEvent('page'),
+            icon.click()
+        ])
+        await newPage.waitForLoadState('load')
+        return newPage
+    }
+    async switchToPreviousTab(){
+        await this.page.bringToFront()
+        await this.page.waitForTimeout(750)
     }
 }

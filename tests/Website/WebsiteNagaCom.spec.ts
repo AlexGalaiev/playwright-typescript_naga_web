@@ -54,7 +54,7 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25209', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://nagacap.com/register'},
         {testRailId: '@25219', type: 'Trade', buttonName: 'Login', baseUrl:'https://naga.com/za', redirectTo: 'https://nagacap.com/login'},
         {testRailId: '@25219', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/za', redirectTo: 'https://nagacap.com/register'},
-        {testRailId: '@25227', type: 'Trade', buttonName: 'Login', baseUrl:'https://naga.com/ae', redirectTo: 'https://nagacap.com/register'},
+        {testRailId: '@25227', type: 'Trade', buttonName: 'Login', baseUrl:'https://naga.com/ae', redirectTo: 'https://nagacap.com/login'},
         {testRailId: '@25227', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/ae', redirectTo: 'https://nagacap.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
@@ -104,7 +104,7 @@ test.describe('Naga.com website', async()=>{
     const languageParameters: languageTypes[] = [
         {testRailId: '@25197', regulation: 'eu', languages: ['English (Europe)', 'Deutsch', 'Italiano', 'Español', 'Polski', 'Čeština', 'Nederlands', 'Português']},
         {testRailId: '@25196', regulation: 'en', languages: ['English (Global)', 'Español (Latam)', 'Português', 'العربية', 'Bahasa Indonesia', '简化字', '繁體中文']},
-        {testRailId: '@25227', regulation: 'ae', languages: ['English (Mena)', 'العربية']}
+        {testRailId: '@25229', regulation: 'ae', languages: ['English (Mena)', 'العربية']}
     ]
     for(const{testRailId, regulation, languages}of languageParameters){
         test(`${testRailId} Check available languages on ${regulation}`,{tag: ['@prodSanity', '@website-naga.com']}, async({page})=>{
@@ -128,7 +128,7 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25202', type: 'invest'}
     ]
     for(const{testRailId, type } of footer){
-        test(`${testRailId} Footer ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+        test(`${testRailId} naga.com/eu footer ->${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step(`Open website https://naga.com/eu`, async()=>{
@@ -146,7 +146,7 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25205', type: 'crypto'},
     ]
     for(const{testRailId, type} of EuFooterCryptoParams){
-        test(`${testRailId} naga.com/eu footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+        test(`${testRailId} naga.com/eu footer ->${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website https://naga.com/eu", async()=>{
@@ -165,7 +165,7 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25207', type: 'pay'},
     ]
     for(const{testRailId, type} of EuFooterPayParams){
-        test(`${testRailId} naga.com/eu footer.${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+        test(`${testRailId} naga.com/eu footer ->${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website https://naga.com/eu", async()=>{
@@ -184,7 +184,7 @@ test.describe('Naga.com website', async()=>{
         {testRailId: "@25203", type: 'Invest'},
     ]
     for(const{testRailId, type}of EnFooterParams){
-        test(`${testRailId} naga.com/en footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+        test(`${testRailId} naga.com/en footer ->${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/en", async()=>{
@@ -201,7 +201,7 @@ test.describe('Naga.com website', async()=>{
         {testRailId: "@25223", type: 'Trade'},
     ]
     for(const{testRailId, type}of ZA_FooterParams){
-        test(`${testRailId} naga.com/za footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+        test(`${testRailId} naga.com/za footer ->${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/za", async()=>{
@@ -218,10 +218,10 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25231', type: 'Invest'}
     ]
     for(const{testRailId, type}of AE_FooterParams){
-        test(`${testRailId} naga.com/ae footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+        test(`${testRailId} naga.com/ae footer ->${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step("Open website naga.com/za", async()=>{
+            await test.step("Open website naga.com/ae", async()=>{
                 await website.open('https://naga.com/ae')
             })
             await test.step("Check footer naga.com/en footer elemets", async()=>{
@@ -244,7 +244,7 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'Fees', page2:'IPO', page3:'Privacy Policy'}
     ]
     for(const{testRailId, type, baseUrl,page1, page2, page3}of EuRiskWarningFooter){
-        test.fixme(`${testRailId} Risk Warning footer. ${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+        test.fixme(`${testRailId} ${baseUrl} ->Risk Warning footer /${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -282,6 +282,8 @@ test.describe('Naga.com website', async()=>{
         {testRailId: '@25214', type: 'trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/eu", categoryName: 'Shares', buttonName:'Trade'},
         {testRailId: '@25212', type: 'invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/eu", categoryName: 'Real Stock USA', buttonName: 'Invest'},
         {testRailId: '@25224', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/za", categoryName: 'Shares', buttonName:'Trade'},
+        {testRailId: "@25235", type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: 'https://nagacap.com/open-trade', basePage:'https://naga.com/ae', categoryName: 'Shares', buttonName:'Trade'},
+        {testRailId: "@25236", type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: 'https://nagacap.com/open-trade', basePage:'https://naga.com/ae', categoryName: 'Real Stock USA', buttonName:'Invest'}
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,categoryName,buttonName}of EuSearchTypes){
         test(`${testRailId} Redirect from website to platform. Search instrument ${nameOfInstrument} on ${basePage} /${type}.`, {tag: '@website-naga.com'}, async({page})=>{
@@ -493,6 +495,35 @@ test.describe('Naga.com website', async()=>{
             await test.step(`Check header on ${page3} page`, async()=>{
                 await website.openFooterCategory(`${page3}`)
                 expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
+            })})
+        }
+
+    type socialNetworksZA = {
+        testRailId: string;
+        regulation: string;
+        networks: Map<string, string>;
+
+    }
+    const socialParamsZA: socialNetworksZA[] = [
+        {testRailId:'@25237', regulation:'eu', networks: new Map<string, string>([['facebook','nagamarketsofficial'],['instagram','nagaeuofficial'],['youtube','@NAGAEurope'],['linkedin','nagainvesting']])},
+        {testRailId:'@25238', regulation:'en', networks: new Map<string, string>([['facebook','nagacapitalofficial'],['instagram','nagacomofficial'],['youtube','@NAGAinvesting'],['twitter','nagacapitalcom']])},
+        {testRailId:'@25239', regulation:'za', networks: new Map<string, string>([['facebook', 'NAGA.S.Africa'], ['instagram', 'capex_za']])},
+        {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'nagamena'], ['facebook', 'NAGA.ADGM'],['instagram', 'naga_adgm'],['twitter', 'CapexMena'],['twitter', 'CapexMena'],['tiktok','@naga_mena'],['linkedin','naga-mena']])},
+    ]
+    for(const{testRailId, regulation, networks}of socialParamsZA){
+        test(`${testRailId} Sochial networks. ${regulation} regulation`,{tag: '@website-naga.com'},async({page}, testInfo)=>{
+            let website = new NagaCom(page);
+            await testInfo.setTimeout(testInfo.timeout + 20000);
+            await test.step(`Open naga.com/${regulation}`, async()=>{
+                await website.open(`https://naga.com/${regulation}`)
+            })
+            await test.step('Check icons of social networks', async()=>{
+                for(const[icon, url] of networks){
+                    const openIcon = await website.openSocialNetwork(icon)
+                    const newTab = new NagaCom(openIcon);
+                    expect(await newTab.checkUrl()).toContain(url)
+                    await website.switchToPreviousTab()
+                }
             })
         })
     }
