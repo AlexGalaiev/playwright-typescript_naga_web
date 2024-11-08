@@ -27,6 +27,8 @@ export class NagaCom{
     aeFooterRiskWarning: Locator;
     aeFooterDisclaimer: Locator;
     aeHeaderDisclaimer: Locator;
+    mainPageContent: Locator;
+    mikeTysonTab: Locator;
 
     constructor(page: Page){
         this.page = page
@@ -54,6 +56,8 @@ export class NagaCom{
         this.aeFooterRiskWarning = page.locator("//span[text()='RISK WARNING:']//..").first()
         this.aeFooterDisclaimer = page.locator("//span[text()='Disclaimer:']//..").first()
         this.aeHeaderDisclaimer = page.locator("//div[@id='header-container']//preceding::div[contains(@class, 'block')][1]")
+        this.mainPageContent = page.locator("//div[@id='header-mobile-container']//following-sibling::div[contains(@class, 'container')]").first()
+        this.mikeTysonTab = page.locator("//img[contains(@src, 'mike-thumbnail.png')]")
     }
 
     async checkTradeInstrument(nameOfInstrument: string){
@@ -114,9 +118,9 @@ export class NagaCom{
         return await btn
     }
     async getMainPageBtntext(btnName: string){
-        let element = await this.page.locator(`//div[contains(@id, 'panel-money')]//span[text()='${btnName}']`)
-        await element.first().scrollIntoViewIfNeeded()
-        return await element
+        await this.checkMikeTysonTab()
+        let element = await this.page.locator(`//span[text()='${btnName}']`)
+        return await element.first()
     }
     async getRiskWarningFooter(){
         await this.page.waitForTimeout(1000)
@@ -193,5 +197,11 @@ export class NagaCom{
     async switchToPreviousTab(){
         await this.page.bringToFront()
         await this.page.waitForTimeout(750)
+    }
+    async checkMikeTysonTab(){
+        if(await this.mikeTysonTab.isVisible()){
+            await this.mikeTysonTab.click();
+            await this.page.waitForTimeout(250)
+        }else{}
     }
 }

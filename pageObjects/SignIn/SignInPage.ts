@@ -11,6 +11,7 @@ export class SignIn{
     readonly redirectionButton: Locator;
     readonly sighInHeaderName: Locator;
     readonly incorrectCredentialsMsg: Locator;
+    readonly languageSwitcher: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -22,6 +23,7 @@ export class SignIn{
         this.redirectionButton = page.locator("//div[@class='prompt__actions']//button");
         this.sighInHeaderName = page.locator("//h2[contains(@class, 'login-form__headline')]");
         this.incorrectCredentialsMsg = page.locator(".login-form__error");
+        this.languageSwitcher = page.locator('#registration-language');
     }
     async signInUserToPlatform(UserEmail: string, UserPassword: string){
         await this.signInName.waitFor({state:"visible"})
@@ -58,18 +60,26 @@ export class SignIn{
             return await project['use']['NagaCapital']
         } else if (tag === '@NM'){
             return await project['use']['NagaMarkets']
-        } else if (tag === '@NA'){
-            return await project['use']['NagaAxon']
+        } else if (tag === '@NX'){
+            return await project['use']['NagaX']
         } else {}
     }
-async chooseBrandCountry(tag: string){
-    let project = await test.info().project;
-        if(tag === '@NS'){
-            return await project['use']['NSCountry']
-        } else if (tag === '@NM'){
-            return await project['use']['NMCountry']
-        } else if (tag === '@NA'){
-            return await project['use']['NACountry']
-        } else {}
-}
+    async chooseBrandCountry(tag: string){
+        let project = await test.info().project;
+            if(tag === '@NS'){
+                return await project['use']['NSCountry']
+            } else if (tag === '@NM'){
+                return await project['use']['NMCountry']
+            } else if (tag === '@NX'){
+                return await project['use']['NXCountry']
+            } else {}
+    }
+    async openLanguages(){
+        await this.languageSwitcher.click();
+        await this.page.waitForTimeout(500)
+    }
+    async checkDefaultLanguage(language: string){
+        return await this.page.locator(`//a[text()='${language}']`);
+    }
+
 }

@@ -38,7 +38,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     let successPopup = new ClosePositionSuccessPopup(page);
     await test.step("Login to platfotm", async () => {
       await sighIn.goto(await sighIn.chooseBrand(brand), "login");
-      await sighIn.sigInUserToPlatform(user, process.env.USER_PASSWORD || "");
+      await sighIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions and close if they exist", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");

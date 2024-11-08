@@ -75,5 +75,21 @@
     "Get started Crypto":{
         "it":"Inizia",
         "pl":"Zaczynamy"
+    },
+    "Discover more":{
+        "eng":"Discover more",
+        "de":"Entdecken Sie mehr",
+        "it":"Scopri di più",
+        "es":"Descubre más",
+        "pl":"Odkryj więcej",
+        "cz":"Objevte více",
+        "ne":"Ontdek meer",
+        "po":"Descubra mais",
+        "lat":"Descubre más",
+        "por":"Descubra mais",
+        "ar":"اكتشف المزيد",
+        "ind":"Temukan lebih banyak",
+        "chi":"发现更多",
+        "chiGlobal":"探索更多"
     }
 }

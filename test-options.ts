@@ -6,13 +6,13 @@ import { VPN } from "./pageObjects/Website/VPN";
 export type TestOptions = {
     NagaMarkets: string;
     NagaCapital: string;
-    NagaAxon: string;
+    NagaX: string;
     baseUrl: string;
     browserContext: BrowserContext;
     testInfo: TestInfo;
     NSCountry: string;
     NMCountry: string;
-    NACountry: string;
+    NXCountry: string;
     WebsiteNagaCom: string;
     browserProxyContext: BrowserContext;
     proxyPage: any
@@ -21,10 +21,10 @@ export type TestOptions = {
 export const test = base.extend<TestOptions>({
     NagaMarkets:['', {option: true}],
     NagaCapital:['', {option: true}],
-    NagaAxon: ['', {option: true}],
+    NagaX: ['', {option: true}],
     NSCountry:['', {option: true}],
     NMCountry:['', {option: true}],
-    NACountry:['', {option: true}],
+    NXCountry:['', {option: true}],
     baseUrl:['', {option: true}],
     WebsiteNagaCom:['', {option: true}],
     browserContext: async({}, use)=>{

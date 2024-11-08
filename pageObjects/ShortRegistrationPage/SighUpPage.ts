@@ -12,6 +12,8 @@ export class SignUp{
     readonly sighUpTittle: Locator;
     readonly NM_checkboxPrivacyPolicy: Locator;
     readonly NM_checkbox_yearsConfirmeation: Locator;
+    readonly NX_RiskDisclaimer: Locator;
+    notCorrectCountryMSG: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -23,6 +25,8 @@ export class SignUp{
         this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
         this.NM_checkboxPrivacyPolicy = page.locator("//div[@class='custom-checkbox'][1]");
         this.NM_checkbox_yearsConfirmeation = page.locator("//div[@class='custom-checkbox'][2]");
+        this.NX_RiskDisclaimer = page.locator("//label[contains(@class, 'registration-form__consent')]");
+        this.notCorrectCountryMSG = page.locator("//div[contains(@class, 'registration-form__country-error--shown')]")
     };
 
     async goto(MainPage: string, pageTest: string){
@@ -62,6 +66,9 @@ export class SignUp{
     async getRiskWarningText(){
         return await this.riskWarning.textContent();
     };
+    async getRiskWarningText_NX(){
+        return await this.NX_RiskDisclaimer.textContent()
+    }
     async getSighUpTittleText(){
         return await this.sighUpTittle.textContent();
     };
@@ -182,4 +189,38 @@ export class SignUp{
             },
         });
         });}
+
+    async getNotCoorectMsgText(){
+        await this.page.waitForTimeout(500)
+        return await this.notCorrectCountryMSG.textContent()
+    }
+    async inputCountry(country: string){
+        await this.country.click();
+        await this.country.pressSequentially(country);
+        await this.country.press('Enter')
+        await this.page.waitForTimeout(1000)
+    }
+
+    async openDocument(documentName: string):Promise<Page>{
+        let doc = await this.page.locator(`//a[text()='${documentName}']`).first()
+        await doc.scrollIntoViewIfNeeded();
+        const [newPage] = await Promise.all([
+            this.page.context().waitForEvent('page'),
+            doc.click()
+        ])
+        await newPage.waitForLoadState('load')
+        return newPage
+    }
+    async checkUrl(){
+        await this.page.waitForTimeout(500)
+        return await this.page.url()
+    }
+    async switchBack(){
+        await this.page.bringToFront()
+        await this.page.waitForTimeout(750)
+    }
+    async closeTab(){
+        await this.page.close()
+    }
 }
+
