@@ -21,4 +21,7 @@ export class getLocalization{
         let elements = elementToGet.split(".")
         return await this.jsonObj[elements[0]][elements[1]][elements[2]]
     }
+    async getLandingPage(regulation:string, type:string, elementToGet: string, params:string){
+        return await this.jsonObj[regulation][type][elementToGet][params]
+    }
 }

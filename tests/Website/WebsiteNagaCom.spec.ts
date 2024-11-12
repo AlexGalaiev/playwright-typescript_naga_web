@@ -2,6 +2,7 @@ import { expect, BrowserContext, Locator} from "@playwright/test";
 import { NagaCom } from "../../pageObjects/Website/NagaCom";
 import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText";
+import { title } from "process";
 
 test.describe('Naga.com website. Redirect from website to platform', async()=>{
     
@@ -78,7 +79,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         {testRailId: '@25228', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/ae',  redirectTo: 'https://nagamarkets.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
-        test.fixme(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, {tag: ['@prodSanity', '@website-naga.com']},async({proxyPage}, testInfo)=>{
+        test.fixme(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, {tag: ['@prodSanity', '@website-naga.com']} ,async({proxyPage}, testInfo)=>{
             await testInfo.setTimeout(testInfo.timeout + 10000);
             let website = new NagaCom(proxyPage)
             let localization = new getLocalization('/pageObjects/localization/Website_NagaCom.json')
@@ -150,13 +151,14 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
         regulation: string;
         languages: string[];
         testRailId: string;
+        numberOfLanguages: number;
     }
     const languageParameters: languageTypes[] = [
-        {testRailId: '@25197', regulation: 'eu', languages: ['English (Europe)', 'Deutsch', 'Italiano', 'Español', 'Polski', 'Čeština', 'Nederlands', 'Português']},
-        {testRailId: '@25196', regulation: 'en', languages: ['English (Global)', 'Español (Latam)', 'Português', 'العربية', 'Bahasa Indonesia', '简化字', '繁體中文']},
-        {testRailId: '@25229', regulation: 'ae', languages: ['English (Mena)', 'العربية']}
+        {testRailId: '@25197', regulation: 'eu', numberOfLanguages: 8, languages: ['English (Europe)', 'Deutsch', 'Italiano', 'Español', 'Polski', 'Čeština', 'Nederlands', 'Português']},
+        {testRailId: '@25196', regulation: 'en', numberOfLanguages: 7, languages: ['English (Global)', 'Español (Latam)', 'Português', 'العربية', 'Bahasa Indonesia', '简化字', '繁體中文']},
+        {testRailId: '@25229', regulation: 'ae', numberOfLanguages: 2, languages: ['English (Mena)', 'العربية']}
     ]
-    for(const{testRailId, regulation, languages}of languageParameters){
+    for(const{testRailId, regulation, languages,numberOfLanguages}of languageParameters){
         test(`${testRailId} Check available languages on ${regulation}`,{tag: ['@prodSanity', '@website-naga.com']}, async({page})=>{
             let website = new NagaCom(page)
             await test.step(`Open naga.com/${regulation} website`, async()=>{
@@ -166,7 +168,9 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
                 await website.openLanguages()
                 for(let index in languages){
                     expect(await website.checkVisibileLanguage(languages[index])).toBeTruthy()
-                }})})
+                }
+                expect(await website.getNumberOfLanguages()).toEqual(numberOfLanguages)
+            })})
     }
 
     type translations = {
@@ -308,6 +312,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
             })})
     }
     
+    
     const EuFooterCryptoParams: footerTypes[] = [
         {testRailId: '@25205', type: 'crypto'},
     ]
@@ -443,7 +448,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId:'@25237', regulation:'eu', networks: new Map<string, string>([['facebook','nagamarketsofficial'],['instagram','nagaeuofficial'],['youtube','@NAGAEurope'],['linkedin','nagainvesting']])},
         {testRailId:'@25238', regulation:'en', networks: new Map<string, string>([['facebook','nagacapitalofficial'],['instagram','nagacomofficial'],['youtube','@NAGAinvesting'],['twitter','nagacapitalcom']])},
         {testRailId:'@25239', regulation:'za', networks: new Map<string, string>([['facebook', 'NAGA.S.Africa'], ['instagram', 'capex_za']])},
-        {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'nagamena'], ['facebook', 'NAGA.ADGM'],['instagram', 'naga_adgm'],['twitter', 'CapexMena'],['twitter', 'CapexMena'],['tiktok','@naga_mena'],['linkedin','naga-mena']])},
+        {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'nagamena'], ['facebook', 'NAGA.ADGM'],['instagram', 'naga_adgm'],['twitter', 'CapexMena'],['tiktok','@naga_mena'],['linkedin','naga-mena']])},
     ]
     for(const{testRailId, regulation, networks}of socialParamsZA){
         test(`${testRailId} Sochial networks. ${regulation} regulation`,{tag: '@website-naga.com'},async({page}, testInfo)=>{
@@ -460,40 +465,6 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
                     await website.switchToPreviousTab()
                 }})})
     }})
-
-    test.describe('Naga.com website. Legal documents', async()=>{
-   
-    type pdfTypes = {
-        testRailId: string,
-        type: string,
-        platform: string,
-        documents: string[],
-        regulation: string,
-    }
-
-    const pdfParams: pdfTypes[] = [
-        {testRailId: "@25218", type:'trade',regulation: 'EU', platform:'https://naga.com/eu/legal-documentation', documents: ["AML and Account Verification Policy", 'Client Agreement', 'Client Categorization Policy','Cost and Charges Policy','Privacy Policy']},
-        {testRailId: "@25217", type:'Trade',regulation: 'EN', platform:'https://naga.com/en/legal-documentation', documents: ["Client Agreement", 'Privacy Policy','Cost and Charges Policy','FATCA']},
-        {testRailId: "@25225", type:'Trade',regulation: 'ZA', platform:'https://naga.com/za/legal-documentation', documents: ["Privacy Policy", 'Risk Disclosure and Warning Notice','Terms & Conditions']},
-        {testRailId: "@25233", type:'Trade',regulation: 'AE', platform:'https://naga.com/ae/legal-documentation', documents: ["Terms & Conditions", 'Disclaimer','W-8 BEN Form', 'Privacy Policy']}
-    ]
-    for(const{testRailId, type, platform, documents, regulation}of pdfParams){
-        test(`${testRailId} Check legal documents on ${type} page. Base url ${platform}`,{tag: '@website-naga.com'}, async({page}, testInfo)=>{
-            await testInfo.setTimeout(testInfo.timeout + 40000);
-            let website = new NagaCom(page);
-            await test.step(`Open ${platform}`, async()=>{
-                await website.open(platform)
-            })
-            await test.step('Check documents in popup', async()=>{
-                for(let index in documents){
-                    await website.openLegalDocument(documents[index])
-                    expect(await website.getPopupHeader()).toEqual(documents[index])
-                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
-                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
-                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
-                    await website.closePopup()
-                }})})
-    }
 
     type headerTypes = {
         type: string;
@@ -528,5 +499,74 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
                 expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
             })})
         }
+    test.describe('Naga.com website. Legal documents', async()=>{
+   
+    type pdfTypes = {
+        testRailId: string,
+        type: string,
+        platform: string,
+        documents: string[],
+        regulation: string,
+    }
+
+    const pdfParams: pdfTypes[] = [
+        {testRailId: "@25218", type:'trade',regulation: 'EU', platform:'https://naga.com/eu/legal-documentation', documents: ["AML and Account Verification Policy", 'Client Agreement', 'Client Categorization Policy','Cost and Charges Policy','Privacy Policy']},
+        {testRailId: "@25217", type:'Trade',regulation: 'EN', platform:'https://naga.com/en/legal-documentation', documents: ["Client Agreement", 'Privacy Policy','Cost and Charges Policy','FATCA']},
+        {testRailId: "@25225", type:'Trade',regulation: 'ZA', platform:'https://naga.com/za/legal-documentation', documents: ["Privacy Policy", 'Risk Disclosure and Warning Notice','Terms & Conditions']},
+        {testRailId: "@25233", type:'Trade',regulation: 'AE', platform:'https://naga.com/ae/legal-documentation', documents: ["Terms & Conditions", 'Disclaimer','W-8 BEN Form', 'Privacy Policy']}
+    ]
+    for(const{testRailId, type, platform, documents, regulation}of pdfParams){
+        test(`${testRailId} Check legal documents on ${type} page. Base url ${platform}`,{tag: '@website-naga.com'}, async({page}, testInfo)=>{
+            await testInfo.setTimeout(testInfo.timeout + 40000);
+            let website = new NagaCom(page);
+            await test.step(`Open ${platform}`, async()=>{
+                await website.open(platform)
+            })
+            await test.step('Check documents in popup', async()=>{
+                for(let index in documents){
+                    await website.openLegalDocument(documents[index])
+                    expect(await website.getPopupHeader()).toEqual(documents[index])
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
+                    await website.closePopup()
+                }})})
+    }
+
+    test.describe('Naga.com website. Main page tests', async()=>{
+        type mainPage = {
+            testRailId: string;
+            regulation: string;
+            landingPages: string[];
+            type: string;
+        }
+        const mainPageParams: mainPage[] = [
+            {testRailId:'@25249', regulation:'en', type:'Trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'money']},
+            {testRailId:'@25249', regulation:'en', type:'Invest', landingPages:['miketyson', 'trading', 'social', 'money']},
+            {testRailId:'@25250', regulation:'eu', type:'trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'money']},
+            {testRailId:'@25250', regulation:'eu', type:'invest', landingPages:['miketyson', 'trading', 'social', 'money']},
+            {testRailId:'@25250', regulation:'eu', type:'crypto', landingPages:['miketyson', 'trading', 'social', 'money']},
+            {testRailId:'@25251', regulation:'za', type:'Trade', landingPages:['miketyson', 'trading', 'bvb', 'money']},
+            {testRailId:'@25252', regulation:'ae', type:'Trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'money']},
+            {testRailId:'@25252', regulation:'ae', type:'Invest', landingPages:['miketyson', 'trading', 'social', 'money']},
+        ]
+        for(const{testRailId, regulation, type, landingPages}of mainPageParams){
+            test(`${testRailId} Landing pages on ${regulation}/ ${type}`, {tag: ['@prodSanity', '@website-naga.com']},async({page}, testInfo)=>{
+                let website = new NagaCom(page);
+                await testInfo.setTimeout(testInfo.timeout + 30000);
+                let localization = new getLocalization('/pageObjects/localization/Website_Naga.com_landingPages.json')
+                await test.step(`Open naga.com/${regulation} ->${type} page`, async()=>{
+                    await website.open(`https://naga.com/${regulation}`)
+                    await website.checkTradeInstrument(type)
+                })
+                await test.step(`Check visible langing pages`, async()=>{
+                    for(let index in landingPages){
+                        const[mainCardName, btnLink] = await website.openLandingPageTab(landingPages[index])
+                        expect(mainCardName).toEqual(await localization.getLandingPage(regulation, type, landingPages[index], 'title'))
+                        expect(btnLink).toContain(await localization.getLandingPage(regulation, type, landingPages[index], 'btnRedirect'))
+                    }})})
+        }
+
+    })
 })
 

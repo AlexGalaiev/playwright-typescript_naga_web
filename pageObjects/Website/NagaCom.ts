@@ -204,4 +204,24 @@ export class NagaCom{
             await this.page.waitForTimeout(250)
         }else{}
     }
+    async getNumberOfLanguages(){
+        return await this.page.locator("//a[contains(@id, 'language_menu_item')]").count()
+    };
+    async getNumberOfLandPages(){
+        return await this.page.locator("//div[contains(@class, 'mantine-Tabs-panel')]").count()
+    }
+    async openLandingPageTab(landingPage: string){
+        let minicard = await this.page.locator(`//button[contains(@id, '${landingPage}')]`)
+        if(await minicard.isVisible()){
+            await minicard.click()
+            await this.page.waitForTimeout(250)
+            let mainCardText = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//h1 | //div[contains(@id, 'panel-${landingPage}')]//h2`).textContent()
+            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//a`).getAttribute('href')
+            return [mainCardText, btnRedirect]
+        }else{
+            let mainCardText = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//h1 | //div[contains(@id, 'panel-${landingPage}')]//h2`).textContent()
+            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//a`).getAttribute('href')
+            return [mainCardText, btnRedirect]
+        }
+    }
 }

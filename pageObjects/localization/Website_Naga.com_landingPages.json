@@ -1,0 +1,166 @@
+{
+    "en":{
+        "Trade":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"/en/mike"
+            },
+            "trading":{
+                "title":"One app. Everything trading",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "social":{
+                "title":"One app. Everything social",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "bvb":{
+                "title":"Official Partner of Borussia Dortmund",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "money":{
+                "title":"One app. Everything money",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            }
+        },
+        "Invest":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"/en/mike"
+            },
+            "money":{
+                "title":"One app. Everything investing",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "trading":{
+                "title":"Where  investing and social come together",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "social":{
+                "title":"Instantly invest in your favourite stocks",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            }
+        }
+    },
+    "eu":{
+        "trade":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"/eu/mike"
+            },
+            "trading":{
+                "title":"One app. Everything trading",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "social":{
+                "title":"One app. Everything social",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "bvb":{
+                "title":"Official Partner of Borussia Dortmund",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "money":{
+                "title":"One app. Everything money",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            }
+        },
+        "invest":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"/eu/mike"
+            },
+            "money":{
+                "title":"One app. Everything investing",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "trading":{
+                "title":"Where investing and social come together",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "social":{
+                "title":"Instantly invest in your favourite stocks",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            }
+        },
+        "crypto":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"https://app.nagax.com/eu"
+            },
+            "money":{
+                "title":"One app. Everything Crypto",
+                "btnRedirect":"https://app.nagax.com/eu/register?lang=en"
+            },
+            "trading":{
+                "title":"Your multi-chain WEB3 wallet",
+                "btnRedirect":"https://app.nagax.com/eu/register?lang=en"
+            },
+            "social":{
+                "title":"Buy Crypto with Credit Card",
+                "btnRedirect":"https://app.nagax.com/eu/register?lang=en"
+            }
+        }
+    },
+    "za":{
+        "Trade":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "trading":{
+                "title":"One app. Everything trading",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "bvb":{
+                "title":"Official Partner of Borussia Dortmund",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "money":{
+                "title":"One app. Everything money",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            }
+        }
+    },
+    "ae":{
+        "Trade":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"/ae/mike"
+            },
+            "trading":{
+                "title":"One app. Everything trading",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "social":{
+                "title":"One app. Everything social",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "bvb":{
+                "title":"Official Partner of Borussia Dortmund",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "money":{
+                "title":"One app. Everything money",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            }
+        },
+        "Invest":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"/ae/mike"
+            },
+            "money":{
+                "title":"One app. Everything investing",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "trading":{
+                "title":"Where  investing and social come together",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "social":{
+                "title":"Instantly invest in your favourite stocks",
+                "btnRedirect":"https://naga.com/register?lang=en"
+            }
+        }
+    }
+}
