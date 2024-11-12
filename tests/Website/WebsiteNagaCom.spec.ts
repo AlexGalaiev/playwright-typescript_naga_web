@@ -451,7 +451,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'nagamena'], ['facebook', 'NAGA.ADGM'],['instagram', 'naga_adgm'],['twitter', 'CapexMena'],['tiktok','@naga_mena'],['linkedin','naga-mena']])},
     ]
     for(const{testRailId, regulation, networks}of socialParamsZA){
-        test(`${testRailId} Sochial networks. ${regulation} regulation`,{tag: '@website-naga.com'},async({page}, testInfo)=>{
+        test(`${testRailId} Social networks. ${regulation} regulation`,{tag: '@website-naga.com'},async({page}, testInfo)=>{
             let website = new NagaCom(page);
             await testInfo.setTimeout(testInfo.timeout + 40000);
             await test.step(`Open naga.com/${regulation}`, async()=>{
