@@ -99,6 +99,24 @@
                 "title":"Buy Crypto with Credit Card",
                 "btnRedirect":"https://app.nagax.com/eu/register?lang=en"
             }
+        },
+        "pay":{
+            "miketyson":{
+                "title":"Your go-to app for Everything Money",
+                "btnRedirect":"Get your card"
+            },
+            "money":{
+                "title":"One app. Everything money",
+                "btnRedirect":"Get your card"
+            },
+            "trading":{
+                "title":"A Visa Card with Bitcoin cashback",
+                "btnRedirect":"Get your card"
+            },
+            "social":{
+                "title":"Faster, more secure payments",
+                "btnRedirect":"Get your card"
+            }
         }
     },
     "za":{

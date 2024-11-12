@@ -447,13 +447,13 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
     const socialParamsZA: socialNetworksZA[] = [
         {testRailId:'@25237', regulation:'eu', networks: new Map<string, string>([['facebook','nagamarketsofficial'],['instagram','nagaeuofficial'],['youtube','@NAGAEurope'],['linkedin','nagainvesting']])},
         {testRailId:'@25238', regulation:'en', networks: new Map<string, string>([['facebook','nagacapitalofficial'],['instagram','nagacomofficial'],['youtube','@NAGAinvesting'],['twitter','nagacapitalcom']])},
-        {testRailId:'@25239', regulation:'za', networks: new Map<string, string>([['facebook', 'NAGA.S.Africa'], ['instagram', 'capex_za']])},
+        {testRailId:'@25239', regulation:'za', networks: new Map<string, string>([['facebook', 'NAGA.S.Africa'], ['instagram', 'naga.s.africa']])},
         {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'nagamena'], ['facebook', 'NAGA.ADGM'],['instagram', 'naga_adgm'],['twitter', 'CapexMena'],['tiktok','@naga_mena'],['linkedin','naga-mena']])},
     ]
     for(const{testRailId, regulation, networks}of socialParamsZA){
         test(`${testRailId} Sochial networks. ${regulation} regulation`,{tag: '@website-naga.com'},async({page}, testInfo)=>{
             let website = new NagaCom(page);
-            await testInfo.setTimeout(testInfo.timeout + 20000);
+            await testInfo.setTimeout(testInfo.timeout + 40000);
             await test.step(`Open naga.com/${regulation}`, async()=>{
                 await website.open(`https://naga.com/${regulation}`)
             })
@@ -567,6 +567,23 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
                     }})})
         }
 
-    })
+        const mainPageLandings: mainPage[] = [
+            {testRailId:'@25250', regulation:'eu', type:'pay', landingPages:['miketyson', 'trading', 'social', 'money']}
+        ]
+        for(const{testRailId, regulation, type, landingPages}of mainPageLandings){
+            test(`${testRailId} Landing page on ${type} page`,{tag: ['@prodSanity', '@website-naga.com']},async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization('/pageObjects/localization/Website_Naga.com_landingPages.json')
+            await test.step(`Open naga.com/${regulation}=>${type} page`, async()=>{
+                await website.open(`https://naga.com/${regulation}`)
+                await website.checkTradeInstrument('pay')
+            })
+            await test.step('Check text and name of the btn', async()=>{
+                for(let index in landingPages){
+                    const[mainCardName, btnName] = await website.openLandingPagesOnPay(landingPages[index])
+                    expect(mainCardName).toEqual(await localization.getLandingPage(regulation, type, landingPages[index], 'title'))
+                    expect(btnName).toContain(await localization.getLandingPage(regulation, type, landingPages[index], 'btnRedirect'))
+                }})})
+    }})
 })
 
