@@ -151,6 +151,7 @@ export class NagaCom{
         let langTitle = await this.languageSwitcher.getAttribute('title') || ''
         if(langTitle.includes(language)){}else{
             await this.languageSwitcher.click();
+            await this.page.waitForTimeout(200)
             await this.page.waitForSelector("//div[contains(@class, 'LanguageSelector_menuBody')]", {state:"visible"})
             await this.page.locator("//a[contains(@id, 'language_menu_item')]", {hasText:language}).click()
         }

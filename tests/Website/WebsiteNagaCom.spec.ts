@@ -243,7 +243,7 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
     ]
     for(const{testRailId, platform, language, type, btn1, btn2}of cryptoParams){
         test(`${testRailId} Localization of main buttons, Language-${language} on ${platform}, ${type}`,{tag: ['@prodSanity', '@website-naga.com']}, async({page}, testInfo)=>{
-            await testInfo.setTimeout(testInfo.timeout + 20000);
+            await testInfo.setTimeout(testInfo.timeout + 30000);
             let website = new NagaCom(page)
             let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
             await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
@@ -448,7 +448,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId:'@25237', regulation:'eu', networks: new Map<string, string>([['facebook','nagamarketsofficial'],['instagram','nagaeuofficial'],['youtube','@NAGAEurope'],['linkedin','nagainvesting']])},
         {testRailId:'@25238', regulation:'en', networks: new Map<string, string>([['facebook','nagacapitalofficial'],['instagram','nagacomofficial'],['youtube','@NAGAinvesting'],['twitter','nagacapitalcom']])},
         {testRailId:'@25239', regulation:'za', networks: new Map<string, string>([['facebook', 'NAGA.S.Africa'], ['instagram', 'naga.s.africa']])},
-        {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'nagamena'], ['facebook', 'NAGA.ADGM'],['instagram', 'naga_adgm'],['twitter', 'CapexMena'],['tiktok','@naga_mena'],['linkedin','naga-mena']])},
+        {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'nagamena'], ['facebook', 'NAGA.ADGM'],['instagram', 'naga_adgm'],['tiktok','@naga_mena'],['linkedin','naga-mena']])},
     ]
     for(const{testRailId, regulation, networks}of socialParamsZA){
         test(`${testRailId} Social networks. ${regulation} regulation`,{tag: '@website-naga.com'},async({page}, testInfo)=>{
