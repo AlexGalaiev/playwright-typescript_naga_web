@@ -9,6 +9,7 @@ export class PersonalInformation{
     readonly phone: Locator;
     readonly countryCode: Locator;
     readonly verifyBySMS: Locator;
+    readonly submitBtn: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -18,6 +19,7 @@ export class PersonalInformation{
         this.phone = page.locator("[name='phone']")
         this.verifyBySMS = page.locator("//button[contains(text(), 'SMS')]")
         this.countryCode = page.locator("[data-testid='naga-dropdown-input']")
+        this.submitBtn = page.locator("//button[text()='Proceed']")
     };
 
     async fillPersonalInformation(){
@@ -37,5 +39,18 @@ export class PersonalInformation{
         await this.phone.pressSequentially("603039647")
         await this.page.waitForTimeout(750);
         await this.verifyBySMS.click();
+    }
+    async fillCryptoPersonalInfo(){
+        let randomUser = new RandomUser();
+        await this.page.waitForTimeout(1000)
+        await this.firstName.pressSequentially('TestN')
+        await this.page.waitForTimeout(100)
+        await this.lastName.pressSequentially('TestSN')
+        await this.page.waitForTimeout(500)
+        await this.userName.pressSequentially(randomUser.randomUserName())
+        await this.page.waitForTimeout(500)
+        await this.phone.pressSequentially('603039647')
+        await this.page.waitForTimeout(500)
+        await this.submitBtn.click();
     }
 }

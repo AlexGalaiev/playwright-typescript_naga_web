@@ -112,4 +112,4 @@ test.describe("Sign up page.", async()=>{
                 }})})
     }
 
-    })
+})

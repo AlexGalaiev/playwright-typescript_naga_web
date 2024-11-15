@@ -84,7 +84,7 @@ export class MainPage{
         await this.UpgradeButton.click()
     };
     async getVerifyBannerDisclaimerText(){
-        await this.page.waitForSelector('".user-status-box__desc-text')
+        await this.page.waitForSelector(".user-status-box__desc-text", {state:'visible'})
         return await this.verifyBannerDisclaimer.textContent()
     };
     async getVerifyBannerMiddleScore(){
@@ -146,5 +146,8 @@ export class MainPage{
         await element.scrollIntoViewIfNeeded();
         await element.click()
         await this.page.waitForTimeout(500)
+    }
+    async clickVerifyBtn_NagaX(){
+        await this.page.locator("//span[text()='Verify now']").click()
     }
 }

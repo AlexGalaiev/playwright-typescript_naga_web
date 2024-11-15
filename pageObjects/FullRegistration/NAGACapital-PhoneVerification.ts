@@ -31,11 +31,10 @@ export class PhoneVerification{
     };
 
     async insertVerificationCode(){
-        await this.page.waitForTimeout(2000);
-        // await this.verificationCode.first().waitFor({timeout:2000})
-        for(const otpCode of await this.verificationCode.all()){
-            await otpCode.pressSequentially('1');
-        }
+        await this.insertCode(0, '1')
+        await this.insertCode(1, '1')
+        await this.insertCode(2, '1')
+        await this.insertCode(3, '1')
         await this.submitBtn.click();
         await this.page.waitForTimeout(10000)
     };
@@ -47,11 +46,27 @@ export class PhoneVerification{
             await otpCode.pressSequentially('1');
         }
         await this.page.waitForTimeout(500)
-        await this.page.locator("//footer//button[text()='Verify']").click();
+        await this.page.locator("//footer//button[text()='Verify']").click();  
+    }
+    async insertVerificationCode_Crypto(){
+        await this.insertCode(0, '1')
+        await this.insertCode(1, '1')
+        await this.insertCode(2, '1')
+        await this.insertCode(3, '1')
+        await this.page.locator("//button[@type='submit']").click();
+    }
+
+    async waitPersonalDetails(){
         await this.page.waitForSelector("//p[text()='Personal Details']", {state:'visible', timeout:25000})
     }
     async acceptPhoneNumber(){
         await this.page.locator("//button[contains(@class, 'kyc-live-account_submitButton')]").click()
-        await this.page.waitForSelector("//div[contains(@class, 'phone-verification-modal__body__kyc')]")
+        await this.page.waitForSelector("//div[contains(@class, 'phone-verification-modal__body__kyc')]", {state:'visible'})
+    }
+    async insertCode(index: number, code: string){
+        await this.page.waitForTimeout(500)
+        let field = await this.verificationCode.nth(index)
+        await field.pressSequentially(code)
+        await this.page.waitForTimeout(500)
     }
 }

@@ -26,6 +26,7 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
       await kycStart.clickStartVerificationBtn();
       await verification.acceptPhoneNumber();
       await verification.MN_insertVerificationCode();
+      await verification.waitPersonalDetails();
     });
   }
 );

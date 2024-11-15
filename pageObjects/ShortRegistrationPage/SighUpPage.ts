@@ -14,12 +14,14 @@ export class SignUp{
     readonly NM_checkbox_yearsConfirmeation: Locator;
     readonly NX_RiskDisclaimer: Locator;
     notCorrectCountryMSG: Locator;
+    countryCrypto: Locator;
 
     constructor(page: Page){
         this.page = page;
         this.email = page.locator("[name='email']");
         this.password = page.locator("[name='password']");
         this.country = page.locator("[data-testid='naga-dropdown-input']");
+        this.countryCrypto = page.locator("//div[contains(@class, 'dropdown-select__custom__control')]")
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
         this.riskWarning = page.locator("//div[contains(@class, 'registration-form__risk-warning')]");
         this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
@@ -56,6 +58,17 @@ export class SignUp{
         return randomEmail;
     }
 
+    async createCryptoUser(country: string){
+        let user = new RandomUser();
+        let randomEmail = user.getRandomUserEmail();
+        await this.email.pressSequentially(randomEmail);
+        await this.password.pressSequentially("Test123!")
+        await this.checkCountry_Crypto(country)
+        await this.page.locator("//label[contains(@class, 'registration-form__consent-checkbox')]").click()
+        await this.submitBtn.click()
+        await this.page.waitForSelector('.complete-your-profile-modal__panel', {state:'visible'})
+    }
+
     async checkCountry(Country: string){
         if(await this.country.textContent() !== Country){
             await this.country.click();
@@ -63,6 +76,12 @@ export class SignUp{
             await this.country.press('Enter')
         } else {}
     };
+    async checkCountry_Crypto(country: string){
+        await this.countryCrypto.click();
+        await this.countryCrypto.pressSequentially(country);
+        await this.page.waitForTimeout(500)
+        await this.countryCrypto.press('Enter')
+    }
     async getRiskWarningText(){
         return await this.riskWarning.textContent();
     };
@@ -221,6 +240,55 @@ export class SignUp{
     }
     async closeTab(){
         await this.page.close()
+    }
+
+    async createLeadUserApiCrypto(){
+        let randomEmail = await new RandomUser().getRandomUserEmail(); 
+        await this.addCryptoUser(randomEmail, await this.randomUserName())
+        return randomEmail
+    }
+
+    async addCryptoUser(email: string, userName: string){
+        let firstName = await fakerEN.person.firstName()
+        let lastName = await fakerEN.person.lastName()
+        const axios = require('axios');
+        let data = JSON.stringify({
+        "p_email": email,
+        "p_user_name": userName,
+        "p_plain_password": "Test123!",
+        "p_tel": "+387603039647",
+        "is_flexible": true,
+        "p_app_language": "en",
+        "p_country": "BA",
+        "p_first_name":firstName,
+        "p_last_name": lastName,
+        "p_webinar": "nagax",
+        "personal_data_processing_and_communication_accepted":true,
+        "site": {
+            "type": "FACEBOOK"
+        }
+        });
+        
+        let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://crypto-api.nagax.com/api/v1/naga/user/registration/register',
+        headers: {
+            'accept-version': '2.*',
+            'platform': 'web-trader',
+            'Content-Type': 'application/json',
+        },
+        data : data
+        };
+        
+        axios.request(config)
+        .then((response) => {
+        console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+        console.log(error);
+        });
+        await this.page.waitForTimeout(250)
     }
 }
 

@@ -125,6 +125,7 @@ test.describe('Naga Markets - Trading accounts', async()=>{
             await kycStart.clickStartVerificationBtn();
             await verification.acceptPhoneNumber();
             await verification.MN_insertVerificationCode();
+            await verification.waitPersonalDetails();
             await quiz.fill_KYC(KYC_Advance);
             expect(await KYC_FinalStep.getUsersScorring()).toEqual("Advanced");
             await KYC_FinalStep.clickFundAccount()
