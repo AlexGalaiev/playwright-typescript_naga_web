@@ -117,6 +117,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
             let website = new NagaCom(page)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
+                await website.checkAndCloseBullonPopup()
                 await website.checkTradeInstrument(type)
             })
             await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
@@ -561,7 +562,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
                 })
                 await test.step(`Check visible langing pages`, async()=>{
                     for(let index in landingPages){
-                        await website.closePush()
+                        await website.checkAndCloseBullonPopup()
                         const[mainCardName, btnLink] = await website.openLandingPageTab(landingPages[index])
                         expect(mainCardName).toEqual(await localization.getLandingPage(regulation, type, landingPages[index], 'title'))
                         expect(btnLink).toContain(await localization.getLandingPage(regulation, type, landingPages[index], 'btnRedirect'))
