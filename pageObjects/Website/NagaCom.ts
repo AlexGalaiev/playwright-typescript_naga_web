@@ -217,11 +217,11 @@ export class NagaCom{
             await minicard.click()
             await this.page.waitForTimeout(250)
             let mainCardText = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//h1 | //div[contains(@id, 'panel-${landingPage}')]//h2`).textContent()
-            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//a`).getAttribute('href')
+            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//a`).first().getAttribute('href')
             return [mainCardText, btnRedirect]
         }else{
             let mainCardText = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//h1 | //div[contains(@id, 'panel-${landingPage}')]//h2`).textContent()
-            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//a`).getAttribute('href')
+            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//a`).first().getAttribute('href')
             return [mainCardText, btnRedirect]
         }
     }
@@ -238,5 +238,13 @@ export class NagaCom{
             let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//button`).textContent()
             return [mainCardText, btnRedirect]
         }
+    }
+
+    async closePush(){
+        let pushPopup = await this.page.locator("//div[contains(@class, 'mantine-Paper-root')]")
+        if(await pushPopup.isVisible()){
+            await pushPopup.locator("//button[contains(@class, 'mantine-CloseButton-root')]").click()
+        }
+        await this.page.waitForTimeout(500)
     }
 }
