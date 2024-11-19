@@ -67,12 +67,12 @@ jobs:
     - name: Determine tags
       id: determine_tags
       run: |
-      echo "Schedule: ${{ github.event.schedule }}"
-      case ${{ github.event.schedule }} in
-        "11 13 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
-        "20 13 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
-        *) echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
-      esac   
+              echo "Schedule: ${{ github.event.schedule }}"
+              case "${{ github.event.schedule }}" in
+                "11 13 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
+                "20 13 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
+                *) echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
+              esac
     - name: Run Playwright tests
       id: playwright_tests
       run: |
