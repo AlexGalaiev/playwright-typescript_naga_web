@@ -6,7 +6,7 @@ on:
     inputs:
       tag:
         description: 'Choose functionality to test'
-        default: "@all"
+        default: "@prodSanity"
         type: choice
         required: false
         options:
@@ -21,7 +21,6 @@ on:
           - "settings"
           - "support"
           - "secondAccount"
-          - "all"
           - "prodSanity"
           - "website-naga.com"
           - "debug"
@@ -29,8 +28,8 @@ on:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string
   schedule:
-    - cron: '05 14 * * 0-6'
-    - cron: '10 14 * * 0-6'
+    - cron: '16 14 * * 0-6'
+    - cron: '20 14 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -69,8 +68,8 @@ jobs:
       run: |
               echo "Schedule: ${{ github.event.schedule }}"
               case "${{ github.event.schedule }}" in
-                "05 14 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
-                "10 14 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
+                "16 14 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
+                "20 14 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
                 *) echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
@@ -80,18 +79,12 @@ jobs:
           if [ -z "$TAGS" ]; then
           TAGS=@${{ inputs.tag }}
           fi
-          if [ "$ENV" = "smoke" ] && [ "$TAGS" = "@all" ]; then
-            echo "Running $ENV tests for all tags"
-            ENV="$ENV" TAGS="$TAGS" npx playwright test --grep @smoke --project=${{ github.head_ref || github.ref_name }} --workers=1;
-          elif [ "$ENV" = "smoke" ] && [ "$TAGS" != "@all" ]; then 
-            echo "Running $ENV tests with tag $TAGS"
-            ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "@smoke.*$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
-          elif [ "$ENV" = "production" ] && [ "$TAGS" != "@all" ]; then
+          if [ "$ENV" = "production" ]; then
             echo "Running $ENV tests with tag $TAGS"
             ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           elif [ "$GITHUB_EVENT_NAME" == "schedule" ]; then
             echo "Running $ENV tests with tag $TAGS"
-            ENV="$ENV" TAGS="$TAGS" npx playwright test --grep @prodSanity --project=${{ github.head_ref || github.ref_name }} --workers=1;
+            ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           else 
             echo "Running all tests"
             ENV="$ENV" TAGS="$TAGS" npx playwright test --project=${{ github.head_ref || github.ref_name }} --workers=1;
@@ -139,7 +132,7 @@ jobs:
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
         status: ${{ steps.playwright_tests.outcome }}  
-        title: ${{ steps.set_outcome_title.outputs.title }} ${{ github.head_ref || github.ref_name }} , TAG = ${{ inputs.tag }}
+        title: ${{ steps.set_outcome_title.outputs.title }} ${{ github.head_ref || github.ref_name }} , ${{ inputs.tag }}
         message: >-
             View report [${{ env.deployment_url }}](${{ env.deployment_url }})
       env:
