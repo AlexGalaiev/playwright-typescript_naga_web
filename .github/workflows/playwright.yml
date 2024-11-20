@@ -28,8 +28,8 @@ on:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string
   schedule:
-    - cron: '30 4 * * 0-6'
-    - cron: '40 5 * * 0-6'
+    - cron: '41 10 * * 0-6'
+    - cron: '50 10 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -68,8 +68,8 @@ jobs:
       run: |
               echo "Schedule: ${{ github.event.schedule }}"
               case "${{ github.event.schedule }}" in
-                "30 4 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
-                "40 5 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
+                "41 10 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
+                "50 10 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
