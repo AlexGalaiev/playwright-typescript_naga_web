@@ -70,7 +70,6 @@ jobs:
               case "${{ github.event.schedule }}" in
                 "30 4 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
                 "40 5 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
-                *) echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
