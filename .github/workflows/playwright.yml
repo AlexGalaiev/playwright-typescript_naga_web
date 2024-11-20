@@ -132,7 +132,7 @@ jobs:
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
         status: ${{ steps.playwright_tests.outcome }}  
-        title: ${{ steps.set_outcome_title.outputs.title }} ${{ github.head_ref || github.ref_name }} , ${{ inputs.tag }}
+        title: ${{ steps.set_outcome_title.outputs.title }} ${{ github.head_ref || github.ref_name }} ${{ inputs.tag }}
         message: >-
             View report [${{ env.deployment_url }}](${{ env.deployment_url }})
       env:
