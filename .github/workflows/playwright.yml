@@ -79,6 +79,8 @@ jobs:
           if [ -z "$TAGS" ]; then
           TAGS=@${{ inputs.tag }}
           fi
+          echo "tags $TAGS"
+          echo "branch $ENV"
            if [ "$ENV" = "production" ]; then
             echo "Running $ENV tests for $TAGS"
             ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
