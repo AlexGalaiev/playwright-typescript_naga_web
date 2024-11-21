@@ -117,8 +117,8 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
             let website = new NagaCom(page)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
-                await website.checkAndCloseBullonPopup()
                 await website.checkTradeInstrument(type)
+                await website.checkAndCloseBullonPopup()
             })
             await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
                 await website.searchInstrument(nameOfInstrument, categoryName);
@@ -600,7 +600,8 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId:'@25257', regulation:'za', tabsName:['Forex','Crypto','Indices','Stock CFDs','Commodities', 'Futures','ETFs']}
     ]
     for(const{testRailId, regulation, tabsName}of tabParams){
-        test(`${testRailId} Check Pricing and Markets hours page.${regulation}`,{tag:'@website-naga.com'}, async({page})=>{
+        test(`${testRailId} Check Pricing and Markets hours page.${regulation}`,{tag:'@website-naga.com'}, async({page},testInfo)=>{
+            await testInfo.setTimeout(testInfo.timeout + 10000);
             let website = new NagaCom(page)
             await test.step(`Open website naga.com/${regulation}`, async()=>{
                 await website.open(`https://naga.com/${regulation}/trading/hours-and-fees`)
@@ -629,8 +630,9 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId:'@25257', regulation:'za', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
     ]
     for(const{testRailId, regulation, tabsName}of otherFeeParams){
-        test(`${testRailId} Check other Fees tab. ${regulation} tab`,{tag:'@website-naga.com'},async({page})=>{
+        test(`${testRailId} Check other Fees tab. ${regulation} tab`,{tag:'@website-naga.com'},async({page}, testInfo)=>{
             let website = new NagaCom(page)
+            await testInfo.setTimeout(testInfo.timeout + 10000);
             await test.step(`Open website naga.com/${regulation}`, async()=>{
                 await website.open(`https://naga.com/${regulation}/trading/hours-and-fees`)
             })
