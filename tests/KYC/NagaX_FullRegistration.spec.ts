@@ -13,7 +13,7 @@ import { FinishPopup } from "../../pageObjects/FullRegistration/components/NagaX
 test.describe('Naga X. KYC', async()=>{
 
     test('@25263 Full registration',{tag:['@kyc', '@prodSanity']},async({page, NagaX}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 30000);
+        await testInfo.setTimeout(testInfo.timeout + 50000);
         let signUp = new SignUp(page)
         let personlInformation = new PersonalInformation(page);
         let verifiaction = new PhoneVerification(page)

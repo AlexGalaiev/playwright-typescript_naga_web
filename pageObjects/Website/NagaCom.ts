@@ -239,12 +239,37 @@ export class NagaCom{
             return [mainCardText, btnRedirect]
         }
     }
-
     async checkAndCloseBullonPopup(){
+        await this.page.waitForTimeout(1500)
         let pushPopup = await this.page.locator("//div[contains(@class, 'mantine-Paper-root')]")
         if(await pushPopup.isVisible()){
             await pushPopup.locator("//button[contains(@class, 'mantine-CloseButton-root')]").click()
         }
         await this.page.waitForTimeout(500)
+    }
+    async openMarketAndHoursTab(tabName: string){
+        await this.page.locator(`//button[@id='${tabName}']`).click()
+        await this.page.waitForTimeout(1000)
+    }
+    async scrollToMarketsAndTradingFees(){
+        await this.page.locator("//div[text()='Market Hours and Trading Fees']").scrollIntoViewIfNeeded();
+    }
+    async scrollToOtherFees(){
+        await this.page.locator("//div[text()='Other Fees']").scrollIntoViewIfNeeded()
+    }
+    async getAllAvailableInstruments(){
+        return await this.page.locator('//table//tbody//div[@id]').allTextContents()
+    }
+    async getTableData(instrument: string, tableIndex: string){
+        let tabledata = await this.page.locator(`//div[@id='${instrument}']//..//..//..//..//td[${tableIndex}]`)
+        return await tabledata.textContent();
+    }
+    async getOtherFeeAvailabelInstruments(){
+        let table = await this.page.locator("//div[text()='Payment method']//..//..//..//following-sibling::tbody//tr[contains(@class, '0')]")
+        return await table.locator('//tr//td[1]').allTextContents()
+    }
+    async getDataForInstrument_OtherFee(instrumentName: string, dataIndex: string){
+        let instrument = await this.page.locator(`//div[text()='${instrumentName}']`).first()
+        return await instrument.locator(`//..//..//td[${dataIndex}]`).textContent()
     }
 }

@@ -586,6 +586,65 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
                     expect(mainCardName).toEqual(await localization.getLandingPage(regulation, type, landingPages[index], 'title'))
                     expect(btnName).toContain(await localization.getLandingPage(regulation, type, landingPages[index], 'btnRedirect'))
                 }})})
-    }})
-})
+    }
 
+    type tabTypes = {
+        testRailId: string,
+        regulation: string,
+        tabsName: string[],
+    }
+    const tabParams: tabTypes[] = [
+        {testRailId:'@25254', regulation:'eu', tabsName:['CFDs on Forex','Crypto CFDs','CFDs on Indices','CFDs on Stocks','Real Stocks','CFDs on Commodities', 'CFDs on Futures','CFDs on ETFs']},
+        {testRailId:'@25255', regulation:'en', tabsName:['Forex','Crypto','Indices','Stock CFDs','Real Stocks','Commodities', 'Futures','ETFs']},
+        {testRailId:'@25256', regulation:'ae', tabsName:['Forex','Indices','Stock CFDs','Real Stocks','Commodities', 'Futures','ETFs']},
+        {testRailId:'@25257', regulation:'za', tabsName:['Forex','Crypto','Indices','Stock CFDs','Commodities', 'Futures','ETFs']}
+    ]
+    for(const{testRailId, regulation, tabsName}of tabParams){
+        test(`${testRailId} Check Pricing and Markets hours page.${regulation}`,{tag:'@website-naga.com'}, async({page})=>{
+            let website = new NagaCom(page)
+            await test.step(`Open website naga.com/${regulation}`, async()=>{
+                await website.open(`https://naga.com/${regulation}/trading/hours-and-fees`)
+            })
+            await test.step('Check that value inside tabs are not empty', async()=>{
+                await website.scrollToMarketsAndTradingFees()
+                for(let index in tabsName){
+                    await website.openMarketAndHoursTab(tabsName[index])
+                    let allInstruments = await website.getAllAvailableInstruments()
+                    for(let index in allInstruments){
+                        expect(await website.getTableData(allInstruments[index], '2')).not.toBeNull()
+                        expect(await website.getTableData(allInstruments[index], '2')).not.toEqual('-')
+                        expect(await website.getTableData(allInstruments[index], '3')).not.toBeNull()
+                        expect(await website.getTableData(allInstruments[index], '3')).not.toEqual('-')
+                        expect(await website.getTableData(allInstruments[index], '4')).not.toBeNull()
+                        expect(await website.getTableData(allInstruments[index], '4')).not.toEqual('-')
+                        expect(await website.getTableData(allInstruments[index], '6')).not.toBeNull()
+                        expect(await website.getTableData(allInstruments[index], '6')).not.toEqual('-')
+                    }}}
+            )})}
+        
+    const otherFeeParams: tabTypes[] = [
+        {testRailId:'@25254', regulation:'eu', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
+        {testRailId:'@25255', regulation:'en', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
+        {testRailId:'@25256', regulation:'ae', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
+        {testRailId:'@25257', regulation:'za', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
+    ]
+    for(const{testRailId, regulation, tabsName}of otherFeeParams){
+        test(`${testRailId} Check other Fees tab. ${regulation} tab`,{tag:'@website-naga.com'},async({page})=>{
+            let website = new NagaCom(page)
+            await test.step(`Open website naga.com/${regulation}`, async()=>{
+                await website.open(`https://naga.com/${regulation}/trading/hours-and-fees`)
+            })
+            await test.step('Check available instruments and tabs', async()=>{
+                await website.scrollToOtherFees();
+                for(let index in tabsName){ 
+                    await website.openMarketAndHoursTab(tabsName[index])
+                    let allInstruments = await website.getOtherFeeAvailabelInstruments();
+                    for(let index in allInstruments){
+                        expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '2')).not.toBeNull()
+                        expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '2')).not.toEqual('-')
+                        expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '3')).not.toBeNull()
+                        expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '3')).not.toEqual('-')
+                    }}
+        })})}
+    })
+})
