@@ -210,6 +210,7 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
             let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
             await test.step(`Open ${platform} and switch to ${language}`, async()=>{
                 await website.open(platform)
+                await website.acceptAllCookies()
                 await website.switchLanguageTo(language);
             })
             await test.step(`Check ${tradeType} page buttons`, async()=>{
@@ -607,6 +608,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
                 await website.open(`https://naga.com/${regulation}/trading/hours-and-fees`)
             })
             await test.step('Check that value inside tabs are not empty', async()=>{
+                await website.acceptAllCookies()
                 await website.scrollToMarketsAndTradingFees()
                 for(let index in tabsName){
                     await website.openMarketAndHoursTab(tabsName[index])

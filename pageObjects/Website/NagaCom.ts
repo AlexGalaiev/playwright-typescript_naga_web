@@ -70,7 +70,6 @@ export class NagaCom{
     async open(url: string){
         await this.page.goto(url);
         await this.page.waitForTimeout(1000)
-        await this.acceptAllCookies()
     }
     async clickBtn(ButtonName:string){
         let elementToClick = await this.page.locator(`//span[text()='${ButtonName}']`).first()
