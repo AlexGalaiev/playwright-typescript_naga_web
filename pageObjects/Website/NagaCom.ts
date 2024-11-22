@@ -70,6 +70,7 @@ export class NagaCom{
     async open(url: string){
         await this.page.goto(url);
         await this.page.waitForTimeout(1000)
+        await this.acceptAllCookies()
     }
     async clickBtn(ButtonName:string){
         let elementToClick = await this.page.locator(`//span[text()='${ButtonName}']`).first()
@@ -271,5 +272,10 @@ export class NagaCom{
     async getDataForInstrument_OtherFee(instrumentName: string, dataIndex: string){
         let instrument = await this.page.locator(`//div[text()='${instrumentName}']`).first()
         return await instrument.locator(`//..//..//td[${dataIndex}]`).textContent()
+    }
+    async acceptAllCookies(){
+        let cookieBtn = await this.page.locator("//button[text()='Accept all cookies']")
+        await cookieBtn.waitFor({timeout: 3000})
+        await cookieBtn.click()
     }
 }
