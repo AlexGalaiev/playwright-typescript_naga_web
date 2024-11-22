@@ -147,3 +147,4 @@ jobs:
       run: |
         if [ "${{ inputs.ticket_id }}" != "" ]; then
           curl -X POST -H "Content-Type: application/json" -d '{"ticket_id": "${{ inputs.ticket_id }}", "deployment_url": "${{ env.deployment_url }}", "outcome": "${{ steps.playwright_tests.outcome }}", "title": "${{ steps.set_outcome_title.outputs.title }}", "tag": "${{ inputs.tag }}"}' https://automation.atlassian.com/pro/hooks/fed5268ffa26ba4c3d60b99ca2c5bf60954af14a?issue=${{ inputs.ticket_id }}
+        fi
