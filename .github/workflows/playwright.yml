@@ -39,7 +39,7 @@ jobs:
     steps:
     - name: Output Received values
       run: |
-        echo "${{ inputs }}"
+        echo "${{ inputs.ticket_id }} | ${{ inputs.tag }}"
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
