@@ -33,7 +33,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25017', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
-  test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${investDirection}`, {tag:['@smoke','@trading','@prodSanity']},async ({ page}, testInfo) => {
+  test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${investDirection}`, {tag:['@trading','@prodSanity']},async ({ page}, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -76,7 +76,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25170', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'}
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
-    test(`${testRailId} Open/Close pending ${investDirection} posiotion + ${protection} ${brand}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
+    test(`${testRailId} Open/Close pending ${investDirection} posiotion + ${protection} ${brand}`, {tag:'@trading'}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 150000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -132,7 +132,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
   {testRailId: '@25172', brand: '@NM', user:'testTrading2Markets', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp'}
 ]
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP} of tradingParametersSLTP){
-  test(`${testRailId} Edit position popup with ${protectionSL}/${protectionTP}`, {tag:['@smoke','@trading']}, async({page}, testInfo)=>{
+  test(`${testRailId} Edit position popup with ${protectionSL}/${protectionTP}`, {tag:'@trading'}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);

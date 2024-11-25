@@ -20,7 +20,7 @@ const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'skrill', pageTittle:'Fund via Skrill'},
 ]
 for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParameters){
-    test(`${testRailId} Check deposit methods ${brand} ${depositName}`, {tag:['@deposit', '@prodSanity']},async({page}, testInfo)=>{
+    test(`${testRailId} Check deposit methods ${brand} ${depositName}`, {tag:['@deposit', '@prodSanity', '@manageFunds']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -38,7 +38,7 @@ for(const{testRailId, brand, user, depositName,pageTittle} of testNStestParamete
         })
     })
 }   
-test("@24068 Deposit via Crypto", {tag:'@deposit'},async({page, NagaCapital }, testInfo)=>{
+test("@24068 Deposit via Crypto", {tag:['@deposit', '@manageFunds']}, async({page, NagaCapital}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 10000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -52,7 +52,9 @@ test("@24068 Deposit via Crypto", {tag:'@deposit'},async({page, NagaCapital }, t
         await deposit.chooseDepositMethod('crypto');
         await deposit.performDeposit('100');
         expect(await deposit.checkCryptoIframeDeposit())
-    })})})
+    })
+})
+})
     
 test.describe('Naga Markets. Deposit', async()=>{
 
@@ -65,14 +67,14 @@ test.describe('Naga Markets. Deposit', async()=>{
         await mainPage.openBackMenuPoint('Manage Funds');
     })
 
-    test('@23995 Pay pal deposit', {tag:'@deposit'},async({page})=>{
+    test('@23995 Pay pal deposit', {tag:['@deposit', '@manageFunds']},async({page})=>{
         let deposit = new Deposit(page);
         await deposit.chooseDepositMethod('paypal');
         await deposit.performDeposit('1000');
         expect(await deposit.getCurrentUrl()).toContain('paypal.com')
     })
 
-    test('@25150 Bank Transfer deposit', {tag:'@deposit'},async({page})=>{
+    test('@25150 Bank Transfer deposit', {tag:['@deposit', '@manageFunds']},async({page})=>{
         let deposit = new Deposit(page);
         await deposit.chooseDepositMethod('sepa-credit')
         await deposit.performDeposit('1000');
@@ -87,7 +89,7 @@ const NMdepositTestParams: NStestTypes[] = [
     {testRailId: '@25151', brand: '@NM', user: 'depositTestMarkets', depositName: 'ewallets', pageTittle: 'Fund via E-Wallets'},
 ]
 for(const{testRailId, brand, user, depositName, pageTittle} of NMdepositTestParams){    
-    test(`${testRailId} Check ewallet methods ${brand} ${depositName}`, {tag:'@deposit'}, async({page}, testInfo)=>{
+    test(`${testRailId} Check ewallet methods ${brand} ${depositName}`, {tag:['@deposit', '@manageFunds']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);

@@ -9,7 +9,7 @@ import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-Up
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 
-test("@24917 NAGA Capital. KYC Advance",{tag:['@smoke', '@kyc', '@prodSanity']}, async({ page, NagaCapital }, testInfo)=>{
+test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity']}, async({ page, NagaCapital }, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 50000);
     let signUp = new SignUp(page);
     let signIn = new SignIn(page)
