@@ -31,6 +31,10 @@ on:
   schedule:
     - cron: '30 4 * * 0-6'
     - cron: '40 5 * * 0-6'
+    - cron: '30 2 * * 0-6'
+    - cron: '00 3 * * 0-6'
+    - cron: '40 3 * * 0-6'
+    - cron: '30 6 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -74,6 +78,10 @@ jobs:
               case "${{ github.event.schedule }}" in
                 "30 4 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
                 "40 5 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
+                "30 2 * * 0-6") echo "TAGS=@KYC" >> $GITHUB_ENV ;;
+                "00 3 * * 0-6") echo "TAGS=@feed" >> $GITHUB_ENV ;;
+                "40 3 * * 0-6") echo "TAGS=@manageFunds" >> $GITHUB_ENV ;;
+                "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
