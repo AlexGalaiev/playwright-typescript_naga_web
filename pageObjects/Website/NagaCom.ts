@@ -274,7 +274,8 @@ export class NagaCom{
     }
     async acceptAllCookies(){
         let cookieBtn = await this.page.locator("//button[text()='Accept all cookies']")
-        await cookieBtn.waitFor({timeout: 3000})
-        await cookieBtn.click()
+        await this.page.waitForTimeout(2500)
+        if(await cookieBtn.isVisible())
+            {await cookieBtn.click()}
     }
 }

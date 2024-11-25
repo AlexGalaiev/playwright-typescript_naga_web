@@ -7,6 +7,7 @@ import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
+import { TwoAuthenfication } from "../../pageObjects/FullRegistration/components/NagaX_2Auth";
 
 test.describe("Feed", async()=>{
     
@@ -17,7 +18,8 @@ type testFeedtypes = {
 }
 const testFeedParams: testFeedtypes[] = [
    {testRailId: '@25122', brand: '@NS', user: 'testFeedUser'},
-   {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'}
+   {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'},
+   {testRailId: '@25331', brand: '@NX', user: 'testFeedX@i.ua'}
 ]
 for(const{testRailId, brand, user}of testFeedParams){
     test(`${testRailId} Main actions for post: create, edit, delete ${brand}`,{tag:['@smoke', '@feed', '@prodSanity']}, async({page}, testInfo)=>{
@@ -28,6 +30,7 @@ for(const{testRailId, brand, user}of testFeedParams){
         await test.step(`login by existing user ${user}`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await new TwoAuthenfication(page).skipAuthenfication()
         })
         await test.step("Delete previously created posts, if exist(in user profile)", async()=>{
             await myAccounts.openUserMenu()

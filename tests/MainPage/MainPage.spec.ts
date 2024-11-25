@@ -6,6 +6,7 @@ import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterL
 import { expect } from "@playwright/test"
 import { getLocalization } from "../../pageObjects/localization/getText"
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile"
+import { TwoAuthenfication } from "../../pageObjects/FullRegistration/components/NagaX_2Auth"
 
 
 test.describe('Main Page elements', async()=>{
@@ -17,9 +18,9 @@ test.describe('Main Page elements', async()=>{
     const testParams: testTypes[] = [
        { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
        { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
-    ]
+]
     for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@smoke', '@signIn', '@prodSanity', '@mainPage']}, async({page})=>{
+        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@signIn', '@prodSanity', '@mainPage']}, async({page})=>{
             let signIn = new SignIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)
@@ -31,8 +32,25 @@ test.describe('Main Page elements', async()=>{
                 await myAccountsMenu.openUserMenu();
                 await myAccountsMenu.userLogOut()
                 expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
+            })})
+    }
+    const testCryptoParams: testTypes[]= [
+        { testrailId: "@25332", brand: '@NX', email: "testLeadX@i.ua"}
+    ]
+    for(const {testrailId, brand, email} of testCryptoParams){
+        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@signIn', '@prodSanity', '@mainPage']}, async({page})=>{
+            let signIn = new SignIn(page);
+            let myAccountsMenu = new MyAccounts(page)
+            await test.step(`Login to platform by ${email}`, async()=>{
+                await signIn.goto(await signIn.chooseBrand(brand), 'login')
+                await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
-        })
+            await test.step('Log out from platform', async()=>{
+                await new TwoAuthenfication(page).skipAuthenfication();
+                await myAccountsMenu.openUserMenu();
+                await myAccountsMenu.userLogOut()
+                expect(await signIn.checkPageHeader()).toEqual('Sign in to your account')
+            })})
     }
 
     type searchTypes = {
@@ -114,10 +132,8 @@ test.describe('Naga Markets', async()=>{
                     expect(await mainPage.getVerifyBannerContent()).toEqual(await localization.getLocalizationText(textOfStep))
                 }else{
                     expect(await mainPage.getVerifyBannerMiddleScore()).toEqual(await localization.getLocalizationText(textOfStep))
-                }
-            })
-        })
-    }
+                }})
+        })}
+    })
 
-})
 

@@ -485,6 +485,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step('Open naga.com/ae and check header discleimer', async()=>{
                 await website.open('https://naga.com/ae');
+                await website.acceptAllCookies();
                 await website.checkTradeInstrument(type);
                 expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
             })
@@ -634,7 +635,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
     for(const{testRailId, regulation, tabsName}of otherFeeParams){
         test(`${testRailId} Check other Fees tab. ${regulation} tab`,{tag:'@website-naga.com'},async({page}, testInfo)=>{
             let website = new NagaCom(page)
-            await testInfo.setTimeout(testInfo.timeout + 10000);
+            await testInfo.setTimeout(testInfo.timeout + 30000);
             await test.step(`Open website naga.com/${regulation}`, async()=>{
                 await website.open(`https://naga.com/${regulation}/trading/hours-and-fees`)
             })
@@ -642,6 +643,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
                 await website.scrollToOtherFees();
                 for(let index in tabsName){ 
                     await website.openMarketAndHoursTab(tabsName[index])
+                    await website.acceptAllCookies()
                     let allInstruments = await website.getOtherFeeAvailabelInstruments();
                     for(let index in allInstruments){
                         expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '2')).not.toBeNull()

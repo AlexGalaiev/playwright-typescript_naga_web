@@ -81,5 +81,8 @@ export class SignIn{
     async checkDefaultLanguage(language: string){
         return await this.page.locator(`//a[text()='${language}']`);
     }
-
+    async checkPageHeader(){
+        await this.page.waitForTimeout(500)
+        return await this.page.locator("//h2[contains(@class, 'login-form__headline')]").textContent()
+    }
 }
