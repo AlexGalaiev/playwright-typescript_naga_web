@@ -19,7 +19,7 @@ test.describe('Main page elements. Messanger', async()=>{
         {testRailId: '@25193', brandSender: '@NS', userSender: 'testFeedUser', receiver:'testTrading2Markets', brandReceiver: '@NM'},
     ]
     for(const{testRailId, brandSender, userSender,receiver, brandReceiver}of testMessangerParams){
-        test(`${testRailId} ${brandSender} Send text via messanger`, async({page})=>{
+        test(`${testRailId} ${brandSender} Send text via messanger`,{tag: '@messanger'},async({page})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page)
             let messanger = new Messanger(page)

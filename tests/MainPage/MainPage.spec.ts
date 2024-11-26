@@ -94,7 +94,7 @@ test.describe('Naga Capital', async()=>{
         {email: "testUserUpgraded@i.ua", numberOfStep:3, textOfStep:"Complete Progress level and verify address", level:'halfVerified'}
     ]
     for(const {email, numberOfStep, textOfStep, level} of testBannerParams){
-    test(`@23926 Status on banner ${level}`,  async({page, NagaCapital})=>{
+    test(`@23926 Status on banner ${level}`,{tag: '@mainPage'}, async({page, NagaCapital})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         await test.step(`Login to platform by ${email}`, async()=>{
@@ -118,7 +118,7 @@ test.describe('Naga Markets', async()=>{
         {email: "user460", textOfStep:"PreAdvanceDisclaimerBody", level: 'Beginner'},
     ]
     for(const{email, textOfStep, level} of testBannerParams){
-        test(`@25190 Naga start login banner ${level}`, async({page, NagaMarkets})=>{
+        test(`@25190 Naga start login banner ${level}`,{tag: '@mainPage'}, async({page, NagaMarkets})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let localization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')

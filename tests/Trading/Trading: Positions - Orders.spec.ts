@@ -21,7 +21,7 @@ let investmentValue;
 let units;
 let rate;
 
-test.describe("Trading Positions/Orders with Stop Loss/Take profit", async () => {
+test.describe("Trading Positions/Orders", async () => {
 const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@25159', brand: '@NS', user:'testTrading2', investDirection:'Short'},
   {testRailId: '@25163', brand: '@NS', user:'testTrading2', investDirection:"Long"},
@@ -29,7 +29,7 @@ const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'}
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
-  test(`${testRailId} Open and close ${investDirection} trading position on ${brand} `,{tag:['@trading', '@prodSanity']}, async ({ page }, testInfo) => {
+  test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,{tag:['@trading', '@prodSanity']}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -74,7 +74,7 @@ const tradingParamsOrders: tradingTypes[] = [
   {testRailId: '@25015', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'},
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
-  test(`${testRailId} Open and close pending trading position ${brand} ${investDirection}`,{tag:'@trading'}, async ({ page }, testInfo) => {
+  test(`${testRailId}${brand} Open/Close pending ${investDirection} position`,{tag:'@trading'}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
