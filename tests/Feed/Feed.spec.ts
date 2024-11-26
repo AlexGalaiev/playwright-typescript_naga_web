@@ -55,7 +55,7 @@ const testFeedParamsActions: testFeedtypes[] = [
     {testRailId: '@25144', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
-    test(`${testRailId} Post actions: like post ${brand}`,{tag:['@feed']}, async({page}, testInfo)=>{
+    test(`${testRailId} Post actions: like post ${brand}`,{tag:'@feed'}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 50000);
     let signIn = new SignIn(page);
     let feed = new Feed(page)
@@ -92,7 +92,7 @@ const testFeedCommentParams: testFeedtypes[] = [
     {testRailId: '@25145', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
-    test(`${testRailId} Post actions: Comment a post ${brand}`, {tag:['@feed']},async({page}, testInfo)=>{
+    test(`${testRailId} Post actions: Comment a post ${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
@@ -166,7 +166,7 @@ const testParamsUserCabinet: testFeedtypes[] = [
     {testRailId: '@25147', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){
-    test(`${testRailId} Check post in user profile ${brand}`, {tag:['@feed']}, async({page}, testInfo)=>{
+    test(`${testRailId} Check post in user profile ${brand}`, {tag:'@feed'}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let myAccounts = new MyAccounts(page);
         let userProfile = new UserProfile(page)
@@ -203,7 +203,7 @@ const testNotVerifieduser: testFeedNotVeried[] = [
     {testRailId: '@25148', brand: '@NM', user: 'testNotVerifiesUser', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
-    test(`${testRailId}Not verified user tries to create new post${brand}`, {tag:['@feed']},async({page}, testInfo)=>{
+    test(`${testRailId} Not verified user tries to create new post${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let feed = new Feed(page)

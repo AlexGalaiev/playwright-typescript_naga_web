@@ -4,22 +4,22 @@ import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
 import { MyTrades } from "../../pageObjects/Trading/MyTrades";
 import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
-import {test} from "..//..//test-options"
+import {test} from "../../test-options"
 
 test.describe("Trading without funds", async()=>{
-let tradingInstrument = "Bitcoin/EUR"
 type testNoFunds = {
     testRailId: string, 
     brand: string,
     user: string,
+    tradingInstrument: string
 }
 //need to have opened previously opened positions of BTC
 
 const testNoFundsParaketers: testNoFunds[] = [
-   {testRailId: '@25018', brand: '@NS', user: 'tradingNoFunds'},
-   {testRailId: '@25176', brand: '@NM', user: 'tradNoFundsMarket'}
+   {testRailId: '@25018', brand: '@NS', user: 'tradingNoFunds', tradingInstrument: "Bitcoin/EUR"},
+   {testRailId: '@25176', brand: '@NM', user: 'tradNoFundsMarket', tradingInstrument: "Cardano/USD"}
 ]
-for(const{testRailId, brand, user}of testNoFundsParaketers){
+for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
     test(`${testRailId} Open position without funds ${brand}`, {tag:'@trading'}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 40000);  
       let signIn = new SignIn(page);

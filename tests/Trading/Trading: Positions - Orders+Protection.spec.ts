@@ -10,7 +10,7 @@ import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 import { TradeDetails } from "../../pageObjects/Trading/TradeDetails";
 import { test } from "../../test-options";
 
-test.describe("Trading + trading protection", async () => {
+test.describe("Trading. Trading by positions/orders + protection", async () => {
 type tradingTypesWithProtection = {
   testRailId: string,
   brand: string,
@@ -33,7 +33,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25017', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
-  test(`${testRailId} Open/Close Short/Long position + Stop loss/Take profit ${brand} ${investDirection}`, {tag:['@trading','@prodSanity']},async ({ page}, testInfo) => {
+  test(`${testRailId} ${brand} Open/Close ${investDirection} position + ${protection}`, {tag:['@trading','@prodSanity']},async ({ page}, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -76,7 +76,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25170', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'}
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
-    test(`${testRailId} Open/Close pending ${investDirection} posiotion + ${protection} ${brand}`, {tag:'@trading'}, async({page}, testInfo)=>{
+    test(`${testRailId} ${brand} Open/Close pending ${investDirection} posiotion + ${protection}`, {tag:'@trading'}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 150000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
