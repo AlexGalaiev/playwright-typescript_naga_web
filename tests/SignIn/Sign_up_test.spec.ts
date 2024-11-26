@@ -18,7 +18,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId: '@25142', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighUp.json'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@smoke', '@signIn']}, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@mainPage']}, async({page})=>{
             let localizationText = new getLocalization(localization)
             let signUp = new SignUp(page);
             await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
@@ -29,7 +29,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId: '@25116', brand:'@NX', localization: '/pageObjects/localization/NagaX_SignInPage.json'}
     ]
     for(const{testRailId, brand, localization} of testNXRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@smoke', '@signIn']}, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:'@mainPage'}, async({page})=>{
             let localizationText = new getLocalization(localization)
             let signUp = new SignUp(page);
             await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
@@ -47,7 +47,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId: '@25242', brand:'@NM', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
     ]
     for(const{testRailId, brand, languages}of platformLanguages){
-        test(`${testRailId} Check default languages on ${brand}`, {tag:['@signIn']}, async({page})=>{
+        test(`${testRailId} Check default languages on ${brand}`, {tag:['@mainPage']}, async({page})=>{
             let signIn = new SignIn(page)
             await test.step(`Open platform of ${brand} brand`, async()=>{
                 await signIn.goto(await signIn.chooseBrand(brand), 'login')
@@ -72,7 +72,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId:'@25244', brand:'@NS', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '}
     ]
     for(const{testRailId, brand, notCorrectCountry, correctCountry, msgText}of CountryCheckParams){
-        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:['@signIn']}, async({page})=>{
+        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:'@mainPage'}, async({page})=>{
             let sighUp = new SignUp(page)
             await test.step(`Open platform for brand ${brand}`, async()=>{
                 await sighUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
@@ -97,7 +97,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId:'@25247', brand:'@NX', documents: new Map<string, string>([['Privacy Policy', 'https://files.nagax.com/files/NXCY-Privacy-Policy.pdf'],['legal documents','https://nagax.com/eu/regulation-and-licensing']])}
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
-        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@signIn']},async({page})=>{
+        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:'@mainPage'},async({page})=>{
             let sighUp = new SignUp(page)
             await test.step(`Open sign up page on brand ${brand}`, async()=>{
                 await sighUp.goto(await new SignIn(page).chooseBrand(brand), 'register')

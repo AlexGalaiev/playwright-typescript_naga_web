@@ -29,7 +29,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25017', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
-  test(`${testRailId} Open/Close position + Protection ${brand} ${user} ${investDirection} ${protection} ${tradeField}`, async ({ page}) => {
+  test(`${testRailId} Open/Close position + Protection ${brand} ${user} ${investDirection} ${protection} ${tradeField}`,{tag:['@trading', '@prodSanity']},async ({ page}) => {
     let sighIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);
@@ -66,60 +66,3 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
 })
 
 }})
-//   test("@25015 Open pending Long order + Take profit", async ({ page }) => {
-//     let tradingInstrument = "Dogecoin/EUR";
-//     let instruments = new AllInstruments(page);
-//     let newPosition = new NewPosition(page);
-//     let myTrades = new MyTrades(page);
-//     let changeLimitPopup = new ChangeLimitsPopup(page);
-//     let changeLimitPopupResult = new ChangeLimitSuccessPopup(page);
-//     let tradeDetails = new TradeDetails(page);
-//     let successPopup = new ClosePositionSuccessPopup(page);
-//     await test.step("Choose instrument", async () => {
-//       await instruments.searchInstrument(tradingInstrument);
-//       await instruments.openPosition('Long');
-//     });
-//     await test.step("Open short pending order", async () => {
-//       await newPosition.openLongOrder();
-//       await newPosition.submitPosition();
-//     });
-//     await test.step("Check My-trades", async () => {
-//       await new MainPage(page).openHeaderMenuPoint("my-trades");
-//       await myTrades.openActivePendingOrdersTab();
-//       expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain(
-//         "active"
-//       );
-//     });
-//     await test.step("Check change limit of opened position and close position", async () => {
-//       let units = await myTrades.getOrderUnits();
-//       let stopLoss = await myTrades.getOrderTakeProfit();
-//       await test.step("Check change limit popup and enable Stop Loss", async () => {
-//         await myTrades.openChangeLimitPopup();
-//         expect(await changeLimitPopup.getInstrumentName()).toContain(
-//           tradingInstrument
-//         );
-//         await changeLimitPopup.enableTakeProgit();
-//       });
-//       await test.step("Check change limit popup", async () => {
-//         expect(await changeLimitPopupResult.getDirection()).toEqual(
-//           "BUY LIMITPrice will rise"
-//         );
-//         expect(await changeLimitPopupResult.getLotsAmount()).toContain(units);
-//         expect(await changeLimitPopupResult.getTakeProfitValue()).not.toEqual(
-//           stopLoss
-//         );
-//         await changeLimitPopupResult.acceptPopup();
-//       });
-//       await test.step("Check trade details", async () => {
-//         await myTrades.openTradeDetails();
-//         expect(await tradeDetails.getLots()).toEqual(units);
-//         await tradeDetails.clickCloseTrade();
-//         await tradeDetails.clickCloseTradeConfirm();
-//       });
-//       await test.step("Check success popup", async () => {
-//         expect(await successPopup.getLots()).toContain(units);
-//         await successPopup.acceptPopup();
-//       });
-//     });
-//   });
-// });

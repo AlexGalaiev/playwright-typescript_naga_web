@@ -32,7 +32,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             await new PageAfterLogout(page).redirectToSighIn();
         })})
 
-    test.skip("@23916 Forgot password link test",{tag:['@smoke', '@signIn']}, async({page})=>{
+    test.skip("@23916 Forgot password link test",{tag:'@mainPage'}, async({page})=>{
         let signInPage = new SignIn(page);
         let forgotPassword = new ForgotPassword(page);
         await test.step('Check forgot password messages on UI', async()=>{
@@ -42,7 +42,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
         })});
 
-    test.skip("@23915 Account locking functionality",{tag:'@sighIn'}, async({page})=>{
+    test.skip("@23915 Account locking functionality",{tag:'@mainPage'}, async({page})=>{
         let signIn = new SignIn(page);
         await test.step("Check login to platform with incorrect password", async()=>{
             await signIn.signInUserToPlatform(testUser, "111Test123")
@@ -75,7 +75,7 @@ test.describe('Naga Markets. Sigh in', async()=>{
             await new PageAfterLogout(page).redirectToSighIn();
         })})
     
-    test.skip("@23574 Forgot password link test", {tag:['@smoke', '@signIn']}, async({page})=>{
+    test.skip("@23574 Forgot password link test", {tag:'@mainPage'}, async({page})=>{
         let signInPage = new SignIn(page);
         let forgotPassword = new ForgotPassword(page);
         await test.step("Check forgot password functionality", async()=>{
@@ -85,7 +85,7 @@ test.describe('Naga Markets. Sigh in', async()=>{
             expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
         })});
 
-    test.skip("@23896 Account locking", {tag:'@sighIn'}, async({page})=>{
+    test.skip("@23896 Account locking", {tag:'@mainPage'}, async({page})=>{
         let signIn = new SignIn(page);
         let incorrectPasPopup = new IncorrectPasswordPopup(page);
         let forgotPassword = new ForgotPassword(page);
@@ -117,7 +117,7 @@ const testParams: testTypes[] = [
     {testRailId: '@23569', brandStart: '@NM', brandRedirect: '@NS', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ]
 for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-    test(`${testRailId} Entity redirection ${brandStart}`, {tag:['@smoke', '@signIn']}, async({page})=>{
+    test(`${testRailId} Entity redirection ${brandStart}`, {tag:'@mainPage'}, async({page})=>{
         let localizationPage = new getLocalization(localization);
         let sighInPage = new SignIn(page);
         await test.step('Open login page and input email from different regulation', async()=>{
@@ -139,7 +139,7 @@ const testParamsGuestMode: testTypesGuestMode[] = [
     {testRailId: '@24936', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
-    test(`${testRailId} Open platform in Guest mode ${brand}`, {tag:['@smoke', '@signIn']}, async({page}, testInfo)=>{
+    test(`${testRailId} Open platform in Guest mode ${brand}`, {tag:'@mainPage'}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let localizationPage = new getLocalization(localization);
         let signUp = new SignUp(page);

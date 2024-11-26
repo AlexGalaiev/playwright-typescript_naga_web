@@ -75,7 +75,7 @@ export class AllInstruments{
     }
 
     async openPosition(investmentType: string){
-        let button = await this.page.locator("//button[contains(@class, 'btn-sm')]", {hasText: investmentType})
+        let button = await this.page.locator("//button[contains(@class, 'btn-sm')]", {hasText: investmentType}).first()
         await button.click()
     }
     async cleanWatchlist(){

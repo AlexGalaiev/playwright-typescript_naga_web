@@ -20,7 +20,7 @@ test.describe('Main Page elements', async()=>{
        { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
 ]
     for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@signIn', '@prodSanity', '@mainPage']}, async({page})=>{
+        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@signIn', '@prodSanity']}, async({page})=>{
             let signIn = new SignIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)
@@ -38,7 +38,7 @@ test.describe('Main Page elements', async()=>{
         { testrailId: "@25332", brand: '@NX', email: "testLeadX@i.ua"}
     ]
     for(const {testrailId, brand, email} of testCryptoParams){
-        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@signIn', '@prodSanity', '@mainPage']}, async({page})=>{
+        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@signIn', '@prodSanity']}, async({page})=>{
             let signIn = new SignIn(page);
             let myAccountsMenu = new MyAccounts(page)
             await test.step(`Login to platform by ${email}`, async()=>{
@@ -65,7 +65,7 @@ test.describe('Main Page elements', async()=>{
         {testRailId: '@25192', brand: '@NS', loginUser:'testTrading2', searchUser: 'testTrading2Markets', flag:'de.png'}
     ]
     for(const{testRailId, brand, loginUser, searchUser, flag} of searchParams){
-        test(`${testRailId} Search functionality`, {tag: ['@signIn', '@mainPage']},async({page})=>{
+        test(`${testRailId} Search functionality`, {tag: '@mainPage'},async({page})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page)
             let userProfile = new UserProfile(page)
@@ -77,8 +77,7 @@ test.describe('Main Page elements', async()=>{
                 await mainPage.search(searchUser)
                 await mainPage.getFoundResults(searchUser)
                 expect(await userProfile.getCountryFlag()).toContain(flag)
-            })
-        })
+            })})
     }
 
 })
@@ -95,7 +94,7 @@ test.describe('Naga Capital', async()=>{
         {email: "testUserUpgraded@i.ua", numberOfStep:3, textOfStep:"Complete Progress level and verify address", level:'halfVerified'}
     ]
     for(const {email, numberOfStep, textOfStep, level} of testBannerParams){
-    test(`@23926 Status on banner ${level}`,{tag:['@signIn', '@mainPage']},  async({page, NagaCapital})=>{
+    test(`@23926 Status on banner ${level}`,  async({page, NagaCapital})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         await test.step(`Login to platform by ${email}`, async()=>{

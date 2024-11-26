@@ -31,7 +31,7 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
   }
 );
 
-test("@24921 Naga Markets. KYC - Advance level.",{tag:['@smoke', '@kyc', '@prodSanity']}, async ({page}, testInfo) => {
+test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity']}, async ({page}, testInfo) => {
   await testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let quiz = new FullRegistration(page);
@@ -50,7 +50,7 @@ test("@24921 Naga Markets. KYC - Advance level.",{tag:['@smoke', '@kyc', '@prodS
   });
 });
 
-test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@smoke', '@kyc']}, async ({page}, testInfo) => {
+test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@kyc']}, async ({page}, testInfo) => {
   await testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let quiz = new FullRegistration(page);
@@ -69,7 +69,7 @@ test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@smoke', '@kyc']}, as
     await KYC_FinalStep.clickFundAccount()});
 });
 
-test("@24920 Naga Markets. KYC - Intermediate level.", {tag:['@smoke', '@kyc']},async ({page}, testInfo) => {
+test("@24920 Naga Markets. KYC - Intermediate level.", {tag:['@kyc']},async ({page}, testInfo) => {
   await testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent ="/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let quiz = new FullRegistration(page);
@@ -89,7 +89,7 @@ test("@24920 Naga Markets. KYC - Intermediate level.", {tag:['@smoke', '@kyc']},
   });
 });
 
-test("@24923 Naga Markets. KYC - Elementary level.",{tag:['@smoke', '@kyc']}, async ({page}, testInfo) => {
+test("@24923 Naga Markets. KYC - Elementary level.",{tag:['@kyc']}, async ({page}, testInfo) => {
   await testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent ="/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let mainPageLocalization = "/pageObjects/localization/NagaMarkets_MainPage.json";
@@ -110,7 +110,7 @@ test("@24923 Naga Markets. KYC - Elementary level.",{tag:['@smoke', '@kyc']}, as
   });
 });
 
-test("@24922 Naga Markets. KYC - Beginner level.",{tag:['@smoke', '@kyc']}, async ({page}, testInfo) => {
+test("@24922 Naga Markets. KYC - Beginner level.",{tag:['@kyc']}, async ({page}, testInfo) => {
   await testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent ="/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let mainPageLocalization ="/pageObjects/localization/NagaMarkets_MainPage.json";
