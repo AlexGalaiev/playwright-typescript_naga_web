@@ -61,7 +61,7 @@ test.describe('Main Page elements', async()=>{
         flag: string
     }
     const searchParams: searchTypes[] = [
-        {testRailId: '@23693', brand: '@NM', loginUser:'testTrading2Markets', searchUser: 'testTrading2', flag:'ba.png'},
+        {testRailId: '@23593', brand: '@NM', loginUser:'testTrading2Markets', searchUser: 'testTrading2', flag:'ba.png'},
         {testRailId: '@25192', brand: '@NS', loginUser:'testTrading2', searchUser: 'testTrading2Markets', flag:'de.png'}
     ]
     for(const{testRailId, brand, loginUser, searchUser, flag} of searchParams){
