@@ -69,7 +69,7 @@ test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@kyc']}, async ({page
     await KYC_FinalStep.clickFundAccount()});
 });
 
-test("@24920 Naga Markets. KYC - Intermediate level.", {tag:['@kyc']},async ({page}, testInfo) => {
+test("@24920 Naga Markets. KYC - Intermediate level.", {tag:'@kyc'},async ({page}, testInfo) => {
   await testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent ="/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let quiz = new FullRegistration(page);

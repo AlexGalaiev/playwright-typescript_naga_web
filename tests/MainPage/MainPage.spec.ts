@@ -65,7 +65,7 @@ test.describe('Main Page elements', async()=>{
         {testRailId: '@25192', brand: '@NS', loginUser:'testTrading2', searchUser: 'testTrading2Markets', flag:'de.png'}
     ]
     for(const{testRailId, brand, loginUser, searchUser, flag} of searchParams){
-        test(`${testRailId} Search functionality`, {tag: '@mainPage'},async({page})=>{
+        test(`${testRailId} Search functionality`, {tag: '@UI'},async({page})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page)
             let userProfile = new UserProfile(page)
@@ -94,7 +94,7 @@ test.describe('Naga Capital', async()=>{
         {email: "testUserUpgraded@i.ua", numberOfStep:3, textOfStep:"Complete Progress level and verify address", level:'halfVerified'}
     ]
     for(const {email, numberOfStep, textOfStep, level} of testBannerParams){
-    test(`@23926 Status on banner ${level}`,{tag: '@mainPage'}, async({page, NagaCapital})=>{
+    test(`@23926 Status on banner ${level}`,{tag: '@UI'}, async({page, NagaCapital})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         await test.step(`Login to platform by ${email}`, async()=>{
@@ -118,7 +118,7 @@ test.describe('Naga Markets', async()=>{
         {email: "user460", textOfStep:"PreAdvanceDisclaimerBody", level: 'Beginner'},
     ]
     for(const{email, textOfStep, level} of testBannerParams){
-        test(`@25190 Naga start login banner ${level}`,{tag: '@mainPage'}, async({page, NagaMarkets})=>{
+        test(`@25190 Naga start login banner ${level}`,{tag: '@UI'}, async({page, NagaMarkets})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let localization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
