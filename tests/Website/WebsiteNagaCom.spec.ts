@@ -221,6 +221,7 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
             })
             await test.step(`Check ${investType} page buttons`, async()=>{
                 await website.checkTradeInstrument(`${investType}`)
+                await website.checkAndCloseBullonPopup()
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn1))).toBeVisible()
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
                 expect(await website.getMainPageBtntext(await localization.getTranslation(btn3))).toBeVisible()
@@ -283,6 +284,7 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
             await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
                 await website.open(platform)
                 await website.checkTradeInstrument(`${type}`)
+                await website.acceptAllCookies()
                 await website.switchLanguageTo(language);
             })
             await test.step(`Check main button ${type} page`, async()=>{

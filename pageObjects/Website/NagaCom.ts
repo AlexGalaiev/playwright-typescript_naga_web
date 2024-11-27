@@ -255,7 +255,7 @@ export class NagaCom{
         await this.page.locator("//div[text()='Market Hours and Trading Fees']").scrollIntoViewIfNeeded();
     }
     async scrollToOtherFees(){
-        await this.page.locator("//div[text()='Other Fees']").scrollIntoViewIfNeeded()
+        await this.page.locator("//div[text()='Payment method']").scrollIntoViewIfNeeded()
     }
     async getAllAvailableInstruments(){
         return await this.page.locator('//table//tbody//div[@id]').allTextContents()
