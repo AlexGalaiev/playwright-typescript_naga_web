@@ -87,7 +87,7 @@ export class MyTrades{
     }
     async closePosition(){
         await this.page.locator("//i[contains(@class, 'trade-actions__close')]").click()
-        await this.page.waitForSelector('#confirm_close_trade');
+        await this.page.waitForSelector("#confirm_close_trade", {state:'visible'});
         await this.page.locator('#confirm_close_trade').click()
         await this.page.waitForTimeout(1000)
     }
@@ -100,7 +100,7 @@ export class MyTrades{
     }
     async deleteOrder(){
         await this.page.locator("//i[contains(@class, 'trade-actions__close')]").click()
-        await this.page.waitForSelector('#confirm_close_trade')
+        await this.page.waitForSelector("#confirm_close_trade", {state:'visible'})
         await this.page.locator('#confirm_close_trade').click();
     }
     async getOrderUnits(){

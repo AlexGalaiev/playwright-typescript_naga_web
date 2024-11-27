@@ -251,6 +251,7 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
             await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
                 await website.open(platform)
                 await website.checkTradeInstrument(`${type}`)
+                await website.acceptAllCookies()
                 await website.switchLanguageTo(language);
             })
             await test.step(`Check main button ${type} page`, async()=>{
