@@ -1,10 +1,8 @@
 import { expect } from "@playwright/test";
 import { test } from "../../test-options";
 import { getLocalization } from "../../pageObjects/localization/getText";
-import { ChangeBrandPopup } from "../../pageObjects/ShortRegistrationPage/ChangeBrandPopup";
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
-import { StringColorFormat } from "@faker-js/faker";
 
 test.describe("Sign up page.", async()=>{
 
@@ -29,7 +27,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId: '@25116', brand:'@NX', localization: '/pageObjects/localization/NagaX_SignInPage.json'}
     ]
     for(const{testRailId, brand, localization} of testNXRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:'@mainPage'}, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:'@UI'}, async({page})=>{
             let localizationText = new getLocalization(localization)
             let signUp = new SignUp(page);
             await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")

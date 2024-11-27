@@ -24,8 +24,9 @@ on:
           - "prodSanity"
           - "website-naga.com"
           - "debug"
-          - "mainPage"
           - "forgotPassword"
+          - "UI"
+          - "messanger"
       ticket_id:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string
