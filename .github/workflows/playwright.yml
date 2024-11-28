@@ -38,6 +38,7 @@ on:
     - cron: '40 3 * * 0-6'
     - cron: '30 6 * * 0-6'
     - cron: '00 4 * * 0-6'
+    - cron: '10 10 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -73,6 +74,7 @@ jobs:
           echo USER_PASSWORD=${{ secrets.USER_PASSWORD }} >> .env
           echo NORDVPN_USERNAME=${{ secrets.NORDVPN_USERNAME }} >> .env
           echo NORDVPN_PASSWORD=${{ secrets.NORDVPN_PASSWORD }} >> .env
+          echo TEST_RUN = ${{github.event.schedule}} >> .env
           cat .env 
     - name: Determine tags
       id: determine_tags
@@ -86,6 +88,7 @@ jobs:
                 "40 3 * * 0-6") echo "TAGS=@manageFunds" >> $GITHUB_ENV ;;
                 "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
                 "00 4 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
+                "10 10 * * 0-6") echo "TAGS=@signIn" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
@@ -99,7 +102,7 @@ jobs:
             ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           elif [ "$GITHUB_EVENT_NAME" == "schedule" ]; then
             echo "Running $ENV tests with tag $TAGS"
-            ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
+            ENV="$ENV" TAGS="$TAGS" TEST_RUN="$TEST_RUN" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           else 
             echo "Running all tests"
             ENV="$ENV" TAGS="$TAGS" npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
