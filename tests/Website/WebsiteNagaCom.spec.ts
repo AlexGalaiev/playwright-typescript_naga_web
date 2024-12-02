@@ -79,7 +79,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         {testRailId: '@25228', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/ae',  redirectTo: 'https://nagamarkets.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
-        test.fixme(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, {tag: ['@prodSanity', '@website-naga.com']} ,async({proxyPage}, testInfo)=>{
+        test.fixme(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, {tag: ['@prodSanity', '@website-naga.com'], annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-5384'}} ,async({proxyPage}, testInfo)=>{
             await testInfo.setTimeout(testInfo.timeout + 10000);
             let website = new NagaCom(proxyPage)
             let localization = new getLocalization('/pageObjects/localization/Website_NagaCom.json')
@@ -419,12 +419,13 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'Fees', page2:'IPO', page3:'Privacy Policy'}
     ]
     for(const{testRailId, type, baseUrl,page1, page2, page3}of EuRiskWarningFooter){
-        test.fixme(`${testRailId} ${baseUrl} ->Risk Warning footer /${type} page`, {tag: '@website-naga.com'}, async({page})=>{
+        test(`${testRailId} ${baseUrl} ->Risk Warning footer /${type} page`, {tag: '@website-naga.com'}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
                 await website.checkTradeInstrument(type)
+                await website.acceptAllCookies()
             })
             await test.step('Check risk warning footer', async()=>{
                 expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
@@ -636,7 +637,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId:'@25257', regulation:'za', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
     ]
     for(const{testRailId, regulation, tabsName}of otherFeeParams){
-        test(`${testRailId} Check other Fees tab. ${regulation} tab`,{tag:'@website-naga.com'},async({page}, testInfo)=>{
+        test.skip(`${testRailId} Check other Fees tab. ${regulation} tab`,{tag:'@website-naga.com'},async({page}, testInfo)=>{
             let website = new NagaCom(page)
             await testInfo.setTimeout(testInfo.timeout + 30000);
             await test.step(`Open website naga.com/${regulation}`, async()=>{

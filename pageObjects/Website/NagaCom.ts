@@ -123,8 +123,9 @@ export class NagaCom{
         return await element.first()
     }
     async getRiskWarningFooter(){
-        await this.page.waitForTimeout(1000)
-        let footer = await this.page.locator("//span[@class='text-primary']//..", {hasText:'RISK WARNING'}).first()
+        await this.page.waitForTimeout(2000)
+        let footer = await this.page.locator("//span[text()='RISK WARNING']//..").first()
+        console.log(await footer.textContent())
         return await footer.textContent()
     }
     async searchInstrument(nameOfInstrument: string, categoryName: string){

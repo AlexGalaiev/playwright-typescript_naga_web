@@ -12,7 +12,7 @@ on:
         options:
           - "kyc"
           - "trading"
-          - "signIn"
+          - "login"
           - "withdrawal"
           - "verification"
           - "deposit"
@@ -38,7 +38,7 @@ on:
     - cron: '40 3 * * 0-6'
     - cron: '30 6 * * 0-6'
     - cron: '00 4 * * 0-6'
-    - cron: '18 11 * * 0-6'
+    - cron: '00 2 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -87,7 +87,8 @@ jobs:
                 "40 3 * * 0-6") echo "TAGS=@manageFunds" >> $GITHUB_ENV ;;
                 "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
                 "00 4 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
-                "18 11 * * 0-6") echo "TAGS=@signIn" >> $GITHUB_ENV ;;
+                "00 2 * * 0-6") echo "TAGS=@login" >> $GITHUB_ENV ;;
+                "05 2 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests

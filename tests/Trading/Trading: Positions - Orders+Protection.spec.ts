@@ -76,7 +76,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25170', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'}
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
-    test(`${testRailId} ${brand} Open/Close pending ${investDirection} posiotion + ${protection}`, {tag:'@trading'}, async({page}, testInfo)=>{
+    test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, {tag:'@trading'}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 150000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);

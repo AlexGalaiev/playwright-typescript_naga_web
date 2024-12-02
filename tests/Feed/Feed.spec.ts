@@ -55,7 +55,7 @@ const testFeedParamsActions: testFeedtypes[] = [
     {testRailId: '@25144', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
-    test(`${testRailId} Post actions: like post ${brand}`,{tag:'@feed'}, async({page}, testInfo)=>{
+    test(`${testRailId} Main actions for post: action - Like ${brand}`,{tag:'@feed'}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 50000);
     let signIn = new SignIn(page);
     let feed = new Feed(page)
@@ -92,7 +92,7 @@ const testFeedCommentParams: testFeedtypes[] = [
     {testRailId: '@25145', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
-    test(`${testRailId} Post actions: Comment a post ${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
+    test(`${testRailId} Main actions for post: Comment a post ${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
@@ -131,7 +131,7 @@ const testShareCommentParams: testFeedtypes[] = [
     {testRailId: '@25146', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
-    test(`${testRailId} Post actions: Share a post ${brand}`, {tag:['@feed', '@prodSanity']},async({page}, testInfo)=>{
+    test(`${testRailId} Main action for post: Share a post ${brand}`, {tag:['@feed', '@prodSanity']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
