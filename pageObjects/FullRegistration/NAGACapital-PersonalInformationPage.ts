@@ -19,6 +19,7 @@ export class PersonalInformation{
         this.submitBtn = page.locator("//button[contains(@class, 'kyc-live-account-capital_submitButton')]")
         this.street = page.locator('#addr_street_no')
         this.personalInfoForm = page.locator(".complete-your-profile-modal__content")
+        //this.signOut = page
     }
 
     async fillPersonalInformation(){
@@ -35,5 +36,8 @@ export class PersonalInformation{
     async waitPersonalInfoBlock(){
         await this.personalInfoForm.waitFor({state: "visible"})
         await this.page.reload()
+    }
+    async clickSignOutBtn(){
+        await this.page.locator("//button[text()='Sign out']").click();
     }
 }

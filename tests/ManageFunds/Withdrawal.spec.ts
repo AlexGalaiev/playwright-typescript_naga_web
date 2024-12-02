@@ -120,7 +120,7 @@ const testWithdrawalParameters: testWithdrawalTypes[] = [
     {testRailId: '@24089', brand: '@NS', user: 'testWithdrawal3@i.ua', menuPoint: 'eWallet', paymentMethod: 'perfectmoney', withdrawalPageTitle:'Perfect Money', amount: '50'}
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParameters){
-    test(`${testRailId} Check withdrawal different payments ${paymentMethod} ${brand}`, {tag: ["@withdrawal", '@prodSanity', '@manageFunds']}, async({page}, testInfo)=>{
+    test(`${testRailId} ${brand} Check withdrawal different payments ${paymentMethod} `, {tag: ["@withdrawal", '@prodSanity', '@manageFunds']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -151,7 +151,7 @@ const testWithdrawalParametersMarkets: testWithdrawalTypes[] = [
     {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle:'Perfect Money', amount: '60'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle, amount}of testWithdrawalParametersMarkets){
-    test(`${testRailId} NagaMarkets.Check withdrawal with different methods ${brand} ${paymentMethod}`, {tag: ["@withdrawal", '@prodSanity', '@manageFunds']},async({page}, testInfo)=>{
+    test(`${testRailId} ${brand} Check withdrawal with different methods  ${paymentMethod}`, {tag: ["@withdrawal", '@prodSanity', '@manageFunds']},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);

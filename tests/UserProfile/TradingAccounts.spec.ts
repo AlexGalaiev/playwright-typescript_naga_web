@@ -85,7 +85,7 @@ const testAccountSwitchingParams: tradingAcTypes[] = [
     {testRailId: '@25187', brand: '@NM', user: 'userWithAccounts2@i.ua'}
 ]
 for(const{testRailId, brand, user} of testAccountSwitchingParams){
-    test(`${testRailId} Account switching between trading accounts`, {tag:['@secondAccount', '@prodSanity']}, async({page}, testInfo)=>{
+    test(`${testRailId} Switching between trading accounts`, {tag:['@secondAccount', '@prodSanity']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 70000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)

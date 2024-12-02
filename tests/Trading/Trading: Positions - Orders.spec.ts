@@ -29,7 +29,7 @@ const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'}
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
-  test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,{tag:['@trading', '@prodSanity']}, async ({ page }, testInfo) => {
+  test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,{tag:['@trading', '@prodSanity'], annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -74,7 +74,7 @@ const tradingParamsOrders: tradingTypes[] = [
   {testRailId: '@25015', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'},
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
-  test(`${testRailId} ${brand} Open/Close pending ${investDirection} position`,{tag:'@trading'}, async ({ page }, testInfo) => {
+  test(`${testRailId} ${brand} Open/Close pending ${investDirection} position`,{tag:['@trading', '@prodSanity']}, async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);

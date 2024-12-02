@@ -117,7 +117,7 @@ const testParams: testTypes[] = [
     {testRailId: '@23569', brandStart: '@NM', brandRedirect: '@NS', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ]
 for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-    test(`${testRailId} Entity redirection ${brandStart}`, {tag:'@UI'}, async({page})=>{
+    test(`${testRailId} Switch brands popup ${brandStart}`, {tag:'@UI'}, async({page})=>{
         let localizationPage = new getLocalization(localization);
         let sighInPage = new SignIn(page);
         await test.step('Open login page and input email from different regulation', async()=>{
