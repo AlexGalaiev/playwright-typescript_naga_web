@@ -16,19 +16,15 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity']}, async({ p
     let mainPage = new MainPage(page);
     let startKyc = new StartKYCPopup(page)
     let verificationPopup = new VerificationPopup(page);
-    let email = await signUp.createLeadUserApiNagaCapital('BA', page)
+    let email = await signUp.createLeadUserApi("BA")
     await test.step(`Create lead user via API. Login by ${email} to platform`, async ()=>{
         await signIn.goto(NagaCapital, 'login');
         await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
     });
-    await test.step('Verify phone number via api request', async()=>{
-        await signUp.makePhoneVerifed(page)
-        await mainPage.mainPageIsDownLoaded();
-    })
     await test.step('Redirect to main page and begin register process', async ()=>{
+        await mainPage.mainPageIsDownLoaded()
         await mainPage.proceedRegistration();
         await startKyc.startKYC();
-        await startKyc.proceedVerification();
     });
     await test.step('Fill personal information step', async() =>{
         await new PersonalInformation(page).fillPersonalInformation();

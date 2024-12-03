@@ -9,33 +9,34 @@ import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "..//..//test-options"
 import { getLocalization } from "../../pageObjects/localization/getText"
 import { FinishPopup } from "../../pageObjects/FullRegistration/components/NagaX_FinishRegistrationPopup"
+import { SignIn } from "../../pageObjects/SignIn/SignInPage"
+import { NagaXAddPopup } from "../../pageObjects/FullRegistration/components/NagaX_AdditionalPopup"
 
 test.describe('Naga X. KYC', async()=>{
 
-    test('@25263 Full registration', {tag:['@prodSanity', '@kyc']}, async({page, NagaX}, testInfo)=>{
+    test('@25253 Full registration', {tag:['@prodSanity', '@kyc']}, async({page, NagaX}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 60000);
         let signUp = new SignUp(page)
-        let personlInformation = new PersonalInformation(page);
+        let signIn = new SignIn(page)
+        let kycPopups = new NagaXAddPopup(page)
         let verifiaction = new PhoneVerification(page)
-        let successPopup = new YouAreInCrypto(page)
         let mainPage = new MainPage(page)
         let KYC = new NagaX_KYC(page)
         let finishPopup = new FinishPopup(page)
         let localization = new getLocalization('/pageObjects/localization/NagaX_KYC.json')
-        await test.step("Create lead customer", async()=>{
-            await signUp.goto(NagaX, 'register')
-            await signUp.createCryptoUser('Bosnia and Herzegovina')
-        })
-        await test.step('Fill personal information and proceed registration. Skip authenfication', async()=>{
-            await personlInformation.fillCryptoPersonalInfo()
-            await verifiaction.insertVerificationCode_Crypto();
-            await successPopup.acceptPopup()  
-            await mainPage.clickVerifyBtn_NagaX();
+        let email = await signUp.createLeadUserApi("BA")
+        await test.step(`Login to platform by user ${email}`, async()=>{
+            await signIn.goto(NagaX, 'login')
+            await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
+            await kycPopups.acceptLoginPopup()
+            await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
+            await kycPopups.acceptTermsConditions()
             await new TwoAuthenfication(page).skipAuthenfication();
             await mainPage.clickVerifyBtn_NagaX();
         })
         await test.step('Add more personal information', async()=>{
             await KYC.fillPersonalFullData()
+            await verifiaction.insertVerificationCode_Crypto();
             await KYC.fillTinData();
             await KYC.fillAddressInfo()
             await KYC.fillInvestorProfile()
