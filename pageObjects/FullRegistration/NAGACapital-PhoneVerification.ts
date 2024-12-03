@@ -53,7 +53,8 @@ export class PhoneVerification{
         await this.insertCode(1, '1')
         await this.insertCode(2, '1')
         await this.insertCode(3, '1')
-        await this.page.locator("//button[@type='submit']").click();
+        await this.page.locator("//button[contains(@class, 'kyc-live-account_submitButton')]").click();
+        await this.page.waitForTimeout(22000)
     }
 
     async waitPersonalDetails(){

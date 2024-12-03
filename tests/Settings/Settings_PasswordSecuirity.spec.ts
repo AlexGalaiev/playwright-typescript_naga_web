@@ -16,7 +16,7 @@ test.describe("NagaCapital. Settings", async()=>{
         let myAccounts = new MyAccounts(page)
         let settings = new SettingsPage(page)
         let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
-        let email = await signUp.createLeadUserApiNagaCapital('BA', page)
+        let email = await signUp.createLeadUserApi("BA")
         await signIn.goto(NagaCapital, 'login');
         await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
         await test.step("Change password", async()=>{

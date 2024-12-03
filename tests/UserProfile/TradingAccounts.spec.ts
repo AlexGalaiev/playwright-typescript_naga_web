@@ -25,14 +25,12 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
     let signIn = new SignIn(page)
     let startKYC = new StartKYCPopup(page)
     await test.step('Create account with finished KYC', async ()=>{
-        let email = await signUp.createLeadUserApiNagaCapital('BA', page)
+        let email = await signUp.createLeadUserApi("BA")
         await signIn.goto(NagaCapital, 'login');
         await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
-        await signUp.makePhoneVerifed(page)
         await mainPage.mainPageIsDownLoaded();
         await mainPage.proceedRegistration();
         await startKYC.startKYC();
-        await startKYC.proceedVerification();
         await new PersonalInformation(page).fillPersonalInformation();
         await new AllSetPopup(page).clickDepositNow();
     })
