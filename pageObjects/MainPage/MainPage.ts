@@ -45,7 +45,9 @@ export class MainPage{
         return await this.verifyHeaders.isVisible()
     }
     async proceedRegistration(){
+        await this.page.waitForTimeout(1500)
         await this.page.locator("//span[text()='Complete now']").click();
+        await this.page.waitForTimeout(500)
     };
     async updateUserLevel(){
         await this.verifyStepHeader.click();
@@ -149,5 +151,8 @@ export class MainPage{
     }
     async clickVerifyBtn_NagaX(){
         await this.page.locator("//span[text()='Verify now']").click()
+    }
+    async clickCryptoSydeBarCategory(categoryName: string){
+        await this.page.locator(`//li[@class='sidebar__nav-item']//span[text()='${categoryName}']`).click()
     }
 }

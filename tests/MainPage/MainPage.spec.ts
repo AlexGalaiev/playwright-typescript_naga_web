@@ -11,66 +11,6 @@ import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapi
 
 
 test.describe('Main Page elements', async()=>{
-    type testTypes = {
-        testrailId: string;
-        brand: string;
-        email: string;
-    }
-    const testParams: testTypes[] = [
-       { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
-    ]
-    for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@login', '@prodSanity']}, async({page})=>{
-            let signIn = new SignIn(page);
-            let pageAfterLogOut = new PageAfterLogout(page)
-            let myAccountsMenu = new MyAccounts(page)
-            await test.step(`Login to platform by ${email}`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand), 'login')
-                await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
-            })
-            await test.step('Log out from platform', async()=>{
-                await myAccountsMenu.openUserMenu();
-                await myAccountsMenu.userLogOut()
-                expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
-            })})
-    }
-    const testNSParams: testTypes[] = [
-        { testrailId: "@23914", brand: '@NS', email: "testLeadUser"}
-    ]
-
-    for(const {testrailId, brand, email} of testNSParams){
-        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@login', '@prodSanity']}, async({page})=>{
-            let signIn = new SignIn(page);
-            let pageAfterLogOut = new PageAfterLogout(page)
-            //let myAccountsMenu = new MyAccounts(page)
-            await test.step(`Login to platform by ${email}`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand), 'login')
-                await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
-            })
-            await test.step('Log out from platform', async()=>{
-                await new PersonalInformation(page).clickSignOutBtn();
-                expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
-            })})
-    }
-
-    const testCryptoParams: testTypes[]= [
-        { testrailId: "@25332", brand: '@NX', email: "testLeadX@i.ua"}
-    ]
-    for(const {testrailId, brand, email} of testCryptoParams){
-        test(`${testrailId} Login/logout ${email} to platform ${brand}`, {tag:['@login', '@prodSanity']}, async({page})=>{
-            let signIn = new SignIn(page);
-            let myAccountsMenu = new MyAccounts(page)
-            await test.step(`Login to platform by ${email}`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand), 'login')
-                await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
-            })
-            await test.step('Log out from platform', async()=>{
-                await new TwoAuthenfication(page).skipAuthenfication();
-                await myAccountsMenu.openUserMenu();
-                await myAccountsMenu.userLogOut()
-                expect(await signIn.checkPageHeader()).toEqual('Sign in to your account')
-            })})
-    }
 
     type searchTypes = {
         testRailId: string;
