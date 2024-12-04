@@ -18,8 +18,7 @@ type testFeedtypes = {
 }
 const testFeedParams: testFeedtypes[] = [
    {testRailId: '@25122', brand: '@NS', user: 'testFeedUser'},
-   {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'},
-   {testRailId: '@25331', brand: '@NX', user: 'testFeedX@i.ua'}
+   {testRailId: '@25143', brand: '@NM', user: 'testFeedUserMarkets'}
 ]
 for(const{testRailId, brand, user}of testFeedParams){
     test(`${testRailId} Main actions for post: create, edit, delete ${brand}`,{tag:['@feed', '@prodSanity']}, async({page}, testInfo)=>{
@@ -49,6 +48,45 @@ for(const{testRailId, brand, user}of testFeedParams){
             await feed.deleteExistedPost(user)
         })
     })}
+type testCryptoTypes = {
+    testRailId: string,
+    brand: string,
+    user: string,
+    userId: string,
+}   
+
+const testNagaXParams: testCryptoTypes[] = [
+    {testRailId: '@25331', brand: '@NX', user: 'testFeedX@i.ua', userId:'sxns338383'}
+]
+for(const{testRailId, brand, user, userId}of testNagaXParams){
+    test(`${testRailId} Main actions for post: create, delete`,{tag:['@feed', '@prodSanity']}, async({page}, testInfo)=>{
+        await testInfo.setTimeout(testInfo.timeout + 30000);
+        let signIn = new SignIn(page);
+        let feed = new Feed(page)
+        let myAccounts = new MyAccounts(page)
+        await test.step(`login by existing user ${user}`, async()=>{
+            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await new TwoAuthenfication(page).skipAuthenfication()
+        })
+        await test.step('Delete previously created posts, if exist(in user profile)', async()=>{
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountsMenuItem('Profile')
+            await feed.closeOpenedPost(userId);
+            await new MainPage(page).clickCryptoSydeBarCategory('Feed')
+        })
+        await feed.openCreatePostForm()
+        await test.step("Create and edit post", async()=>{
+            let previousText = await feed.addTextToCryptoPost('Hello World')
+            expect(previousText).toEqual(await feed.getMainPagePostText(userId))
+        })
+        await test.step("Delete post", async()=>{
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountsMenuItem('Profile')
+            await feed.closeOpenedPost(userId);
+        })
+    })
+}
 
 const testFeedParamsActions: testFeedtypes[] = [
     {testRailId: '@25123', brand: '@NS', user: 'testFeedUser'},

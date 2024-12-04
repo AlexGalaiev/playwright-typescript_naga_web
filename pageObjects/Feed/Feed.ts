@@ -67,9 +67,26 @@ export class Feed {
     await this.postBtn.click();
     return postText;
   }
+  async addTextToCryptoPost(postText:string){
+    let postArea = await this.page.locator("//div[@class='feed-status-post-modal__body']//textarea")
+    await postArea.clear()
+    await postArea.pressSequentially(postText);
+    await this.page.waitForTimeout(500);
+    await this.postBtn.click();
+    await this.page.waitForTimeout(1500)
+    return postText;
+  }
 
   async editExistedPost(userName: string) {
     let post = await this.page.locator(".user-message-header__top", {
+      hasText: userName,
+    });
+    await post.scrollIntoViewIfNeeded()
+    await post.locator(".user-message-header__options").click();
+    await post.locator('[data-cy="edit-post"]').click();
+  }
+  async editCryptoExistedPost(userName: string){
+    let post = await this.page.locator(".user-message-header__user-info__username", {
       hasText: userName,
     });
     await post.scrollIntoViewIfNeeded()
@@ -149,5 +166,10 @@ export class Feed {
       name: "Verify Account",
     });
     await verifyBtn.click();
+  }
+  async getMainPagePostText(userId: string){
+    let post = await this.page.locator("//div[@class='feed-item']", {has: await this.page.locator(`//a[text()='${userId}']`)})
+    let text = await post.locator('.user-message-header__description').textContent()
+    return text
   }
 }

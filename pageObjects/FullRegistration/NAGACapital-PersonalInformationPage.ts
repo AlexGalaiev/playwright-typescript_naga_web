@@ -23,6 +23,7 @@ export class PersonalInformation{
     }
 
     async fillPersonalInformation(){
+        await this.firstName.waitFor({state:'visible'})
         await this.firstName.pressSequentially("test");
         await this.lastName.pressSequentially("test");
         await this.dateOfBirth.pressSequentially('12.12.1980')

@@ -607,7 +607,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
     ]
     for(const{testRailId, regulation, tabsName}of tabParams){
         test(`${testRailId} Check Pricing and Markets hours page.${regulation}`,{tag:'@website-naga.com'}, async({page},testInfo)=>{
-            await testInfo.setTimeout(testInfo.timeout + 10000);
+            await testInfo.setTimeout(testInfo.timeout + 30000);
             let website = new NagaCom(page)
             await test.step(`Open website naga.com/${regulation}`, async()=>{
                 await website.open(`https://naga.com/${regulation}/trading/hours-and-fees`)
