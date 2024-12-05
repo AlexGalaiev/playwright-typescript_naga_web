@@ -40,10 +40,13 @@ export class NewPosition{
         let rateBtn = await rateBtns.locator("//label[contains(@class, 'btn-default')]", {hasText:positionDiewctionWithRate})
         return await rateBtn
     }
-    async submitPosition(){
-        await this.submitBtn.scrollIntoViewIfNeeded()
-        await this.submitBtn.click()
-        await this.page.waitForTimeout(3000)
+    async submitPosition(investDirection){
+        let submitBtn = await this.page.locator(`//button[contains(text(), '${investDirection}')]`)
+        await submitBtn.scrollIntoViewIfNeeded()
+        await this.page.waitForTimeout(500)
+        await submitBtn.click()
+        await this.page.locator('.naga-toast').waitFor({state:'visible'})
+        await this.page.waitForTimeout(500)
     }
     //NagaProtection
     async enableProtection(NameOfProtection: string){
@@ -61,6 +64,28 @@ export class NewPosition{
     }
     async getSubmitBtnText(){
         return await this.submitBtn.textContent()
+    }
+    async installLostSizeRate(){
+        await this.page.waitForTimeout(1000)
+        await this.page.locator("//input[@value='units']//..").click()
+        let lotsFieldInput = await this.page.locator("//div[@class='investment-section ']//div[@class='enter-value']//input").nth(1)
+        let value = await lotsFieldInput.getAttribute('value')
+        let newValue = Number(value)*2
+        //await lotsFieldInput.clear()
+        //await lotsFieldInput.pressSequentially(String(newValue))
+        await this.page.waitForTimeout(500)
+    }
+    async installLotsSiveViaPlusBtn(){
+        await this.page.waitForTimeout(1000)
+        await this.page.locator("//input[@value='units']//..").click()
+        await this.page.waitForTimeout(500)
+        let plusBtn = await this.page.locator("//div[@class='investment-section ']//div[@class='enter-value']//div[contains(@class, 'plus-btn')]").nth(1)
+        await plusBtn.dblclick()
+        await plusBtn.dblclick()
+        await plusBtn.dblclick()
+        await plusBtn.dblclick()
+        await plusBtn.dblclick()
+        await this.page.waitForTimeout(500)
     }
 
 }

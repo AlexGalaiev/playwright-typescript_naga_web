@@ -52,7 +52,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
     await test.step("Check parameters and open short position", async () => {
       expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(investDirection))).toContain('active')
       expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${investDirection} at Current Price`))).toContain('active')
-      await newPosition.submitPosition();
+      await newPosition.submitPosition(investDirection);
     });
     await test.step("Check My-trades", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
@@ -78,7 +78,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
         {tag:['@trading', '@prodSanity'], 
         annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
         async ({ page }, testInfo) => {
-    await testInfo.setTimeout(testInfo.timeout + 140000);
+    await testInfo.setTimeout(testInfo.timeout + 30000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
@@ -98,9 +98,10 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
-    await test.step('Open order', async()=>{
+    await test.step('Open order with manual rate value', async()=>{
       await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
-      await newPosition.submitPosition()
+      await newPosition.installLotsSiveViaPlusBtn()
+      await newPosition.submitPosition(investDirection)
     })
     await test.step('Check my-trades', async()=>{
       await mainPage.openHeaderMenuPoint("my-trades");
