@@ -45,11 +45,11 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
       await mainPage.openHeaderMenuPoint("my-trades");
       await myTrades.closePositionsIfExist();
     });
-    await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
+    await test.step(`Choose ${tradingInstrument} instrument.  Open ${investDirection} type`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
-    await test.step("Check parameters and open short position", async () => {
+    await test.step(`Check parameters and open ${investDirection} position`, async () => {
       expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(investDirection))).toContain('active')
       expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${investDirection} at Current Price`))).toContain('active')
       await newPosition.submitPosition();
