@@ -40,8 +40,8 @@ export class NewPosition{
         let rateBtn = await rateBtns.locator("//label[contains(@class, 'btn-default')]", {hasText:positionDiewctionWithRate})
         return await rateBtn
     }
-    async submitPosition(investDirection){
-        let submitBtn = await this.page.locator(`//button[contains(text(), '${investDirection}')]`)
+    async submitPosition(){
+        let submitBtn = await this.page.locator("//button[contains(@class, 'buy-sell-button')]")
         await submitBtn.scrollIntoViewIfNeeded()
         await this.page.waitForTimeout(500)
         await submitBtn.click()

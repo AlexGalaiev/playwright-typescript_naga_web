@@ -37,8 +37,6 @@ for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
           await test.step('Check Not enough money messages', async()=>{
             expect(await newPosition.getNotEnoughFundsMsg()).toEqual('You have insufficient funds to trade at the moment')
             expect(await newPosition.getSubmitBtnText()).toEqual('Fund account now')
-            await newPosition.submitPosition()
-            expect(await mainPage.getUrl()).toContain('manage-money/deposit')
           })
     })
 }

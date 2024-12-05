@@ -13,7 +13,9 @@
         "ar":"تسجيل الدخول",
         "ind":"Login",
         "chi":"登录",
-        "chiGlobal":"登錄"
+        "chiGlobal":"登錄",
+        "ro":"Autentifică-te",
+        "thai":"เข้าระบบ"
     },
     "GetStarted":{
         "eng":"Get started",
@@ -29,7 +31,9 @@
         "ar":"البدء",
         "ind":"Memulai",
         "chi":"开始",
-        "chiGlobal":"開始"
+        "chiGlobal":"開始",
+        "ro":"Înregistrează-te",
+        "thai":"เริ่มต้นเทรด"
     },
     "Start Investing":{
         "eng":"Start Investing",
@@ -45,7 +49,8 @@
         "ar":"ابدأ الاستثمار",
         "ind":"Mulailah berinvestasi",
         "chi":"开始投资",
-        "chiGlobal":"開始投資"
+        "chiGlobal":"開始投資",
+        "ro":"Începe să investești"
     },
     "Get your card":{
         "eng":"Get your card",
@@ -90,6 +95,8 @@
         "ar":"اكتشف المزيد",
         "ind":"Temukan lebih banyak",
         "chi":"发现更多",
-        "chiGlobal":"探索更多"
+        "chiGlobal":"探索更多",
+        "ro":"Află mai multe",
+        "thai":"ค้นพบเพิ่มเติม"
     }
 }
