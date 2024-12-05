@@ -101,7 +101,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
         await newPosition.enableProtection(protection)
         NagaProtectionValue = await newPosition.getProtectionValue(protection)
-        await newPosition.submitPosition();
+        await newPosition.submitPosition(investDirection);
       });
       await test.step("Check My-trades popup", async () => {
         await mainPage.openHeaderMenuPoint("my-trades");
@@ -153,7 +153,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-      await newPosition.submitPosition(); 
+      await newPosition.submitPosition(investDirection); 
     });
     await test.step("Check My-trades", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
