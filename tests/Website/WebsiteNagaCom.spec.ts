@@ -608,7 +608,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId:'@25257', regulation:'za', tabsName:['Forex','Crypto','Indices','Stock CFDs','Commodities', 'Futures','ETFs']}
     ]
     for(const{testRailId, regulation, tabsName}of tabParams){
-        test(`${testRailId} Check Pricing and Markets hours page.${regulation}`,{tag:'@website-naga.com'}, async({page},testInfo)=>{
+        test(`${testRailId} Check Pricing and Markets hours page.${regulation}`,{tag:['@website-naga.com', '@debug']}, async({page},testInfo)=>{
             await testInfo.setTimeout(testInfo.timeout + 30000);
             let website = new NagaCom(page)
             await test.step(`Open website naga.com/${regulation}`, async()=>{

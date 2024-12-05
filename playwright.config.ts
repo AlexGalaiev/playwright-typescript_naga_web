@@ -22,7 +22,7 @@ export default defineConfig<TestOptions>({
   use: {
     video: "retain-on-failure",
     screenshot: "only-on-failure",
-    trace:"off",
+    trace:'retain-on-failure',
   },
   globalSetup: process.env.CI && process.env.CRON_RUN !== "schedule"
     ? require.resolve("./global-setup.ts")
