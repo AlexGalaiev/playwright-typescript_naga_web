@@ -616,8 +616,8 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
             })
             await test.step('Check that value inside tabs are not empty', async()=>{
                 await website.acceptAllCookies()
-                await website.scrollToMarketsAndTradingFees()
                 for(let index in tabsName){
+                    await website.scrollToMarketsAndTradingFees()
                     await website.openMarketAndHoursTab(tabsName[index])
                     let allInstruments = await website.getAllAvailableInstruments()
                     for(let index in allInstruments){

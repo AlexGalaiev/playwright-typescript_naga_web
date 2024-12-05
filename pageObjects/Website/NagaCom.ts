@@ -250,15 +250,16 @@ export class NagaCom{
     }
     async openMarketAndHoursTab(tabName: string){
         await this.page.locator(`//button[@id='${tabName}']`).click()
-        await this.page.waitForTimeout(1000)
+        await this.page.waitForTimeout(2500)
     }
     async scrollToMarketsAndTradingFees(){
-        await this.page.locator("//div[text()='Market Hours and Trading Fees']").scrollIntoViewIfNeeded();
+        await this.page.locator("//div[text()='Market Hours and Trading Fees']//..//tbody").scrollIntoViewIfNeeded();
     }
     async scrollToOtherFees(){
         await this.page.locator("//div[text()='Payment method']").scrollIntoViewIfNeeded()
     }
     async getAllAvailableInstruments(){
+        await this.page.waitForTimeout(1500)
         return await this.page.locator('//table//tbody//div[@id]').allTextContents()
     }
     async getTableData(instrument: string, tableIndex: string){
