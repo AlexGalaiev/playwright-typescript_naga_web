@@ -15,7 +15,11 @@ export type TestOptions = {
     NXCountry: string;
     WebsiteNagaCom: string;
     browserProxyContext: BrowserContext;
-    proxyPage: any
+    browserProxyContextUAE: BrowserContext;
+    browserProxyContextSA: BrowserContext;
+    proxyPage: any;
+    proxyPageUAE: any;
+    proxyPageSA: any
 }
 
 export const test = base.extend<TestOptions>({
@@ -36,7 +40,7 @@ export const test = base.extend<TestOptions>({
     },
     browserProxyContext: async({}, use)=>{
         let browser = await baseChromium.launch();
-        let vpn = await new VPN().proxyOptions(process.env.NORDVPN_USERNAME || '', process.env.NORDVPN_PASSWORD || '')
+        let vpn = await new VPN().proxyOptions(process.env.NORDVPN_USERNAME || '', process.env.NORDVPN_PASSWORD || '', 'IT')
         let context = await browser.newContext({proxy:{
             server: vpn,
             username: process.env.NORDVPN_USERNAME || '',
@@ -44,6 +48,27 @@ export const test = base.extend<TestOptions>({
         }});
         await use(context)
     },
+    browserProxyContextUAE: async({}, use)=>{
+        let browser = await baseChromium.launch();
+        let vpn = await new VPN().proxyOptions(process.env.NORDVPN_USERNAME || '', process.env.NORDVPN_PASSWORD || '', 'UAE')
+        let context = await browser.newContext({proxy:{
+            server: vpn,
+            username: process.env.NORDVPN_USERNAME || '',
+            password: process.env.NORDVPN_PASSWORD || ''
+        }});
+        await use(context)
+    },
+    browserProxyContextSA: async({}, use)=>{
+        let browser = await baseChromium.launch();
+        let vpn = await new VPN().proxyOptions(process.env.NORDVPN_USERNAME || '', process.env.NORDVPN_PASSWORD || '', 'SA')
+        let context = await browser.newContext({proxy:{
+            server: vpn,
+            username: process.env.NORDVPN_USERNAME || '',
+            password: process.env.NORDVPN_PASSWORD || ''
+        }});
+        await use(context)
+    },
+
     page: async ({browserContext}, use)=>{
         let page = await browserContext.newPage()
         await use(page)
@@ -59,5 +84,21 @@ export const test = base.extend<TestOptions>({
         await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
         await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserProxyContext.close()
+    },
+    proxyPageUAE: async({browserProxyContextUAE}, use)=>{
+        let page = await browserProxyContextUAE.newPage()
+        await use(page)
+        let Tr = await new TestRailIntegration();
+        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        await browserProxyContextUAE.close()
+    },
+    proxyPageSA: async({browserProxyContextSA}, use)=>{
+        let page = await browserProxyContextSA.newPage()
+        await use(page)
+        let Tr = await new TestRailIntegration();
+        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        await browserProxyContextSA.close()
     }
 })

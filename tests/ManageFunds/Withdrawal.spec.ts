@@ -27,9 +27,10 @@ test.describe("Naga Capital. Withdrawal", async()=>{
             await withdrawal.clickMenuPoint('Credit Card');
             await withdrawal.inputAmountWithdrawal(amountValueToWithrawal);
             expect(await withdrawal.getWithdrawalAmountValue()).toContain(amountValueToWithrawal);
-            await withdrawal.clickWithdrawBtn();
         })
         await test.step("Check withdrawal iframe", async()=>{
+            let responseTitle = await withdrawal.checkWithdrawalRequest()
+           // expect()
             expect(await withdrawal.getTitleOfCashierName()).toContain('Credit Card')
             expect(await withdrawal.checkNameOfIframe()).toEqual('_cashier_iframe')
         })
