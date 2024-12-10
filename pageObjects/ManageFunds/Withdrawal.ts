@@ -106,5 +106,20 @@ export class Withdrawal{
     };
     async getNagaMarketsWithdrawalPopupTitle(){
         return await this.titleOnNagaMarketsPopup.textContent();
+    };
+    async checkWithdrawalRequest(){
+        await this.WithdrawBtn.scrollIntoViewIfNeeded();
+        const [withdrawalRequest] = await Promise.all([
+            this.page.waitForResponse("**/api/cashier/get-gateway-list-without-details"),
+            this.page.locator("//button[text()='Withdraw']").click()
+        ])
+        let body = await withdrawalRequest.json()
+        return body.title()
+    };
+    async numberOfEwalletMethods(){
+        return await this.page.locator('[alt="withdraw option"]').count()
+    }
+    async numberOfCryptoMethods_NS(){
+        return await this.page.locator("//div[contains(@class, 'account-selection__list__item')]")
     }
 }

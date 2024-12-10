@@ -5,71 +5,71 @@ export class Deposit{
     readonly depositInputValuePoopup: Locator;
     readonly inputFieldDepositPopup: Locator;
     readonly submitDeposit: Locator;
-    readonly creditCardCashier: Locator;
-    readonly praxisHeaderTittle: Locator;
-    readonly cryptoDepositIframe: Locator;
-    readonly iframeName: Locator;
-    readonly iframeNameNM: Locator;
-    readonly praxisHeaderTittleNM: Locator;
-    readonly MNBankTransferForm: Locator;
 
     constructor(page: Page){
         this.page = page;
         this.depositInputValuePoopup = page.locator(".modal-content")
         this.inputFieldDepositPopup = page.locator("//input[contains(@class, 'amount')]")
         this.submitDeposit = page.locator("//button[@type='submit']")
-        this.creditCardCashier = page.locator("#_cashier_iframe")
-        this.praxisHeaderTittle = page.locator(".praxis-funding__header__title")
-        this.praxisHeaderTittleNM = page.locator("//span[contains(@class, 'header__title')]")
-        this.cryptoDepositIframe = page.locator("//div[@class='paydev-modal_inner']")
-        this.iframeName = page.locator("//div[@id='cashier-block']//iframe")
-        this.iframeNameNM = page.locator("//div[@class='Loader__content']//iframe")
-        this.MNBankTransferForm = page.locator('.truelayer-provider-form')
     }
-    async performDeposit(value: string){
-        await this.page.waitForTimeout(1000)
+
+    ///new
+    async performDepositWithoutAmount(depositName:string, depositUrl:string){
+        await this.page.waitForTimeout(1500)
+        //choose deposit method 
+        let depositMethod = await this.page.locator('.funding-method-table-body__info')
+        .filter({has: await this.page.locator(`//img[contains(@src, '${depositName}')]`)})
+        await depositMethod.scrollIntoViewIfNeeded()
+        //click on deposit method and get response
+        const [response] = await Promise.all([
+            this.page.waitForResponse(depositUrl),
+            depositMethod.click()
+        ]) 
+        return response
+    }
+    async performDepositWithAmount(depositName:string, value:string, depositUrl:string){
+        await this.page.waitForTimeout(1500)
+        //choose deposit method 
+        let depositMethod = await this.page.locator('.funding-method-table-body__info')
+        .filter({has: await this.page.locator(`//img[contains(@src, '${depositName}')]`)})
+        await depositMethod.scrollIntoViewIfNeeded()
+        await depositMethod.click()
+        //popup with input value
         await this.depositInputValuePoopup.waitFor({state:"visible"});
         await this.inputFieldDepositPopup.pressSequentially(value);
-        await this.submitDeposit.click();
-        await this.page.waitForTimeout(5000)
+        // Wait for response after click sub,it btn
+        const [response] = await Promise.all([
+            this.page.waitForResponse(depositUrl),
+            this.submitDeposit.click()
+        ]) 
+        return response
     }
-    async checkNameOfIframe(){
-        await this.page.waitForTimeout(5000)
-        let frameName = await this.iframeName.getAttribute("id")
-        return await frameName
+    async getApiPaymentMethodKey(responseBody: any){
+        let response = await responseBody.json()
+        return await response.gateways[0].payment_method_key
     }
-    async checkNameOfiframeNM(){
-        await this.page.waitForTimeout(5000)
-        let frameName = await this.iframeNameNM.getAttribute("id")
-        return await frameName
+    async getApiStatusCode(bodyJson: any){
+        return await bodyJson.status()
     }
-    async getPraxisHeaderTittle(){
-        return await this.praxisHeaderTittle.textContent()
+    async getSuccessStatus(response: any){
+        let responseBody = await response.json()
+        return await responseBody.success
     }
-    async getPraxisHeaderTittleNM(){
-        return await this.praxisHeaderTittleNM.textContent();
+    async getInfoCode(response: any){
+        let responseBody = await response.json()
+        return await responseBody.info.code
     }
-    async checkCryptoIframeDeposit(){
-        return await this.cryptoDepositIframe.isVisible()
+    async getNumberOfDepositMethods(){
+        return await this.page.locator("//div[contains(@class, 'funding-method-table-body__info')]").count()
     }
-//new 
-    async chooseDepositMethod(methodName: string){
-        await this.page.waitForTimeout(1500)
-        let depositMethod = await this.page.locator('.funding-method-table-body__info')
-        .filter({has: await this.page.locator(`//img[contains(@src, '${methodName}')]`)})
-        await depositMethod.scrollIntoViewIfNeeded()
-        await depositMethod.click();
-        await this.page.waitForTimeout(1500)
+    async checkActiveDepositTab(tabName: string){
+        let tab = await this.page.locator(`//a[contains(@id, 'mm_${tabName}')]`)
+        let tabStatus = await tab.getAttribute('class')
+        if(!tabStatus?.includes('active'))
+            await tab.click()
     }
     async getCurrentUrl(){
+        await this.page.waitForTimeout(1500)
         return await this.page.url();
-    }
-    async getBankTransferForm(){
-        return await this.MNBankTransferForm
-    }
-    async getWireTransferBankInfo(bankName: string){
-        let bankInfo = await this.page.locator('.bank-transfer-option')
-        .filter({has: await this.page.locator(`//span[text()='${bankName}']`)})
-        return await bankInfo
     }
 }
