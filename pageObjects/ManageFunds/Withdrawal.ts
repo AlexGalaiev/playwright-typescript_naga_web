@@ -67,7 +67,8 @@ export class Withdrawal{
         return await this.WithdrawalAmointCheck.textContent();
     };
     async getErrorText(){
-        await this.page.waitForTimeout(2000);
+        await this.page.waitForTimeout(2500);
+        await this.WithdrawalAmountErrorMSG.scrollIntoViewIfNeeded()
         return await this.WithdrawalAmountErrorMSG.textContent();
     };
     async clickWithdrawBtn(){
