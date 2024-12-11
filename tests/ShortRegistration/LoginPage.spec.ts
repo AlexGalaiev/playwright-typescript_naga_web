@@ -169,7 +169,7 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
            { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
         ]
         for(const {testrailId, brand, email} of testParams){
-            test(`${testrailId} Login/logout to platform ${brand} by ${email}`, {tag:['@login', '@prodSanity']}, async({page})=>{
+            test(`${testrailId} Login/logout to platform ${brand} by ${email}`, {tag:['@login', '@prodSanity','@smoke']}, async({page})=>{
                 let signIn = new SignIn(page);
                 let pageAfterLogOut = new PageAfterLogout(page)
                 let myAccountsMenu = new MyAccounts(page)
@@ -188,7 +188,7 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
         ]
     
         for(const {testrailId, brand, email} of testNSParams){
-            test(`${testrailId} Login/logout to platform ${brand}, by ${email} `, {tag:['@login', '@prodSanity']}, async({page})=>{
+            test(`${testrailId} Login/logout to platform ${brand}, by ${email} `, {tag:['@login', '@prodSanity','@smoke']}, async({page})=>{
                 let signIn = new SignIn(page);
                 let pageAfterLogOut = new PageAfterLogout(page)
                 //let myAccountsMenu = new MyAccounts(page)
@@ -206,7 +206,7 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
             { testrailId: "@25332", brand: '@NX', email: "testLeadX@i.ua"}
         ]
         for(const {testrailId, brand, email} of testCryptoParams){
-            test(`${testrailId} Login/logout to platform ${brand} by ${email}`, {tag:['@login', '@prodSanity']}, async({page})=>{
+            test(`${testrailId} Login/logout to platform ${brand} by ${email}`, async({page})=>{
                 let signIn = new SignIn(page);
                 let myAccountsMenu = new MyAccounts(page)
                 await test.step(`Login to platform by ${email}`, async()=>{

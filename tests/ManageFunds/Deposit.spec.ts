@@ -13,7 +13,7 @@ type NStestTypes = {
 }
 test.describe("Naga Capital.", async()=>{
     let numberOfExistDeposits = 5
-    test('@25351 Check of number exist deposit methods', 
+    test('@25351 Check number of exist deposit methods', 
         {tag:['@deposit', '@prodSanity', '@manageFunds']}, async({page, NagaCapital})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -51,9 +51,9 @@ for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestP
             expect(await deposit.getApiStatusCode(response)).toEqual(200)
         })
     })} 
-    test.describe('NagaCapital. Crypto and WiremTransfer', async()=>{
+    test.describe('NagaCapital. Crypto and WireTransfer', async()=>{
 
-        test.beforeEach(`Login by testTrading2 customer`, async({page, NagaCapital}, testInfo)=>{
+        test.beforeEach(`Login by testTrading2 to platform`, async({page, NagaCapital}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 10000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
@@ -70,7 +70,7 @@ for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestP
                 expect(await deposit.getApiStatusCode(response)).toEqual(200)
             })
         })
-        test('@25352 Deposit via wire transfer',{tag:['@deposit', '@manageFunds']}, async({page})=>{
+        test('@25352 Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds']}, async({page})=>{
             let deposit = new Deposit(page);
             await test.step('Check wire trannsfer deposit', async()=>{
                 let response = await deposit.performDepositWithoutAmount('amazonaws', '**/payment/bank_accounts')
