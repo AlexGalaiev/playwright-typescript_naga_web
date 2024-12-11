@@ -227,7 +227,7 @@ export class SignUp{
             this.page.context().waitForEvent('page'),
             doc.click()
         ])
-        await newPage.waitForLoadState('load')
+        //await newPage.waitForLoadState('load')
         return newPage
     }
     async checkUrl(){
