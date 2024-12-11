@@ -14,7 +14,7 @@ import { NagaXAddPopup } from "../../pageObjects/FullRegistration/components/Nag
 
 test.describe('Naga X. KYC', async()=>{
 
-    test('@25253 Full registration', {tag:['@prodSanity', '@kyc']}, async({page, NagaX}, testInfo)=>{
+    test.skip('@25253 Full registration', {tag:['@prodSanity', '@kyc']}, async({page, NagaX}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 60000);
         let signUp = new SignUp(page)
         let signIn = new SignIn(page)

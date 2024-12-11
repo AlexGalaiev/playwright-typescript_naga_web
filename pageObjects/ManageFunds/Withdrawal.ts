@@ -74,9 +74,9 @@ export class Withdrawal{
         await this.WithdrawBtn.scrollIntoViewIfNeeded();
         return await this.WithdrawBtn.click();
     };
-    async getEwalletWithdrawalAmount(){
-        return await this.ewalletWithdrawalAmount.textContent();
-    };
+    // async getEwalletWithdrawalAmount(){
+    //     return await this.ewalletWithdrawalAmount.textContent();
+    // };
     async openModalCCPopup(){
         await this.WithdrawBtn.press('Enter');
     };
@@ -107,19 +107,45 @@ export class Withdrawal{
     async getNagaMarketsWithdrawalPopupTitle(){
         return await this.titleOnNagaMarketsPopup.textContent();
     };
+    // new
     async checkWithdrawalRequest(){
         await this.WithdrawBtn.scrollIntoViewIfNeeded();
         const [withdrawalRequest] = await Promise.all([
             this.page.waitForResponse("**/api/cashier/get-gateway-list-without-details"),
             this.page.locator("//button[text()='Withdraw']").click()
         ])
-        let body = await withdrawalRequest.json()
-        return body.title()
+        return withdrawalRequest
     };
-    async numberOfEwalletMethods(){
+    async getNumberOfWithdrawalMethods(){
         return await this.page.locator('[alt="withdraw option"]').count()
     }
     async numberOfCryptoMethods_NS(){
         return await this.page.locator("//div[contains(@class, 'account-selection__list__item')]")
+    }
+
+    async performManualWithdrawal(ValueToInput: number, withdrawalURL: string){
+        await this.CCWithdrawalAmount.waitFor({timeout:15000})
+        await this.CCWithdrawalAmount.pressSequentially(String(ValueToInput));
+        await this.page.waitForTimeout(1000)
+        const [response] = await Promise.all([
+            this.page.waitForResponse(withdrawalURL),
+            this.WithdrawBtn.click()
+        ])
+        return response
+    }
+    async getAPIWithdrawalMSG(response: any){
+        let body = await response.json()
+        return await body.data.message
+    }
+    async getAPIWithdrawalAmount(response: any){
+        let body = await response.json()
+        return await body.data.requested_amount
+    }
+    async getApiPaymentMethodKey(response: any){
+        let body = await response.json();
+        return await body.gateways[0].payment_method_key
+    }
+    async getApiStatusCode(response: any){
+        return await response.status()
     }
 }
