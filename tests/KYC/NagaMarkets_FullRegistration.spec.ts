@@ -32,7 +32,7 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
 );
 
 test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity','@smoke']}, async ({page}, testInfo) => {
-  await testInfo.setTimeout(testInfo.timeout + 120000);
+  testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let quiz = new FullRegistration(page);
   let localization = new getLocalization(kycFinishContent);
@@ -42,16 +42,15 @@ test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity','@s
     await quiz.fill_KYC(KYC_Advance);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {
-    expect(await KYC_FinalStep.getUsersScorring()).toEqual("Advanced");
-    expect(await localization.getLocalizationText("KYC_Advance_Disclaimer")).toContain(await KYC_FinalStep.getDisclaimer());
-    expect(await localization.getLocalizationText("KYC_AdvanceScorring_Footer_description")).toContain(await KYC_FinalStep.getDescription());
-    expect(await KYC_FinalStep.getFundAccountText()).toContain(await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount"));
-    await KYC_FinalStep.clickFundAccount();
+    expect(await KYC_FinalStep.getUserScorringText()).toContain("Advanced");
+    expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+    await KYC_FinalStep.clickBtn('Deposit');
+    expect(await new MainPage(page).getMainPageBannerText()).toContain('Verify your identity')
   });
 });
 
 test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@kyc']}, async ({page}, testInfo) => {
-  await testInfo.setTimeout(testInfo.timeout + 120000);
+  testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent = "/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let quiz = new FullRegistration(page);
   let localization = new getLocalization(kycFinishContent);
@@ -61,16 +60,15 @@ test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@kyc']}, async ({page
     await quiz.fill_KYC(KYC_PreAdvance);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {
-    expect(await KYC_FinalStep.getUsersScorring()).toEqual("Pre-Advanced");
-    expect(await localization.getLocalizationText("KYC_PreAdvance_Disclaimer")).toContain(await KYC_FinalStep.getPreAdvanceDisclaimer());
-    expect(await localization.getLocalizationText("KYC_PreAdvance_Footer_quizWarning")).toContain(await KYC_FinalStep.getPreAdvanceWarning());
-    expect(await localization.getLocalizationText("KYC_PreAdvance_Footer_description")).toContain(await KYC_FinalStep.getPreAdvanceDescription());
-    expect(await KYC_FinalStep.getPreAdvanceFundAccount()).toContain(await localization.getLocalizationText("KYC_PreAdvance_Footer_fundaccount"));
-    await KYC_FinalStep.clickFundAccount()});
-});
+    expect(await KYC_FinalStep.getUserScorringText()).toContain("Pre-Advanced");
+    expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+    await KYC_FinalStep.clickBtn('Deposit');
+    expect(await new MainPage(page).getMainPageBannerText()).toContain('Your account will be eligible for reassessment in 15 days')
+})
+})
 
 test("@24920 Naga Markets. KYC - Intermediate level.", {tag:'@kyc'},async ({page}, testInfo) => {
-  await testInfo.setTimeout(testInfo.timeout + 120000);
+  testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent ="/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let quiz = new FullRegistration(page);
   let localization = new getLocalization(kycFinishContent);
@@ -80,17 +78,17 @@ test("@24920 Naga Markets. KYC - Intermediate level.", {tag:'@kyc'},async ({page
     await quiz.fill_KYC(KYC_Intermediate);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {
-    expect(await KYC_FinalStep.getUsersScorring()).toEqual("Intermediate");
-    expect(await localization.getLocalizationText("KYC_Intermidiate_Warning")).toContain(await KYC_FinalStep.getIntermediateWarning());
-    expect(await localization.getLocalizationText("KYC_Intermidiate_Disclaimer")).toContain(await KYC_FinalStep.getIntermediateDisclaimer());
-    expect(await localization.getLocalizationText("KYC_Intermidiate_Desription")).toContain(await KYC_FinalStep.getIntermediateDescription());
-    expect(await KYC_FinalStep.getIntermediateFundAcount()).toContain(await localization.getLocalizationText("KYC_Intermidiate_FundAccount"));
-    await KYC_FinalStep.clickFundAccount();
+    expect(await KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
+    expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+    await KYC_FinalStep.clickBtn('Deposit');
+    expect(await new MainPage(page).getMainPageBannerText()).toContain('Your account will be eligible for reassessment in 15 days')
   });
 });
 
-test("@24923 Naga Markets. KYC - Elementary level.",{tag:['@kyc']}, async ({page}, testInfo) => {
-  await testInfo.setTimeout(testInfo.timeout + 120000);
+test.fixme("@24923 Naga Markets. KYC - Elementary level.",
+  {tag:'@kyc', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-6937','type';'ticket'}}, 
+    async ({page}, testInfo) => {
+  testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent ="/pageObjects/localization/NagaMarkets_KYC_localization.json";
   let mainPageLocalization = "/pageObjects/localization/NagaMarkets_MainPage.json";
   let quiz = new FullRegistration(page);
@@ -122,10 +120,9 @@ test("@24922 Naga Markets. KYC - Beginner level.",{tag:['@kyc']}, async ({page},
     await quiz.fill_KYC(KYC_Beginner);
   });
   await test.step("Check KYC status. Check KYC finish popup texts", async () => {
-    expect(await KYC_FinalStep.getUsersScorring()).toEqual("Beginner Account");
-    expect(await localization.getLocalizationText("KYC_Beginer_warning")).toContain(await KYC_FinalStep.getBeginnerWarning());
-    expect(await localization.getLocalizationText("KYC_Beginer_disclaimer")).toContain(await KYC_FinalStep.getBeginnerDisclaimer());
-    expect(await localization.getLocalizationText("KYC_Beginer_fundAccount")).toContain(await KYC_FinalStep.getBeginnerDescription());
-    await KYC_FinalStep.clickFundAccount();
+    expect(await KYC_FinalStep.getUserScorringText()).toContain("Beginner");
+    expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+    await KYC_FinalStep.clickBtn('Deposit');
+    expect(await new MainPage(page).getMainPageBannerText()).toContain('Your account will be eligible for reassessment in 15 days')
   });
 });

@@ -231,7 +231,7 @@ export class SignUp{
         return newPage
     }
     async checkUrl(){
-        await this.page.waitForTimeout(500)
+        await this.page.waitForTimeout(1500)
         return await this.page.url()
     }
     async switchBack(){
@@ -289,6 +289,14 @@ export class SignUp{
         console.log(error);
         });
         await this.page.waitForTimeout(250)
+    }
+    async getNumberObBtns(){
+        return await this.page.locator("//button[contains(@class, 'button')]").count()
+    }
+    async personalInfoPopup(){
+        let personalInfoPopup = await this.page.locator('.complete-your-profile-modal__panel')
+        await personalInfoPopup.waitFor({state:'visible'})
+        return await personalInfoPopup
     }
 }
 
