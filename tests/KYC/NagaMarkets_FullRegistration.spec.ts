@@ -86,7 +86,7 @@ test("@24920 Naga Markets. KYC - Intermediate level.", {tag:'@kyc'},async ({page
 });
 
 test.fixme("@24923 Naga Markets. KYC - Elementary level.",
-  {tag:'@kyc', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-6937','type';'ticket'}}, 
+  {tag:'@kyc', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-6937','type':'ticket'}}, 
     async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let kycFinishContent ="/pageObjects/localization/NagaMarkets_KYC_localization.json";
