@@ -155,4 +155,8 @@ export class MainPage{
     async clickCryptoSydeBarCategory(categoryName: string){
         await this.page.locator(`//li[@class='sidebar__nav-item']//span[text()='${categoryName}']`).click()
     }
+    async getMainPageBannerText(){
+        await this.page.waitForTimeout(1500)
+        return await this.page.locator('//div[@class="user-status-box__desc-title"]').textContent()
+    }
 }

@@ -34,7 +34,8 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             await new PageAfterLogout(page).redirectToSighIn();
         })})
 
-    test.skip("@23916 Forgot password link test",{tag:'@forgotPassword'}, async({page})=>{
+    test.skip("@23916 Forgot password link test",
+            {tag:'@forgotPassword', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, async({page})=>{
         let signInPage = new SignIn(page);
         let forgotPassword = new ForgotPassword(page);
         await test.step('Check forgot password messages on UI', async()=>{
@@ -77,7 +78,8 @@ test.describe('Naga Markets. Sigh in', async()=>{
             await new PageAfterLogout(page).redirectToSighIn();
         })})
     
-    test.skip("@23574 Forgot password link test", {tag:'@forgotPassword'}, async({page})=>{
+    test.skip("@23574 Forgot password link test", 
+        {tag:'@forgotPassword', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, async({page})=>{
         let signInPage = new SignIn(page);
         let forgotPassword = new ForgotPassword(page);
         await test.step("Check forgot password functionality", async()=>{
@@ -166,10 +168,12 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
             email: string;
         }
         const testParams: testTypes[] = [
-           { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"}
+           { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"},
+           { testrailId: "@23914", brand: '@NS', email: "testLeadUser"}
         ]
         for(const {testrailId, brand, email} of testParams){
-            test(`${testrailId} Login/logout to platform ${brand} by ${email}`, {tag:['@login', '@prodSanity','@smoke']}, async({page})=>{
+            test(`${testrailId} Login/logout to platform ${brand} by ${email}`, 
+                {tag:['@login', '@prodSanity','@smoke']}, async({page})=>{
                 let signIn = new SignIn(page);
                 let pageAfterLogOut = new PageAfterLogout(page)
                 let myAccountsMenu = new MyAccounts(page)
@@ -181,25 +185,8 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
                     await myAccountsMenu.openUserMenu();
                     await myAccountsMenu.userLogOut()
                     expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
-                })})
-        }
-        const testNSParams: testTypes[] = [
-            { testrailId: "@23914", brand: '@NS', email: "testLeadUser"}
-        ]
-    
-        for(const {testrailId, brand, email} of testNSParams){
-            test(`${testrailId} Login/logout to platform ${brand}, by ${email} `, {tag:['@login', '@prodSanity','@smoke']}, async({page})=>{
-                let signIn = new SignIn(page);
-                let pageAfterLogOut = new PageAfterLogout(page)
-                //let myAccountsMenu = new MyAccounts(page)
-                await test.step(`Login to platform by ${email}`, async()=>{
-                    await signIn.goto(await signIn.chooseBrand(brand), 'login')
-                    await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
                 })
-                await test.step('Log out from platform', async()=>{
-                    await new PersonalInformation(page).clickSignOutBtn();
-                    expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
-                })})
+            })
         }
     
         const testCryptoParams: testTypes[]= [

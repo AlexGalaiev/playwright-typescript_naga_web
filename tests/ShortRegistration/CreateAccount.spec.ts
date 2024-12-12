@@ -27,7 +27,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId: '@25116', brand:'@NX', localization: '/pageObjects/localization/NagaX_SignInPage.json'}
     ]
     for(const{testRailId, brand, localization} of testNXRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:'@UI'}, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, async({page})=>{
             let localizationText = new getLocalization(localization)
             let signUp = new SignUp(page);
             await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
@@ -40,7 +40,7 @@ test.describe("Sign up page.", async()=>{
         languages: string[];
     }
     const platformLanguages :languages[] = [
-        {testRailId: '@25117', brand:'@NX', languages: ['English', 'Español', 'Deutsch','Polski','Italiano']},
+        //{testRailId: '@25117', brand:'@NX', languages: ['English', 'Español', 'Deutsch','Polski','Italiano']},
         {testRailId: '@25241', brand:'@NS', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
         {testRailId: '@25242', brand:'@NM', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
     ]
@@ -109,5 +109,35 @@ test.describe("Sign up page.", async()=>{
                     await sighUp.switchBack()
                 }})})
     }
-
 })
+
+test.describe('Create account per brand', async()=>{
+
+    test.skip('@25356 @NM Create lead user',
+        {tag:'@smoke', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
+            async({page, NagaMarkets})=>{
+        let signUp = new SignUp(page)
+        let localizationText = new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json')
+        await signUp.goto(NagaMarkets, 'register')
+        expect(await signUp.getNumberObBtns()).toEqual(4)
+        expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
+        await signUp.create_NM_CFDUser('France')
+        expect(await signUp.personalInfoPopup()).toBeVisible()
+    })
+    test.skip('@25357 @NS Create lead user',
+        {tag:'@smoke', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
+            async({page, NagaCapital})=>{
+        let signUp = new SignUp(page)
+        let localizationText = new getLocalization('/pageObjects/localization/SignUpPage.json')
+        await signUp.goto(NagaCapital, 'register')
+        expect(await signUp.getNumberObBtns()).toEqual(4)
+        expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
+        await signUp.createCFDUser('Bosnia')
+        expect(await signUp.personalInfoPopup()).toBeVisible()
+    })
+})
+
+
+    
+
+

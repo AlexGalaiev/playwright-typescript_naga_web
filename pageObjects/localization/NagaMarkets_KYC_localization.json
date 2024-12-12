@@ -82,5 +82,8 @@
     },
     "KYC_categorization":{
         "answer":"Due to regulatory requierements, NAGA uses an automated scoring system to evaulate your replies and categorize your knowledge and suitability for trading. Once you complete the questionaire, you will see the scoring result. After 15 days you can be re-assessed and get a higher  score. In short, these are the major differences for you in each category:"
+    },
+    "KYC_PreAdvance_RiskDisclaimer":{
+        "answer":"Risk Warning: CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money. You may proceed further with your trading experience by accepting this risk."
     }
 }

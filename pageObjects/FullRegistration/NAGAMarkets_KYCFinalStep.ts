@@ -126,4 +126,16 @@ export class FinalStep{
     async getBeginnerFundAccount(){
         return await this.BeginnerFundAccount.textContent()
     }
+    //new 
+    async getUserScorringText(){
+        let userText = await this.page.locator("//p[contains(text(), 'Account Categorization')]")
+        return await userText.textContent()
+    }
+    async getPreAdvanceRiskWarning(){
+        return await this.page.locator("//p[contains(@class, 'account-specification-modal_description__content__span')]").textContent()
+    }
+    async clickBtn(buttonName: string){
+        await this.page.locator(`//button[text()='${buttonName}']`).click()
+        await this.page.waitForTimeout(1500)
+    }
 }

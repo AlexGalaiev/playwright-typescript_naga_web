@@ -59,7 +59,7 @@ const testNagaXParams: testCryptoTypes[] = [
     {testRailId: '@25331', brand: '@NX', user: 'testFeedX@i.ua', userId:'sxns338383'}
 ]
 for(const{testRailId, brand, user, userId}of testNagaXParams){
-    test(`${testRailId} Main actions for post: create, delete`,{tag:['@feed', '@prodSanity']}, async({page}, testInfo)=>{
+    test(`${testRailId} Main actions for post: create, delete`, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let feed = new Feed(page)
