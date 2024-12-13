@@ -40,7 +40,6 @@ test.describe("Sign up page.", async()=>{
         languages: string[];
     }
     const platformLanguages :languages[] = [
-        //{testRailId: '@25117', brand:'@NX', languages: ['English', 'Español', 'Deutsch','Polski','Italiano']},
         {testRailId: '@25241', brand:'@NS', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
         {testRailId: '@25242', brand:'@NM', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
     ]
@@ -92,7 +91,6 @@ test.describe("Sign up page.", async()=>{
     const legalDocumentsParams: legalDocuments[] = [
         {testRailId:'@25246', brand:'@NS', documents: new Map<string, string>([['Privacy Policy', 'https://naga.com/en/privacy-policy'],['legal documents','https://naga.com/en/legal-documentation'],['Client Agreement','https://naga.com/en/legal-documentation']])},
         {testRailId:'@25247', brand:'@NM', documents: new Map<string, string>([['Privacy Policy', 'https://cms.naga.com/Privacy_Policy'],['legal documents','https://nagamarkets.com/eu/legal-documentation']])},
-        //{testRailId:'@25247', brand:'@NX', documents: new Map<string, string>([['Privacy Policy', 'https://files.nagax.com/files/NXCY-Privacy-Policy.pdf'],['legal documents','https://nagax.com/eu/regulation-and-licensing']])}
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
         test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:'@UI'},async({page})=>{
