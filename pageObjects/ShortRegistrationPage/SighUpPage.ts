@@ -10,8 +10,8 @@ export class SignUp{
     readonly submitBtn: Locator;
     readonly riskWarning: Locator;
     readonly sighUpTittle: Locator;
-    readonly NM_checkboxPrivacyPolicy: Locator;
-    readonly NM_checkbox_yearsConfirmeation: Locator;
+    readonly checkbox_PrivacyPolicy: Locator;
+    readonly checkbox_RiskAcceptance: Locator;
     readonly NX_RiskDisclaimer: Locator;
     notCorrectCountryMSG: Locator;
     countryCrypto: Locator;
@@ -25,8 +25,8 @@ export class SignUp{
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
         this.riskWarning = page.locator("//div[contains(@class, 'registration-form__risk-warning')]");
         this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
-        this.NM_checkboxPrivacyPolicy = page.locator("//div[@class='custom-checkbox'][1]");
-        this.NM_checkbox_yearsConfirmeation = page.locator("//div[@class='custom-checkbox'][2]");
+        this.checkbox_PrivacyPolicy = page.locator("//input[@data-testid='privacy-policy-checkbox']/following-sibling::label");
+        this.checkbox_RiskAcceptance = page.locator("//input[@data-testid='data-processing-checkbox']/following-sibling::label");
         this.NX_RiskDisclaimer = page.locator("//label[contains(@class, 'registration-form__consent')]");
         this.notCorrectCountryMSG = page.locator("//div[contains(@class, 'registration-form__country-error--shown')]")
     };
@@ -35,27 +35,23 @@ export class SignUp{
         await this.page.goto(`${MainPage}/${pageTest}`);
     };
 
-    async createCFDUser(Country: string){
-        let user = new RandomUser();
-        let randomEmail = user.getRandomUserEmail();
-        await this.email.pressSequentially(randomEmail);
-        await this.password.pressSequentially("Test123!")
-        await this.checkCountry(Country)
-        await this.submitBtn.click();
-        //await this.page.waitForSelector('.header__menu',{state:'visible'})
-        return randomEmail;
+    async createCFDUser(email: string, password: string,  country: string){
+        await this.page.waitForTimeout(500)
+        await this.email.pressSequentially(email);
+        await this.password.pressSequentially(password)
+        await this.checkCountry(country)
+        //await this.page.locator("//label[contains(@class, 'registration-form')]").click()
+        await this.page.waitForTimeout(500)
+        await this.page.locator("//button[text()='Sign Up']").click()
     };
-    async create_NM_CFDUser(Country: string){
-        let user = new RandomUser();
-        let randomEmail = user.getRandomUserEmail();
-        await this.email.pressSequentially(randomEmail);
-        await this.password.pressSequentially("Test123!")
-        await this.checkCountry(Country)
-        await this.NM_checkboxPrivacyPolicy.click();
-        await this.NM_checkbox_yearsConfirmeation.click();
+    async createCfdUser_All(email: string, password: string,  country: string){
+        await this.page.waitForTimeout(500)
+        await this.email.pressSequentially(email);
+        await this.password.pressSequentially(password)
+        await this.checkCountry(country)
+        await this.checkbox_PrivacyPolicy.click();
+        await this.checkbox_RiskAcceptance.click();
         await this.submitBtn.click();
-        //await this.page.waitForSelector('.header__menu',{state:'visible'})
-        return randomEmail;
     }
 
     async createCryptoUser(country: string){

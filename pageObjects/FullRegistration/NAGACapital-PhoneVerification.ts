@@ -35,8 +35,9 @@ export class PhoneVerification{
         await this.insertCode(1, '1')
         await this.insertCode(2, '1')
         await this.insertCode(3, '1')
-        await this.submitBtn.click();
+        await this.page.locator("//button[text()='Submit']").click()
         await this.page.waitForTimeout(10000)
+        await this.page.waitForSelector("//button[text()='Submit']", {state:'hidden'})
     };
 
     async MN_insertVerificationCode(){

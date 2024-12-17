@@ -27,7 +27,7 @@ export class FullRegistration{
         this.id = page.locator("[name='national_id']")
     }
     async countryStep(){
-        await this.page.waitForSelector("//label[@for='country_expected_source_of_funds']");
+        await this.page.waitForSelector("//label[@for='country_expected_source_of_funds']", {'state':'visible'});
         await this.countrySumbit.click()
         await this.page.waitForTimeout(250)
     }
@@ -71,7 +71,6 @@ export class FullRegistration{
         let answerQuiz = await this.page.locator(`//button[text()='${answer}']`)
         await this.page.waitForTimeout(4000);
         await answerQuiz.click();
-        
     }
     async singleSelectOther(QuestionName: string, level: string){
         await this.page.waitForTimeout(700)

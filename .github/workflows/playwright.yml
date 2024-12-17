@@ -28,14 +28,15 @@ on:
           - "UI"
           - "messanger"
           - "smoke"
-      environment:
-        description: 'Choose environment'
-        default: "@production"
-        type: choice
-        required: false
-        options:
-          - "qa"
-          - "production"
+          - "compliance"
+      #environment:
+       # description: 'Choose environment'
+        #default: "@production"
+        #type: choice
+        #required: false
+        #options:
+         # - "qa"
+          #- "production"
       ticket_id:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string

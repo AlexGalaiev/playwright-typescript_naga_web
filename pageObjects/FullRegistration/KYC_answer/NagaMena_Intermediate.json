@@ -1,0 +1,94 @@
+{
+    "level_of_trading_knowledge":{
+        "text": "What is your financial knowledge regarding leveraged products?",
+        "answer":"I have no financial knowledge "
+    },
+    "trading_experience_in_stocks_bonds_etfs":{
+        "text": "Over the last year, how many times have you invested in stocks and/or ETFs?",
+        "answer":"1 - 10 "
+    },
+    "trading_experience_in_contracts":{
+        "text": "How many times have you invested in Contracts for Difference and other Leverage Products, over the last year?",
+        "answer":"1 - 10"
+    },
+    "trading_experience_in_crypto":{
+        "text": "Over the last year, how many times have you invested in crypto?",
+        "answer":"1 - 10 "
+    },
+    "market_moves_by_3_percent":{
+        "text": "The market moves by 3%. Trading with which leverage would lead to the largest potential profit or loss?",
+        "answer":"1:5"
+    },
+    "required_margin_for_1_lot":{
+        "text": "What would be the required margin in AED for 1 lot (100,000) AED/USD, if your leverage is 1:100?",
+        "answer":"1,000"
+    },
+    "type_of_closing_order":{
+        "text": "What type of closing order can you choose to help limit losses when trading?",
+        "answer":"A stop loss order"
+    },
+    "how_much_do_you_have_to_pay_to_buy":{
+        "text": "How much margin in AED is going to be used to buy 1,000,000 AED/USD through an account that its leverage is 1:50?",
+        "answer":"1,000,000"
+    },
+    "market_moving_against_you":{
+        "text": "The market is moving against you and your account has a stop-out level of 50%. Your account will be stopped out in which of the following situations?",
+        "answer":"The account equity reaches zero"
+    },
+    "employment_status":{
+        "text": "What best describes your employment status?",
+        "answer":"Employed"
+    },
+    "employer_name":{
+        "text": "Name of Employer",
+        "answer":"Amazon"
+    },
+    "employment_type":{
+        "text": "What is your occupation - work industry?",
+        "answer":"Accounting"
+    },
+    "source_of_income":{
+        "text": "What is the origin of funds you plan to invest on NAGA?",
+        "answer":"Savings"
+    },
+    "annual_income":{
+        "text": "What is your annual net income in USD?",
+        "answer":"From 2,000,001 - 3,000,000"
+    },
+    "net_worth":{
+        "text": "Your Net Worth in USD (Assets less Liabilities)?",
+        "answer":"From 2,000,001 - 3,000,000"
+    },
+    "liquid_assets_net_worth":{
+        "text": "Your total cash and liquid assets in your Net Worth?",
+        "answer":"More than 10%"
+    },
+    "anticipated_amount":{
+        "text": "How much do you plan to deposit into NAGA account in USD over 1 year?",
+        "answer":"From 100,001 - 250,000"
+    },
+    "expected_deposit_and_withdrawal_method":{
+        "text": "How do you plan to deposit your funds to NAGA?",
+        "answer":"Bank Transfer"
+    },
+    "underlying_instrument_on_contracts":{
+        "text": "Which assets do you plan to trade at NAGA? Please select from one to four options:",
+        "answer":"Stocks, Bonds, and ETFs"
+    },
+    "investment_objectives_naga":{
+        "text": "What best describes your primary purpose of trading with us?",
+        "answer":"Short Term Returns"
+    },
+    "time_to_hold_open_positions":{
+        "text": "How long do you plan to leave your positions open?",
+        "answer":"Less than a week"
+    },
+    "level_of_risk_to_tolerate_in_exchange":{
+        "text": "Please state the level of risk (volatility) you will tolerate in exchange for the expected gain from your annual investments with us?",
+        "answer":"Potential gain 80% / Potential loss -80%"
+    },
+    "currency":{
+        "text": "Please choose the currency for your trading account:",
+        "answer":"EUR"
+    }
+}

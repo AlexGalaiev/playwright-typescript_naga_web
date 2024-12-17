@@ -8,27 +8,28 @@ import { AllSetPopup } from "../../pageObjects/common/allSetPopup(KYC)/allSetPop
 import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-UpdateAccount";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
+import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
+import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
+import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
 test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']}, async({ page, NagaCapital }, testInfo)=>{
-    await testInfo.setTimeout(testInfo.timeout + 50000);
+    testInfo.setTimeout(testInfo.timeout + 60000);
     let signUp = new SignUp(page);
-    let signIn = new SignIn(page)
+    //let signIn = new SignIn(page)
     let mainPage = new MainPage(page);
     let startKyc = new StartKYCPopup(page)
+    let personalInfo = new PersonalInformation(page)
     let verificationPopup = new VerificationPopup(page);
-    let email = await signUp.createLeadUserApi("BA")
-    await test.step(`Create lead user via API. Login by ${email} to platform`, async ()=>{
-        await signIn.goto(NagaCapital, 'login');
-        await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
-    });
-    await test.step('Redirect to main page and begin register process', async ()=>{
-        await mainPage.mainPageIsDownLoaded()
-        await mainPage.proceedRegistration();
-        await startKyc.startKYC();
+    let email = await new RandomUser().getRandomUserEmail() 
+    await test.step(`Create lead user with ${email}`, async ()=>{
+        await signUp.goto(NagaCapital, 'register')
+        await signUp.createCFDUser(email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina')
     });
     await test.step('Fill personal information step', async() =>{
-        await new PersonalInformation(page).fillPersonalInformation();
-        await new AllSetPopup(page).clickDepositNow();
+        await personalInfo.fillPersonalInformation();
+        await new YouAreInNagaMarkets(page).clickOpenRealMoneyAccount()
+        await personalInfo.compleateYourProfile()
+        await personalInfo.clickDepositNow()
     });
     await test.step('Check status on second step on header banner', async()=>{
         expect(await mainPage.getStatusOfHeaderStep(2)).toEqual('To do')

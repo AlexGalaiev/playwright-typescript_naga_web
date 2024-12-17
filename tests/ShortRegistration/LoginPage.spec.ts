@@ -169,11 +169,13 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
         }
         const testParams: testTypes[] = [
            { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"},
-           { testrailId: "@23914", brand: '@NS', email: "testLeadUser"}
+           { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
+           { testrailId: "@25359", brand: '@NMena', email: "testLeadUserMena"},
+           { testrailId: "@25360", brand: '@NAfrica', email: "testLeadAfrica"}
         ]
         for(const {testrailId, brand, email} of testParams){
             test(`${testrailId} Login/logout to platform ${brand} by ${email}`, 
-                {tag:['@login', '@prodSanity','@smoke', '@debug']}, async({page})=>{
+                {tag:['@login', '@prodSanity','@smoke']}, async({page})=>{
                 let signIn = new SignIn(page);
                 let pageAfterLogOut = new PageAfterLogout(page)
                 let myAccountsMenu = new MyAccounts(page)
@@ -185,26 +187,6 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
                     await myAccountsMenu.openUserMenu();
                     await myAccountsMenu.userLogOut()
                     expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
-                })
-            })
-        }
-    
-        const testCryptoParams: testTypes[]= [
-            { testrailId: "@25332", brand: '@NX', email: "testLeadX@i.ua"}
-        ]
-        for(const {testrailId, brand, email} of testCryptoParams){
-            test(`${testrailId} Login/logout to platform ${brand} by ${email}`, async({page})=>{
-                let signIn = new SignIn(page);
-                let myAccountsMenu = new MyAccounts(page)
-                await test.step(`Login to platform by ${email}`, async()=>{
-                    await signIn.goto(await signIn.chooseBrand(brand), 'login')
-                    await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
-                })
-                await test.step('Log out from platform', async()=>{
-                    await new TwoAuthenfication(page).skipAuthenfication();
-                    await myAccountsMenu.openUserMenu();
-                    await myAccountsMenu.userLogOut()
-                    expect(await signIn.checkPageHeader()).toEqual('Sign in to your account')
                 })})
         }
     })

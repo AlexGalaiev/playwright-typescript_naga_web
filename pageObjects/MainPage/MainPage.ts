@@ -70,9 +70,11 @@ export class MainPage{
         let numberOfTrdingAccounts = (await this.tradingAccount).count();
         return numberOfTrdingAccounts
     };
+
+
     async getVerifyBannerContent(){
-        await this.page.waitForSelector('.header__verify__content', {state: 'visible'})
-        return await this.verifyBanner.textContent()
+        let banner = await this.page.locator(".header__verify__content")
+        return await banner.textContent()
     };
     async getStepName(){
         return await this.bannerName.textContent()
@@ -158,5 +160,11 @@ export class MainPage{
     async getMainPageBannerText(){
         await this.page.waitForTimeout(1500)
         return await this.page.locator('//div[@class="user-status-box__desc-title"]').textContent()
+    }
+    async openKyc(){
+        await this.page.locator("//div[@class='header__verify']//span[text()='Upgrade Now']").click()
+    }
+    async waitForHeaderBanner(){
+        await this.page.waitForSelector('.header__verify__content', {state:'visible'})
     }
 }

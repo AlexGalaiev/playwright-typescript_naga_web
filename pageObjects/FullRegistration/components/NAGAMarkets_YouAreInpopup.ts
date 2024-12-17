@@ -26,4 +26,9 @@ export class YouAreInNagaMarkets{
     async openNagaPlatform(){
         await this.explorePlatform.click()
     }
+    async openNagaKyc(){
+        let openKycBtn = await this.page.locator("//button[text()='Open Real Money NAGA Account']")
+        await openKycBtn.waitFor({state:"visible"})
+        await openKycBtn.click()
+    }
 }

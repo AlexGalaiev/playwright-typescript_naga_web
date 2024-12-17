@@ -8,25 +8,24 @@ import { KYC_Start } from "../../pageObjects/FullRegistration/NAGAMarkets-KYCSta
 import { FullRegistration } from "../../pageObjects/FullRegistration/NagaMarkets_FullRegistration";
 import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
+import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
+import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGAMarkets_PersonalInformation";
+import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
 test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 120000);
     let signUp = new SignUp(page);
-    let signIn = new SignIn(page);
-    let mainpage = new MainPage(page);
-    let verification = new PhoneVerification(page);
     let kycStart = new KYC_Start(page);
-    let email = await signUp.createLeadUserApi("FR");
-    await test.step(`Create lead user via API. Login by ${email} to platform`, async () => {
-      await signIn.goto(NagaMarkets, "login");
-      await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "");
+    let email = await new RandomUser().getRandomUserEmail()
+    await test.step(`Create lead user with ${email}`, async () => {
+      await signUp.goto(NagaMarkets, 'register')
+      await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France');
     });
     await test.step("Phone verifiaction step", async () => {
-      await mainpage.clickUpgradeBtn();
-      await kycStart.clickStartVerificationBtn();
-      await verification.acceptPhoneNumber();
-      await verification.MN_insertVerificationCode();
-      await verification.waitPersonalDetails();
+      await new PersonalInformation(page).fillPersonalInformation()
+      await new PhoneVerification(page).insertVerificationCode()
+      await new YouAreInNagaMarkets(page).openNagaKyc()
+      await kycStart.clickStartVerificationBtn()
     });
   }
 );
@@ -85,7 +84,7 @@ test("@24920 Naga Markets. KYC - Intermediate level.", {tag:'@kyc'},async ({page
   });
 });
 
-test.fixme("@24923 Naga Markets. KYC - Elementary level.",
+test("@24923 Naga Markets. KYC - Elementary level.",
   {tag:'@kyc', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-6937','type':'ticket'}}, 
     async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
