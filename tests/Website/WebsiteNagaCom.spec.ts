@@ -536,7 +536,7 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
         {testRailId: "@25233", type:'Trade',regulation: 'AE', platform:'https://naga.com/ae/legal-documentation', documents: ["Terms & Conditions", 'Disclaimer','W-8 BEN Form', 'Privacy Policy']}
     ]
     for(const{testRailId, type, platform, documents, regulation}of pdfParams){
-        test(`${testRailId} Check legal documents on ${type} page. Base url ${platform}`,{tag: '@website-naga.com'}, async({page}, testInfo)=>{
+        test(`${testRailId} Check legal documents on ${type} page. Base url ${platform}`,{tag: ['@website-naga.com', '@compliance']}, async({page}, testInfo)=>{
             await testInfo.setTimeout(testInfo.timeout + 40000);
             let website = new NagaCom(page);
             await test.step(`Open ${platform}`, async()=>{

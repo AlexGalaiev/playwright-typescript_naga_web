@@ -61,8 +61,10 @@ export class SignIn{
             return await project['use']['NagaCapital']
         } else if (tag === '@NM'){
             return await project['use']['NagaMarkets']
-        } else if (tag === '@NX'){
-            return await project['use']['NagaX']
+        } else if (tag === '@NMena'){
+            return await project['use']['NagaMena']
+        } else if (tag === '@NAfrica'){
+            return await project['use']['NagaAfrica']
         } else {}
     }
     async chooseBrandCountry(tag: string){
@@ -71,8 +73,10 @@ export class SignIn{
                 return await project['use']['NSCountry']
             } else if (tag === '@NM'){
                 return await project['use']['NMCountry']
-            } else if (tag === '@NX'){
-                return await project['use']['NXCountry']
+            } else if (tag === '@NMena'){
+                return await project['use']['NagaMenaCountry']
+            } else if (tag === '@NAfrica'){
+                return await project['use']['NagaAfricaCountry']
             } else {}
     }
     async openLanguages(){

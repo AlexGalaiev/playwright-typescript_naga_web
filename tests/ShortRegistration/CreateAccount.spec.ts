@@ -3,6 +3,7 @@ import { test } from "../../test-options";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
+import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 
 test.describe("Sign up page.", async()=>{
 
@@ -23,24 +24,12 @@ test.describe("Sign up page.", async()=>{
             expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
     })}
 
-    const testNXRiskDisclaimer: testRiskDisclaimer[] = [
-        {testRailId: '@25116', brand:'@NX', localization: '/pageObjects/localization/NagaX_SignInPage.json'}
-    ]
-    for(const{testRailId, brand, localization} of testNXRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, async({page})=>{
-            let localizationText = new getLocalization(localization)
-            let signUp = new SignUp(page);
-            await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
-            expect(await signUp.getRiskWarningText_NX()).toEqual(await localizationText.getLocalizationText("SighIn_RiskDisclaimer"))
-    })}
-
     type languages = {
         testRailId: string;
         brand: string;
         languages: string[];
     }
     const platformLanguages :languages[] = [
-        //{testRailId: '@25117', brand:'@NX', languages: ['English', 'Español', 'Deutsch','Polski','Italiano']},
         {testRailId: '@25241', brand:'@NS', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
         {testRailId: '@25242', brand:'@NM', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
     ]
@@ -92,10 +81,9 @@ test.describe("Sign up page.", async()=>{
     const legalDocumentsParams: legalDocuments[] = [
         {testRailId:'@25246', brand:'@NS', documents: new Map<string, string>([['Privacy Policy', 'https://naga.com/en/privacy-policy'],['legal documents','https://naga.com/en/legal-documentation'],['Client Agreement','https://naga.com/en/legal-documentation']])},
         {testRailId:'@25247', brand:'@NM', documents: new Map<string, string>([['Privacy Policy', 'https://cms.naga.com/Privacy_Policy'],['legal documents','https://nagamarkets.com/eu/legal-documentation']])},
-        //{testRailId:'@25247', brand:'@NX', documents: new Map<string, string>([['Privacy Policy', 'https://files.nagax.com/files/NXCY-Privacy-Policy.pdf'],['legal documents','https://nagax.com/eu/regulation-and-licensing']])}
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
-        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:'@UI'},async({page})=>{
+        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@UI', '@compliance']},async({page})=>{
             let sighUp = new SignUp(page)
             await test.step(`Open sign up page on brand ${brand}`, async()=>{
                 await sighUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
@@ -121,7 +109,8 @@ test.describe('Create account per brand', async()=>{
         await signUp.goto(NagaMarkets, 'register')
         expect(await signUp.getNumberObBtns()).toEqual(4)
         expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
-        await signUp.create_NM_CFDUser('France')
+        let email = new RandomUser().getRandomUserEmail()
+        await signUp.create_NM_CFDUser(email, 'France')
         expect(await signUp.personalInfoPopup()).toBeVisible()
     })
     test.skip('@25357 @NS Create lead user',
