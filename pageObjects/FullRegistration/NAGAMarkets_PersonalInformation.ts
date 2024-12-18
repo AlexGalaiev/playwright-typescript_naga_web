@@ -22,7 +22,7 @@ export class PersonalInformation{
         this.submitBtn = page.locator("//button[text()='Proceed']")
     };
 
-    async fillPersonalInformation(){
+    async fillPersonalInformation(submitBtnName: string){
         let randomUser = new RandomUser();
         await this.page.waitForTimeout(5000)
         await this.firstName.pressSequentially('testFirstName');
@@ -38,7 +38,7 @@ export class PersonalInformation{
         await this.countryCode.press('Enter')
         await this.phone.pressSequentially("603039647")
         await this.page.waitForTimeout(750);
-        await this.verifyBySMS.click();
+        await this.page.locator(`//button[text()='${submitBtnName}']`).click();
     }
     async fillCryptoPersonalInfo(){
         let randomUser = new RandomUser();

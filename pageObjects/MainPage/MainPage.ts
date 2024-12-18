@@ -50,7 +50,11 @@ export class MainPage{
         await this.page.waitForTimeout(500)
     };
     async updateUserLevel(){
-        await this.verifyStepHeader.click();
+        let verifyIdentityBtn = await this.page.locator("//span[text()='Verify identity']")
+        await verifyIdentityBtn.waitFor({state:'visible'})
+        await verifyIdentityBtn.click()
+        await this.page.waitForTimeout(1000)
+        
     }
     //Naga Capital
     async openLoginFromGuestMode(){
@@ -71,14 +75,11 @@ export class MainPage{
         return numberOfTrdingAccounts
     };
 
-
     async getVerifyBannerContent(){
         let banner = await this.page.locator(".header__verify__content")
         return await banner.textContent()
     };
-    async getStepName(){
-        return await this.bannerName.textContent()
-    }
+
     //Naga Markets
     async clickIUnderstanBtn(){
         return await this.IUnderstandBtn.click()
@@ -151,12 +152,7 @@ export class MainPage{
         await element.click()
         await this.page.waitForTimeout(500)
     }
-    async clickVerifyBtn_NagaX(){
-        await this.page.locator("//span[text()='Verify now']").click()
-    }
-    async clickCryptoSydeBarCategory(categoryName: string){
-        await this.page.locator(`//li[@class='sidebar__nav-item']//span[text()='${categoryName}']`).click()
-    }
+
     async getMainPageBannerText(){
         await this.page.waitForTimeout(1500)
         return await this.page.locator('//div[@class="user-status-box__desc-title"]').textContent()

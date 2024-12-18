@@ -11,6 +11,7 @@ export class StartKYCPopup{
 
     async startKYC(){
         await this.continueBtn.click();
+        await this.page.waitForTimeout(2000)
     }
     async proceedVerification(){
         await this.page.locator("//button[@type='submit']").click()

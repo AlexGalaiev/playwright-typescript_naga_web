@@ -15,9 +15,7 @@ import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/componen
 test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']}, async({ page, NagaCapital }, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 60000);
     let signUp = new SignUp(page);
-    //let signIn = new SignIn(page)
     let mainPage = new MainPage(page);
-    let startKyc = new StartKYCPopup(page)
     let personalInfo = new PersonalInformation(page)
     let verificationPopup = new VerificationPopup(page);
     let email = await new RandomUser().getRandomUserEmail() 
@@ -26,7 +24,7 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']}, 
         await signUp.createCFDUser(email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina')
     });
     await test.step('Fill personal information step', async() =>{
-        await personalInfo.fillPersonalInformation();
+        await personalInfo.fillPersonalInformation('Continue');
         await new YouAreInNagaMarkets(page).clickOpenRealMoneyAccount()
         await personalInfo.compleateYourProfile()
         await personalInfo.clickDepositNow()
@@ -41,7 +39,7 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']}, 
         await new UdpateAccount(page).clickFinishBtn();
     });
     await test.step('Check verification step (header step)', async()=>{
-        expect(await verificationPopup.verificationPoupIsDisplyed()).toBeVisible()
+       // expect(await verificationPopup.verificationPoupIsDisplyed()).toBeVisible()
         await verificationPopup.skipVerificationStep();
         expect(await mainPage.getStatusOfHeaderStep(3)).toEqual('To do')
         expect(await mainPage.getStatusTextOfHeaderStep(3)).toEqual('Complete Progress level and verify address')

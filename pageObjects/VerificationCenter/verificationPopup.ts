@@ -19,6 +19,7 @@ export class VerificationPopup{
         return await this.verificationPopup
     };
     async skipVerificationStep(){
+        await this.page.waitForTimeout(2000)
         await this.page.getByRole('button', {name: 'Skip'}).click()
     };
     async getNoDataRequestedDocuments(){
