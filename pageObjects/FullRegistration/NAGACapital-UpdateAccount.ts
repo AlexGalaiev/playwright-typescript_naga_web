@@ -12,8 +12,8 @@ export class UdpateAccount{
     }
 
     async clickFinishBtn(){
-        await this.kycForm.waitFor({timeout:1500})
-        await this.finishBtn.scrollIntoViewIfNeeded({timeout:1000})
+        await this.kycForm.waitFor({state:'visible'})
+        await this.finishBtn.scrollIntoViewIfNeeded()
         await this.finishBtn.click()
     }
 }

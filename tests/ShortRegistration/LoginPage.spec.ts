@@ -8,8 +8,6 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout";
 import { IncorrectPasswordPopup } from "../../pageObjects/SignIn/IncorrectPassword";
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
-import { TwoAuthenfication } from "../../pageObjects/FullRegistration/components/NagaX_2Auth";
 
 
 test.describe("Naga Capital. SignIn Page", async()=>{

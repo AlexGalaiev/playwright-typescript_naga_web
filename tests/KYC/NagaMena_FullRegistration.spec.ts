@@ -22,7 +22,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
       await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates');
     });
     await test.step("Fill personal information and verify phone number", async () => {
-      await new PersonalInformation(page).fillPersonalInformation()
+      await new PersonalInformation(page).fillPersonalInformation('Verify with SMS')
       await new PhoneVerification(page).insertVerificationCode()
       await mainPage.openKyc()
       await kycStart.clickStartVerificationBtn()

@@ -22,7 +22,7 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
       await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France');
     });
     await test.step("Phone verifiaction step", async () => {
-      await new PersonalInformation(page).fillPersonalInformation()
+      await new PersonalInformation(page).fillPersonalInformation('Verify with SMS')
       await new PhoneVerification(page).insertVerificationCode()
       await new YouAreInNagaMarkets(page).openNagaKyc()
       await kycStart.clickStartVerificationBtn()

@@ -29,7 +29,7 @@ export class PersonalInformation{
         this.phone = page.locator('[name="phone"]')
     }
 
-    async fillPersonalInformation(){
+    async fillPersonalInformation(submitBtnName: string){
         let randomUser = new RandomUser();
         await this.page.waitForTimeout(5000)
         await this.firstName.pressSequentially('testFirstName');
@@ -45,7 +45,7 @@ export class PersonalInformation{
         await this.countryCode.press('Enter')
         await this.phone.pressSequentially("603039647")
         await this.page.waitForTimeout(750);
-        await this.page.locator("//button[text()='Continue']").click();
+        await this.page.locator(`//button[text()='${submitBtnName}']`).click();
     }
     
     async compleateYourProfile(){
