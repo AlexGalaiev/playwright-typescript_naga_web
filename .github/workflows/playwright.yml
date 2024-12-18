@@ -86,6 +86,8 @@ jobs:
           echo USER_PASSWORD=${{ secrets.USER_PASSWORD }} >> .env
           echo NORDVPN_USERNAME=${{ secrets.NORDVPN_USERNAME }} >> .env
           echo NORDVPN_PASSWORD=${{ secrets.NORDVPN_PASSWORD }} >> .env
+          echo DEVELOPMENT_CAPTCHA_BYPASS_TOKEN=${{ vars.DEVELOPMENT_CAPTCHA_BYPASS_TOKEN }} >> .env
+          echo PRODUCTION_CAPTCHA_BYPASS_TOKEN=${{ vars.PRODUCTION_CAPTCHA_BYPASS_TOKEN }} >> .env
           cat .env 
     - name: Determine tags
       id: determine_tags
