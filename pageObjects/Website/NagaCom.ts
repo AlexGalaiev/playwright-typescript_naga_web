@@ -128,12 +128,11 @@ export class NagaCom{
         console.log(await footer.textContent())
         return await footer.textContent()
     }
-    async searchInstrument(nameOfInstrument: string, categoryName: string){
+    async searchInstrument(nameOfInstrument: string){
         let searchField = await this.page.locator("//input[@placeholder='Search']")
         await searchField.scrollIntoViewIfNeeded();
         await searchField.pressSequentially(nameOfInstrument)
         await this.page.waitForTimeout(500);
-        await this.page.locator(`//li[text()='${categoryName}']`).click()
     }
     async openPosition(buttonName: string):Promise<[Page, instrumentName:any]>{
         let instrument = await this.page.locator("//ul[contains(@class, 'InstrumentsTableRow')]")
@@ -241,7 +240,7 @@ export class NagaCom{
         }
     }
     async checkAndCloseBullonPopup(){
-        await this.page.waitForTimeout(1500)
+        await this.page.waitForTimeout(2500)
         let pushPopup = await this.page.locator("//div[contains(@class, 'mantine-Paper-root')]")
         if(await pushPopup.isVisible()){
             await pushPopup.locator("//button[contains(@class, 'mantine-CloseButton-root')]").click()
