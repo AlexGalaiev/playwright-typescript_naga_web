@@ -109,7 +109,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
             {tag: ['@prodSanity', '@website-naga.com']}, 
             async({proxyPage}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 10000);
+            testInfo.setTimeout(testInfo.timeout + 20000);
             let website = new NagaCom(proxyPage)
             let localization = new getLocalization('/pageObjects/localization/Website_NagaCom.json')
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -142,7 +142,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         test(`${testRailId} VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag: '@website-naga.com'}, async({proxyPageUA}, testInfo)=>{
             let website = new NagaCom(proxyPageUA)
-            testInfo.setTimeout(testInfo.timeout + 10000)
+            testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
@@ -163,7 +163,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         test(`${testRailId} VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag: '@website-naga.com'}, async({proxyPageUAE}, testInfo)=>{
             let website = new NagaCom(proxyPageUAE)
-            testInfo.setTimeout(testInfo.timeout + 10000)
+            testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
@@ -183,7 +183,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         test(`${testRailId} VPN(ZA) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag: '@website-naga.com'}, async({proxyPageSA}, testInfo)=>{
             let website = new NagaCom(proxyPageSA)
-            testInfo.setTimeout(testInfo.timeout + 10000)
+            testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)

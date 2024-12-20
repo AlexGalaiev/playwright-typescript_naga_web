@@ -143,9 +143,10 @@ export class NagaCom{
             contexts.waitForEvent('page'),
             instrument.locator(`//div[text()='${buttonName}']`).first().click()
         ])
-        await this.page.waitForTimeout(7000)
+        await this.page.waitForTimeout(10000)
         return [newPage, instrumentName?.replace(/[()]/g, "")]
     }
+
     async switchLanguageTo(language: string){
         await this.page.waitForTimeout(1000)
         let langTitle = await this.languageSwitcher.getAttribute('title') || ''
