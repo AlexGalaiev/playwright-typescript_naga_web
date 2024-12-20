@@ -6,19 +6,22 @@ import { SettingsPage } from "../../pageObjects/Settings/SettingsPage"
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "../../test-options"
 import { SignIn } from "../../pageObjects/SignIn/SignInPage"
+import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
+import { register } from "module"
+import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations"
 
 test.describe("NagaCapital. Settings", async()=>{
     test("@23920 Change password via settings", {tag:['@settings', '@prodSanity']}, async({page, NagaCapital}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 40000);
+        testInfo.setTimeout(testInfo.timeout + 40000);
         let signUp = new SignUp(page)
         let signIn = new SignIn(page)
-        let mainPage = new MainPage(page)
         let myAccounts = new MyAccounts(page)
         let settings = new SettingsPage(page)
         let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
         let email = await signUp.createLeadUserApi("BA")
-        await signIn.goto(NagaCapital, 'login');
-        await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
+        await test.step(`Create lead user ${email} with personal information`, async()=>{
+            await new KYC_General(page).NagaCapital_UserLead(email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina', NagaCapital)
+        })
         await test.step("Change password", async()=>{
             await myAccounts.openUserMenu();
             await myAccounts.openMyAccountsMenuItem('Settings')
@@ -29,21 +32,21 @@ test.describe("NagaCapital. Settings", async()=>{
         })
         await test.step("Login to platform with new password", async()=>{
             await signIn.signInUserToPlatform(email, "Test12345!");
-            expect(await mainPage.checkMainPage()).toBe(true);
+            expect(await new MainPage(page).checkMainPage()).toBe(true);
         })})
-})
 
-test.describe('Naga Markets. Settings', async()=>{
-    test("@23598 Change password via settings",{tag:['@settings', '@prodSanity']}, async({page, NagaMarkets}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 120000);
-        let signUp = new SignUp(page);
-        let signIn = new SignIn(page)
+    test("@23598 Change password via settings",{tag:['@settings', '@prodSanity']}, 
+            async({page, NagaMarkets}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 120000);
+        let newLead = new KYC_General(page)
+        let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
+        let email = new RandomUser().getRandomUserEmail()
         let myAccounts = new MyAccounts(page)
         let settings = new SettingsPage(page)
-        let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
-        let email = await signUp.createLeadUserApi('FR')
-        await signIn.goto(NagaMarkets, 'login');
-        await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || "")
+        let signIn = new SignIn(page)
+        await test.step(`Create lead user - ${email}`, async()=>{
+            await newLead.NagaMarkets_UserLead(email, process.env.USER_PASSWORD || '','France', NagaMarkets)
+        })
         await test.step("Change password", async()=>{
             await myAccounts.openUserMenu();
             await myAccounts.openMyAccountsMenuItem('Settings')
@@ -54,6 +57,7 @@ test.describe('Naga Markets. Settings', async()=>{
         })
         await test.step("Login to platform with new password", async()=>{
             await signIn.signInUserToPlatform(email, "Test12345!");
-        })})
+        })
+    })
 })
 
