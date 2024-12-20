@@ -84,17 +84,17 @@ test.describe("Sign up page.", async()=>{
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
         test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@UI', '@compliance']},async({page})=>{
-            let sighUp = new SignUp(page)
+            let signUp = new SignUp(page)
             await test.step(`Open sign up page on brand ${brand}`, async()=>{
-                await sighUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
+                await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
             })
             await test.step('Check legal documents', async()=>{
                 for(let[documentName, url] of documents){
-                    const documentPage = await sighUp.openDocument(documentName)
+                    const documentPage = await signUp.openDocument(documentName)
                     const newTab = new SignUp(documentPage)
                     expect(await newTab.checkUrl()).toContain(url)
                     await newTab.closeTab();
-                    await sighUp.switchBack()
+                    await signUp.switchBack()
                 }})})
     }
 })

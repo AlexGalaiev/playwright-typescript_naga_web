@@ -527,10 +527,10 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
 
     }
     const socialParamsZA: socialNetworksZA[] = [
-        {testRailId:'@25237', regulation:'eu', networks: new Map<string, string>([['facebook','nagamarketsofficial'],['instagram','nagaeuofficial'],['youtube','@NAGAEurope'],['linkedin','nagainvesting']])},
-        {testRailId:'@25238', regulation:'en', networks: new Map<string, string>([['facebook','nagacapitalofficial'],['instagram','nagacomofficial'],['youtube','@NAGAinvesting'],['twitter','nagacapitalcom']])},
-        {testRailId:'@25239', regulation:'za', networks: new Map<string, string>([['facebook', 'NAGA.S.Africa'], ['instagram', 'naga.s.africa']])},
-        {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'nagamena'], ['facebook', 'NAGA.ADGM'],['instagram', 'naga_adgm'],['tiktok','@naga_mena'],['linkedin','naga-mena']])},
+        {testRailId:'@25237', regulation:'eu', networks: new Map<string, string>([['facebook','https://www.facebook.com/nagamarketsofficial'],['instagram','https://www.instagram.com/nagaeuofficial/'],['youtube','https://www.youtube.com/@NAGAEurope'],['linkedin','https://www.linkedin.com/company/nagainvesting/posts/?feedView=all']])},
+        {testRailId:'@25238', regulation:'en', networks: new Map<string, string>([['facebook','https://www.facebook.com/nagacapitalofficial'],['instagram','https://www.instagram.com/nagacomofficial'],['youtube','http://www.youtube.com/@NAGAinvesting'],['twitter','https://x.com/nagacapitalcom']])},
+        {testRailId:'@25239', regulation:'za', networks: new Map<string, string>([['facebook', 'https://www.facebook.com/NAGA.S.Africa'], ['instagram', 'https://www.instagram.com/naga.s.africa']])},
+        {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'https://www.youtube.com/@nagamena'], ['facebook', 'https://www.facebook.com/NAGA.ADGM'],['instagram', 'https://www.instagram.com/naga_adgm/'],['tiktok','https://www.tiktok.com/@naga_mena'],['linkedin','https://www.linkedin.com/company/naga-mena/']])},
     ]
     for(const{testRailId, regulation, networks}of socialParamsZA){
         test(`${testRailId} Social networks. ${regulation} regulation`,{tag: '@website-naga.com'},async({page}, testInfo)=>{
@@ -541,11 +541,9 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
             })
             await test.step('Check icons of social networks', async()=>{
                 for(const[icon, url] of networks){
-                    const openIcon = await website.openSocialNetwork(icon)
-                    const newTab = new NagaCom(openIcon);
-                    expect(await newTab.checkUrl()).toContain(url)
-                    await website.switchToPreviousTab()
-                }})})
+                    expect(await website.getSocialNetworkHref(icon)).toEqual(url)
+                }
+            })})
     }})
 
     type headerTypes = {
