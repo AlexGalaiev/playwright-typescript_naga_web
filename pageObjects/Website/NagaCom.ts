@@ -280,4 +280,8 @@ export class NagaCom{
         if(await cookieBtn.isVisible())
             {await cookieBtn.click()}
     }
+    async getSocialNetworkHref(newtworkName: string){
+        let socialNetwork = await this.page.locator(`//a[contains(@aria-label, '${newtworkName}')]`).first()
+        return await socialNetwork.getAttribute('href')
+    }
 }

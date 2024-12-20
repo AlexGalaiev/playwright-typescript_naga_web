@@ -227,7 +227,7 @@ export class SignUp{
         return newPage
     }
     async checkUrl(){
-        await this.page.waitForTimeout(1500)
+        await this.page.waitForTimeout(3000)
         return await this.page.url()
     }
     async switchBack(){
