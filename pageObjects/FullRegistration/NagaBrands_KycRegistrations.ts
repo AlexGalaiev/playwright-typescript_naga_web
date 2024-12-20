@@ -64,5 +64,25 @@ export class KYC_General{
         await KYC_FinalStep.clickBtn('Deposit');
         await this.page.waitForTimeout(1500)
     }
+    async NagaMarkets_UserLead(email: string, password: string, country:string, brand: string){
+        // create lead user via UI
+        await new SignUp(this.page).goto(brand, 'register')
+        await new SignUp(this.page).createCfdUser_All(email, password, country)
+        //Fill personal information tab + Insert verification code
+        await new PersonalInformation(this.page).fillPersonalInformation('Verify with SMS')
+        await new PhoneVerification(this.page).insertVerificationCode()
+      //go to main Page
+        await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
+    }
+
+    async NagaCapital_UserLead(email: string, password: string, country:string, brand: string){
+        //create lead user via ui
+        await new SignUp(this.page).goto(brand, 'register')
+        await new SignUp(this.page).createCFDUser(email, password, country)
+        //fill personal information
+        await new PersonalInformation(this.page).fillPersonalInformation('Continue')
+        //go to main page 
+        await new YouAreInNagaMarkets(this.page).openNagaPlatform()
+    }
 
 }
