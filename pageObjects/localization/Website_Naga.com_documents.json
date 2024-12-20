@@ -29,23 +29,23 @@
     "EN_Trade":{
         "Client Agreement":{
             "name":"CLIENT AGREEMENT",
-            "updated":"November ",
+            "updated":"December",
             "year":"2024"
         },
         "Privacy Policy":{
             "name":"Privacy Policy",
-            "updated":"September",
-            "year":"202"
+            "updated":"Last Update: December 2024",
+            "year":"2024"
         },
         "Cost and Charges Policy":{
             "name":"COST AND CHARGES POLICY",
-            "updated":"November ",
+            "updated":"December",
             "year":"2024 "
         },
         "FATCA":{
             "name":"FOREIGN ACCOUNT TAX COMPLIANCE ACT ",
-            "updated":"September 2024 ",
-            "year":"2024"
+            "updated":"December",
+            "year":"2024 "
         }
     },
     "ZA_Trade":{

@@ -14,19 +14,10 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         redirectTo: string;
         baseUrl: string;
     }
+    //get started btn is tested in Check allert popup test
     const fromWebsiteToNM: RedirectTypes[] = [
-        {testRailId: '@25194', type: 'trade', buttonName: 'Login', baseUrl: 'https://naga.com/eu', redirectTo: 'https://nagamarkets.com/login'},
-        {testRailId: '@25194', type: 'trade', buttonName: 'Get started',baseUrl: 'https://naga.com/eu', redirectTo: 'https://nagamarkets.com/register'},
-        {testRailId: '@25194', type: 'invest', buttonName: 'Login', baseUrl: 'https://naga.com/eu',redirectTo: 'https://nagamarkets.com/login'},
-        {testRailId: '@25194', type: 'invest', buttonName: 'Get started', baseUrl: 'https://naga.com/eu',redirectTo: 'https://nagamarkets.com/register'},
-        {testRailId: '@25194', type: 'crypto', buttonName: 'Login', baseUrl: 'https://naga.com/eu', redirectTo: 'https://app.nagax.com/eu/login'},
-        {testRailId: '@25194', type: 'crypto', buttonName: 'Get started', baseUrl: 'https://naga.com/eu', redirectTo: 'https://app.nagax.com/eu/register'},
-        {testRailId: '@25194', type: 'pay', buttonName: 'Get your card', baseUrl: 'https://naga.com/eu', redirectTo: 'https://naga.com/eu/pay'},
         {testRailId: '@25208', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://nagamarkets.com/login'},
         {testRailId: '@25208', type: 'Invest', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://nagamarkets.com/login'},
-        {testRailId: '@25220', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/za', redirectTo: 'https://nagamarkets.com/login'},
-        {testRailId: '@25226', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/ae', redirectTo: 'https://nagamarkets.com/login'},
-        {testRailId: '@25226', type: 'Invest', buttonName: 'Login', baseUrl: 'https://naga.com/ae', redirectTo: 'https://nagamarkets.com/login'},
     ]
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
@@ -43,7 +34,49 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
             })
         })
     }
-    
+
+    const fromWebsiteToNMena: RedirectTypes[] = [
+        {testRailId: '@25226', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/ae', redirectTo: 'https://nagamena.com/login?lang=en'},
+        {testRailId: '@25226', type: 'Trade', buttonName: 'Get started', baseUrl: 'https://naga.com/ae', redirectTo: 'https://nagamena.com/register?lang=en'},
+        {testRailId: '@25226', type: 'Invest', buttonName: 'Login', baseUrl: 'https://naga.com/ae', redirectTo: 'https://nagamena.com/login?lang=en'},
+        {testRailId: '@25226', type: 'Invest', buttonName: 'Get started', baseUrl: 'https://naga.com/ae', redirectTo: 'https://nagamena.com/register?lang=en'},
+    ]
+    for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
+        test(`${testRailId} Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
+            {tag: ['@prodSanity', '@website-naga.com']}, async({proxyPageUAE},testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 15000)
+            let website = new NagaCom(proxyPageUAE)
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
+            })
+            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
+                await website.checkTradeInstrument(`${type}`)
+                await website.clickBtn(`${buttonName}`)
+                expect(await website.checkUrl()).toContain(`${redirectTo}`)
+            })
+        })
+    }
+
+    const fromWebsiteToNAfrica: RedirectTypes[] = [
+        {testRailId: '@25220', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/za', redirectTo: 'https://nagaafrica.com/login?lang=en'},
+        {testRailId: '@25220', type: 'Trade', buttonName: 'Get started', baseUrl: 'https://naga.com/za', redirectTo: 'https://nagaafrica.com/register?lang=en'},
+    ]
+    for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNAfrica){
+        test(`${testRailId} Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
+            {tag: ['@prodSanity', '@website-naga.com']}, async({proxyPageSA},testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 15000)
+            let website = new NagaCom(proxyPageSA)
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
+            })
+            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
+                await website.checkTradeInstrument(`${type}`)
+                await website.clickBtn(`${buttonName}`)
+                expect(await website.checkUrl()).toContain(`${redirectTo}`)
+            })
+        })
+    }
+
     const fromWebsitetoNS: RedirectTypes[] = [
         {testRailId: '@25195', type: 'trade', buttonName: 'Login', baseUrl: 'https://naga.com/eu', redirectTo: 'https://nagacap.com/login'},
         {testRailId: '@25195', type: 'trade', buttonName: 'Get started', baseUrl: 'https://naga.com/eu', redirectTo: 'https://nagacap.com/register'},
@@ -51,21 +84,13 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         {testRailId: '@25195', type: 'invest', buttonName: 'Get started', baseUrl: 'https://naga.com/eu', redirectTo: 'https://nagacap.com/register'},
         {testRailId: '@25195', type: 'crypto', buttonName: 'Login', baseUrl: 'https://naga.com/eu', redirectTo: 'https://app.nagax.com/eu/login'},
         {testRailId: '@25195', type: 'crypto', buttonName: 'Get started', baseUrl: 'https://naga.com/eu',  redirectTo: 'https://app.nagax.com/eu/register'},
-        {testRailId: '@25195', type: 'pay', buttonName: 'Get your card', baseUrl: 'https://naga.com/eu', redirectTo: 'https://naga.com/eu/pay'},
-        {testRailId: '@25209', type: 'Trade', buttonName: 'Login', baseUrl:'https://naga.com/en', redirectTo: 'https://nagacap.com/login'},
-        {testRailId: '@25209', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://nagacap.com/register'},
-        {testRailId: '@25209', type: 'Invest', buttonName: 'Login', baseUrl:'https://naga.com/en', redirectTo: 'https://nagacap.com/login'},
-        {testRailId: '@25209', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://nagacap.com/register'},
-        {testRailId: '@25219', type: 'Trade', buttonName: 'Login', baseUrl:'https://naga.com/za', redirectTo: 'https://nagacap.com/login'},
-        {testRailId: '@25219', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/za', redirectTo: 'https://nagacap.com/register'},
-        {testRailId: '@25227', type: 'Trade', buttonName: 'Login', baseUrl:'https://naga.com/ae', redirectTo: 'https://nagacap.com/login'},
-        {testRailId: '@25227', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/ae', redirectTo: 'https://nagacap.com/register'},
+        {testRailId: '@25195', type: 'pay', buttonName: 'Get your card', baseUrl: 'https://naga.com/eu', redirectTo: 'https://naga.com/eu/pay'}
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
-        test(`${testRailId} Redirect from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
-            {tag: ['@prodSanity', '@website-naga.com']}, async({page}, testInfo)=>{
+        test(`${testRailId} Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
+            {tag: ['@prodSanity', '@website-naga.com']}, async({proxyPageUA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 10000)
-            let website = new NagaCom(page)
+            let website = new NagaCom(proxyPageUA)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
             })
@@ -79,13 +104,10 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     const fromENtoNMAllert: RedirectTypes[] = [
         {testRailId: '@25210', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://nagamarkets.com/register'},
         {testRailId: '@25210', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://nagamarkets.com/register'},
-        {testRailId: '@25221', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/za',  redirectTo: 'https://nagamarkets.com/register'},
-        {testRailId: '@25228', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/ae',  redirectTo: 'https://nagamarkets.com/register'},
-        {testRailId: '@25228', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/ae',  redirectTo: 'https://nagamarkets.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
-        test.fixme(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
-            {tag: ['@prodSanity', '@website-naga.com'], annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-5384'}}, 
+        test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
+            {tag: ['@prodSanity', '@website-naga.com']}, 
             async({proxyPage}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 10000);
             let website = new NagaCom(proxyPage)
@@ -94,6 +116,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
                 await website.open(`${baseUrl}`)
             })
             await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
+                await website.checkAndCloseBullonPopup()
                 await website.checkTradeInstrument(`${type}`)
                 await website.clickBtn(`${buttonName}`)
             await test.step('Check redirect notification popup text. And redirect to Webtrader', async()=>{
@@ -109,20 +132,16 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         nameOfInstrument: string;
         redirectTo: string;
         basePage: string;
-        categoryName: string;
         buttonName: string;
     }
     const EuSearchTypes: searchTypes[] = [
         {testRailId: '@25214', type: 'trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/eu", categoryName: 'Shares', buttonName:'Trade'},
         {testRailId: '@25212', type: 'invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/eu", categoryName: 'Real Stock USA', buttonName: 'Invest'},
-        {testRailId: '@25224', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/za", categoryName: 'Shares', buttonName:'Trade'},
-        {testRailId: "@25235", type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: 'https://nagacap.com/open-trade', basePage:'https://naga.com/ae', categoryName: 'Shares', buttonName:'Trade'},
-        {testRailId: "@25236", type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: 'https://nagacap.com/open-trade', basePage:'https://naga.com/ae', categoryName: 'Real Stock USA', buttonName:'Invest'}
-    ]
-    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,categoryName,buttonName}of EuSearchTypes){
-        test(`${testRailId} Redirect from website to platform. Search instrument ${nameOfInstrument} on ${basePage} /${type}.`, 
-            {tag: '@website-naga.com'}, async({page}, testInfo)=>{
-            let website = new NagaCom(page)
+       ]
+    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EuSearchTypes){
+        test(`${testRailId} VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
+            {tag: '@website-naga.com'}, async({proxyPageUA}, testInfo)=>{
+            let website = new NagaCom(proxyPageUA)
             testInfo.setTimeout(testInfo.timeout + 10000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
@@ -130,7 +149,48 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
                 await website.checkAndCloseBullonPopup()
             })
             await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
-                await website.searchInstrument(nameOfInstrument, categoryName);
+                await website.searchInstrument(nameOfInstrument);
+                const[newPage, instrumentName] = await website.openPosition(buttonName)
+                let newWebsite = new NagaCom(newPage)
+                expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
+            })})
+    }
+    const AESearchTypes: searchTypes[] = [
+         {testRailId: "@25235", type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: 'https://nagamena.com/open-trade', basePage:'https://naga.com/ae', categoryName: 'Shares', buttonName:'Trade'},
+         {testRailId: "@25236", type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: 'https://nagamena.com/open-trade', basePage:'https://naga.com/ae', categoryName: 'Shares', buttonName:'Invest'}
+    ]
+    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of AESearchTypes){
+        test(`${testRailId} VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
+            {tag: '@website-naga.com'}, async({proxyPageUAE}, testInfo)=>{
+            let website = new NagaCom(proxyPageUAE)
+            testInfo.setTimeout(testInfo.timeout + 10000)
+            await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
+                await website.open(basePage)
+                await website.checkTradeInstrument(type)
+            })
+            await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
+                await website.searchInstrument(nameOfInstrument);
+                await website.checkAndCloseBullonPopup()
+                const[newPage, instrumentName] = await website.openPosition(buttonName)
+                let newWebsite = new NagaCom(newPage)
+                expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
+            })})
+    }
+    const ZASearchTypes: searchTypes[] = [
+         {testRailId: '@25224', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagaafrica.com/open-trade", basePage:"https://naga.com/za", buttonName:'Trade'}
+    ]
+    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of ZASearchTypes){
+        test(`${testRailId} VPN(ZA) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
+            {tag: '@website-naga.com'}, async({proxyPageSA}, testInfo)=>{
+            let website = new NagaCom(proxyPageSA)
+            testInfo.setTimeout(testInfo.timeout + 10000)
+            await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
+                await website.open(basePage)
+                await website.checkTradeInstrument(type)
+            })
+            await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
+                await website.searchInstrument(nameOfInstrument);
+                await website.checkAndCloseBullonPopup()
                 const[newPage, instrumentName] = await website.openPosition(buttonName)
                 let newWebsite = new NagaCom(newPage)
                 expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
@@ -138,25 +198,28 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     }
 
     const EnSearchTypes: searchTypes[] = [
-        {testRailId: '@25213', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagamarkets.com/open-trade", basePage:"https://naga.com/en", categoryName: 'Shares', buttonName:'Trade'},
-        {testRailId: '@25211', type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagamarkets.com/open-trade", basePage:"https://naga.com/en", categoryName: 'Real Stock USA', buttonName: 'Invest'},
+        {testRailId: '@25213', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagamarkets.com/open-trade", basePage:"https://naga.com/en", buttonName:'Trade'},
+        {testRailId: '@25211', type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagamarkets.com/open-trade", basePage:"https://naga.com/en", buttonName: 'Invest'},
     ]
-    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,categoryName,buttonName}of EnSearchTypes){
-        test(`${testRailId} Search instrument on ${basePage}. ${type} page. Redirect to ${redirectTo}`, 
+    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EnSearchTypes){
+        test(`${testRailId} VPN(Italy). Redirect from ${basePage}/${type} to platfotm. Search ${nameOfInstrument} on page`, 
             {tag: '@website-naga.com'}, async({proxyPage}, testInfo)=>{
             let website = new NagaCom(proxyPage)
             testInfo.setTimeout(testInfo.timeout + 10000)
             await test.step(`Open website ${basePage}. Check instrument ${type}`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
+                await website.checkAndCloseBullonPopup()
             })
             await test.step(`Search instrument ${nameOfInstrument}. Redirect to platform`, async()=>{
-                await website.searchInstrument(nameOfInstrument, categoryName);
+                await website.searchInstrument(nameOfInstrument);
                 const[newPage, instrumentName] = await website.openPosition(buttonName)
                 let newWebsite = new NagaCom(newPage)
                 expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
             })})}
         })
+
+
 test.describe('Naga.com website. Default languages and translations', async()=>{
 
     type languageTypes = {
@@ -633,13 +696,9 @@ test.describe('Naga.com website. Footer and header elements', async()=>{
                     let allInstruments = await website.getAllAvailableInstruments()
                     for(let index in allInstruments){
                         expect(await website.getTableData(allInstruments[index], '2')).not.toBeNull()
-                        //expect(await website.getTableData(allInstruments[index], '2')).not.toEqual('-')
                         expect(await website.getTableData(allInstruments[index], '3')).not.toBeNull()
-                        //expect(await website.getTableData(allInstruments[index], '3')).not.toEqual('-')
                         expect(await website.getTableData(allInstruments[index], '4')).not.toBeNull()
-                        //expect(await website.getTableData(allInstruments[index], '4')).not.toEqual('-')
                         expect(await website.getTableData(allInstruments[index], '6')).not.toBeNull()
-                        //expect(await website.getTableData(allInstruments[index], '6')).not.toEqual('-')
                     }}}
             )})}
         

@@ -19,9 +19,11 @@ export type TestOptions = {
     browserProxyContext: BrowserContext;
     browserProxyContextUAE: BrowserContext;
     browserProxyContextSA: BrowserContext;
+    browserProxyContextUA: BrowserContext;
     proxyPage: any;
     proxyPageUAE: any;
-    proxyPageSA: any
+    proxyPageSA: any;
+    proxyPageUA: any;
 }
 
 export const test = base.extend<TestOptions>({
@@ -72,6 +74,16 @@ export const test = base.extend<TestOptions>({
         }});
         await use(context)
     },
+    browserProxyContextUA: async({}, use)=>{
+        let browser = await baseChromium.launch();
+        let vpn = await new VPN().proxyOptions(process.env.NORDVPN_USERNAME || '', process.env.NORDVPN_PASSWORD || '', 'UA')
+        let context = await browser.newContext({proxy:{
+            server: vpn,
+            username: process.env.NORDVPN_USERNAME || '',
+            password: process.env.NORDVPN_PASSWORD || ''
+        }});
+        await use(context)
+    },
 
     page: async ({browserContext}, use)=>{
         let page = await browserContext.newPage()
@@ -104,5 +116,13 @@ export const test = base.extend<TestOptions>({
         await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
         await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserProxyContextSA.close()
+    },
+    proxyPageUA: async({browserProxyContextUA}, use)=>{
+        let page = await browserProxyContextUA.newPage()
+        await use(page)
+        let Tr = await new TestRailIntegration();
+        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        await browserProxyContextUA.close()
     }
 })
