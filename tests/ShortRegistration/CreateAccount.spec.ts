@@ -83,10 +83,11 @@ test.describe("Sign up page.", async()=>{
         {testRailId:'@25247', brand:'@NM', documents: new Map<string, string>([['Privacy Policy', 'https://cms.naga.com/Privacy_Policy'],['legal documents','https://nagamarkets.com/eu/legal-documentation']])},
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
-        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@UI', '@compliance']},async({page})=>{
-            let signUp = new SignUp(page)
+        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@UI', '@compliance']},async({proxyPage}, testInfo)=>{
+            let signUp = new SignUp(proxyPage)
+            testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open sign up page on brand ${brand}`, async()=>{
-                await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
+                await signUp.goto(await new SignIn(proxyPage).chooseBrand(brand), 'register')
             })
             await test.step('Check legal documents', async()=>{
                 for(let[documentName, url] of documents){
@@ -110,7 +111,7 @@ test.describe('Create account per brand', async()=>{
         expect(await signUp.getNumberObBtns()).toEqual(4)
         expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
         let email = new RandomUser().getRandomUserEmail()
-        await signUp.create_NM_CFDUser(email, 'France')
+        await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France')
         expect(await signUp.personalInfoPopup()).toBeVisible()
     })
     test.skip('@25357 @NS Create lead user',
@@ -121,7 +122,8 @@ test.describe('Create account per brand', async()=>{
         await signUp.goto(NagaCapital, 'register')
         expect(await signUp.getNumberObBtns()).toEqual(4)
         expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
-        await signUp.createCFDUser('Bosnia')
+        let email = new RandomUser().getRandomUserEmail()
+        await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', 'Bosnia and Herzegovina')
         expect(await signUp.personalInfoPopup()).toBeVisible()
     })
 })
