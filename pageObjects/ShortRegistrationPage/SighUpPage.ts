@@ -294,5 +294,9 @@ export class SignUp{
         await personalInfoPopup.waitFor({state:'visible'})
         return await personalInfoPopup
     }
+    async getDocumentHref(documentName: string){
+        let document = await this.page.locator(`//a[text()='${documentName}']`).first()
+        return await document.getAttribute('href')
+    }
 }
 

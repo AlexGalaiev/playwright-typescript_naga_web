@@ -241,7 +241,7 @@ export class NagaCom{
         }
     }
     async checkAndCloseBullonPopup(){
-        await this.page.waitForTimeout(2500)
+        await this.page.waitForTimeout(3500)
         let pushPopup = await this.page.locator("//div[contains(@class, 'mantine-Paper-root')]")
         if(await pushPopup.isVisible()){
             await pushPopup.locator("//button[contains(@class, 'mantine-CloseButton-root')]").click()

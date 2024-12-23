@@ -146,6 +146,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
+                await website.acceptAllCookies()
                 await website.checkAndCloseBullonPopup()
             })
             await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
