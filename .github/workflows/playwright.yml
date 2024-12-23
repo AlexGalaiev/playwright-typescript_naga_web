@@ -115,7 +115,11 @@ jobs:
             echo "Running $ENV tests for $TAGS"
             ENV="$ENV" TAGS="$TAGS" CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           elif [ "$GITHUB_EVENT_NAME" == "schedule" ]; then
-            echo "Running $ENV tests with tag $TAGS"
+            echo "Running schedule $ENV tests with tag $TAGS"
+            ENV="$ENV" TAGS="$TAGS" CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
+          elif [ "$GITHUB_EVENT_NAME" == "push" ] && [[ "$ENV" == "qa" || "$ENV" == "production" ]]; then
+            TAGS="@prodSanity"
+            echo "Running $ENV tests for tag $TAGS due to push"
             ENV="$ENV" TAGS="$TAGS" CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           else 
             echo "Running all tests"
