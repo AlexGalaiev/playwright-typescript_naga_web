@@ -60,6 +60,7 @@ export class Deposit{
         return await responseBody.info.code
     }
     async getNumberOfDepositMethods(){
+        await this.page.waitForTimeout(500)
         return await this.page.locator("//div[contains(@class, 'funding-method-table-body__info')]").count()
     }
     async checkActiveDepositTab(tabName: string){

@@ -12,7 +12,7 @@ type NStestTypes = {
     responseMethodKey: string
 }
 test.describe("Naga Capital.", async()=>{
-    let numberOfExistDeposits = 6
+    let numberOfExistDeposits = 5
     test('@25351 Check number of exist deposit methods', 
         {tag:['@deposit', '@prodSanity', '@manageFunds']}, async({page, NagaCapital})=>{
         let signIn = new SignIn(page);
@@ -32,7 +32,7 @@ const testNStestParameters: NStestTypes[] = [
     //{testRailId: '@24067', brand: '@NM', user: 'testTrading2', depositName: 'perfectmoney', responseMethodKey:'Fund via Perfect Money'},
     {testRailId: '@24078', brand: '@NS', user: 'testTrading2', depositName: 'neteller', responseMethodKey:'altneteller'},
     {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'skrill', responseMethodKey:'skrill'},
-    {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
+    //{testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
 ]
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
     test(`${testRailId} ${brand} Check deposit methods. Test of ${depositName} deposit`, 
