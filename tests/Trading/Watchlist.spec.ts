@@ -38,9 +38,10 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
         await test.step(`Choose ${tradeInstrument} and add to watchlist`, async()=>{
             await watchlist.searchInstrument(tradeInstrument);
             await watchlist.addToWatchlist(tradeInstrument)
+            await watchlist.clearSearchField()
         })
         await test.step("Check instrument in watchlist. Remove instrument and check empty page", async()=>{
-            await watchlist.openWatclistTab();
+            //await watchlist.openWatclistTab();
             expect(await watchlist.getWatchlistedInstrumentName()).toEqual(tradeInstrument);
             await watchlist.removeInstrumentFromWatclist();
             expect(await localizationPage.getLocalizationText("Empty_watchlist_header")).toEqual(await watchlist.getEmptyWatchlistHeader())

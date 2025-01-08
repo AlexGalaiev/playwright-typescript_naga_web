@@ -24,9 +24,9 @@ export class AllInstruments{
         this.foundInstrumentName = page.locator("//div[contains(@class, 'symbol-name-container')]//div");
         this.foundInstrumentSellBtn = page.locator("//div[@class='buy-sell-container']//div[@data-type='SELL']");
         this.foundInstrumentBuyBtn = page.locator("//div[@class='buy-sell-container']//div[@data-type='BUY']");
-        this.foundInstrumentAddtoWatchlist = page.locator("//div[@class='symbol-favorite-container']//button");
+        this.foundInstrumentAddtoWatchlist = page.locator("//button[contains(@class, 'star-checkbox')]");
         this.watchlistTab = page.locator("#favorites_symbol_type")
-        this.watchlistedInstrument = page.locator("//div[@class='symbol-container__name']//div")
+        this.watchlistedInstrument = page.locator("//div[@class='symbol-container__name']")
         this.removeFromWatchlist = page.locator("//i[contains(@class, 'remove-favorites')]")
         this.emptyWatchlistHeader = page.locator("//div[@class='no-data__title']")
         this.emptyWatchlistText = page.locator("//div[@class='no-data__description']")
@@ -40,6 +40,8 @@ export class AllInstruments{
     async addToWatchlist(NameOfInstrument: string){
         //await this.foundInstrumentName.textContent() === NameOfInstrument;
         await this.foundInstrumentAddtoWatchlist.first().click();
+        await this.page.waitForTimeout(500)
+        await this.page.waitForSelector("//i[contains(@class, ' active-star')]", {state:'visible'})
         await this.page.waitForTimeout(1000)
     };
     async openWatclistTab(){
@@ -49,7 +51,8 @@ export class AllInstruments{
         return await this.watchlistedInstrument.textContent()
     };
     async removeInstrumentFromWatclist(){
-        await this.removeFromWatchlist.click();
+        //await this.removeFromWatchlist.click();
+        await this.page.locator("//i[contains(@class, ' active-star')]").first().click()
         await this.page.waitForTimeout(1000)
     };
     async getEmptyWatchlistHeader(){
@@ -79,10 +82,14 @@ export class AllInstruments{
         await button.click()
     }
     async cleanWatchlist(){
-        const removeIcon = await this.page.locator("//i[contains(@class, 'remove-favorites')]").first();
+        let removeIcon = await this.page.locator("//i[contains(@class, ' active-star')]").first();
         while(await removeIcon.isVisible()){
             await removeIcon.click()
             await this.page.waitForTimeout(1500)
         }
+    }
+    async clearSearchField(){
+        await this.page.locator('[alt="clear search"]').click()
+        await this.page.waitForTimeout(500)
     }
 }
