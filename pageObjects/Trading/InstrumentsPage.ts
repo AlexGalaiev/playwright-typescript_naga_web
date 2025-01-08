@@ -70,7 +70,7 @@ export class AllInstruments{
         let instrumentContainer = await this.page.locator(".symbol-row", 
             {has: await this.page.locator(`//div[@class = 'symbol-name-container']//div[text()='${instrumentName}']`)})
         let instrument = await instrumentContainer.first();
-        let position = await instrument.locator(`//button[text()='${positionType}']`)
+        let position = await instrument.locator(`//button//span[text()='${positionType}']`)
         await position.first().click();
     }
 
