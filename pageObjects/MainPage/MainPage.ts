@@ -163,4 +163,9 @@ export class MainPage{
     async waitForHeaderBanner(){
         await this.page.waitForSelector('.header__verify__content', {state:'visible'})
     }
+    async cryptoOpenKyc(){
+        await this.page.waitForSelector("//button//span[text()='Verify now']", {state:'visible'})
+        await this.page.locator("//button//span[text()='Verify now']").click()
+        await this.page.waitForTimeout(500)
+    }
 }

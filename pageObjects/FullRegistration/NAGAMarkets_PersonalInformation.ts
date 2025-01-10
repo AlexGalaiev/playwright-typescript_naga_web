@@ -43,13 +43,11 @@ export class PersonalInformation{
     async fillCryptoPersonalInfo(){
         let randomUser = new RandomUser();
         await this.page.waitForTimeout(1000)
-        await this.firstName.clear()
         await this.firstName.pressSequentially('TestN')
         await this.page.waitForTimeout(100)
-        await this.lastName.clear()
         await this.lastName.pressSequentially('TestSN')
         await this.page.waitForTimeout(500)
-        await this.userName.pressSequentially(randomUser.randomUserName())
+        await this.userName.pressSequentially(await randomUser.randomUserName())
         await this.page.waitForTimeout(500)
         await this.phone.pressSequentially('603039647')
         await this.page.waitForTimeout(500)

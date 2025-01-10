@@ -8,6 +8,7 @@ export type TestOptions = {
     NagaCapital: string;
     NagaMena: string;
     NagaAfrica: string;
+    NagaX: string;
     baseUrl: string;
     browserContext: BrowserContext;
     testInfo: TestInfo;
@@ -15,6 +16,7 @@ export type TestOptions = {
     NMCountry: string;
     NagaMenaCountry: string;
     NagaAfricaCountry: string;
+    NagaXCountry: string;
     WebsiteNagaCom: string;
     browserProxyContext: BrowserContext;
     browserProxyContextUAE: BrowserContext;
@@ -31,10 +33,12 @@ export const test = base.extend<TestOptions>({
     NagaCapital:['', {option: true}],
     NagaAfrica:['', {option: true}],
     NagaMena:['', {option: true}],
+    NagaX:['', {option: true}],
     NSCountry:['', {option: true}],
     NMCountry:['', {option: true}],
     NagaMenaCountry:['', {option: true}],
     NagaAfricaCountry:['', {option: true}],
+    NagaXCountry:['', {option: true}],
     baseUrl:['', {option: true}],
     WebsiteNagaCom:['', {option: true}],
     browserContext: async({}, use)=>{

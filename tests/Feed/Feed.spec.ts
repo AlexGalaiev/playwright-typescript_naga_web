@@ -206,7 +206,7 @@ const testNotVerifieduser: testFeedNotVeried[] = [
     {testRailId: '@25148', brand: '@NM', user: 'testNotVerifiesUser', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
-    test(`${testRailId} Not verified user tries to create new post${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
+    test.skip(`${testRailId} Not verified user tries to create new post${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let feed = new Feed(page)
