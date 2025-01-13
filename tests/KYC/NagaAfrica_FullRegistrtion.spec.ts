@@ -1,5 +1,6 @@
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
+import { PersonalDetails } from "../../pageObjects/FullRegistration/NagaAfrica_PersonalDetails"
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage"
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification"
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
@@ -23,7 +24,14 @@ test.describe('Naga Africa', async()=>{
     })
 
     test('@25366 KYC - Advance score', async({page})=>{
-        
+        let personalDetails = new PersonalDetails(page)
+        await test.step(`Fill personal details step`, async()=>{
+            await personalDetails.fillPersonalDetail()
+            await personalDetails.fillAddressResidence()
+        })
+        await test.step('Scorring popup', async()=>{
+            
+        })
         console.log(2)
     })
 })

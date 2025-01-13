@@ -206,23 +206,32 @@ const testNotVerifieduser: testFeedNotVeried[] = [
     {testRailId: '@25148', brand: '@NM', user: 'testNotVerifiesUser', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
-    test.skip(`${testRailId} Not verified user tries to create new post${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
+    test(`${testRailId} Not verified user tries to create new post${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let feed = new Feed(page)
-        let verificationPopup = new VerificationPopup(page);
-        let feedLocalization = new getLocalization(localization)
+        let myAccounts = new MyAccounts(page)
         await test.step("login to platform with not verified user", async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
+        await test.step("Delete previously created posts, if exist(in user profile)", async()=>{
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountsMenuItem('Profile')
+            await feed.closeOpenedPost(user);
+            await new MainPage(page).openHeaderMenuPoint('feed')
+        })
         await test.step('User tryes to meke a post without approval', async()=>{
             await feed.openCreatePostForm()
-            await feed.clickOnPostZone()
-            expect(await feed.getMessageForNotverifiedUser()).toEqual(await feedLocalization.getLocalizationText('NotVerifiedUserPopupMessage'))
-            await feed.checkRedirectToVerification();
-            expect(await verificationPopup.getUrl()).toContain('verification')
+        })
+        await test.step("Create and edit post", async()=>{
+            let previousText = await feed.addTextToPost('Hello World')
+            await feed.editExistedPost(user);
+            let modifiedTex = await feed.addTextToPost('Bye Bye')
+            expect(await previousText).not.toEqual(modifiedTex)
+        })
+        await test.step("Delete post", async()=>{
+                await feed.deleteExistedPost(user)
         })
     })
-}
-})
+    }})
