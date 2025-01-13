@@ -54,11 +54,10 @@ export class SignUp{
         await this.submitBtn.click();
     }
 
-    async createCryptoUser(country: string){
-        let user = new RandomUser();
-        let randomEmail = user.getRandomUserEmail();
-        await this.email.pressSequentially(randomEmail);
-        await this.password.pressSequentially("Test123!")
+    async createCryptoUser(email: string, password: string, country: string){
+        await this.page.waitForSelector("//div[contains(@class, 'registration-form__subtitle')]", {state:'visible'})
+        await this.email.pressSequentially(email);
+        await this.password.pressSequentially(password)
         await this.checkCountry_Crypto(country)
         await this.page.locator("//label[contains(@class, 'registration-form__consent-checkbox')]").click()
         await this.submitBtn.click()

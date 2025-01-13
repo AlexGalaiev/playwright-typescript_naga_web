@@ -30,8 +30,8 @@ test.describe("Sign up page.", async()=>{
         languages: string[];
     }
     const platformLanguages :languages[] = [
-        {testRailId: '@25241', brand:'@NS', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
-        {testRailId: '@25242', brand:'@NM', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Romanian', '汉语', '繁體中文']},
+        {testRailId: '@25241', brand:'@NS', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
+        {testRailId: '@25242', brand:'@NM', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
     ]
     for(const{testRailId, brand, languages}of platformLanguages){
         test(`${testRailId} Check default languages on ${brand}`, {tag:['@UI']}, async({page})=>{

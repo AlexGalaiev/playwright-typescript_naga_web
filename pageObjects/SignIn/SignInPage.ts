@@ -65,6 +65,8 @@ export class SignIn{
             return await project['use']['NagaMena']
         } else if (tag === '@NAfrica'){
             return await project['use']['NagaAfrica']
+        } else if (tag === '@NX'){
+            return await project['use']['NagaX']
         } else {}
     }
     async chooseBrandCountry(tag: string){
@@ -77,6 +79,8 @@ export class SignIn{
                 return await project['use']['NagaMenaCountry']
             } else if (tag === '@NAfrica'){
                 return await project['use']['NagaAfricaCountry']
+            } else if (tag === '@NX'){
+                return await project['use']['NagaXCountry']
             } else {}
     }
     async openLanguages(){

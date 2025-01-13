@@ -19,7 +19,7 @@ export class Deposit{
         //choose deposit method 
         let depositMethod = await this.page.locator('.funding-method-table-body__info')
         .filter({has: await this.page.locator(`//img[contains(@src, '${depositName}')]`)})
-        await depositMethod.scrollIntoViewIfNeeded()
+        //await depositMethod.scrollIntoViewIfNeeded()
         //click on deposit method and get response
         const [response] = await Promise.all([
             this.page.waitForResponse(depositUrl),

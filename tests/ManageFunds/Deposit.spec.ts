@@ -28,10 +28,10 @@ test.describe("Naga Capital.", async()=>{
     })
 
 const testNStestParameters: NStestTypes[] = [
-    {testRailId: '@24082', brand: '@NS', user: 'testTrading2', depositName: 'credit-cards', responseMethodKey:'Credit Card'}, 
+    {testRailId: '@24082', brand: '@NS', user: 'testTrading2', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'}, 
     //{testRailId: '@24067', brand: '@NM', user: 'testTrading2', depositName: 'perfectmoney', responseMethodKey:'Fund via Perfect Money'},
-    {testRailId: '@24078', brand: '@NS', user: 'testTrading2', depositName: 'neteller', responseMethodKey:'altneteller'},
-    {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'skrill', responseMethodKey:'skrill'},
+    {testRailId: '@24078', brand: '@NS', user: 'testTrading2', depositName: 'light-neteller', responseMethodKey:'altneteller'},
+    {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'light-skrill', responseMethodKey:'skrill'},
     //{testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
 ]
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
@@ -109,9 +109,9 @@ test.describe('Naga Markets', async()=>{
     })
 
     const NMdepositTestParams: NMtestTypes[] = [
-        {testRailId: '@23606', brand: '@NM', user: 'depositTestMarkets', depositName: 'credit-cards', requestURL: '**/payment/safecharge/url'},
-        {testRailId: '@25151', brand: '@NM', user: 'depositTestMarkets', depositName: 'ewallets', requestURL: '**/payment/safecharge/url'},
-        {testRailId: '@25150', brand: '@NM', user: 'depositTestMarkets', depositName: 'sepa-credit', requestURL: '**/payments/truelayer/providers'}    ]
+        {testRailId: '@23606', brand: '@NM', user: 'depositTestMarkets', depositName: 'light-credit-debit-cards', requestURL: '**/payment/safecharge/url'},
+        {testRailId: '@25151', brand: '@NM', user: 'depositTestMarkets', depositName: 'light-ewallet', requestURL: '**/payment/safecharge/url'},
+        {testRailId: '@25150', brand: '@NM', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}    ]
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} ${brand} Check ${depositName} deposit`, 
             {tag:['@deposit', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{

@@ -185,6 +185,7 @@ export class NagaCom{
         await this.footerContainer.scrollIntoViewIfNeeded();
         let category = await this.footerContainer.locator(`//a[text()='${categoryName}']`).first()
         await category.click()
+        await this.page.waitForTimeout(1500)
     }
     async openSocialNetwork(networkName: string):Promise<Page>{
         let icon = await this.page.locator(`//a[contains(@aria-label, '${networkName}')]`).first()

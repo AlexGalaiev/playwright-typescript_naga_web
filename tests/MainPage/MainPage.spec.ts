@@ -6,8 +6,6 @@ import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterL
 import { expect } from "@playwright/test"
 import { getLocalization } from "../../pageObjects/localization/getText"
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile"
-import { TwoAuthenfication } from "../../pageObjects/FullRegistration/components/NagaX_2Auth"
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage"
 
 
 test.describe('Main Page elements', async()=>{
