@@ -140,7 +140,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
 ]
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
   test(`${testRailId} ${brand} Edit position popup with ${protectionSL}/${protectionTP}`, {tag:'@trading'}, async({page}, testInfo)=>{
-    await testInfo.setTimeout(testInfo.timeout + 140000);
+    testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
@@ -176,7 +176,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     })
     await test.step('Check change limit successfull popup', async()=>{
       expect(await changeLimitsSuccessPopup.getLotsAmount()).toContain(units)
-      expect(Number(await changeLimitsSuccessPopup.getInvesctmentsAmount())).toBeCloseTo(Number(deposit))
+      expect(Number(await changeLimitsSuccessPopup.getInvesctmentsAmount(currency))).toBeCloseTo(Number(deposit))
       expect(await changeLimitsSuccessPopup.getProtectionValue(protectionSL)).toContain(SL)
       await changeLimitsSuccessPopup.acceptPopup()
     })

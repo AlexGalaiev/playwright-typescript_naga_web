@@ -29,11 +29,11 @@ export class ChangeLimitsPopup{
     };
     async enableStopLoss(){
         await this.stopLossSwitcher.click()
-        await this.page.waitForTimeout(1250);
+        await this.page.waitForTimeout(2000);
     };
     async enableTakeProgit(){
         await this.takeProfit.click()
-        await this.page.waitForTimeout(1250);
+        await this.page.waitForTimeout(2000);
     };
     async updatePosition(){
         return await this.updateBtn.click();
