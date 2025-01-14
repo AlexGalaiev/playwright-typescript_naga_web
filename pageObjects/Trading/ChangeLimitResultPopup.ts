@@ -22,10 +22,10 @@ export class ChangeLimitSuccessPopup{
         this.thankYouBtn = page.locator("#ot_ok_thx")
         this.direction = page.locator("//div[@class='modal-trade-summary__buy-sell']//div[@class='modal-trade-summary__direction']")
     }
-    async getInvesctmentsAmount(){
+    async getInvesctmentsAmount(currency: string){
         await this.popupBody.waitFor({state:"visible"})
         let amount =  await this.investmentAmount.textContent();
-        return await amount?.replace('$', '')
+        return await amount?.replace(currency, '')
     };
     async getLotsAmount(){
         return await this.lots.textContent()
