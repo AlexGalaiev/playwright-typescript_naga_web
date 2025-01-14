@@ -13,7 +13,8 @@ type tradingTypes = {
   testRailId: string,
   brand: string,
   user: string,
-  investDirection: string
+  investDirection: string,
+  currency: string
 }
 const tradingInstrument = "Dogecoin/USD";
 const realStockInstrument = 'Agilent Technologies'
@@ -23,13 +24,18 @@ let rate;
 
 test.describe("Trading Positions/Orders", async () => {
 const tradingParamsPositions: tradingTypes[] = [
-  {testRailId: '@25159', brand: '@NS', user:'testTrading2', investDirection:'Short'},
-  {testRailId: '@25163', brand: '@NS', user:'testTrading2', investDirection:"Long"},
-  {testRailId: '@23675', brand: '@NM', user:'testTrading2Markets', investDirection:'Short'},
-  {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'}
+  {testRailId: '@25159', brand: '@NS', user:'testTrading2', investDirection:'Short',currency:'$'},
+  {testRailId: '@25163', brand: '@NS', user:'testTrading2', investDirection:"Long", currency:'$'},
+  {testRailId: '@23675', brand: '@NM', user:'testTrading2Markets', investDirection:'Short', currency:'$'},
+  {testRailId: '@25164', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', currency:'$'},
+  {testRailId: '@25369', brand: '@NMena', user:'testTrading@naga.com', investDirection:'Short',currency:'€'},
+  {testRailId: '@25368', brand: '@NMena', user:'testTrading@naga.com', investDirection:'Long',currency:'€'}
 ]
-for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
-  test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,{tag:['@trading', '@prodSanity'], annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, async ({ page }, testInfo) => {
+for(const{testRailId, brand, user,investDirection, currency}of tradingParamsPositions){
+  test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,
+      {tag:['@trading', '@prodSanity'], 
+        annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
+      async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -57,21 +63,23 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsPositions){
     await test.step("Check My-trades", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      investmentValue = await myTrades.getDepositValue();
+      investmentValue = await myTrades.getDepositValue(currency);
       units = await myTrades.getUnits();
       await myTrades.closePosition()
     });
     await test.step('Check successfull closing popup', async()=>{
-      expect(Number(await successfullClosePopup.getDeposit())).toBeCloseTo(Number(investmentValue))
+      expect(Number(await successfullClosePopup.getDeposit(currency))).toBeCloseTo(Number(investmentValue))
       expect(await successfullClosePopup.getLots()).toContain(units)
     })
   });
 }
 const tradingParamsOrders: tradingTypes[] = [
-  {testRailId: '@25161', brand: '@NS', user:'testTrading2', investDirection:'Short'},
-  {testRailId: '@25162', brand: '@NS', user:'testTrading2', investDirection:"Long"},
-  {testRailId: '@25016', brand: '@NM', user:'testTrading2Markets', investDirection:'Short'},
-  {testRailId: '@25015', brand: '@NM', user:'testTrading2Markets', investDirection:'Long'},
+  {testRailId: '@25161', brand: '@NS', user:'testTrading2', investDirection:'Short', currency:'$'},
+  {testRailId: '@25162', brand: '@NS', user:'testTrading2', investDirection:"Long", currency:'$'},
+  {testRailId: '@25016', brand: '@NM', user:'testTrading2Markets', investDirection:'Short', currency:'$'},
+  {testRailId: '@25015', brand: '@NM', user:'testTrading2Markets', investDirection:'Long',currency:'$'},
+  {testRailId: '@25371', brand: '@NMena', user:'testTrading@naga.com', investDirection:'Long',currency:'€'},
+  {testRailId: '@25372', brand: '@NMena', user:'testTrading@naga.com', investDirection:'Short',currency:'€'},
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
   test(`${testRailId} ${brand} Open/Close pending ${investDirection} position`,
@@ -117,12 +125,13 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
 })}
 
 const tradingParameters: tradingTypes[] = [
-  {testRailId: '@25175', brand: '@NS', user:'testTrading2', investDirection:'Short'},
-  {testRailId: '@25174', brand: '@NM', user:'testTrading2Markets', investDirection:"Short"},
+  {testRailId: '@25175', brand: '@NS', user:'testTrading2', investDirection:'Short', currency:'$'},
+  {testRailId: '@25174', brand: '@NM', user:'testTrading2Markets', investDirection:"Short", currency:'$'},
+  //{testRailId: '@25373', brand: '@NMena', user:'testTrading@naga.com', investDirection:"Short", currency:'€'}
 ]
 for(const{testRailId, brand, user, investDirection}of tradingParameters){
   test(`${testRailId} Open short position of real stock ${brand}`,{tag:'@trading'}, async({page}, testInfo)=>{
-    await testInfo.setTimeout(testInfo.timeout + 140000);
+    testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);

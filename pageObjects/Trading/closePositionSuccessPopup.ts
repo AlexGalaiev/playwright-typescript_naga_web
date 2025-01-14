@@ -17,9 +17,9 @@ export class ClosePositionSuccessPopup{
         this.rate = page.locator("//span[text()='Planned Entry Price']//..//span[contains(@class, 'amount')]//span")
         this.acceptBtn = page.locator("#ot_ok_thx")
     };
-    async getDeposit(){
+    async getDeposit(currency: string){
         let value = await this.popupInvestmentValue.textContent()
-        return await value?.replace('$', '')
+        return await value?.replace(currency, '')
     };
     async getLots(){
         return await this.lots.textContent()

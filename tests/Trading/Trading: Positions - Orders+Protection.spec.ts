@@ -31,6 +31,8 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25160', brand: '@NS', user:'testTrading2', investDirection:"Long", protection: 'Take profit',tradeField: 'tp'},
   {testRailId: '@25166', brand: '@NM', user:'testTrading2Markets', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
   {testRailId: '@25017', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
+  {testRailId: '@25374', brand: '@NMena', user:'testTrading@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
+  {testRailId: '@25375', brand: '@NMena', user:'testTrading@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
   test(`${testRailId} ${brand} Open/Close ${investDirection} position + ${protection}`, 
@@ -74,7 +76,9 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25167', brand: '@NS', user:'testTrading2', investDirection:'Short', protection: 'Stop Loss',tradeField: 'sl'},
     {testRailId: '@25169', brand: '@NS', user:'testTrading2', investDirection:"Long", protection: 'Take profit',tradeField: 'tp'},
     {testRailId: '@25171', brand: '@NM', user:'testTrading2Markets', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
-    {testRailId: '@25170', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'}
+    {testRailId: '@25170', brand: '@NM', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
+    {testRailId: '@25376', brand: '@NMena', user:'testTrading@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
+    {testRailId: '@25377', brand: '@NMena', user:'testTrading@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
     test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, {tag:'@trading'}, async({page}, testInfo)=>{
@@ -125,15 +129,17 @@ type changeLimittypes = {
   protectionSL: string,
   protectionTP: string,
   tradeFieldSL: string,
-  tradeFieldsTP: string
+  tradeFieldsTP: string,
+  currency: string
 }
 
 const tradingParametersSLTP: changeLimittypes[] = [
-  {testRailId: '@25173', brand: '@NS', user:'testTrading2', investDirection:'Short', protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp'},
-  {testRailId: '@25172', brand: '@NM', user:'testTrading2Markets', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp'}
+  {testRailId: '@25173', brand: '@NS', user:'testTrading2', investDirection:'Short', protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$'},
+  {testRailId: '@25172', brand: '@NM', user:'testTrading2Markets', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$'},
+  {testRailId: '@25378', brand: '@NMena', user:'testTrading@naga.com', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'€'}
 ]
-for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP} of tradingParametersSLTP){
-  test(`${testRailId} Edit position popup with ${protectionSL}/${protectionTP}`, {tag:'@trading'}, async({page}, testInfo)=>{
+for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
+  test(`${testRailId} ${brand} Edit position popup with ${protectionSL}/${protectionTP}`, {tag:'@trading'}, async({page}, testInfo)=>{
     await testInfo.setTimeout(testInfo.timeout + 140000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -159,7 +165,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     await test.step("Check My-trades", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      deposit = (await myTrades.getDepositValue())?.replace('$','');
+      deposit = (await myTrades.getDepositValue(currency));
       units = await myTrades.getUnits();
     })
     await test.step(`Open change limit popup and install ${protectionSL}`, async()=>{
