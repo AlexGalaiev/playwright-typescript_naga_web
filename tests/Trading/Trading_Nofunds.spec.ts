@@ -17,7 +17,8 @@ type testNoFunds = {
 
 const testNoFundsParaketers: testNoFunds[] = [
    {testRailId: '@25018', brand: '@NS', user: 'tradingNoFunds', tradingInstrument: "Bitcoin/EUR"},
-   {testRailId: '@25176', brand: '@NM', user: 'tradNoFundsMarket', tradingInstrument: "Cardano/USD"}
+   {testRailId: '@25176', brand: '@NM', user: 'tradNoFundsMarket', tradingInstrument: "Cardano/USD"},
+   {testRailId: '@25381', brand: '@NMena', user: 'testNoFundsMena@naga.com', tradingInstrument: "Bitcoin/EUR"}
 ]
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
     test(`${testRailId} Open position without funds ${brand}`, {tag:'@trading'}, async({page}, testInfo)=>{
