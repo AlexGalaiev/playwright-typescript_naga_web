@@ -87,5 +87,31 @@ export class NewPosition{
         await plusBtn.dblclick()
         await this.page.waitForTimeout(500)
     }
-
+    async installShortAtCurrentPriceViaMinusBtn(){
+        await this.page.waitForTimeout(1000)
+        let plusBtn = await this.page.locator("//div[@class='investment-section ']//div[@class='enter-value']//div[contains(@class, 'minus-btn')]").first()
+        await plusBtn.click()
+        await this.page.waitForTimeout(250)
+        await plusBtn.click()
+        await this.page.waitForTimeout(250)
+        await plusBtn.click()
+        await this.page.waitForTimeout(250)
+        await plusBtn.click()
+        await this.page.waitForTimeout(250)
+        await plusBtn.click()
+        await this.page.waitForTimeout(500)
+    }
+    async installSpecificRateViaMinusBtn(){
+        await this.page.waitForTimeout(1000)
+        await this.page.locator("//label[text()='Short at Specific Rate']").click()
+        let plusBtn = await this.page.locator("//div[@class='open-trade__entry-price ']//div[contains(@class, 'minus-btn')]")
+        await plusBtn.click()
+        await this.page.waitForTimeout(250)
+        await plusBtn.click()
+        await this.page.waitForTimeout(250)
+        await plusBtn.click()
+        await this.page.waitForTimeout(250)
+        await plusBtn.click()
+        await this.page.waitForTimeout(250)
+    }
 }

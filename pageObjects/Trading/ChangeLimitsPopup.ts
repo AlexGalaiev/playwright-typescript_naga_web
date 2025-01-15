@@ -28,12 +28,18 @@ export class ChangeLimitsPopup{
         return await this.investmentAmount.textContent();
     };
     async enableStopLoss(){
+        await this.page.waitForSelector(
+            "//span[contains(@class, 'change-trade-limits__profit')]//span[contains(@class, 'value-negative')]", {state:'visible'})
+        await this.page.waitForTimeout(1000)
         await this.stopLossSwitcher.click()
-        await this.page.waitForTimeout(2000);
+        await this.page.waitForTimeout(1000);
     };
     async enableTakeProgit(){
+        await this.page.waitForSelector(
+            "//span[contains(@class, 'change-trade-limits__profit')]//span[contains(@class, 'value-negative')]", {state:'visible'})
+        await this.page.waitForTimeout(1000)
         await this.takeProfit.click()
-        await this.page.waitForTimeout(2000);
+        await this.page.waitForTimeout(1000);
     };
     async updatePosition(){
         return await this.updateBtn.click();

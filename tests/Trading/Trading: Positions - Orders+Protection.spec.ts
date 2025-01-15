@@ -160,6 +160,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
+      await newPosition.installShortAtCurrentPriceViaMinusBtn()
       await newPosition.submitPosition(); 
     });
     await test.step("Check My-trades", async () => {
