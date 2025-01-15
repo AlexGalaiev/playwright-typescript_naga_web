@@ -12,7 +12,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
-test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']}, async({ page, NagaCapital, NSCountry }, testInfo)=>{
+test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@debug']}, async({ page, NagaCapital, NSCountry }, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 60000);
     let signUp = new SignUp(page);
     let mainPage = new MainPage(page);
