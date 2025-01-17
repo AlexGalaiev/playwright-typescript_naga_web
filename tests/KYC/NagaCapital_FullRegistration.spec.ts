@@ -12,7 +12,8 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
-test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@debug']}, async({ page, NagaCapital, NSCountry }, testInfo)=>{
+test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@debug']}, 
+    async({ page, NagaCapital, NSCountry }, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 60000);
     let signUp = new SignUp(page);
     let mainPage = new MainPage(page);
@@ -21,7 +22,7 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@
     let email = await new RandomUser().getRandomUserEmail() 
     await test.step(`Create lead user with ${email}`, async ()=>{
         await signUp.goto(NagaCapital, 'register')
-        await signUp.createCFDUser(email, process.env.USER_PASSWORD || '',NSCountry)
+        await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry)
     });
     await test.step('Fill personal information step', async() =>{
         await personalInfo.fillPersonalInformation('Continue');
@@ -29,19 +30,20 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@
         await personalInfo.compleateYourProfile()
         await personalInfo.clickDepositNow()
     });
-    await test.step('Check status on second step on header banner', async()=>{
-        expect(await mainPage.getStatusOfHeaderStep(2)).toEqual('To do')
-        expect(await mainPage.getStatusTextOfHeaderStep(2)).toEqual('Verify identity')
+    await test.step('Check status of main page widget', async()=>{
+        await mainPage.openHeaderMenuPoint("feed");
+        expect(await mainPage.getStatusOfWidgetStep('NAGA Start')).toContain('--finished')
+        expect(await mainPage.getStatusOfWidgetStep('Deposit')).toContain('--active')
     })
     await test.step('Update account to next level', async()=>{
-        await mainPage.updateUserLevel();
+        await mainPage.clickOnWidgepPoint('NAGA Progress')
         await new StartKYCPopup(page).startKYC();
         await new UdpateAccount(page).clickFinishBtn();
     });
     await test.step('Check verification step (header step)', async()=>{
        // expect(await verificationPopup.verificationPoupIsDisplyed()).toBeVisible()
         await verificationPopup.skipVerificationStep();
-        expect(await mainPage.getStatusOfHeaderStep(3)).toEqual('To do')
-        expect(await mainPage.getStatusTextOfHeaderStep(3)).toEqual('Complete Progress level and verify address')
+        expect(await mainPage.getStatusOfWidgetStep('NAGA Progress')).toContain('--next')
+        expect(await mainPage.getStatusOfWidgetStep('NAGA Ultimate')).toContain('--next')
     })
 })

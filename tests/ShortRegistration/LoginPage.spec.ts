@@ -8,29 +8,26 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout";
 import { IncorrectPasswordPopup } from "../../pageObjects/SignIn/IncorrectPassword";
+import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
+import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
+import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
+import { NagaCom } from "../../pageObjects/Website/NagaCom";
 
 
 test.describe("Naga Capital. SignIn Page", async()=>{
     let localization = new getLocalization('/pageObjects/localization/SighInPage.json');
     let testUser: string = '';
 
-    test.beforeEach('Create lead user for tests', async({page, NagaCapital})=>{
+    test.beforeEach('Create lead user for tests', async({page, NagaCapital, NSCountry})=>{
         let signUp = new SignUp(page)
-        let signIn = new SignIn(page)
-        let mainPage = new MainPage(page);
-        let myAccountsMenu = new MyAccounts(page)
-        await test.step("Create lead user", async()=>{
-            testUser = await signUp.createLeadUserApiNagaCapital('BA', page)
-            await signIn.goto(NagaCapital, 'login');
-            await signIn.signInUserToPlatform(testUser, process.env.USER_PASSWORD || "")
-            await mainPage.mainPageIsDownLoaded()
-            await signUp.makePhoneVerifed(page)
+        testUser = new RandomUser().getRandomUserEmail()
+        await test.step(`Create lead user ${testUser}`, async()=>{
+            await signUp.goto(NagaCapital, 'register');
+            await signUp.createCFDUser(testUser, process.env.USER_PASSWORD || "", NSCountry)
+            await new PersonalInformation(page).clickLogOut()
+            await new PageAfterLogout(page).redirectToSighIn()
         })
-        await test.step('Log out from platform ', async()=>{
-            await myAccountsMenu.openUserMenu();
-            await myAccountsMenu.userLogOut()
-            await new PageAfterLogout(page).redirectToSighIn();
-        })})
+    })
 
     test.skip("@23916 Forgot password link test",
             {tag:'@forgotPassword', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, async({page})=>{
@@ -41,7 +38,8 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             expect(await forgotPassword.getForgotPasswordDescription()).toEqual(await localization.getLocalizationText("ForgotPasswordDescription"))
             await forgotPassword.sendForgotPasswordToEmail(testUser);
             expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
-        })});
+        })
+    });
 
     test.skip("@23915 Account locking functionality",{tag:'@UI'}, async({page})=>{
         let signIn = new SignIn(page);
@@ -61,20 +59,17 @@ test.describe('Naga Markets. Sigh in', async()=>{
     let testUser;
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_SighInPage.json');
 
-    test.beforeEach('Create lead user for tests', async({page, NagaMarkets})=>{
+    test.beforeEach('Create lead user for tests', async({page, NagaMarkets, NMCountry})=>{
         let signUp = new SignUp(page)
         let myAccountsMenu = new MyAccounts(page)
-        let signIn = new SignIn(page)
-        await test.step("Create lead user", async()=>{
-            testUser = await signUp.createLeadUserApi('FR')
-            await signIn.goto(NagaMarkets, 'login');
-            await signIn.signInUserToPlatform(testUser, process.env.USER_PASSWORD || "")
+        testUser = new RandomUser().getRandomUserEmail()
+        await test.step(`Create lead user ${testUser}`, async()=>{
+            await signUp.goto(NagaMarkets, 'register');
+            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || "", NMCountry)
+            await new PersonalInformation(page).clickLogOut()
+            await new PageAfterLogout(page).redirectToSighIn()
         })
-        await test.step('Log out from platform ', async()=>{
-            await myAccountsMenu.openUserMenu();
-            await myAccountsMenu.userLogOut()
-            await new PageAfterLogout(page).redirectToSighIn();
-        })})
+    })
     
     test.skip("@23574 Forgot password link test", 
         {tag:'@forgotPassword', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, async({page})=>{
@@ -155,7 +150,7 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
         await test.step("Redirect from platform(in Guest mode) to sigh Up page", async()=>{
             await signUp.goto(await signIn.chooseBrand(brand),"feed");
             await mainPage.openRegistrationFromGuestMode();
-            expect(await signUp.getSighUpTittleText()).toContain("Sign Up, it's free!");
+            expect(await signUp.getSighUpTittleText()).toContain("Sign up, it's free!");
         });
     })
 }
@@ -188,6 +183,28 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
                 })})
         }
     })
+
+    type logoTests = {
+        testRailId:string;
+        brand: string;
+    }
+    const logoTestParams: logoTests[] = [
+        {testRailId: '@25388', brand: '@NM'},
+        {testRailId: '@25389', brand: '@NS'},
+        {testRailId: '@25390', brand: '@NMena'},
+        {testRailId: '@25390', brand: '@NAfrica'}
+    ]
+
+    for(const{testRailId, brand}of logoTestParams){
+        test(`${testRailId} Redirect from ${brand} logo to website`,{tag:'@UI'}, async({page})=>{
+            let signIn = new SignIn(page)
+            let website = new NagaCom(page)
+            await signIn.goto(await signIn.chooseBrand(brand), 'login')
+            await signIn.clickLogo()
+            expect(await website.checkInstrumentBar()).toBeVisible()
+        })
+    }
+
 
 
     

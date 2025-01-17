@@ -285,4 +285,7 @@ export class NagaCom{
         let socialNetwork = await this.page.locator(`//a[contains(@aria-label, '${newtworkName}')]`).first()
         return await socialNetwork.getAttribute('href')
     }
+    async checkInstrumentBar(){
+        return await this.page.locator("#prod_types_container").first()
+    }
 }

@@ -1,17 +1,11 @@
 
 import { expect } from "@playwright/test";
-
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
-import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { AddAcountForm } from "../../pageObjects/UserProfile/AddTradingAccount";
 import { HeaderMenuUserProfile } from "../../pageObjects/UserProfile/HeaderUserProfile";
 import {test} from "../../test-options";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
-import { KYC_Start } from "../../pageObjects/FullRegistration/NAGAMarkets-KYCStart";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations";
 
 test.describe("NagaCapital - Trading Accounts", async()=>{

@@ -33,7 +33,9 @@ export class SignIn{
         await this.signBtn.click();
     };
     async forgotPasswordClick(){
+        await this.page.waitForTimeout(500)
         await this.forgotPasswordLink.click();
+        await this.page.waitForTimeout(500)
     };
     async getRedirectionNoticeMsg(){
         return await this.redirectionNotice.textContent();
@@ -93,5 +95,10 @@ export class SignIn{
     async checkPageHeader(){
         await this.page.waitForTimeout(500)
         return await this.page.locator("//h2[contains(@class, 'login-form__headline')]").textContent()
+    }
+
+    async clickLogo(){
+        await this.page.locator(".naga-logo"). click()
+        await this.page.waitForTimeout(500)
     }
 }
