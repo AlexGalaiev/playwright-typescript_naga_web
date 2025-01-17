@@ -86,100 +86,103 @@ export class SignUp{
     async getSighUpTittleText(){
         return await this.sighUpTittle.textContent();
     };
-    async addUserApi(email: string, country: string, userName: string){
-        let firstName = await fakerEN.person.firstName()
-        let lastName = await fakerEN.person.lastName()
-        const axios = require('axios');
-        let data = JSON.stringify({
-        "p_email": email,
-        "p_user_name": userName,
-        "p_plain_password": "Test123!",
-        "p_tel": "+387603039647",
-        "is_flexible": true,
-        "p_app_language": "en",
-        "p_country": country,
-        "p_first_name":firstName,
-        "p_last_name": lastName,
-        "site": {
-            "type": "FACEBOOK"
-        }
-        });
-        
-        let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://api-v2.naga.com/user/registration/register',
-        headers: {
-            'accept-version': '2.*',
-            'platform': 'web-trader',
-            'Content-Type': 'application/json',
-        },
-        data : data
-        };
-        
-        axios.request(config)
-        .then((response) => {
-        //console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-        //console.log(error);
-        });
-        await this.page.waitForTimeout(250)
-    }
 
-    async addUserApiNagaCapital(email: string, country: string){
-        const axios = require('axios');
-        let data = JSON.stringify({
-        "p_app_language":"en",
-        "p_user_name": null,
-        "p_email": email,
-        "p_plain_password": "Test123!",
-        "is_flexible": true,
-        "p_country": country,
-        "p_first_name":"",
-        "p_last_name": "",
-        "legal_documents_accepted_code":"ns_legal_docs_accepted",
-        "personal_data_processing_and_communication_accepted":true,
-        "us_citizen_or_resident":false,
-        "p_webinar":"web-trader",
-        "p_department":"ns",
-        "site": {
-            "type": "FACEBOOK"
-        }
-        });
+    //delete
+    // async addUserApi(email: string, country: string, userName: string){
+    //     let firstName = await fakerEN.person.firstName()
+    //     let lastName = await fakerEN.person.lastName()
+    //     const axios = require('axios');
+    //     let data = JSON.stringify({
+    //     "p_email": email,
+    //     "p_user_name": userName,
+    //     "p_plain_password": "Test123!",
+    //     "p_tel": "+387603039647",
+    //     "is_flexible": true,
+    //     "p_app_language": "en",
+    //     "p_country": country,
+    //     "p_first_name":firstName,
+    //     "p_last_name": lastName,
+    //     "site": {
+    //         "type": "FACEBOOK"
+    //     }
+    //     });
         
-        let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://api-v2.naga.com/user/registration/register',
-        //url: 'https://api-v2-canary.sxdev.io/user/registration/register',
-        headers: {
-            'accept-version': '2.*',
-            'platform': 'web-trader',
-            'Content-Type': 'application/json',
-        },
-        data : data
-        };
+    //     let config = {
+    //     method: 'post',
+    //     maxBodyLength: Infinity,
+    //     url: 'https://api-v2.naga.com/user/registration/register',
+    //     headers: {
+    //         'accept-version': '2.*',
+    //         'platform': 'web-trader',
+    //         'Content-Type': 'application/json',
+    //     },
+    //     data : data
+    //     };
         
-        axios.request(config)
-        .then((response) => {
-        console.log();
-        })
-        .catch((error) => {
-        console.log(error);
-        });
-    }
+    //     axios.request(config)
+    //     .then((response) => {
+    //     //console.log(JSON.stringify(response.data));
+    //     })
+    //     .catch((error) => {
+    //     //console.log(error);
+    //     });
+    //     await this.page.waitForTimeout(250)
+    // }
+
+    // async addUserApiNagaCapital(email: string, country: string){
+    //     const axios = require('axios');
+    //     let data = JSON.stringify({
+    //     "p_app_language":"en",
+    //     "p_user_name": null,
+    //     "p_email": email,
+    //     "p_plain_password": "Test123!",
+    //     "is_flexible": true,
+    //     "p_country": country,
+    //     "p_first_name":"",
+    //     "p_last_name": "",
+    //     "legal_documents_accepted_code":"ns_legal_docs_accepted",
+    //     "personal_data_processing_and_communication_accepted":true,
+    //     "us_citizen_or_resident":false,
+    //     "p_webinar":"web-trader",
+    //     "p_department":"ns",
+    //     "site": {
+    //         "type": "FACEBOOK"
+    //     }
+    //     });
+        
+    //     let config = {
+    //     method: 'post',
+    //     maxBodyLength: Infinity,
+    //     url: 'https://api-v2.naga.com/user/registration/register',
+    //     //url: 'https://api-v2-canary.sxdev.io/user/registration/register',
+    //     headers: {
+    //         'accept-version': '2.*',
+    //         'platform': 'web-trader',
+    //         'Content-Type': 'application/json',
+    //     },
+    //     data : data
+    //     };
+        
+    //     axios.request(config)
+    //     .then((response) => {
+    //     console.log();
+    //     })
+    //     .catch((error) => {
+    //     console.log(error);
+    //     });
+    // }
 
     public randomUserName(){
         const randomNumber = Math.floor(Math.random() * (999 - 10 + 1)) + 10;
         let userName = `user${randomNumber}`
         return userName;
     }
-    async createLeadUserApi(country: string){
-        let randomEmail = await new RandomUser().getRandomUserEmail(); 
-        await this.addUserApi(randomEmail, country, await this.randomUserName())
-        return randomEmail
-    }
+    //delete
+    // async createLeadUserApi(country: string){
+    //     let randomEmail = await new RandomUser().getRandomUserEmail(); 
+    //     await this.addUserApi(randomEmail, country, await this.randomUserName())
+    //     return randomEmail
+    // }
 
     async createLeadUserApiNagaCapital(country: string, page: Page){
         let randomEmail = await new RandomUser().getRandomUserEmail(); 

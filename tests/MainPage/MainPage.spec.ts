@@ -41,17 +41,16 @@ test.describe('Main Page elements', async()=>{
 test.describe('Naga Capital', async()=>{
     type testpBannerTypes = {
         email: string;
-        numberOfStep: number;
-        textOfStep:string;
-        level: string
+        stepName:string;
+        text: string
     }
     const testBannerParams: testpBannerTypes[] = [
-        {email: "testUserLead@i.ua", numberOfStep: 1, textOfStep:"Complete now", level: 'Lead'},
-        {email: "userHalfRegistered@i.ua", numberOfStep: 2, textOfStep:"Verify identity", level: 'leadToUpgrade'},
-        {email: "testUserUpgraded@i.ua", numberOfStep:3, textOfStep:"Complete Progress level and verify address", level:'halfVerified'}
+        {email: "testUserLead@i.ua", stepName:"NAGA Start", text: 'Provide basic info to open a Real-Money account with a $2,000 deposit limit.'},
+        {email: "userHalfRegistered@i.ua", stepName:"NAGA Start", text: 'Provide basic info to open a Real-Money account with a $2,000 deposit limit.'},
+        {email: "testUserUpgraded@i.ua", stepName:"NAGA Start", text: 'Provide basic info to open a Real-Money account with a $2,000 deposit limit.'}
     ]
-    for(const {email, numberOfStep, textOfStep, level} of testBannerParams){
-    test(`@23926 Status on banner ${level}`,{tag: '@UI'}, async({page, NagaCapital})=>{
+    for(const {email, stepName, text} of testBannerParams){
+    test(`@23926 Status on widget step ${email}`,{tag: '@UI'}, async({page, NagaCapital})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         await test.step(`Login to platform by ${email}`, async()=>{
@@ -59,7 +58,7 @@ test.describe('Naga Capital', async()=>{
             await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
         })
         await test.step('Check statuses of steps', async()=>{
-            expect(await mainPage.getStatusTextOfHeaderStep(numberOfStep)).toEqual(textOfStep)
+            expect(await mainPage.getTextOfWidgetStep(stepName)).toEqual(text)
         })})}
 })
 

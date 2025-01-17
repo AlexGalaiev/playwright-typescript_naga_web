@@ -65,4 +65,8 @@ export class PersonalInformation{
         await depositBtn.waitFor({state:"visible"})
         await depositBtn.click()
     }
+    async clickLogOut(){
+        await this.page.waitForSelector(".complete-your-profile-modal__content", {state:'visible'})
+        await this.page.locator("//button[text()='Sign out']").click()
+    }
 }

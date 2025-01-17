@@ -26,9 +26,11 @@ export class KYC_Start{
         return await this.desclaimer.textContent();
     }
     async openAccountsTypes(){
+        await this.page.waitForTimeout(500)
         await this.accountsTypes.click();
     }
     async clickStartVerificationBtn(){
+        await this.page.waitForTimeout(500)
         await this.startVerificationBtn.click()
     }
 }

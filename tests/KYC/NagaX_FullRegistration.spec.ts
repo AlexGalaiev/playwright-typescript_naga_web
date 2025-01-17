@@ -12,6 +12,7 @@ import { getLocalization } from "../../pageObjects/localization/getText"
 import { FinishPopup } from "../../pageObjects/FullRegistration/components/NagaX_FinishRegistrationPopup"
 import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import { NagaXAddPopup } from "../../pageObjects/FullRegistration/components/NagaX_AdditionalPopup"
+import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
 
 test.describe('Naga X ', async()=>{
 //commit #180
@@ -23,7 +24,7 @@ test.describe('Naga X ', async()=>{
         let finishPopup = new FinishPopup(page)
         let inPlatformPopup = new YouAreInCrypto(page)
         let localization = new getLocalization('/pageObjects/localization/NagaX_KYC.json')
-        let email = await signUp.createLeadUserApi("BA")
+        let email = await new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user with ${email}`, async()=>{
             await signUp.goto(NagaX, 'register')
             await signUp.createCryptoUser(email, process.env.USER_PASSWORD || "", NagaXCountry)

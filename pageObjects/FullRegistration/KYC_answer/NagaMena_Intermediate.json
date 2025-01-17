@@ -57,7 +57,7 @@
     },
     "net_worth":{
         "text": "Your Net Worth in USD (Assets less Liabilities)?",
-        "answer":"From 2,000,001 - 3,000,000"
+        "answer":"Less than 10,000"
     },
     "liquid_assets_net_worth":{
         "text": "Your total cash and liquid assets in your Net Worth?",
@@ -65,7 +65,7 @@
     },
     "anticipated_amount":{
         "text": "How much do you plan to deposit into NAGA account in USD over 1 year?",
-        "answer":"From 100,001 - 250,000"
+        "answer":"Less than 10,000"
     },
     "expected_deposit_and_withdrawal_method":{
         "text": "How do you plan to deposit your funds to NAGA?",
@@ -77,15 +77,15 @@
     },
     "investment_objectives_naga":{
         "text": "What best describes your primary purpose of trading with us?",
-        "answer":"Short Term Returns"
+        "answer":"Capital Protection"
     },
     "time_to_hold_open_positions":{
         "text": "How long do you plan to leave your positions open?",
-        "answer":"Less than a week"
+        "answer":"Less than a month"
     },
     "level_of_risk_to_tolerate_in_exchange":{
         "text": "Please state the level of risk (volatility) you will tolerate in exchange for the expected gain from your annual investments with us?",
-        "answer":"Potential gain 80% / Potential loss -80%"
+        "answer":"Potential gain 20% / Potential loss -20%"
     },
     "currency":{
         "text": "Please choose the currency for your trading account:",

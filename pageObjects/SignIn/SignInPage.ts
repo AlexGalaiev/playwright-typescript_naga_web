@@ -33,7 +33,9 @@ export class SignIn{
         await this.signBtn.click();
     };
     async forgotPasswordClick(){
+        await this.page.waitForTimeout(500)
         await this.forgotPasswordLink.click();
+        await this.page.waitForTimeout(500)
     };
     async getRedirectionNoticeMsg(){
         return await this.redirectionNotice.textContent();

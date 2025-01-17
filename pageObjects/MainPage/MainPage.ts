@@ -168,4 +168,27 @@ export class MainPage{
         await this.page.locator("//button//span[text()='Verify now']").click()
         await this.page.waitForTimeout(500)
     }
+
+    //mainpage widget naga capital
+    async getStatusOfWidgetStep(nameOfTheStep:string){
+        await this.page.waitForTimeout(3000)
+        let step = await this.page.locator(`//div[text()='${nameOfTheStep}']`)
+        return await step.getAttribute('class')
+    }
+
+    async getTextOfWidgetStep(widgetName: string){
+        let text = await this.page.locator(`//div[text()='${widgetName}']//following-sibling::div`)
+        return await text.textContent()
+    }
+
+    async clickOnWidgepPoint(nameOfTheStep:string){
+        await this.page.locator(`//div[text()='${nameOfTheStep}']`).click()
+        await this.page.waitForTimeout(1000)
+    }
+
+    // main page naga markets
+    async getKYCbannerText(){
+        let bannerText = await this.page.locator(`//div[contains(@class, 'complete-profile-widget__title--finished')]//..//div[@class='complete-profile-widget__description']`)
+        return await bannerText.textContent()
+    }
 }

@@ -8,29 +8,25 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout";
 import { IncorrectPasswordPopup } from "../../pageObjects/SignIn/IncorrectPassword";
+import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
+import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
+import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
 
 test.describe("Naga Capital. SignIn Page", async()=>{
     let localization = new getLocalization('/pageObjects/localization/SighInPage.json');
     let testUser: string = '';
 
-    test.beforeEach('Create lead user for tests', async({page, NagaCapital})=>{
+    test.beforeEach('Create lead user for tests', async({page, NagaCapital, NSCountry})=>{
         let signUp = new SignUp(page)
-        let signIn = new SignIn(page)
-        let mainPage = new MainPage(page);
-        let myAccountsMenu = new MyAccounts(page)
-        await test.step("Create lead user", async()=>{
-            testUser = await signUp.createLeadUserApiNagaCapital('BA', page)
-            await signIn.goto(NagaCapital, 'login');
-            await signIn.signInUserToPlatform(testUser, process.env.USER_PASSWORD || "")
-            await mainPage.mainPageIsDownLoaded()
-            await signUp.makePhoneVerifed(page)
+        let email = new RandomUser().getRandomUserEmail()
+        await test.step(`Create lead user ${email}`, async()=>{
+            await signUp.goto(NagaCapital, 'register');
+            await signUp.createCFDUser(email, process.env.USER_PASSWORD || "", NSCountry)
+            await new PersonalInformation(page).clickLogOut()
+            await new PageAfterLogout(page).redirectToSighIn()
         })
-        await test.step('Log out from platform ', async()=>{
-            await myAccountsMenu.openUserMenu();
-            await myAccountsMenu.userLogOut()
-            await new PageAfterLogout(page).redirectToSighIn();
-        })})
+    })
 
     test.skip("@23916 Forgot password link test",
             {tag:'@forgotPassword', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, async({page})=>{
@@ -41,7 +37,8 @@ test.describe("Naga Capital. SignIn Page", async()=>{
             expect(await forgotPassword.getForgotPasswordDescription()).toEqual(await localization.getLocalizationText("ForgotPasswordDescription"))
             await forgotPassword.sendForgotPasswordToEmail(testUser);
             expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
-        })});
+        })
+    });
 
     test.skip("@23915 Account locking functionality",{tag:'@UI'}, async({page})=>{
         let signIn = new SignIn(page);
