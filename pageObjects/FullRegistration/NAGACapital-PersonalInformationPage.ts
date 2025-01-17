@@ -1,6 +1,5 @@
 import { Locator, Page } from "playwright/test";
 import { RandomUser } from "../common/testUserCredentials/randomUser";
-import { de } from "@faker-js/faker";
 
 export class PersonalInformation{
     page: Page;
@@ -8,9 +7,6 @@ export class PersonalInformation{
     readonly lastName: Locator;
     readonly dateOfBirth: Locator;
     readonly address: Locator;
-    //readonly submitBtn: Locator;
-    //readonly street: Locator;
-    //readonly personalInfoForm: Locator;
     readonly userName: Locator;
     readonly countryCode: Locator;
     readonly phone: Locator;
@@ -21,9 +17,6 @@ export class PersonalInformation{
         this.lastName = page.locator('[name="last_name"]');
         this.dateOfBirth = page.locator("#date_of_birth");
         this.address = page.locator("[data-testid='naga-dropdown-input']");
-        // this.submitBtn = page.locator("//button[contains(@class, 'kyc-live-account-capital_submitButton')]")
-        // this.street = page.locator('#addr_street_no')
-        // this.personalInfoForm = page.locator(".complete-your-profile-modal__content")
         this.userName = page.locator('[name="user_name"]')
         this.countryCode = page.locator('[data-testid="naga-dropdown-input"]')
         this.phone = page.locator('[name="phone"]')
@@ -68,5 +61,8 @@ export class PersonalInformation{
     async clickLogOut(){
         await this.page.waitForSelector(".complete-your-profile-modal__content", {state:'visible'})
         await this.page.locator("//button[text()='Sign out']").click()
+    }
+    async clickExploreNaga(){
+        await this.page.locator("//button[text()='Explore NAGA Platform']").click()
     }
 }

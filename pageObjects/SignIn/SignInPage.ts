@@ -96,4 +96,9 @@ export class SignIn{
         await this.page.waitForTimeout(500)
         return await this.page.locator("//h2[contains(@class, 'login-form__headline')]").textContent()
     }
+
+    async clickLogo(){
+        await this.page.locator(".naga-logo"). click()
+        await this.page.waitForTimeout(500)
+    }
 }

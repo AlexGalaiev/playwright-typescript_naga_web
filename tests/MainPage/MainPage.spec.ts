@@ -66,29 +66,24 @@ test.describe('Naga Markets', async()=>{
     type testpBannerTypes = {
         email: string;
         textOfStep:string;
-        level: string
+        stepName: string
     }
     const testBannerParams: testpBannerTypes[] = [
-        {email: "testUserLeadMarkets@i.ua", textOfStep: "UpgradeAccountBannerContent", level: 'Lead'},
-        {email: "user949", textOfStep:"PreAdvanceDisclaimerBody", level: 'PreAdvance'},
-        {email: "user460", textOfStep:"PreAdvanceDisclaimerBody", level: 'Beginner'},
+        {email: "testUserLeadMarkets@i.ua", stepName:'Upgrade to Live', textOfStep: "Provide your financial profile, trading experience, and objectives to open a real-money account."},
+        {email: "user949", stepName:"Reassessment", textOfStep: 'Based on your classification, some features are restricted. Your can now take the reassessment.'},
+        {email: "user460", stepName:"Verify Identity", textOfStep: 'Submit proof of identity and address to verify your profile and activate trading.'},
     ]
-    for(const{email, textOfStep, level} of testBannerParams){
-        test(`@25190 Naga start login banner ${level}`,{tag: '@UI'}, async({page, NagaMarkets})=>{
+    for(const{email, stepName, textOfStep} of testBannerParams){
+        test(`@25190 Naga start login banner ${stepName}`,{tag: '@UI'}, async({page, NagaMarkets})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
-            let localization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
             await test.step('Login to platform', async()=>{
                 await signIn.goto(NagaMarkets, 'login')
                 await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
             await test.step('Check banners with different scorrings', async()=>{
-                if(level == 'Lead'){
-                    expect(await mainPage.getVerifyBannerContent()).toEqual(await localization.getLocalizationText(textOfStep))
-                }else{
-                    expect(await mainPage.getVerifyBannerMiddleScore()).toEqual(await localization.getLocalizationText(textOfStep))
-                }})
+                expect(await mainPage.getTextOfWidgetStep(stepName)).toEqual(textOfStep)
+            })
         })}
-    })
-
+})
 

@@ -184,28 +184,28 @@ export class SignUp{
     //     return randomEmail
     // }
 
-    async createLeadUserApiNagaCapital(country: string, page: Page){
-        let randomEmail = await new RandomUser().getRandomUserEmail(); 
-        await this.addUserApiNagaCapital(randomEmail, country)
-        return randomEmail
-    }
+    // async createLeadUserApiNagaCapital(country: string, page: Page){
+    //     let randomEmail = await new RandomUser().getRandomUserEmail(); 
+    //     await this.addUserApiNagaCapital(randomEmail, country)
+    //     return randomEmail
+    // }
 
-    async makePhoneVerifed(page){
-    await page.route('*/**/user/info', async route => {
-        const response = await route.fetch();
-        let body = await response.json();
-        body.data.company_id = '1';
-        body.data.phone_number_confirmed = 'Y'
-        body.data.phone_number = "+387603039647";
-        body.data.kyc_beginner_risk_accepted = true;
-        await route.fulfill({
-            response,
-            body: JSON.stringify(body),
-            headers: {
-            ...response.headers(),
-            },
-        });
-        });}
+    // async makePhoneVerifed(page){
+    // await page.route('*/**/user/info', async route => {
+    //     const response = await route.fetch();
+    //     let body = await response.json();
+    //     body.data.company_id = '1';
+    //     body.data.phone_number_confirmed = 'Y'
+    //     body.data.phone_number = "+387603039647";
+    //     body.data.kyc_beginner_risk_accepted = true;
+    //     await route.fulfill({
+    //         response,
+    //         body: JSON.stringify(body),
+    //         headers: {
+    //         ...response.headers(),
+    //         },
+    //     });
+    //     });}
 
     async getNotCoorectMsgText(){
         await this.page.waitForTimeout(500)
@@ -240,54 +240,54 @@ export class SignUp{
         await this.page.close()
     }
 
-    async createLeadUserApiCrypto(){
-        let randomEmail = await new RandomUser().getRandomUserEmail(); 
-        await this.addCryptoUser(randomEmail, await this.randomUserName())
-        return randomEmail
-    }
-
-    async addCryptoUser(email: string, userName: string){
-        let firstName = await fakerEN.person.firstName()
-        let lastName = await fakerEN.person.lastName()
-        const axios = require('axios');
-        let data = JSON.stringify({
-        "p_email": email,
-        "p_user_name": userName,
-        "p_plain_password": "Test123!",
-        "p_tel": "+387603039647",
-        "is_flexible": true,
-        "p_app_language": "en",
-        "p_country": "BA",
-        "p_first_name":firstName,
-        "p_last_name": lastName,
-        "p_webinar": "nagax",
-        "personal_data_processing_and_communication_accepted":true,
-        "site": {
-            "type": "FACEBOOK"
-        }
-        });
+    // async createLeadUserApiCrypto(){
+    //     let randomEmail = await new RandomUser().getRandomUserEmail(); 
+    //     await this.addCryptoUser(randomEmail, await this.randomUserName())
+    //     return randomEmail
+    // }
+    //delete
+    // async addCryptoUser(email: string, userName: string){
+    //     let firstName = await fakerEN.person.firstName()
+    //     let lastName = await fakerEN.person.lastName()
+    //     const axios = require('axios');
+    //     let data = JSON.stringify({
+    //     "p_email": email,
+    //     "p_user_name": userName,
+    //     "p_plain_password": "Test123!",
+    //     "p_tel": "+387603039647",
+    //     "is_flexible": true,
+    //     "p_app_language": "en",
+    //     "p_country": "BA",
+    //     "p_first_name":firstName,
+    //     "p_last_name": lastName,
+    //     "p_webinar": "nagax",
+    //     "personal_data_processing_and_communication_accepted":true,
+    //     "site": {
+    //         "type": "FACEBOOK"
+    //     }
+    //     });
         
-        let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://crypto-api.nagax.com/api/v1/naga/user/registration/register',
-        headers: {
-            'accept-version': '2.*',
-            'platform': 'web-trader',
-            'Content-Type': 'application/json',
-        },
-        data : data
-        };
+    //     let config = {
+    //     method: 'post',
+    //     maxBodyLength: Infinity,
+    //     url: 'https://crypto-api.nagax.com/api/v1/naga/user/registration/register',
+    //     headers: {
+    //         'accept-version': '2.*',
+    //         'platform': 'web-trader',
+    //         'Content-Type': 'application/json',
+    //     },
+    //     data : data
+    //     };
         
-        axios.request(config)
-        .then((response) => {
-        console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-        console.log(error);
-        });
-        await this.page.waitForTimeout(250)
-    }
+    //     axios.request(config)
+    //     .then((response) => {
+    //     console.log(JSON.stringify(response.data));
+    //     })
+    //     .catch((error) => {
+    //     console.log(error);
+    //     });
+    //     await this.page.waitForTimeout(250)
+    // }
     async getNumberObBtns(){
         return await this.page.locator("//button[contains(@class, 'button')]").count()
     }
