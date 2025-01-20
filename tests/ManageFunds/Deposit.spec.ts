@@ -12,32 +12,49 @@ type NStestTypes = {
     responseMethodKey: string
 }
 test.describe("Naga Capital.", async()=>{
-    let numberOfExistDeposits = 5
-    test('@25351 Check number of exist deposit methods', 
-        {tag:['@deposit', '@prodSanity', '@manageFunds']}, async({page, NagaCapital})=>{
-        let signIn = new SignIn(page);
-        let mainPage = new MainPage(page);
-        let deposit = new Deposit(page);
-        await test.step(`Login to platfrom by testTrading2 and check number of exist methods`, async()=>{
-            await signIn.goto(NagaCapital,'login');
-            await signIn.signInUserToPlatform('testTrading2', process.env.USER_PASSWORD || '');
-            await mainPage.openBackMenuPoint('Manage Funds');
-            await deposit.checkActiveDepositTab('deposit')
-            expect(await deposit.getNumberOfDepositMethods()).toEqual(numberOfExistDeposits)
-        })
-    })
+    type depositNumber = {
+        testRaildId: string,
+        numberOfDepositMethods: number,
+        brand: string,
+        user: string
+    }
+    const testDepositNumber: depositNumber[] = [
+        {testRaildId: '@25351', numberOfDepositMethods:5, brand: '@NS', user: 'testTrading2'},
+        {testRaildId: '@25391', numberOfDepositMethods:8, brand: '@NM', user: 'depositTestMarkets'},
+        {testRaildId: '@25392', numberOfDepositMethods:4, brand: '@NMena', user: 'depositNagaMena@naga.com'},
+    ]
+    for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
+        test(`${testRaildId} ${brand} Check number of exist deposit methods`, 
+            {tag:['@deposit', '@prodSanity', '@manageFunds']}, async({page})=>{
+            let signIn = new SignIn(page);
+            let mainPage = new MainPage(page);
+            let deposit = new Deposit(page);
+            await test.step(`Login to platfrom by ${user} and check number of exist methods`, async()=>{
+                await signIn.goto(await signIn.chooseBrand(brand),'login');
+                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+                await mainPage.openBackMenuPoint('Manage Funds');
+                await deposit.checkActiveDepositTab('deposit')
+                expect(await deposit.getNumberOfDepositMethods()).toEqual(numberOfDepositMethods)
+            })})
+    }
+    
 
 const testNStestParameters: NStestTypes[] = [
     {testRailId: '@24082', brand: '@NS', user: 'testTrading2', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'}, 
     //{testRailId: '@24067', brand: '@NM', user: 'testTrading2', depositName: 'perfectmoney', responseMethodKey:'Fund via Perfect Money'},
     {testRailId: '@24078', brand: '@NS', user: 'testTrading2', depositName: 'light-neteller', responseMethodKey:'altneteller'},
     {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'light-skrill', responseMethodKey:'skrill'},
+    {testRailId: '@25393', brand: '@NMena', user: 'depositNagaMena@naga.com', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'},
+    {testRailId: '@25394', brand: '@NMena', user: 'depositNagaMena@naga.com', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
+    {testRailId: '@25395', brand: '@NMena', user: 'depositNagaMena@naga.com', depositName: 'light-cc-applepay', responseMethodKey:'altcreditcard'},
+    {testRailId: '@25396', brand: '@NMena', user: 'depositNagaMena@naga.com', depositName: 'light-neteller', responseMethodKey:'Credit Card'},
     //{testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
+    
 ]
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
     test(`${testRailId} ${brand} Check deposit methods. Test of ${depositName} deposit`, 
         {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 15000);
+        testInfo.setTimeout(testInfo.timeout + 15000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);

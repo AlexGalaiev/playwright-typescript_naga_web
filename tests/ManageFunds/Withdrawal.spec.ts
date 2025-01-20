@@ -141,7 +141,7 @@ type NM_WithdrawalTypes = {
 const NM_WithdrawalParams: NM_WithdrawalTypes[] = [
     {testRailId: '@25156', brand: '@NM', user: 'depositTestMarkets', menuPoint: 'eWallet', paymentMethod: 'sofort', amount: 100, withdrawalPageTitle: 'Neteller'},
     {testRailId: '@25157', brand: '@NM', user: 'depositTestMarkets1', menuPoint: 'eWallet', paymentMethod: 'giropay', amount: 100, withdrawalPageTitle: 'Skrill'},
-    {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', amount: 100, withdrawalPageTitle: 'Perfect Money'},
+    {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', amount: 100, withdrawalPageTitle: 'Perfect Money'}
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPageTitle} of NM_WithdrawalParams){
     test(`${testRailId} ${brand} Check ${withdrawalPageTitle} withdrawal`, 
@@ -176,7 +176,8 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPa
     }
     const testNumberOfWithdrawals: withdrawalTypes[] = [
         {testRailId:'@25354', brand:'@NM', user:'depositTestMarkets', numberOfEwalletWithdrawal:3},
-        {testRailId:'@25355', brand:'@NS', user:'testTrading2', numberOfEwalletWithdrawal:2}
+        {testRailId:'@25355', brand:'@NS', user:'testTrading2', numberOfEwalletWithdrawal:2},
+        {testRailId:'@25398', brand:'@NMena', user:'testTrading@naga.com', numberOfEwalletWithdrawal:1}
     ]
     for(const{testRailId, brand, user, numberOfEwalletWithdrawal} of testNumberOfWithdrawals){
         test(`${testRailId} ${brand} Check number of available withdrawals`, 
@@ -197,3 +198,27 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPa
         })
     }
 })  
+
+test.describe('NagaMena', async()=>{
+
+    test(`@25399 @NMena Withdrawal. Bank Account. Ecommpay`, 
+        {tag:["@withdrawal", '@manageFunds','@prodSanity']},async({page, NagaMena}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 50000);
+        let signIn = new SignIn(page);
+        let mainPage = new MainPage(page);
+        let withdrawal = new Withdrawal(page);
+        await test.step(`Login to platform by testTrading@naga.com and open withdrawal`, async()=>{
+            await signIn.goto(NagaMena,'login');
+            await signIn.signInUserToPlatform('testTrading@naga.com', process.env.USER_PASSWORD || '');
+            await mainPage.openBackMenuPoint('Manage Funds');
+            await new Withdrawal(page).chooseWithdrawalMenu();
+        });
+        await test.step(`Make Ecommpay withdrawal`, async()=>{
+            await withdrawal.clickMenuPoint('Bank Account')
+            let response = await withdrawal.performManualWithdrawal(50, '**/api/cashier/get-gateway-list-without-details')
+            expect(await withdrawal.getApiPaymentMethodKey(response)).toEqual('Credit Card')
+            expect(await withdrawal.getApiStatusCode(response)).toEqual(200)
+        })
+    })
+
+})
