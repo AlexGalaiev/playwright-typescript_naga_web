@@ -29,14 +29,16 @@ on:
           - "messanger"
           - "smoke"
           - "compliance"
-      #environment:
-       # description: 'Choose environment'
-        #default: "@production"
-        #type: choice
-        #required: false
-        #options:
-         # - "qa"
-          #- "production"
+      environment:
+        description: 'Choose environment'
+        default: "@production"
+        type: choice
+        required: false
+        options:
+         - "qa"
+         - "production"
+         - "canaryQA"
+         - "canaryProd"
       ticket_id:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string
@@ -96,22 +98,24 @@ jobs:
       run: |
               echo "Schedule: ${{ github.event.schedule }}"
               case "${{ github.event.schedule }}" in
-                "30 4 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
-                "40 5 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
-                "30 2 * * 0-6") echo "TAGS=@KYC" >> $GITHUB_ENV ;;
-                "00 3 * * 0-6") echo "TAGS=@feed" >> $GITHUB_ENV ;;
-                "40 3 * * 0-6") echo "TAGS=@manageFunds" >> $GITHUB_ENV ;;
-                "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
-                "00 4 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
-                "00 2 * * 0-6") echo "TAGS=@login" >> $GITHUB_ENV ;;
-                "05 2 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
+                "30 4 * * 0-6") echo "TAGS=@prodSanity, ENV=@production" >> $GITHUB_ENV ;;
+                "40 5 * * 0-6") echo "TAGS=@website-naga.com, ENV=@production" >> $GITHUB_ENV ;;
+                "30 2 * * 0-6") echo "TAGS=@KYC, ENV=@production" >> $GITHUB_ENV ;;
+                "00 3 * * 0-6") echo "TAGS=@feed, ENV=@production" >> $GITHUB_ENV ;;
+                "40 3 * * 0-6") echo "TAGS=@manageFunds, ENV=@production" >> $GITHUB_ENV ;;
+                "30 6 * * 0-6") echo "TAGS=@trading, ENV=@production" >> $GITHUB_ENV ;;
+                "00 4 * * 0-6") echo "TAGS=@UI, ENV=@production" >> $GITHUB_ENV ;;
+                "00 2 * * 0-6") echo "TAGS=@login, ENV=@production" >> $GITHUB_ENV ;;
+                "05 2 * * 0-6") echo "TAGS=@secondAccount, ENV=@production" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
       run: |
-          ENV=${{ github.head_ref || github.ref_name }}
+          if [ -z "$ENV" ]; then
+          ENV=@${{ inputs.tag }}
+          fi
           if [ -z "$TAGS" ]; then
-          TAGS=@${{ inputs.tag }}
+          TAGS=@${{ inputs.environment }}
           fi
           if [ "$ENV" = "production" ]; then
             echo "Running $ENV tests for $TAGS"

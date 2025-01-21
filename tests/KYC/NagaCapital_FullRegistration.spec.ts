@@ -11,6 +11,7 @@ import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
+import { Captcha } from "../../pageObjects/captcha";
 
 test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@debug']}, 
     async({ page, NagaCapital, NSCountry }, testInfo)=>{
@@ -22,6 +23,7 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@
     let email = await new RandomUser().getRandomUserEmail() 
     await test.step(`Create lead user with ${email}`, async ()=>{
         await signUp.goto(NagaCapital, 'register')
+        await new Captcha(page).removeCaptcha()
         await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry)
     });
     await test.step('Fill personal information step', async() =>{

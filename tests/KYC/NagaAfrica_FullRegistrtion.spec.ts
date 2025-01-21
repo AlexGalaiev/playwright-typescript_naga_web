@@ -1,3 +1,4 @@
+import { Captcha } from "../../pageObjects/captcha"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
 import { PersonalDetails } from "../../pageObjects/FullRegistration/NagaAfrica_PersonalDetails"
@@ -14,6 +15,7 @@ test.describe('Naga Africa', async()=>{
         let email = await new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user with ${email}`, async()=>{
             await signUp.goto(NagaAfrica, 'register')
+            await new Captcha(page).removeCaptcha()
             await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', NagaAfricaCountry)
         })
         await test.step(`Fill personal information`, async()=>{
@@ -23,7 +25,7 @@ test.describe('Naga Africa', async()=>{
         })
     })
 
-    test('@25366 KYC - Advance score', async({page})=>{
+    test('@25366 KYC - Advance score',async({page})=>{
         let personalDetails = new PersonalDetails(page)
         await test.step(`Fill personal details step`, async()=>{
             await personalDetails.fillPersonalDetail()
