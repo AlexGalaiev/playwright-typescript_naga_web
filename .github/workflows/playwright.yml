@@ -121,9 +121,8 @@ jobs:
             echo "Running schedule production tests with tag $TAGS"
             ENV="production" TAGS="$TAGS" CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
           elif [ "$GITHUB_EVENT_NAME" == "push" ]; then
-            TAGS="@prodSanity"
             echo "Running production tests for tag @prodSanity due to merge"
-            ENV="production" CRON_RUN=${{github.event_name}} npx playwright test --grep $TAGS --project=${{ github.head_ref || github.ref_name }} --workers=1;
+            ENV="production" CRON_RUN=${{github.event_name}} npx playwright test --grep @prodSanity --project=${{ github.head_ref || github.ref_name }} --workers=1;
           else 
             echo "Running all tests with $TAGS"
             ENV="$ENV" TAGS="$TAGS" CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project=${{ github.head_ref || github.ref_name }} --workers=1;
