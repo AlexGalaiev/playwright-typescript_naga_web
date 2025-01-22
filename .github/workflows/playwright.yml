@@ -117,6 +117,7 @@ jobs:
         CANARY="false"
         PROJECT=""
         ENV=${{ inputs.environment }}
+        TAGS=@${{ inputs.environment }}
         
         if [[ "$ENV" == *"Canary"* ]]; then
           CANARY="true"
