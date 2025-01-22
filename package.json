@@ -11,14 +11,16 @@
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
-    "@playwright/test": "^1.48.0",
+    "@playwright/test": "^1.49.1",
     "@types/node": "^20.11.20"
   },
   "dependencies": {
+    "@azure/identity": "^4.6.0",
+    "@azure/microsoft-playwright-testing": "^1.0.0-beta.7",
     "@dlenroc/testrail": "^1.9.1",
     "axios": "^1.7.7",
     "browsers": "^1.0.2",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "image-js": "^0.35.5",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.21",
