@@ -143,15 +143,15 @@ jobs:
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
             export Canary="$CANARY" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=25 --config=playwright.service.config.ts;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=5 --config=playwright.service.config.ts;
         elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
             echo "Running production tests for tag @prodSanity due to push"
             export Canary="$CANARY" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=25 --config=playwright.service.config.ts;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=5 --config=playwright.service.config.ts;
         else
             echo "Running all tests with $TAGS"
             export Canary="$CANARY" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=25 --config=playwright.service.config.ts;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=5 --config=playwright.service.config.ts;
         fi   
 
     - uses: actions/upload-artifact@v3
