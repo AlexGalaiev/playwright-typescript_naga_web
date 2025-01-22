@@ -8,7 +8,7 @@ on:
         description: 'Choose functionality to test'
         default: "@prodSanity"
         type: choice
-        required: false
+        required: true
         options:
           - "kyc"
           - "trading"
@@ -33,19 +33,12 @@ on:
         description: 'Choose environment'
         default: "production"
         type: choice
-        required: false
+        required: true
         options:
-         - "qa"
-         - "production"
-      canary:
-        description: 'Choose canary'
-        default: "None"
-        type: choice
-        required: false
-        options:
-          - "None"
-          - "canaryQA"
-          - "canaryProd"
+          - "QA"
+          - "Prod"
+          - "QA-Canary"
+          - "Prod-Canary"
       ticket_id:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string
@@ -120,29 +113,40 @@ jobs:
     - name: Run Playwright tests
       id: playwright_tests
       run: |
-          if [ -z "$ENV" ]; then
-            ENV=${{ inputs.environment || 'production' }}
-          fi
-          if [ -z "$TAGS" ]; then
-            TAGS=@${{ inputs.tag || 'prodSanity' }}
-          fi
-            DEV=@${{ inputs.canary || 'None' }}
-          
-          echo "Current ENV: $ENV"
-          echo "Current TAGS: $TAGS"
-          echo "GitHub Event Name: $GITHUB_EVENT_NAME"
-          echo "Canary $DEV"
+      
+        CANARY="false"
+        PROJECT=""
+        
+        if [[ "$ENV" == *"Canary"* ]]; then
+          CANARY="true"
+        fi
 
-          if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
+        case "$ENV" in
+          "Prod"|"Prod-Canary")
+            PROJECT="production"
+            ;;
+          "QA"|"QA-Canary")
+            PROJECT="qa"
+            ;;
+        esac
+
+        echo "Current ENV: $ENV"
+        echo "Current TAGS: $TAGS"
+        echo "GitHub Event Name: $GITHUB_EVENT_NAME"
+        echo "Canary: $CANARY"
+        echo "Project: $PROJECT"
+ 
+        if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$ENV" --workers=1;
-          elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1;
+        elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
             echo "Running production tests for tag @prodSanity due to push"
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$ENV" --workers=1;
-          else 
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1;
+        else
             echo "Running all tests with $TAGS"
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$ENV" --workers=1;
-          fi          
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1;
+        fi   
+
     - uses: actions/upload-artifact@v3
       if: always()
       with:
