@@ -116,8 +116,8 @@ jobs:
       
         CANARY="false"
         PROJECT=""
-        ENV=${{ inputs.environment }}
-        TAGS=@${{ inputs.environment }}
+        ENV=${{ inputs.environment || 'Prod' }}
+        TAGS=@${{ inputs.tag || 'prodSanity' }}
         echo "ENV equal to $ENV"
  
         
