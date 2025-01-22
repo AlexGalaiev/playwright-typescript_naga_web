@@ -118,6 +118,8 @@ jobs:
         PROJECT=""
         ENV=${{ inputs.environment }}
         TAGS=@${{ inputs.environment }}
+        echo "ENV equal to $ENV"
+ 
         
         if [[ "$ENV" == *"Canary"* ]]; then
           CANARY="true"
