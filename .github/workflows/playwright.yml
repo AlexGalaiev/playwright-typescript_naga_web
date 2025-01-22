@@ -93,6 +93,8 @@ jobs:
           echo DEVELOPMENT_CANARY_CAPTCHA_BYPASS_TOKEN=${{ vars.DEVELOPMENT_CANARY_CAPTCHA_BYPASS_TOKEN }} >> .env
           echo PRODUCTION_CAPTCHA_BYPASS_TOKEN=${{ vars.PRODUCTION_CAPTCHA_BYPASS_TOKEN }} >> .env
           echo PRODUCTION_CANARY_CAPTCHA_BYPASS_TOKEN=${{ vars.PRODUCTION_CANARY_CAPTCHA_BYPASS_TOKEN }} >> .env
+          echo PLAYWRIGHT_SERVICE_ACCESS_TOKEN=${{ secrets.PLAYWRIGHT_SERVICE_ACCESS_TOKEN }} >> .env
+          echo PLAYWRIGHT_SERVICE_URL=${{ secrets.PLAYWRIGHT_SERVICE_URL }} >> .env
           cat .env 
     - name: Determine tags
       id: determine_tags
@@ -141,15 +143,15 @@ jobs:
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
             export Canary="$CANARY" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=10 --config=playwright.service.config.ts;
         elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
             echo "Running production tests for tag @prodSanity due to push"
             export Canary="$CANARY" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=10 --config=playwright.service.config.ts;
         else
             echo "Running all tests with $TAGS"
             export Canary="$CANARY" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=10 --config=playwright.service.config.ts;
         fi   
 
     - uses: actions/upload-artifact@v3
