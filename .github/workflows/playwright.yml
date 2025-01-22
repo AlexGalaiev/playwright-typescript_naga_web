@@ -8,7 +8,7 @@ on:
         description: 'Choose functionality to test'
         default: "@prodSanity"
         type: choice
-        required: true
+        required: false
         options:
           - "kyc"
           - "trading"
@@ -31,9 +31,9 @@ on:
           - "compliance"
       environment:
         description: 'Choose environment'
-        default: "production"
+        default: "Prod"
         type: choice
-        required: true
+        required: false
         options:
           - "QA"
           - "Prod"
