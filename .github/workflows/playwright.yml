@@ -118,8 +118,6 @@ jobs:
         PROJECT=""
         ENV=${{ inputs.environment || 'Prod' }}
         TAGS=@${{ inputs.tag || 'prodSanity' }}
-        echo "ENV equal to $ENV"
- 
         
         if [[ "$ENV" == *"Canary"* ]]; then
           CANARY="true"
