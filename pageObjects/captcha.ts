@@ -12,19 +12,19 @@ export class Captcha{
     async chooseEnv(){
         let envVariable = process.env.ENV
         let env = ''
-        if(envVariable === 'production'){
+        if(envVariable === 'Prod'){
             env = process.env.PRODUCTION_CAPTCHA_BYPASS_TOKEN || ''
             return env
         }
-        else if(envVariable === 'qa'){
+        else if(envVariable === 'QA'){
             env = process.env.DEVELOPMENT_CAPTCHA_BYPASS_TOKEN || ''
             return env
         }
-        else if(envVariable === 'canaryQA'){
+        else if(envVariable === 'QA-Canary'){
             env = process.env.DEVELOPMENT_CANARY_CAPTCHA_BYPASS_TOKEN || ''
             return env
         }
-        else if(envVariable === 'canaryProd'){
+        else if(envVariable === 'Prod-Canary'){
             env = process.env.PRODUCTION_CANARY_CAPTCHA_BYPASS_TOKEN ||''
             return env
         }else{

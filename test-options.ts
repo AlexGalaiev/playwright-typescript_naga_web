@@ -45,10 +45,10 @@ export const test = base.extend<TestOptions>({
         //let browser = await webBrowser.launch();
         let browser = await baseChromium.launch();
         let context = await browser.newContext();
-        //await context.addCookies([
-            //{name: 'bypass-captcha', value: 'd14b41f3874eeb17a7ac2fc21b64a57bafdbe365a6572638ec50411a7945172c', domain:'sxdevcap.com', path:'/'},
-          //  {name: 'X-Variant', value:'canary', domain:'sxdevcap.com', path:'/'}
-        //]);
+        // await context.addCookies([
+        //     //{name: 'bypass-captcha', value: 'd14b41f3874eeb17a7ac2fc21b64a57bafdbe365a6572638ec50411a7945172c', domain:'sxdevcap.com', path:'/'},
+        //     {name: 'X-Variant', value:'canary', domain:'', path:'/'}
+        // ]);
         await use(context);
     },
     browserProxyContext: async({}, use)=>{

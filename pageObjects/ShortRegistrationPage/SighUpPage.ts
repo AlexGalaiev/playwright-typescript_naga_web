@@ -13,6 +13,7 @@ export class SignUp{
     readonly checkbox_PrivacyPolicy: Locator;
     readonly checkbox_RiskAcceptance: Locator;
     readonly NX_RiskDisclaimer: Locator;
+    readonly phone: Locator;
     notCorrectCountryMSG: Locator;
     countryCrypto: Locator;
 
@@ -20,7 +21,8 @@ export class SignUp{
         this.page = page;
         this.email = page.locator("[name='email']");
         this.password = page.locator("[name='password']");
-        this.country = page.locator("[data-testid='naga-dropdown-input']");
+        this.country = page.locator('//label[text()="Country"]//..//div[@data-testid="naga-dropdown-input"]');
+        this.phone = page.locator('//input[@name="phone"]')
         this.countryCrypto = page.locator("//div[contains(@class, 'dropdown-select__custom__control')]")
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
         this.riskWarning = page.locator("//div[contains(@class, 'registration-form__risk-warning')]");
@@ -41,7 +43,8 @@ export class SignUp{
         await this.password.pressSequentially(password)
         await this.checkCountry(country)
         //await this.page.locator("//label[contains(@class, 'registration-form')]").click()
-        await this.page.waitForTimeout(500)
+        await this.phone.pressSequentially('603039647')
+        await this.page.waitForTimeout(750)
         await this.page.locator("//button[text()='Sign Up']").click()
     };
     async createCfdUser_All(email: string, password: string,  country: string){
@@ -87,125 +90,11 @@ export class SignUp{
         return await this.sighUpTittle.textContent();
     };
 
-    //delete
-    // async addUserApi(email: string, country: string, userName: string){
-    //     let firstName = await fakerEN.person.firstName()
-    //     let lastName = await fakerEN.person.lastName()
-    //     const axios = require('axios');
-    //     let data = JSON.stringify({
-    //     "p_email": email,
-    //     "p_user_name": userName,
-    //     "p_plain_password": "Test123!",
-    //     "p_tel": "+387603039647",
-    //     "is_flexible": true,
-    //     "p_app_language": "en",
-    //     "p_country": country,
-    //     "p_first_name":firstName,
-    //     "p_last_name": lastName,
-    //     "site": {
-    //         "type": "FACEBOOK"
-    //     }
-    //     });
-        
-    //     let config = {
-    //     method: 'post',
-    //     maxBodyLength: Infinity,
-    //     url: 'https://api-v2.naga.com/user/registration/register',
-    //     headers: {
-    //         'accept-version': '2.*',
-    //         'platform': 'web-trader',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     data : data
-    //     };
-        
-    //     axios.request(config)
-    //     .then((response) => {
-    //     //console.log(JSON.stringify(response.data));
-    //     })
-    //     .catch((error) => {
-    //     //console.log(error);
-    //     });
-    //     await this.page.waitForTimeout(250)
-    // }
-
-    // async addUserApiNagaCapital(email: string, country: string){
-    //     const axios = require('axios');
-    //     let data = JSON.stringify({
-    //     "p_app_language":"en",
-    //     "p_user_name": null,
-    //     "p_email": email,
-    //     "p_plain_password": "Test123!",
-    //     "is_flexible": true,
-    //     "p_country": country,
-    //     "p_first_name":"",
-    //     "p_last_name": "",
-    //     "legal_documents_accepted_code":"ns_legal_docs_accepted",
-    //     "personal_data_processing_and_communication_accepted":true,
-    //     "us_citizen_or_resident":false,
-    //     "p_webinar":"web-trader",
-    //     "p_department":"ns",
-    //     "site": {
-    //         "type": "FACEBOOK"
-    //     }
-    //     });
-        
-    //     let config = {
-    //     method: 'post',
-    //     maxBodyLength: Infinity,
-    //     url: 'https://api-v2.naga.com/user/registration/register',
-    //     //url: 'https://api-v2-canary.sxdev.io/user/registration/register',
-    //     headers: {
-    //         'accept-version': '2.*',
-    //         'platform': 'web-trader',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     data : data
-    //     };
-        
-    //     axios.request(config)
-    //     .then((response) => {
-    //     console.log();
-    //     })
-    //     .catch((error) => {
-    //     console.log(error);
-    //     });
-    // }
-
     public randomUserName(){
         const randomNumber = Math.floor(Math.random() * (999 - 10 + 1)) + 10;
         let userName = `user${randomNumber}`
         return userName;
     }
-    //delete
-    // async createLeadUserApi(country: string){
-    //     let randomEmail = await new RandomUser().getRandomUserEmail(); 
-    //     await this.addUserApi(randomEmail, country, await this.randomUserName())
-    //     return randomEmail
-    // }
-
-    // async createLeadUserApiNagaCapital(country: string, page: Page){
-    //     let randomEmail = await new RandomUser().getRandomUserEmail(); 
-    //     await this.addUserApiNagaCapital(randomEmail, country)
-    //     return randomEmail
-    // }
-
-    // async makePhoneVerifed(page){
-    // await page.route('*/**/user/info', async route => {
-    //     const response = await route.fetch();
-    //     let body = await response.json();
-    //     body.data.company_id = '1';
-    //     body.data.phone_number_confirmed = 'Y'
-    //     body.data.phone_number = "+387603039647";
-    //     body.data.kyc_beginner_risk_accepted = true;
-    //     await route.fulfill({
-    //         response,
-    //         body: JSON.stringify(body),
-    //         headers: {
-    //         ...response.headers(),
-    //         },
-    //     });
-    //     });}
 
     async getNotCoorectMsgText(){
         await this.page.waitForTimeout(500)
@@ -240,54 +129,6 @@ export class SignUp{
         await this.page.close()
     }
 
-    // async createLeadUserApiCrypto(){
-    //     let randomEmail = await new RandomUser().getRandomUserEmail(); 
-    //     await this.addCryptoUser(randomEmail, await this.randomUserName())
-    //     return randomEmail
-    // }
-    //delete
-    // async addCryptoUser(email: string, userName: string){
-    //     let firstName = await fakerEN.person.firstName()
-    //     let lastName = await fakerEN.person.lastName()
-    //     const axios = require('axios');
-    //     let data = JSON.stringify({
-    //     "p_email": email,
-    //     "p_user_name": userName,
-    //     "p_plain_password": "Test123!",
-    //     "p_tel": "+387603039647",
-    //     "is_flexible": true,
-    //     "p_app_language": "en",
-    //     "p_country": "BA",
-    //     "p_first_name":firstName,
-    //     "p_last_name": lastName,
-    //     "p_webinar": "nagax",
-    //     "personal_data_processing_and_communication_accepted":true,
-    //     "site": {
-    //         "type": "FACEBOOK"
-    //     }
-    //     });
-        
-    //     let config = {
-    //     method: 'post',
-    //     maxBodyLength: Infinity,
-    //     url: 'https://crypto-api.nagax.com/api/v1/naga/user/registration/register',
-    //     headers: {
-    //         'accept-version': '2.*',
-    //         'platform': 'web-trader',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     data : data
-    //     };
-        
-    //     axios.request(config)
-    //     .then((response) => {
-    //     console.log(JSON.stringify(response.data));
-    //     })
-    //     .catch((error) => {
-    //     console.log(error);
-    //     });
-    //     await this.page.waitForTimeout(250)
-    // }
     async getNumberObBtns(){
         return await this.page.locator("//button[contains(@class, 'button')]").count()
     }
