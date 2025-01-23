@@ -16,6 +16,10 @@ export class StartKYCPopup{
     async proceedVerification(){
         await this.page.locator("//button[@type='submit']").click()
     }
+    async startSetup(){
+        await this.page.locator("//button[text()='Start Setup']").click()
+        await this.page.waitForTimeout(500)
+    }
 
     
 }
