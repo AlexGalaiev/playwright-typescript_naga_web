@@ -35,7 +35,9 @@ export class Captcha{
 
     async removeCaptcha(){
         let env = await this.chooseEnv()
+        console.log(env)
         let host = await new URL(await this.page.url()).hostname
+        console.log(host)
         let contextPage = await this.page.context()
         await contextPage.addCookies([{
             name:'bypass-captcha', value: env, domain: host, path:'/'
