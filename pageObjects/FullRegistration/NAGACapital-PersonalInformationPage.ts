@@ -42,6 +42,7 @@ export class PersonalInformation{
     }
     
     async compleateYourProfile(){
+        await this.page.waitForSelector("//p[text()='Complete your profile information']", {state:'visible'})
         await this.firstName.pressSequentially('testFirstName');
         await this.page.waitForTimeout(1000);
         await this.lastName.pressSequentially('testLastName');
