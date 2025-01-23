@@ -42,7 +42,10 @@ export class PersonalInformation{
     }
     
     async compleateYourProfile(){
-        await this.page.waitForTimeout(500)
+        await this.firstName.pressSequentially('testFirstName');
+        await this.page.waitForTimeout(1000);
+        await this.lastName.pressSequentially('testLastName');
+        await this.page.waitForTimeout(1000);
         await this.dateOfBirth.pressSequentially('12.12.1989')
         await this.page.waitForTimeout(500)
         await this.address.click()
