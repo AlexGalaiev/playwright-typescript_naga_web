@@ -26,14 +26,14 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@
         await new Captcha(page).removeCaptcha()
         await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry)
     });
-    await test.step('Fill you profile information kyc', async() =>{
+    await test.step('Fill personal information KYC', async() =>{
         //await personalInfo.fillPersonalInformation('Continue');
         await new YouAreInNagaMarkets(page).clickExplorePlatform()
         await mainPage.clickOnWidgepPoint('NAGA Start')
         await new StartKYCPopup(page).startKYC();
-        await new StartKYCPopup(page).startSetup();
+        //await new StartKYCPopup(page).startSetup();
         await personalInfo.compleateYourProfile()
-        await personalInfo.clickDepositNow()
+        //await personalInfo.clickDepositNow()
     });
     await test.step('Check status of main page widget', async()=>{
         await mainPage.openHeaderMenuPoint("feed");
