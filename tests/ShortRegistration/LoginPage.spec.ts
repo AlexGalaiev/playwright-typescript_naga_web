@@ -12,27 +12,30 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { NagaCom } from "../../pageObjects/Website/NagaCom";
+import { Captcha } from "../../pageObjects/captcha";
 
 
 test.describe("Naga Capital. SignIn Page", async()=>{
     let localization = new getLocalization('/pageObjects/localization/SighInPage.json');
     let testUser: string = '';
 
-    test.beforeEach('Create lead user for tests', async({page, NagaCapital, NSCountry})=>{
+    test.skip("@23916 Forgot password link test",
+            {tag:['@forgotPassword','@debug'], annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
+        async({page, NagaCapital, NSCountry})=>{
+        let signInPage = new SignIn(page);
+        let forgotPassword = new ForgotPassword(page);
         let signUp = new SignUp(page)
+        let myAccountsMenu = new MyAccounts(page)
         testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
             await signUp.goto(NagaCapital, 'register');
+            await new Captcha(page).removeCaptcha()
             await signUp.createCFDUser(testUser, process.env.USER_PASSWORD || "", NSCountry)
-            await new PersonalInformation(page).clickLogOut()
+            await new YouAreInNagaMarkets(page).clickExplorePlatform()
+            await myAccountsMenu.openUserMenu();
+            await myAccountsMenu.userLogOut()
             await new PageAfterLogout(page).redirectToSighIn()
         })
-    })
-
-    test.skip("@23916 Forgot password link test",
-            {tag:'@forgotPassword', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, async({page})=>{
-        let signInPage = new SignIn(page);
-        let forgotPassword = new ForgotPassword(page);
         await test.step('Check forgot password messages on UI', async()=>{
             await signInPage.forgotPasswordClick()
             expect(await forgotPassword.getForgotPasswordDescription()).toEqual(await localization.getLocalizationText("ForgotPasswordDescription"))

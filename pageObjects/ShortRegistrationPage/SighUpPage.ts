@@ -16,12 +16,14 @@ export class SignUp{
     readonly phone: Locator;
     notCorrectCountryMSG: Locator;
     countryCrypto: Locator;
+    phoneCode: Locator;
 
     constructor(page: Page){
         this.page = page;
         this.email = page.locator("[name='email']");
         this.password = page.locator("[name='password']");
         this.country = page.locator('//label[text()="Country"]//..//div[@data-testid="naga-dropdown-input"]');
+        this.phoneCode = page.locator("//label[text()='Country Code']//..//div[@data-testid='naga-dropdown-input']")
         this.phone = page.locator('//input[@name="phone"]')
         this.countryCrypto = page.locator("//div[contains(@class, 'dropdown-select__custom__control')]")
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
@@ -47,11 +49,12 @@ export class SignUp{
         await this.page.waitForTimeout(750)
         await this.page.locator("//button[text()='Sign Up']").click()
     };
-    async createCfdUser_All(email: string, password: string,  country: string){
+    async createCfdUser_All(email: string, password: string,  country: string, countryCode: string, phoneNumber: string){
         await this.page.waitForTimeout(500)
         await this.email.pressSequentially(email);
         await this.password.pressSequentially(password)
         await this.checkCountry(country)
+        await this.checkPhoneCode(countryCode)
         await this.checkbox_PrivacyPolicy.click();
         await this.checkbox_RiskAcceptance.click();
         await this.submitBtn.click();
@@ -74,6 +77,15 @@ export class SignUp{
             await this.country.press('Enter')
         } else {}
     };
+    async checkPhoneCode(code: string){
+        if(await this.phoneCode.textContent() !== code){
+            await this.phoneCode.click();
+            await this.phoneCode.clear()
+            await this.phoneCode.pressSequentially(code);
+            await this.phoneCode.press('Enter')
+        } else {}
+    }
+
     async checkCountry_Crypto(country: string){
         await this.countryCrypto.click();
         await this.countryCrypto.pressSequentially(country);

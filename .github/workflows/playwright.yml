@@ -52,7 +52,7 @@ on:
     - cron: '00 4 * * 0-6'
     - cron: '00 2 * * 0-6'
     - cron: '05 2 * * 0-6'
-    - cron: '55 8 * * 0-6'
+    - cron: '17 8 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -110,7 +110,7 @@ jobs:
                 "00 4 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
                 "00 2 * * 0-6") echo "TAGS=@login" >> $GITHUB_ENV ;;
                 "05 2 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
-                "55 8 * * 0-6") echo "TAGS=@debug" >> $GITHUB_ENV ;;
+                "17 8 * * 0-6") echo "TAGS=@debug" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
@@ -119,8 +119,11 @@ jobs:
         CANARY="false"
         PROJECT=""
         ENV=${{ inputs.environment || 'Prod' }}
-        TAGS=@${{ inputs.tag || 'prodSanity' }}
         
+        if [ -z "$TAGS" ]; then
+           TAGS=@${{ inputs.tag || 'prodSanity' }}
+        fi
+
         if [[ "$ENV" == *"Canary"* ]]; then
           CANARY="true"
         fi
