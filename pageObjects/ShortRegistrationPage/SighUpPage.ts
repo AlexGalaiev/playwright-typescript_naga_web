@@ -55,6 +55,7 @@ export class SignUp{
         await this.password.pressSequentially(password)
         await this.checkCountry(country)
         await this.checkPhoneCode(countryCode)
+        await this.phone.pressSequentially(phoneNumber)
         await this.checkbox_PrivacyPolicy.click();
         await this.checkbox_RiskAcceptance.click();
         await this.submitBtn.click();
@@ -80,7 +81,7 @@ export class SignUp{
     async checkPhoneCode(code: string){
         if(await this.phoneCode.textContent() !== code){
             await this.phoneCode.click();
-            await this.phoneCode.clear()
+            //await this.phoneCode.clear()
             await this.phoneCode.pressSequentially(code);
             await this.phoneCode.press('Enter')
         } else {}
@@ -101,12 +102,6 @@ export class SignUp{
     async getSighUpTittleText(){
         return await this.sighUpTittle.textContent();
     };
-
-    public randomUserName(){
-        const randomNumber = Math.floor(Math.random() * (999 - 10 + 1)) + 10;
-        let userName = `user${randomNumber}`
-        return userName;
-    }
 
     async getNotCoorectMsgText(){
         await this.page.waitForTimeout(500)

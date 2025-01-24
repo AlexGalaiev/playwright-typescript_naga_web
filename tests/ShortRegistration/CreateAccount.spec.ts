@@ -4,6 +4,9 @@ import { getLocalization } from "../../pageObjects/localization/getText";
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
+import { Captcha } from "../../pageObjects/captcha";
+import { MainPage } from "../../pageObjects/MainPage/MainPage";
+import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
 test.describe("Sign up page.", async()=>{
 
@@ -92,41 +95,43 @@ test.describe("Sign up page.", async()=>{
             await test.step('Check legal documents', async()=>{
                 for(let[documentName, url] of documents){
                     expect(await signUp.getDocumentHref(documentName)).toEqual(url)
-
-                    // const documentPage = await signUp.openDocument(documentName)
-                    // const newTab = new SignUp(documentPage)
-                    // expect(await newTab.checkUrl()).toContain(url)
-                    // await newTab.closeTab();
-                    // await signUp.switchBack()
                 }})})
     }
 })
 
 test.describe('Create account per brand', async()=>{
 
-    test.skip('@25356 @NM Create lead user',
-        {tag:'@smoke', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
-            async({page, NagaMarkets})=>{
+    test('@25356 @NM Create lead user', {tag:['@smoke']}, async({page, NagaMarkets})=>{
         let signUp = new SignUp(page)
         let localizationText = new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json')
-        await signUp.goto(NagaMarkets, 'register')
-        expect(await signUp.getNumberObBtns()).toEqual(4)
-        expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
-        let email = new RandomUser().getRandomUserEmail()
-        await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France')
-        expect(await signUp.personalInfoPopup()).toBeVisible()
+        await test.step("Open register page, check number of buttons and remove captcha", async()=>{
+            await signUp.goto(NagaMarkets, 'register')
+            await new Captcha(page).removeCaptcha()
+            expect(await signUp.getNumberObBtns()).toEqual(4)
+            expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
+        })
+        await test.step('Create lead user and check Personal Information popup', async()=>{
+            let email = new RandomUser().getRandomUserEmail()
+            await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France', "+387", "603039647")
+            expect(await signUp.personalInfoPopup()).toBeVisible()
+        })
     })
-    test.skip('@25357 @NS Create lead user',
-        {tag:'@smoke', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
-            async({page, NagaCapital})=>{
+    
+    test('@25357 @NS Create lead user', {tag:['@smoke']}, async({page, NagaCapital})=>{
         let signUp = new SignUp(page)
+        let mainPage = new MainPage(page)
         let localizationText = new getLocalization('/pageObjects/localization/SignUpPage.json')
-        await signUp.goto(NagaCapital, 'register')
-        expect(await signUp.getNumberObBtns()).toEqual(4)
-        expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
-        let email = new RandomUser().getRandomUserEmail()
-        await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', 'Bosnia and Herzegovina')
-        expect(await signUp.personalInfoPopup()).toBeVisible()
+        await test.step('Open register page, check number of buttons, remove captcha', async()=>{
+            await signUp.goto(NagaCapital, 'register')
+            await new Captcha(page).removeCaptcha()
+            expect(await signUp.getNumberObBtns()).toEqual(4)
+            expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
+        })
+        await test.step('Create lead user and check main page', async()=>{
+            let email = new RandomUser().getRandomUserEmail()
+            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', 'Bosnia and Herzegovina')
+            expect(new YouAreInNagaMarkets(page).checkExploreBtn()).toBeTruthy()
+        })
     })
 })
 
