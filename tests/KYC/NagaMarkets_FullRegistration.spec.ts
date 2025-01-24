@@ -18,7 +18,7 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
     let email = await new RandomUser().getRandomUserEmail()
     await test.step(`Create lead user with ${email}`, async () => {
       await signUp.goto(NagaMarkets, 'register')
-      await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France');
+      await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France', '+387', '603039647');
     });
     await test.step("Phone verifiaction step", async () => {
       await new PersonalInformation(page).fillPersonalInformation('Verify with SMS')
@@ -29,7 +29,8 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
   }
 );
 
-test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity','@smoke']}, async ({page}, testInfo) => {
+test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity','@smoke', '@debug']}, 
+  async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
   let quiz = new FullRegistration(page);

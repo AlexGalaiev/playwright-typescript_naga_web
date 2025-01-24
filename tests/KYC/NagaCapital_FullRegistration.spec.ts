@@ -13,7 +13,7 @@ import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapita
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { Captcha } from "../../pageObjects/captcha";
 
-test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@debug']}, 
+test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']}, 
     async({ page, NagaCapital, NSCountry }, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 60000);
     let signUp = new SignUp(page);
