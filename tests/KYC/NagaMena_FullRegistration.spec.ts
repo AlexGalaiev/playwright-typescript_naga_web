@@ -9,6 +9,9 @@ import { test } from "../../test-options";
 import { MenaFullRegistration } from "../../pageObjects/FullRegistration/NagaMena_FullRegistration";
 import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep";
 import { getLocalization } from "../../pageObjects/localization/getText";
+import { Captcha } from "..//..//pageObjects/captcha"
+import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
+import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
 
 
 test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
@@ -20,17 +23,22 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     console.log(email)
     await test.step(`Create lead user via API. Login by ${email} to platform`, async () => {
       await signUp.goto(NagaMena, "register");
-      await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates');
+      await new Captcha(page).removeCaptcha()
+      await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates','+387', '603039647');
     });
     await test.step("Fill personal information and verify phone number", async () => {
       await new PersonalInformation(page).fillPersonalInformation('Verify with SMS')
       await new PhoneVerification(page).insertVerificationCode()
+      await new YouAreInNagaMarkets(page).clickExplorePlatform()
       await mainPage.clickOnWidgepPoint('Upgrade to Live')
       await kycStart.clickStartVerificationBtn()
+      // await new YouAreInNagaMarkets(page).clickExplorePlatform()
+      // await mainPage.clickOnWidgepPoint('NAGA Start')
+      // await new StartKYCPopup(page).startKYC();
     })
   })
 
-  test('@25253 KYC - Advance Score', {tag:['@kyc', '@prodSanity','@smoke']}, async({page})=>{
+  test('@25253 KYC - Advance Score', {tag:['@kyc', '@prodSanity','@smoke','@debug']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Advance'
     let KYC_FinalStep = new FinalStep(page);

@@ -20,7 +20,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
     let testUser: string = '';
 
     test.skip("@23916 Forgot password link test",
-            {tag:['@forgotPassword','@debug'], annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
+            {tag:['@forgotPassword'], annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
         async({page, NagaCapital, NSCountry})=>{
         let signInPage = new SignIn(page);
         let forgotPassword = new ForgotPassword(page);

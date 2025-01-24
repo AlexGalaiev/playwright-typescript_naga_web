@@ -31,4 +31,7 @@ export class YouAreInNagaMarkets{
         await openKycBtn.waitFor({state:"visible"})
         await openKycBtn.click()
     }
+    async checkExploreBtn(){
+        return await this.explorePlatform.isVisible()
+    }
 }

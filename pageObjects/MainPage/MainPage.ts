@@ -185,6 +185,11 @@ export class MainPage{
         await this.page.locator(`//div[text()='${nameOfTheStep}']`).click()
         await this.page.waitForTimeout(1000)
     }
+    async checkWidgetStepVisibility(nameOfTheStep: string){
+        await this.page.waitForTimeout(3000)
+        let step = await this.page.locator(`//div[text()='${nameOfTheStep}']`)
+        return await step.isVisible()
+    }
 
     // main page naga markets
     async getKYCbannerText(){
