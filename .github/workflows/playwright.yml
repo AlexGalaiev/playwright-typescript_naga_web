@@ -165,7 +165,10 @@ jobs:
         retention-days: 30
     - name: Get report url
       id: extract_report
-      run: report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*' test-log.txt) && echo "report_url=$report_url" | sed 's/%3A/:/g' >> $GITHUB_ENV
+      run: |
+        report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*' test-log.txt | head -n1 | sed 's/%3A/:/g')
+        report_url=$(echo "$report_url" | xargs)
+        echo "report_url=$report_url" >> $GITHUB_ENV
     - name: Set outcome title
       if: always()
       id: set_outcome_title
