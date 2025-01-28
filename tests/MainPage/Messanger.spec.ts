@@ -15,8 +15,8 @@ test.describe('Main page elements. Messanger', async()=>{
         brandReceiver: string
     } 
     const testMessangerParams: testMessangertypes[] = [
-        {testRailId: '@23615', brandSender: '@NM', userSender: 'testTrading2Markets', receiver: 'testFeedUser', brandReceiver: '@NS'},
-        {testRailId: '@25193', brandSender: '@NS', userSender: 'testFeedUser', receiver:'testTrading2Markets', brandReceiver: '@NM'},
+        {testRailId: '@23615', brandSender: '@Markets', userSender: 'testTrading2Markets', receiver: 'testFeedUser', brandReceiver: '@Capital'},
+        {testRailId: '@25193', brandSender: '@Capital', userSender: 'testFeedUser', receiver:'testTrading2Markets', brandReceiver: '@Markets'},
     ]
     for(const{testRailId, brandSender, userSender,receiver, brandReceiver}of testMessangerParams){
         test(`${testRailId} ${brandSender} Send text via messanger`,{tag: '@messanger'},async({page})=>{

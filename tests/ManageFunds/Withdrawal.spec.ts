@@ -103,8 +103,8 @@ type NS_WithdrawalTypes = {
     responsePaymentMethod: string
 }
 const NS_WithdrawalParams: NS_WithdrawalTypes[] = [
-    {testRailId: '@24098', brand: '@NS', user: 'testWithdrawal@i.ua', menuPoint: 'eWallet', paymentMethod: 'neteller', amount: 100, responsePaymentMethod:'altneteller'},
-    {testRailId: '@24095', brand: '@NS', user: 'testWithdrawal2@i.ua', menuPoint: 'eWallet', paymentMethod: 'skrill', amount: 100, responsePaymentMethod:'skrill'},
+    {testRailId: '@24098', brand: '@Capital', user: 'testWithdrawal@i.ua', menuPoint: 'eWallet', paymentMethod: 'neteller', amount: 100, responsePaymentMethod:'altneteller'},
+    {testRailId: '@24095', brand: '@Capital', user: 'testWithdrawal2@i.ua', menuPoint: 'eWallet', paymentMethod: 'skrill', amount: 100, responsePaymentMethod:'skrill'},
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod, amount, responsePaymentMethod}of NS_WithdrawalParams){
     test(`${testRailId} ${brand} Check withdrawal different payments ${paymentMethod} `, 
@@ -139,9 +139,9 @@ type NM_WithdrawalTypes = {
     withdrawalPageTitle: string
 }
 const NM_WithdrawalParams: NM_WithdrawalTypes[] = [
-    {testRailId: '@25156', brand: '@NM', user: 'depositTestMarkets', menuPoint: 'eWallet', paymentMethod: 'sofort', amount: 100, withdrawalPageTitle: 'Neteller'},
-    {testRailId: '@25157', brand: '@NM', user: 'depositTestMarkets1', menuPoint: 'eWallet', paymentMethod: 'giropay', amount: 100, withdrawalPageTitle: 'Skrill'},
-    {testRailId: '@25158', brand: '@NM', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', amount: 100, withdrawalPageTitle: 'Perfect Money'}
+    {testRailId: '@25156', brand: '@Markets', user: 'depositTestMarkets', menuPoint: 'eWallet', paymentMethod: 'sofort', amount: 100, withdrawalPageTitle: 'Neteller'},
+    {testRailId: '@25157', brand: '@Markets', user: 'depositTestMarkets1', menuPoint: 'eWallet', paymentMethod: 'giropay', amount: 100, withdrawalPageTitle: 'Skrill'},
+    {testRailId: '@25158', brand: '@Markets', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', amount: 100, withdrawalPageTitle: 'Perfect Money'}
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPageTitle} of NM_WithdrawalParams){
     test(`${testRailId} ${brand} Check ${withdrawalPageTitle} withdrawal`, 
@@ -175,9 +175,9 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPa
         numberOfEwalletWithdrawal: number
     }
     const testNumberOfWithdrawals: withdrawalTypes[] = [
-        {testRailId:'@25354', brand:'@NM', user:'depositTestMarkets', numberOfEwalletWithdrawal:3},
-        {testRailId:'@25355', brand:'@NS', user:'testTrading2', numberOfEwalletWithdrawal:2},
-        {testRailId:'@25398', brand:'@NMena', user:'testTrading@naga.com', numberOfEwalletWithdrawal:1}
+        {testRailId:'@25354', brand:'@Markets', user:'depositTestMarkets', numberOfEwalletWithdrawal:3},
+        {testRailId:'@25355', brand:'@Capital', user:'testTrading2', numberOfEwalletWithdrawal:2},
+        {testRailId:'@25398', brand:'@Mena', user:'testTrading@naga.com', numberOfEwalletWithdrawal:1}
     ]
     for(const{testRailId, brand, user, numberOfEwalletWithdrawal} of testNumberOfWithdrawals){
         test(`${testRailId} ${brand} Check number of available withdrawals`, 
@@ -201,7 +201,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPa
 
 test.describe('NagaMena', async()=>{
 
-    test(`@25399 @NMena Withdrawal. Bank Account. Ecommpay`, 
+    test(`@25399 @Mena Withdrawal. Bank Account. Ecommpay`, 
         {tag:["@withdrawal", '@manageFunds','@prodSanity']},async({page, NagaMena}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);

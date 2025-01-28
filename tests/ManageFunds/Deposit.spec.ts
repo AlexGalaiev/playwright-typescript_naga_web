@@ -19,9 +19,9 @@ test.describe("Naga Capital.", async()=>{
         user: string
     }
     const testDepositNumber: depositNumber[] = [
-        {testRaildId: '@25351', numberOfDepositMethods:5, brand: '@NS', user: 'testTrading2'},
-        {testRaildId: '@25391', numberOfDepositMethods:8, brand: '@NM', user: 'depositTestMarkets'},
-        {testRaildId: '@25392', numberOfDepositMethods:4, brand: '@NMena', user: 'depositNagaMena@naga.com'},
+        {testRaildId: '@25351', numberOfDepositMethods:5, brand: '@Capital', user: 'testTrading2'},
+        {testRaildId: '@25391', numberOfDepositMethods:8, brand: '@Markets', user: 'depositTestMarkets'},
+        {testRaildId: '@25392', numberOfDepositMethods:4, brand: '@Mena', user: 'depositNagaMena@naga.com'},
     ]
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`${testRaildId} ${brand} Check number of exist deposit methods`, 
@@ -40,15 +40,15 @@ test.describe("Naga Capital.", async()=>{
     
 
 const testNStestParameters: NStestTypes[] = [
-    {testRailId: '@24082', brand: '@NS', user: 'testTrading2', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'}, 
-    //{testRailId: '@24067', brand: '@NM', user: 'testTrading2', depositName: 'perfectmoney', responseMethodKey:'Fund via Perfect Money'},
-    {testRailId: '@24078', brand: '@NS', user: 'testTrading2', depositName: 'light-neteller', responseMethodKey:'altneteller'},
-    {testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'light-skrill', responseMethodKey:'skrill'},
-    {testRailId: '@25393', brand: '@NMena', user: 'depositNagaMena@naga.com', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'},
-    {testRailId: '@25394', brand: '@NMena', user: 'depositNagaMena@naga.com', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
-    {testRailId: '@25395', brand: '@NMena', user: 'depositNagaMena@naga.com', depositName: 'light-cc-applepay', responseMethodKey:'altcreditcard'},
-    {testRailId: '@25396', brand: '@NMena', user: 'depositNagaMena@naga.com', depositName: 'light-neteller', responseMethodKey:'Credit Card'},
-    //{testRailId: '@24077', brand: '@NS', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
+    {testRailId: '@24082', brand: '@Capital', user: 'testTrading2', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'}, 
+    //{testRailId: '@24067', brand: '@Markets', user: 'testTrading2', depositName: 'perfectmoney', responseMethodKey:'Fund via Perfect Money'},
+    {testRailId: '@24078', brand: '@Capital', user: 'testTrading2', depositName: 'light-neteller', responseMethodKey:'altneteller'},
+    {testRailId: '@24077', brand: '@Capital', user: 'testTrading2', depositName: 'light-skrill', responseMethodKey:'skrill'},
+    {testRailId: '@25393', brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'},
+    {testRailId: '@25394', brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
+    {testRailId: '@25395', brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-cc-applepay', responseMethodKey:'altcreditcard'},
+    {testRailId: '@25396', brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-neteller', responseMethodKey:'Credit Card'},
+    //{testRailId: '@24077', brand: '@Capital', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
     
 ]
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
@@ -126,9 +126,9 @@ test.describe('Naga Markets', async()=>{
     })
 
     const NMdepositTestParams: NMtestTypes[] = [
-        {testRailId: '@23606', brand: '@NM', user: 'depositTestMarkets', depositName: 'light-credit-debit-cards', requestURL: '**/payment/safecharge/url'},
-        {testRailId: '@25151', brand: '@NM', user: 'depositTestMarkets', depositName: 'light-ewallet', requestURL: '**/payment/safecharge/url'},
-        {testRailId: '@25150', brand: '@NM', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}    ]
+        {testRailId: '@23606', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-credit-debit-cards', requestURL: '**/payment/safecharge/url'},
+        {testRailId: '@25151', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-ewallet', requestURL: '**/payment/safecharge/url'},
+        {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}    ]
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} ${brand} Check ${depositName} deposit`, 
             {tag:['@deposit', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{

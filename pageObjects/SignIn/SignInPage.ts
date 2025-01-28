@@ -59,13 +59,13 @@ export class SignIn{
     };
     async chooseBrand(tag: string){
         let project = await test.info().project;
-        if(tag === '@NS'){
+        if(tag === '@Capital'){
             return await project['use']['NagaCapital']
-        } else if (tag === '@NM'){
+        } else if (tag === '@Markets'){
             return await project['use']['NagaMarkets']
-        } else if (tag === '@NMena'){
+        } else if (tag === '@Mena'){
             return await project['use']['NagaMena']
-        } else if (tag === '@NAfrica'){
+        } else if (tag === '@Africa'){
             return await project['use']['NagaAfrica']
         } else if (tag === '@NX'){
             return await project['use']['NagaX']
@@ -73,13 +73,13 @@ export class SignIn{
     }
     async chooseBrandCountry(tag: string){
         let project = await test.info().project;
-            if(tag === '@NS'){
+            if(tag === '@Capital'){
                 return await project['use']['NSCountry']
-            } else if (tag === '@NM'){
+            } else if (tag === '@Markets'){
                 return await project['use']['NMCountry']
-            } else if (tag === '@NMena'){
+            } else if (tag === '@Mena'){
                 return await project['use']['NagaMenaCountry']
-            } else if (tag === '@NAfrica'){
+            } else if (tag === '@Africa'){
                 return await project['use']['NagaAfricaCountry']
             } else if (tag === '@NX'){
                 return await project['use']['NagaXCountry']

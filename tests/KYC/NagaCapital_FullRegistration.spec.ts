@@ -21,12 +21,12 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']},
     let personalInfo = new PersonalInformation(page)
     let verificationPopup = new VerificationPopup(page);
     let email = await new RandomUser().getRandomUserEmail() 
-    await test.step(`Create lead user with ${email}`, async ()=>{
+    await test.step(`Create lead user with ${email} on Short registration page.`, async ()=>{
         await signUp.goto(NagaCapital, 'register')
         await new Captcha(page).removeCaptcha()
         await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry)
     });
-    await test.step('Fill personal information KYC', async() =>{
+    await test.step('Fill Compleate you profile kyc.', async() =>{
         //await personalInfo.fillPersonalInformation('Continue');
         await new YouAreInNagaMarkets(page).clickExplorePlatform()
         await mainPage.clickOnWidgepPoint('NAGA Start')
@@ -35,17 +35,17 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']},
         await personalInfo.compleateYourProfile()
         //await personalInfo.clickDepositNow()
     });
-    await test.step('Check status of main page widget', async()=>{
+    await test.step('Check name of the widget banner "Naga start". Assert that Compleate profile popup is hidden', async()=>{
         await mainPage.openHeaderMenuPoint("feed");
         expect(await mainPage.getStatusOfWidgetStep('NAGA Start')).toContain('--finished')
         expect(await mainPage.getStatusOfWidgetStep('Deposit')).toContain('--active')
     })
-    await test.step('Update account to next level', async()=>{
+    await test.step('Open step:  Naga progres. User clicks on Finished btn(KYC is prefield)', async()=>{
         await mainPage.clickOnWidgepPoint('NAGA Progress')
         await new StartKYCPopup(page).startKYC();
         await new UdpateAccount(page).clickFinishBtn();
     });
-    await test.step('Check verification step (header step)', async()=>{
+    await test.step('User see"s Verification popup', async()=>{
        // expect(await verificationPopup.verificationPoupIsDisplyed()).toBeVisible()
         await verificationPopup.skipVerificationStep();
         expect(await mainPage.getStatusOfWidgetStep('NAGA Progress')).toContain('--next')

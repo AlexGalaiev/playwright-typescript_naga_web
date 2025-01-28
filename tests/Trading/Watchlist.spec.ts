@@ -16,9 +16,9 @@ type testTypes = {
 }
 
 const AddWatchlistPatameters: testTypes[] = [
-    {testRailId: '@23951', brand: '@NS', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
-    {testRailId: '@23674', brand: '@NM', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
-    {testRailId: '@25379', brand: '@NMena', user: 'testTrading@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
+    {testRailId: '@23951', brand: '@Capital', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
+    {testRailId: '@23674', brand: '@Markets', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
+    {testRailId: '@25379', brand: '@Mena', user: 'testTrading@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
     test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@trading','@prodSanity']}, async({page}, testInfo)=>{
@@ -52,9 +52,9 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
 }
 
 const priceAlertParameters: testTypes[] = [
-    {testRailId: '@23952', brand: '@NS', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
-    {testRailId: '@23678', brand: '@NM', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
-    {testRailId: '@25380', brand: '@NMena', user: 'testTrading@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
+    {testRailId: '@23952', brand: '@Capital', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
+    {testRailId: '@23678', brand: '@Markets', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
+    {testRailId: '@25380', brand: '@Mena', user: 'testTrading@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{testRailId, brand, user, localization}of priceAlertParameters){
     test(`${testRailId} Price alerts ${brand} ${user}`,{tag:'@trading'}, async({page}, testInfo)=>{
