@@ -163,6 +163,15 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+    - name: Get report url
+      id: extract_report
+      run: |
+        report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*')
+        if [ -z "$report_url" ]; then
+          echo "No report URL found in the logs."
+          exit 1
+        fi
+        echo "::set-output name=report_url::$report_url"
     - name: Publish to Cloudflare Pages
       if: always()
       id: cloudflare_publish
