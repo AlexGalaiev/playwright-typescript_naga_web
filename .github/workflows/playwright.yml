@@ -165,14 +165,7 @@ jobs:
         retention-days: 30
     - name: Get report url
       id: extract_report
-      run: |
-        report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*' test-log.txt)
-        if [ -z "$report_url" ]; then
-          echo "No report URL found in the logs."
-          exit 1
-        fi
-        echo "deployment_url=$report_url" >> $GITHUB_ENV  
-        echo "::set-output name=report_url::$report_url"
+      run: report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*' test-log.txt) && echo "report_url=$report_url" >> $GITHUB_ENV
     - name: Set outcome title
       if: always()
       id: set_outcome_title
