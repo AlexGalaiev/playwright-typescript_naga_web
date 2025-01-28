@@ -166,8 +166,23 @@ jobs:
     - name: Get report url
       id: extract_report
       run: |
-        report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*' test-log.txt)
-        echo "report_url=$report_url" >> $GITHUB_ENV
+        report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*' test-log.txt | head -n 1)
+        decoded_report_url=$(echo "$report_url" \
+        | sed 's/%20/ /g' \
+        | sed 's/%3A/:/g' \
+        | sed 's/%2F/\//g' \
+        | sed 's/%3F/?/g' \
+        | sed 's/%3D/=/g' \
+        | sed 's/%26/\&/g' \
+        | sed 's/%2C/,/g' \
+        | sed 's/%23/#/g' \
+        | sed 's/%25/%/g' \
+        | sed 's/%40/@/g' \
+        | sed 's/%2B/+/g' \
+        | sed 's/%5B/\[/g' \
+        | sed 's/%5D/\]/g')
+        
+        echo "report_url=$decoded_report_url" >> $GITHUB_ENV
     - name: Set outcome title
       if: always()
       id: set_outcome_title
@@ -195,5 +210,5 @@ jobs:
       if: always()
       run: |
         if [ "${{ inputs.ticket_id }}" != "" ]; then
-          curl -X POST -H "Content-Type: application/json" -d '{"issues": ["${{ inputs.ticket_id }}"], "deployment_url": "${{ env.deployment_url }}", "outcome": "${{ steps.playwright_tests.outcome }}", "title": "${{ steps.set_outcome_title.outputs.title }}", "tag": "${{ inputs.tag }}"}' https://automation.atlassian.com/pro/hooks/fed5268ffa26ba4c3d60b99ca2c5bf60954af14a
+          curl -X POST -H "Content-Type: application/json" -d '{"issues": ["${{ inputs.ticket_id }}"], "deployment_url": "${{ env.report_url }}", "outcome": "${{ steps.playwright_tests.outcome }}", "title": "${{ steps.set_outcome_title.outputs.title }}", "tag": "${{ inputs.tag }}"}' https://automation.atlassian.com/pro/hooks/fed5268ffa26ba4c3d60b99ca2c5bf60954af14a
         fi
