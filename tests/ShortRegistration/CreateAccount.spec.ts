@@ -16,8 +16,8 @@ test.describe("Sign up page.", async()=>{
         localization: string
     }
     const testParamsRiskDisclaimer: testRiskDisclaimer[] = [
-        {testRailId: '@24930', brand: '@NS', localization: '/pageObjects/localization/SignUpPage.json'},
-        {testRailId: '@25142', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighUp.json'}
+        {testRailId: '@24930', brand: '@Capital', localization: '/pageObjects/localization/SignUpPage.json'},
+        {testRailId: '@25142', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighUp.json'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
         test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI']}, async({page})=>{
@@ -33,8 +33,8 @@ test.describe("Sign up page.", async()=>{
         languages: string[];
     }
     const platformLanguages :languages[] = [
-        {testRailId: '@25241', brand:'@NS', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
-        {testRailId: '@25242', brand:'@NM', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
+        {testRailId: '@25241', brand:'@Capital', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
+        {testRailId: '@25242', brand:'@Markets', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
     ]
     for(const{testRailId, brand, languages}of platformLanguages){
         test(`${testRailId} Check default languages on ${brand}`, {tag:['@UI']}, async({page})=>{
@@ -58,8 +58,8 @@ test.describe("Sign up page.", async()=>{
         msgText: string
     }
     const CountryCheckParams: countryCheck[] =[
-        {testRailId:'@25243', brand:'@NM', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
-        {testRailId:'@25244', brand:'@NS', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '}
+        {testRailId:'@25243', brand:'@Markets', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
+        {testRailId:'@25244', brand:'@Capital', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '}
     ]
     for(const{testRailId, brand, notCorrectCountry, correctCountry, msgText}of CountryCheckParams){
         test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:'@UI'}, async({page})=>{
@@ -82,8 +82,8 @@ test.describe("Sign up page.", async()=>{
         documents: Map<string, string>
     }
     const legalDocumentsParams: legalDocuments[] = [
-        {testRailId:'@25246', brand:'@NS', documents: new Map<string, string>([['Privacy Policy', "https://nagacap.com/documents/privacy_policy"],['legal documents',"https://nagacap.com/legal-documentation"],['Client Agreement',"https://nagacap.com/legal-documentation"]])},
-        {testRailId:'@25247', brand:'@NM', documents: new Map<string, string>([['Privacy Policy', "https://nagamarkets.com/documents/privacy_policy"],['legal documents',"https://nagamarkets.com/legal-documentation"]])},
+        {testRailId:'@25246', brand:'@Capital', documents: new Map<string, string>([['Privacy Policy', "https://nagacap.com/documents/privacy_policy"],['legal documents',"https://nagacap.com/legal-documentation"],['Client Agreement',"https://nagacap.com/legal-documentation"]])},
+        {testRailId:'@25247', brand:'@Markets', documents: new Map<string, string>([['Privacy Policy', "https://nagamarkets.com/documents/privacy_policy"],['legal documents',"https://nagamarkets.com/legal-documentation"]])},
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
         test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@UI', '@compliance']},async({page}, testInfo)=>{
@@ -101,7 +101,7 @@ test.describe("Sign up page.", async()=>{
 
 test.describe('Create account per brand', async()=>{
 
-    test('@25356 @NM Create lead user', {tag:['@smoke']}, async({page, NagaMarkets})=>{
+    test('@25356 @Markets Create lead user', {tag:['@smoke']}, async({page, NagaMarkets})=>{
         let signUp = new SignUp(page)
         let localizationText = new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json')
         await test.step("Open register page, check number of buttons and remove captcha", async()=>{
@@ -117,7 +117,7 @@ test.describe('Create account per brand', async()=>{
         })
     })
     
-    test('@25357 @NS Create lead user', {tag:['@smoke']}, async({page, NagaCapital})=>{
+    test('@25357 @Capital Create lead user', {tag:['@smoke']}, async({page, NagaCapital})=>{
         let signUp = new SignUp(page)
         let mainPage = new MainPage(page)
         let localizationText = new getLocalization('/pageObjects/localization/SignUpPage.json')

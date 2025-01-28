@@ -13,8 +13,8 @@ test.describe("Verification center", async() => {
   }
 
   const testVerificatrionParams: VerificationTypes[] = [
-    {testRailId: '@23599', user: 'testVerification@i.ua', brand: '@NS'},
-    {testRailId: '@23921', user: 'testVerificationMarkets@i.ua', brand: '@NM'}
+    {testRailId: '@23599', user: 'testVerification@i.ua', brand: '@Capital'},
+    {testRailId: '@23921', user: 'testVerificationMarkets@i.ua', brand: '@Markets'}
   ]
 
   for(const{testRailId, user, brand}of testVerificatrionParams){

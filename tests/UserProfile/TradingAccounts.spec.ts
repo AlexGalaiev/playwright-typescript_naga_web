@@ -41,8 +41,8 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         user: string,
     }
     const testTrAccountsParams: tradingAcTypes[] = [
-        {testRailId: '@23930', brand: '@NS', user: 'userWithAccounts@i.ua'},
-        {testRailId: '@23602', brand: '@NM', user: 'userWithAccounts2@i.ua'}
+        {testRailId: '@23930', brand: '@Capital', user: 'userWithAccounts@i.ua'},
+        {testRailId: '@23602', brand: '@Markets', user: 'userWithAccounts2@i.ua'}
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
         test(`${testRailId} Edit trading account information`, {tag:['@secondAccount']}, async({page}, testInfo)=>{
@@ -68,8 +68,8 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
 }
 
 const testAccountSwitchingParams: tradingAcTypes[] = [
-    {testRailId: '@25130', brand: '@NS', user: 'userWithAccounts@i.ua'},
-    {testRailId: '@25187', brand: '@NM', user: 'userWithAccounts2@i.ua'}
+    {testRailId: '@25130', brand: '@Capital', user: 'userWithAccounts@i.ua'},
+    {testRailId: '@25187', brand: '@Markets', user: 'userWithAccounts2@i.ua'}
 ]
 for(const{testRailId, brand, user} of testAccountSwitchingParams){
     test(`${testRailId} Switching between trading accounts`, {tag:['@secondAccount', '@prodSanity']}, async({page}, testInfo)=>{

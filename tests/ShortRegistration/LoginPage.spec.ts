@@ -113,8 +113,8 @@ type testTypes = {
 }
 
 const testParams: testTypes[] = [
-    {testRailId: "@23911", brandStart: '@NS', brandRedirect: '@NM', user: 'NagaMarketsLeadUser@gmail.com', localization: '/pageObjects/localization/SighInPage.json'},
-    {testRailId: '@23569', brandStart: '@NM', brandRedirect: '@NS', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
+    {testRailId: "@23911", brandStart: '@Capital', brandRedirect: '@Markets', user: 'NagaMarketsLeadUser@gmail.com', localization: '/pageObjects/localization/SighInPage.json'},
+    {testRailId: '@23569', brandStart: '@Markets', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ]
 for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
     test(`${testRailId} Switch brands popup ${brandStart}`, {tag:'@UI'}, async({page})=>{
@@ -135,8 +135,8 @@ type testTypesGuestMode = {
 }
 
 const testParamsGuestMode: testTypesGuestMode[] = [
-    {testRailId: '@24929', brand: '@NS', localization: '/pageObjects/localization/SighInPage.json'},
-    {testRailId: '@24936', brand: '@NM', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
+    {testRailId: '@24929', brand: '@Capital', localization: '/pageObjects/localization/SighInPage.json'},
+    {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
     test(`${testRailId} Open platform in Guest mode ${brand}`, {tag:'@UI'}, async({page}, testInfo)=>{
@@ -164,10 +164,10 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
             email: string;
         }
         const testParams: testTypes[] = [
-           { testrailId: "@23568", brand: '@NM', email: "testLeadUser@i.ua"},
-           { testrailId: "@23914", brand: '@NS', email: "testLeadUser"},
-           { testrailId: "@25359", brand: '@NMena', email: "testLeadUserMena"},
-           { testrailId: "@25360", brand: '@NAfrica', email: "testLeadAfrica"}
+           { testrailId: "@23568", brand: '@Markets', email: "testLeadUser@i.ua"},
+           { testrailId: "@23914", brand: '@Capital', email: "testLeadUser"},
+           { testrailId: "@25359", brand: '@Mena', email: "testLeadUserMena"},
+           { testrailId: "@25360", brand: '@Africa', email: "testLeadAfrica"}
         ]
         for(const {testrailId, brand, email} of testParams){
             test(`${testrailId} Login/logout to platform ${brand} by ${email}`, 
@@ -192,10 +192,10 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
         brand: string;
     }
     const logoTestParams: logoTests[] = [
-        {testRailId: '@25388', brand: '@NM'},
-        {testRailId: '@25389', brand: '@NS'},
-        {testRailId: '@25390', brand: '@NMena'},
-        {testRailId: '@25390', brand: '@NAfrica'}
+        {testRailId: '@25388', brand: '@Markets'},
+        {testRailId: '@25389', brand: '@Capital'},
+        {testRailId: '@25390', brand: '@Mena'},
+        {testRailId: '@25390', brand: '@Africa'}
     ]
 
     for(const{testRailId, brand}of logoTestParams){

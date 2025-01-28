@@ -10,9 +10,9 @@ type testTransfer = {
     brand: string
 }
 const testTransferParams: testTransfer[] = [
-    {testRailId: '@23961', brand: '@NS', user: 'testTrading3'},
-    {testRailId: '@25149', brand: '@NM', user: 'testTrading3Markets'},
-    {testRailId: '@25397', brand: '@NMena', user: 'testTrading2Mena@naga.com'}
+    {testRailId: '@23961', brand: '@Capital', user: 'testTrading3'},
+    {testRailId: '@25149', brand: '@Markets', user: 'testTrading3Markets'},
+    {testRailId: '@25397', brand: '@Mena', user: 'testTrading2Mena@naga.com'}
 ]
 for(const{testRailId, brand, user} of testTransferParams){
     test(`${testRailId} Internal transfer funds ${brand}`, 

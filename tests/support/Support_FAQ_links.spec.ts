@@ -17,8 +17,8 @@ type faqTypes = {
 }
 
 const testFAQParams: faqTypes[] = [
-    {testRailId: '@23621', brand: '@NM', user: "testSupportMarkets@i.ua", categories: FAQ_NM},
-    {testRailId: '@23981', brand: '@NS', user: "testSupport@i.ua", categories: FAQ_NM}
+    {testRailId: '@23621', brand: '@Markets', user: "testSupportMarkets@i.ua", categories: FAQ_NM},
+    {testRailId: '@23981', brand: '@Capital', user: "testSupport@i.ua", categories: FAQ_NM}
 ]
 
 for(const{testRailId, brand, user, categories} of testFAQParams){
