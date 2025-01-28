@@ -171,29 +171,8 @@ jobs:
           echo "No report URL found in the logs."
           exit 1
         fi
+        echo "deployment_url=$report_url" >> $GITHUB_ENV  
         echo "::set-output name=report_url::$report_url"
-    - name: Publish to Cloudflare Pages
-      if: always()
-      id: cloudflare_publish
-      uses: cloudflare/pages-action@v1
-      env:
-        CLOUDFLARE_API_TKN: ${{ secrets.CLOUDFLARE_API_TKN }}
-      with:
-        apiToken: ${{ secrets.CLOUDFLARE_API_TKN }}
-        accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID_KWG }}
-        projectName: playwright-naga-report-${{ github.head_ref || github.ref_name }}
-        directory: playwright-report
-        branch: master
-    - name: Extract deployment URL
-      if: always()
-      id: extract_url
-      run: |
-        URL=$(echo "${{ join(steps.cloudflare_publish.outputs.*, ' ') }}" | grep -o 'https://[^ ]*' | head -n 1)
-        echo "deployment_url=$URL" >> $GITHUB_ENV    
-    - name: Use the URL
-      if: always()
-      run: |
-          echo "The deployment URL is $deployment_url"
     - name: Set outcome title
       if: always()
       id: set_outcome_title
