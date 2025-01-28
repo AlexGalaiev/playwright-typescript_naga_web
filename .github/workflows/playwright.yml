@@ -166,8 +166,7 @@ jobs:
     - name: Get report url
       id: extract_report
       run: |
-        report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*' test-log.txt | head -n1 | sed 's/%3A/:/g')
-        report_url=$(echo "$report_url" | xargs)
+        report_url=$(grep -o 'https://playwright.microsoft.com/workspaces/.*' test-log.txt)
         echo "report_url=$report_url" >> $GITHUB_ENV
     - name: Set outcome title
       if: always()
@@ -186,7 +185,7 @@ jobs:
         status: ${{ steps.playwright_tests.outcome }}  
         title: ${{ steps.set_outcome_title.outputs.title }} ${{ github.head_ref || github.ref_name }} ${{ inputs.tag }} ${{ env.TAGS }} ${{ env.ENV }}
         message: >-
-            View report [${{ env.deployment_url }}](${{ env.deployment_url }})
+            View report [${{ env.report_url }}](${{ env.report_url }})
       env:
         SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
         SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
