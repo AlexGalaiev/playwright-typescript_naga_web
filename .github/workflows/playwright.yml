@@ -183,22 +183,26 @@ jobs:
         | sed 's/%5D/\]/g')
         
         echo "report_url=$decoded_report_url" >> $GITHUB_ENV
+    - name: Debug Playwright Log
+      if: always()
+      run: cat test-log.txt || echo "⚠️ Log file not found"
     - name: Set outcome title
       if: always()
       id: set_outcome_title
       run: |
-        if [ "${{ steps.playwright_tests.outcome }}" == "success" ]; then
-          echo "::set-output name=title::✅ Naga Test Passed on "
+        if grep -qi "failed" test-log.txt; then
+          echo "title=❌ Naga Test Failed on " >> $GITHUB_ENV
+          exit 1
         else
-          echo "::set-output name=title::❌ Naga Test Failed on "
+          echo "title=✅ Naga Test Passed on " >> $GITHUB_ENV
         fi
     - name: Notify test result for dedicated teams channel
       if: always()
       uses: neonidian/teams-notify-build-status@v3
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
-        status: ${{ steps.playwright_tests.outcome }}  
-        title: ${{ steps.set_outcome_title.outputs.title }} ${{ github.head_ref || github.ref_name }} ${{ inputs.tag }} ${{ env.TAGS }} ${{ env.ENV }}
+        status: ${{ steps.set_outcome_title.outcome }}  
+        title: ${{ steps.set_outcome_title.outcome }} ${{ github.head_ref || github.ref_name }} ${{ inputs.tag }} ${{ env.TAGS }} ${{ env.ENV }}
         message: >-
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
@@ -210,5 +214,5 @@ jobs:
       if: always()
       run: |
         if [ "${{ inputs.ticket_id }}" != "" ]; then
-          curl -X POST -H "Content-Type: application/json" -d '{"issues": ["${{ inputs.ticket_id }}"], "deployment_url": "${{ env.report_url }}", "outcome": "${{ steps.playwright_tests.outcome }}", "title": "${{ steps.set_outcome_title.outputs.title }}", "tag": "${{ inputs.tag }}"}' https://automation.atlassian.com/pro/hooks/fed5268ffa26ba4c3d60b99ca2c5bf60954af14a
+          curl -X POST -H "Content-Type: application/json" -d '{"issues": ["${{ inputs.ticket_id }}"], "deployment_url": "${{ env.report_url }}", "outcome": "${{ steps.set_outcome_title.outcome }}", "title": "${{ steps.set_outcome_title.outcome }}", "tag": "${{ inputs.tag }}"}' https://automation.atlassian.com/pro/hooks/fed5268ffa26ba4c3d60b99ca2c5bf60954af14a
         fi
