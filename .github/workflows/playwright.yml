@@ -141,7 +141,7 @@ jobs:
         echo "Current TAGS: $TAGS"
         echo "GitHub Event Name: $GITHUB_EVENT_NAME"
         echo "Canary: $CANARY"
-        echo "Project: $PROJECT"
+        echo "Project: $PROJECT" >> $GITHUB_ENV
  
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
@@ -202,7 +202,7 @@ jobs:
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
         status: ${{ steps.set_outcome_title.outcome }}  
-        title: Status- ${{ steps.set_outcome_title.outcome }}; Branch- ${{ github.head_ref || github.ref_name }}; Tags- ${{ inputs.tag || env.TAGS }} Environment "$PROJECT"
+        title: Status- ${{ steps.set_outcome_title.outcome }}; Branch- ${{ github.head_ref || github.ref_name }}; Tags- ${{ inputs.tag || env.TAGS }} Environment ${{ env.PROJECT || env.ENV}}
         message: >-
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
