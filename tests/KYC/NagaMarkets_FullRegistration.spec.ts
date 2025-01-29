@@ -24,15 +24,16 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
     });
     await test.step("Fill Personal information popup. Verify phone number with sms", async () => {
       await new PersonalInformation(page).fillPersonalInformation('Verify with SMS')
+    })
+    await test.step("Verify phone number", async()=>{
       await new PhoneVerification(page).insertVerificationCode()
       await new YouAreInNagaMarkets(page).openNagaKyc()
       await kycStart.clickStartVerificationBtn()
-    });
+    })
   }
 );
 
-test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity','@smoke']}, 
-  async ({page}, testInfo) => {
+test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity','@smoke']}, async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
   let quiz = new FullRegistration(page);
@@ -87,7 +88,7 @@ test("@24920 Naga Markets. KYC - Intermediate level.", {tag:'@kyc'},async ({page
   await test.step(`Test manually fill KYC - ${KYC_Intermediate} level`, async () => {
     await quiz.fill_KYC(KYC_Intermediate);
   });
-  await test.step(`Check final KYC Popup. ${KYC_PreAdvance} scorring must be in the header`, async () => {
+  await test.step(`Check final KYC Popup. ${KYC_Intermediate} scorring must be in the header`, async () => {
     expect(await KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
     expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
     await KYC_FinalStep.clickBtn('Deposit');

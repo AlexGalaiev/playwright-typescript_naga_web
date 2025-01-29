@@ -171,7 +171,7 @@ export class MainPage{
 
     //mainpage widget naga capital
     async getStatusOfWidgetStep(nameOfTheStep:string){
-        await this.page.waitForTimeout(3000)
+        await this.page.waitForTimeout(5000)
         let step = await this.page.locator(`//div[text()='${nameOfTheStep}']`)
         return await step.getAttribute('class')
     }

@@ -52,7 +52,6 @@ on:
     - cron: '00 4 * * 0-6'
     - cron: '00 2 * * 0-6'
     - cron: '05 2 * * 0-6'
-    - cron: '17 8 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -110,7 +109,6 @@ jobs:
                 "00 4 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
                 "00 2 * * 0-6") echo "TAGS=@login" >> $GITHUB_ENV ;;
                 "05 2 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
-                "17 8 * * 0-6") echo "TAGS=@debug" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
@@ -141,8 +139,9 @@ jobs:
         echo "Current TAGS: $TAGS"
         echo "GitHub Event Name: $GITHUB_EVENT_NAME"
         echo "Canary: $CANARY"
-        echo "Project: $PROJECT" >> $GITHUB_ENV
- 
+        echo "Project: $PROJECT"
+        TitleProject="$PROJECT" >> $GITHUB_ENV
+              
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
             export ENV="$ENV" 
@@ -199,7 +198,7 @@ jobs:
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
         status: ${{ steps.set_outcome_title.outcome }}  
-        title: Status- ${{ steps.set_outcome_title.outcome }}; Branch- ${{ github.head_ref || github.ref_name }}; Tags- ${{ inputs.tag || env.TAGS }} Environment ${{ env.PROJECT || env.ENV}}
+        title: Status- ${{ steps.set_outcome_title.outcome }}; Branch- ${{ github.head_ref || github.ref_name }}; Tags- ${{ inputs.tag || env.TAGS }} Environment ${{ env.TitleProject }}
         message: >-
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
