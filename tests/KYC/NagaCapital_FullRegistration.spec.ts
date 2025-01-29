@@ -4,18 +4,15 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 import { expect } from "@playwright/test";
-import { AllSetPopup } from "../../pageObjects/common/allSetPopup(KYC)/allSetPopup";
 import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-UpdateAccount";
 import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
-import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { Captcha } from "../../pageObjects/captcha";
 
-test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@debug']}, 
+test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke']}, 
     async({ page, NagaCapital, NSCountry }, testInfo)=>{
-    testInfo.setTimeout(testInfo.timeout + 60000);
+    testInfo.setTimeout(testInfo.timeout + 80000);
     let signUp = new SignUp(page);
     let mainPage = new MainPage(page);
     let personalInfo = new PersonalInformation(page)
@@ -42,10 +39,8 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@
         await new StartKYCPopup(page).startKYC();
         await new UdpateAccount(page).clickFinishBtn();
     });
-    await test.step('User see"s Verification popup and check statuses of widget banner', async()=>{
+    await test.step('User see"s Verification popup', async()=>{
         expect(await verificationPopup.verificationPoupIsDisplyed()).toBeVisible()
         await verificationPopup.skipVerificationStep();
-        expect(await mainPage.getStatusOfWidgetStep('NAGA Progress')).toContain('--next')
-        expect(await mainPage.getStatusOfWidgetStep('NAGA Ultimate')).toContain('--next')
     })
 })

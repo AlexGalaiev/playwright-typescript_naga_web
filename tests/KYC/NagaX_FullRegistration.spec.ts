@@ -13,10 +13,10 @@ import { FinishPopup } from "../../pageObjects/FullRegistration/components/NagaX
 import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import { NagaXAddPopup } from "../../pageObjects/FullRegistration/components/NagaX_AdditionalPopup"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
+import { Captcha } from "../../pageObjects/captcha"
 
 test.describe('Naga X ', async()=>{
-//commit #180
-    test('@25365 KYC - High score', {tag:['@prodSanity', '@kyc']}, async({page, NagaX, NagaXCountry}, testInfo)=>{
+    test('@25365 KYC - High score', {tag:['@prodSanity', '@kyc', '@debug']}, async({page, NagaX, NagaXCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000);
         let signUp = new SignUp(page)
         let mainPage = new MainPage(page)
@@ -25,15 +25,18 @@ test.describe('Naga X ', async()=>{
         let inPlatformPopup = new YouAreInCrypto(page)
         let localization = new getLocalization('/pageObjects/localization/NagaX_KYC.json')
         let email = await new RandomUser().getRandomUserEmail()
-        await test.step(`Create lead user with ${email}`, async()=>{
+        await test.step(`Create lead user with ${email} on short registration form`, async()=>{
             await signUp.goto(NagaX, 'register')
+            await new Captcha(page).removeCaptcha()
             await signUp.createCryptoUser(email, process.env.USER_PASSWORD || "", NagaXCountry)
         })
-        await test.step(`Fill personal information`, async()=>{
+        await test.step(`Fill personal information on registration popup`, async()=>{
             await new PersonalInformation(page).fillCryptoPersonalInfo()
+        })
+        await test.step('Insert verification code and wait', async()=>{
             await new PhoneVerification(page).insertVerificationCode()
             await inPlatformPopup.acceptAccountCreationPopup()
-        }) 
+        })
         await test.step(`Open KYC and start registration`, async()=>{
             await mainPage.cryptoOpenKyc()
             await new TwoAuthenfication(page).skipAuthenfication();

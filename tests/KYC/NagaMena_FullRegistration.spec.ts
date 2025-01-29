@@ -11,7 +11,6 @@ import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFin
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { Captcha } from "..//..//pageObjects/captcha"
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
-import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
 
 
 test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
@@ -28,14 +27,18 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     });
     await test.step("Fill Personal information popup. Verify phone number with sms", async () => {
       await new PersonalInformation(page).fillPersonalInformation('Verify with SMS')
+    })
+    await test.step("Insert verification code. Wait for popup", async()=>{
       await new PhoneVerification(page).insertVerificationCode()
       await new YouAreInNagaMarkets(page).clickExplorePlatform()
+    })
+    await test.step('Click first step on main page', async()=>{
       await mainPage.clickOnWidgepPoint('Upgrade to Live')
       await kycStart.clickStartVerificationBtn()
     })
   })
 
-  test('@25253 KYC - Advance Score', {tag:['@kyc', '@prodSanity','@smoke']}, async({page})=>{
+  test('@25253 KYC Mena - Advance Score', {tag:['@kyc', '@prodSanity','@smoke']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Advance'
     let KYC_FinalStep = new FinalStep(page);
@@ -55,7 +58,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })
-  test('@25361 KYC - PreAdvance Score', {tag:['@kyc']}, async({page})=>{
+  test('@25361 KYC Mena - PreAdvance Score', {tag:['@kyc']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'PreAdvance'
     let KYC_FinalStep = new FinalStep(page);
@@ -75,7 +78,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })
-  test('@25362 KYC - Intermediate Score', {tag:['@kyc']}, async({page})=>{
+  test('@25362 KYC Mena - Intermediate Score', {tag:['@kyc']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Intermediate'
     let KYC_FinalStep = new FinalStep(page);
@@ -96,7 +99,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     })
   })
 
-  test('@25363 KYC - Elementary Score', {tag:['@kyc']}, async({page})=>{
+  test('@25363 KYC Mena - Elementary Score', {tag:['@kyc']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Elementary'
     let KYC_FinalStep = new FinalStep(page);
@@ -116,7 +119,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })
-  test('@25364 KYC - Beginner Score', {tag:['@kyc']}, async({page})=>{
+  test('@25364 KYC Mena - Beginner Score', {tag:['@kyc']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Beginner'
     let KYC_FinalStep = new FinalStep(page);
