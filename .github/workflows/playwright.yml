@@ -214,5 +214,5 @@ jobs:
       if: always()
       run: |
         if [ "${{ inputs.ticket_id }}" != "" ]; then
-          curl -X POST -H "Content-Type: application/json" -d '{"issues": ["${{ inputs.ticket_id }}"], "deployment_url": "${{ env.report_url }}", "outcome": "${{ steps.playwright_tests.outcome }}", "title": "${{ steps.set_outcome_title.outputs.title }}", "tag": "${{ inputs.tag }}"}' https://automation.atlassian.com/pro/hooks/fed5268ffa26ba4c3d60b99ca2c5bf60954af14a
+          curl -X POST -H "Content-Type: application/json" -d '{"issues": ["${{ inputs.ticket_id }}"], "deployment_url": "${{ env.report_url }}", "outcome": "${{ steps.set_outcome_title.outcome }}", "title": "${{ steps.set_outcome_title.outcome }}", "tag": "${{ inputs.tag }}"}' https://automation.atlassian.com/pro/hooks/fed5268ffa26ba4c3d60b99ca2c5bf60954af14a
         fi
