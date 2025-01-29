@@ -183,15 +183,6 @@ jobs:
         | sed 's/%5D/\]/g')
         
         echo "report_url=$decoded_report_url" >> $GITHUB_ENV
-    - name: Set outcome title
-      if: always()
-      id: set_outcome_title
-      run: |
-        if [ "${{ steps.playwright_tests.outcome }}" == "success" ]; then
-          echo "::set-output name=title::✅ Naga Test Passed on "
-        else
-          echo "::set-output name=title::❌ Naga Test Failed on "
-        fi
     - name: Notify test result for dedicated teams channel
       if: always()
       uses: neonidian/teams-notify-build-status@v3
