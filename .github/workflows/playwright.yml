@@ -190,8 +190,9 @@ jobs:
       if: always()
       id: set_outcome_title
       run: |
-        if grep -qE "s|failed" test-log.txt; then
+        if grep -qi "failed" test-log.txt; then
           echo "title=❌ Naga Test Failed on " >> $GITHUB_ENV
+          exit 1
         else
           echo "title=✅ Naga Test Passed on " >> $GITHUB_ENV
         fi
