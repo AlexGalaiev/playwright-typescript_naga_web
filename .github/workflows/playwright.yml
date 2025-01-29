@@ -141,7 +141,7 @@ jobs:
         echo "Current TAGS: $TAGS"
         echo "GitHub Event Name: $GITHUB_EVENT_NAME"
         echo "Canary: $CANARY"
-        echo "Project: $PROJECT"
+        echo "Project: $PROJECT" >> $GITHUB_ENV
  
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
@@ -183,9 +183,6 @@ jobs:
         | sed 's/%5D/\]/g')
         
         echo "report_url=$decoded_report_url" >> $GITHUB_ENV
-    - name: Debug Playwright Log
-      if: always()
-      run: cat test-log.txt || echo "⚠️ Log file not found"
     - name: Set outcome title
       if: always()
       id: set_outcome_title
@@ -202,7 +199,7 @@ jobs:
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
         status: ${{ steps.set_outcome_title.outcome }}  
-        title: ${{ steps.set_outcome_title.outcome }} ${{ github.head_ref || github.ref_name }} ${{ inputs.tag }} ${{ env.TAGS }} ${{ env.ENV }}
+        title: Status- ${{ steps.set_outcome_title.outcome }}; Branch- ${{ github.head_ref || github.ref_name }}; Tags- ${{ inputs.tag || env.TAGS }} Environment ${{ env.PROJECT || env.ENV}}
         message: >-
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
