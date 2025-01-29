@@ -183,6 +183,8 @@ jobs:
         | sed 's/%5D/\]/g')
         
         echo "report_url=$decoded_report_url" >> $GITHUB_ENV
+    - name: Debug Playwright Log
+      run: cat test-log.txt || echo "Log not found"
     - name: Set outcome title
       if: always()
       id: set_outcome_title
