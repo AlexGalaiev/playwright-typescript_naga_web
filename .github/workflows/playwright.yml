@@ -202,7 +202,7 @@ jobs:
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
         status: ${{ steps.set_outcome_title.outcome }}  
-        title: ${{ steps.set_outcome_title.outcome }} Branch ${{ github.head_ref || github.ref_name }} tags ${{ inputs.tag }} | ${{ env.TAGS }} Environment ${{ env.ENV }}
+        title: Status- ${{ steps.set_outcome_title.outcome }} Branch- ${{ github.head_ref || github.ref_name }} Tags- ${{ inputs.tag || env.TAGS }} Environment ${{ env.ENV }}
         message: >-
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
