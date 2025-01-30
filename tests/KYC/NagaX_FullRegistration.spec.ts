@@ -16,7 +16,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { Captcha } from "../../pageObjects/captcha"
 
 test.describe('Naga X ', async()=>{
-    test('@25365 KYC - High score', {tag:['@prodSanity', '@kyc', '@debug']}, async({page, NagaX, NagaXCountry}, testInfo)=>{
+    test('@25365 KYC - High score', {tag:['@prodSanity', '@kyc']}, async({page, NagaX, NagaXCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000);
         let signUp = new SignUp(page)
         let mainPage = new MainPage(page)

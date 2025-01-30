@@ -42,11 +42,11 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
     }
     const testTrAccountsParams: tradingAcTypes[] = [
         {testRailId: '@23930', brand: '@Capital', user: 'userWithAccounts@i.ua'},
-        {testRailId: '@23602', brand: '@Markets', user: 'userWithAccounts2@i.ua'}
+        {testRailId: '@23602', brand: '@Markets', user: 'userWithAccounts2@i.ua'},
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
         test(`${testRailId} Edit trading account information`, {tag:['@secondAccount']}, async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 90000);
+        testInfo.setTimeout(testInfo.timeout + 90000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let addAccountForm = new AddAcountForm(page);
@@ -98,9 +98,12 @@ test.describe('Naga Markets - Trading accounts', async()=>{
         let headerMenu = new HeaderMenuUserProfile(page);
         let email = await new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${email} and fill KYC`, async()=>{
-            await new KYC_General(page).NagaMarkets_KYC_Advance(email, 
+            await new KYC_General(page).NagaMarkets_KYC_Advance(
+                email, 
                 process.env.USER_PASSWORD || '',
                 'France',
+                '+387',
+                '603039647',
                 NagaMarkets)
         })
         await test.step('Add second live account', async()=>{

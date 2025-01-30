@@ -12,12 +12,13 @@ import { getLocalization } from "../../pageObjects/localization/getText";
 import { Captcha } from "..//..//pageObjects/captcha"
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
+let email =''
 
 test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 200000);
     let signUp = new SignUp(page);
     let kycStart = new KYC_Start(page);
-    let email = new RandomUser().getRandomUserEmail()
+    email = new RandomUser().getRandomUserEmail()
     let mainPage = new MainPage(page)
     console.log(email)
     await test.step(`Create lead user with ${email} via Short registration form`, async () => {
@@ -45,7 +46,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
     let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
     let mainPage = new MainPage(page)
-    await test.step(`Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
+    await test.step(`User email - ${email}. Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
       await kyc.fillKYC(KYC_scorring)
     })
     await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
@@ -65,7 +66,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
     let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
     let mainPage = new MainPage(page)
-    await test.step(`Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
+    await test.step(`User email - ${email}. Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
       await kyc.fillKYC(KYC_scorring)
     })
     await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
@@ -85,7 +86,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
     let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
     let mainPage = new MainPage(page)
-    await test.step(`Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
+    await test.step(`User email - ${email}. Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
       await kyc.fillKYC(KYC_scorring)
     })
     await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
@@ -106,7 +107,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
     let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
     let mainPage = new MainPage(page)
-    await test.step(`Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
+    await test.step(`User email - ${email}. Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
       await kyc.fillKYC(KYC_scorring)
     })
     await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
@@ -126,7 +127,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
     let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
     let mainPage = new MainPage(page)
-    await test.step('Fill KYC- Beginner scorring', async()=>{
+    await test.step(`User email - ${email}. Fill KYC- Beginner scorring`, async()=>{
       await kyc.fillKYC(KYC_scorring)
     })
     await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
