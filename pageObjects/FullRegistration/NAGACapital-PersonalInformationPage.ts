@@ -36,6 +36,7 @@ export class PersonalInformation{
         await this.countryCode.pressSequentially("Bosnia")
         await this.page.waitForTimeout(1000)
         await this.countryCode.press('Enter')
+        await this.phone.clear()
         await this.phone.pressSequentially("603039647")
         await this.page.waitForTimeout(750);
         await this.page.locator(`//button[text()='${submitBtnName}']`).click();

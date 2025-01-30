@@ -44,7 +44,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
         test(`${testRailId} Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
             {tag: ['@prodSanity', '@website-naga.com']}, async({proxyPageUAE},testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 15000)
+            testInfo.setTimeout(testInfo.timeout + 25000)
             let website = new NagaCom(proxyPageUAE)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
