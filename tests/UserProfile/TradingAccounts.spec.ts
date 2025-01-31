@@ -10,7 +10,8 @@ import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRe
 
 test.describe("NagaCapital - Trading Accounts", async()=>{
     
-  test("@23922 Create 2nd live account", {tag:['@secondAccount', '@prodSanity']},async({page, NagaCapital}, testInfo)=>{
+  test("@23922 Create 2nd live account", {tag:['@secondAccount', '@prodSanity']}, 
+    async({page, NagaCapital}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 70000);
     let addAccount = new AddAcountForm(page);
     let headerMenu = new HeaderMenuUserProfile(page);
@@ -92,7 +93,8 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
         })})}})
 
 test.describe('Naga Markets - Trading accounts', async()=>{
-    test('@23600 Create 2nd live account', {tag:['@secondAccount', '@prodSanity']}, async({page, NagaMarkets}, testInfo)=>{
+    test('@23600 Create 2nd live account', {tag:['@secondAccount', '@prodSanity']}, 
+        async({page, NagaMarkets}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 150000);
         let addAccount = new AddAcountForm(page);
         let headerMenu = new HeaderMenuUserProfile(page);
@@ -115,6 +117,32 @@ test.describe('Naga Markets - Trading accounts', async()=>{
             await headerMenu.openAddNewTradingAccount();
             await addAccount.create_EUR_DemoAccount();
             expect(await addAccount.checkNewDemoAccount()).toBeTruthy
-        })
+        })})
 })
+test.describe('Naga Mena - Trading accounts', async()=>{
+   
+    test(`@25400 Create 2nd live account`, {tag:['@secondAccount', '@prodSanity', '@debug']},
+        async({page, NagaMena}, testInfo)=>{
+    testInfo.setTimeout(testInfo.timeout + 30000);
+    let addAccount = new AddAcountForm(page);
+    let headerMenu = new HeaderMenuUserProfile(page);
+    let email = await new RandomUser().getRandomUserEmail() 
+    await test.step(`Create lead user with ${email}`, async()=>{
+        await new KYC_General(page).NagaMena_UserLead(
+            email,
+            'United Arab Emirates',
+            NagaMena)
+    })
+    await test.step('Add second live account', async()=>{
+        await headerMenu.openAddNewTradingAccount();
+        await addAccount.create_USD_LiveAccount();
+        expect(await addAccount.checkNewLiveAccount()).toBeTruthy
+    })
+    await test.step('Add second demo account', async()=>{
+        await headerMenu.openAddNewTradingAccount();
+        await addAccount.create_EUR_DemoAccount();
+        expect(await addAccount.checkNewDemoAccount()).toBeTruthy
+    })
+
+    })
 })
