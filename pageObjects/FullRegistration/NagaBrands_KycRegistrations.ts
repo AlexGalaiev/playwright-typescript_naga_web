@@ -26,22 +26,27 @@ export class KYC_General{
         let personalInfo = new PersonalInformation(this.page)
         //open platform and create lead user
         await signUp.goto(brand, 'register')
+        await new Captcha(this.page).removeCaptcha()
         await signUp.createCFDUser(email, password, country)
         //fill personal information popup
-        await personalInfo.fillPersonalInformation('Continue');
+        //await personalInfo.fillPersonalInformation('Continue');
         //click on Real money button
-        await new YouAreInNagaMarkets(this.page).clickOpenRealMoneyAccount()
+        await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
+        //switch to main page and click to Naga Start widget step
+        await mainPage.clickOnWidgepPoint('NAGA Start')
+        await new StartKYCPopup(this.page).startKYC();
         //After previous step - user sees next form. Add more information to personal info
         await personalInfo.compleateYourProfile()
+        await this.page.waitForTimeout(3000)
         //Click on deposit button and redirect to main page
-        await personalInfo.clickDepositNow()
+        //await personalInfo.clickDepositNow()
         //Wait for Verify identity btn (header of main page) and click ion it
-        await mainPage.updateUserLevel();
+        //await mainPage.updateUserLevel();
         //Click start kyc btn on popup
-        await new StartKYCPopup(this.page).startKYC();
+        //await new StartKYCPopup(this.page).startKYC();
         //wait for preselected form and click on Finish form
-        await new UdpateAccount(this.page).clickFinishBtn();
-        await new VerificationPopup(this.page).skipVerificationStep()
+        //await new UdpateAccount(this.page).clickFinishBtn();
+        //await new VerificationPopup(this.page).skipVerificationStep()
     }
 
     async NagaMarkets_KYC_Advance(email: string, password: string, country:string, countryCode: string, phoneNumber: string, brand: string){
@@ -87,5 +92,30 @@ export class KYC_General{
         //go to main page 
         //await new YouAreInNagaMarkets(this.page).openNagaPlatform()
     }
+
+    async NagaMena_UserLead(email: string, country: string, brand: string){
+        //create lead user via short registration
+        await new SignUp(this.page).goto(brand, "register");
+        await new Captcha(this.page).removeCaptcha()
+        await new SignUp(this.page).createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates','+387', '603039647');
+        //fill personal information
+        await new PersonalInformation(this.page).fillPersonalInformation('Verify with SMS')
+        //phone verification
+        await new PhoneVerification(this.page).insertVerificationCode()
+        await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
+    }
+
+    async NagaMena_FullRegUser(email: string, country: string, brand: string){
+        //create lead user via short registration
+        await new SignUp(this.page).goto(brand, "register");
+        await new Captcha(this.page).removeCaptcha()
+        await new SignUp(this.page).createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates','+387', '603039647');
+        //fill personal information
+        await new PersonalInformation(this.page).fillPersonalInformation('Verify with SMS')
+        //phone verification
+        await new PhoneVerification(this.page).insertVerificationCode()
+        await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
+    }
+
 
 }

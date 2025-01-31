@@ -156,7 +156,7 @@ jobs:
             CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=2 --config=playwright.service.config.ts | tee test-log.txt;
         fi   
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: always()
       with:
         name: playwright-report
