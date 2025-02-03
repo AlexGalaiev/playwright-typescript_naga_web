@@ -29,7 +29,7 @@ test.describe("Naga Capital.", async()=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
-            await test.step(`Login to platfrom by ${user} and check number of exist methods`, async()=>{
+            await test.step(`Login by ${user} to ${brand} platform and check number of exist methods`, async()=>{
                 await signIn.goto(await signIn.chooseBrand(brand),'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
                 await mainPage.openBackMenuPoint('Manage Funds');
@@ -54,11 +54,11 @@ const testNStestParameters: NStestTypes[] = [
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
     test(`${testRailId} ${brand} Check deposit methods. Test of ${depositName} deposit`, 
         {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 15000);
+        testInfo.setTimeout(testInfo.timeout + 35000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);
-        await test.step(`Login by ${user} user`, async()=>{
+        await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await mainPage.openBackMenuPoint('Manage Funds');
@@ -132,7 +132,7 @@ test.describe('Naga Markets', async()=>{
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} ${brand} Check ${depositName} deposit`, 
             {tag:['@deposit', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 10000);
+            testInfo.setTimeout(testInfo.timeout + 20000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);

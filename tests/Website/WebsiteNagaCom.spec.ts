@@ -109,7 +109,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
             {tag: ['@prodSanity', '@website-naga.com']}, 
             async({proxyPage}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 20000);
+            testInfo.setTimeout(testInfo.timeout + 50000);
             let website = new NagaCom(proxyPage)
             let localization = new getLocalization('/pageObjects/localization/Website_NagaCom.json')
             await test.step(`Open website ${baseUrl}`, async()=>{

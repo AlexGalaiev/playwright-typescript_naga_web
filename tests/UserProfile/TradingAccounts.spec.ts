@@ -46,10 +46,9 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         {testRailId: '@23602', brand: '@Markets', user: 'userWithAccounts2@i.ua'},
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
-        test(`${testRailId} Edit trading account information`, {tag:['@secondAccount']}, async({page}, testInfo)=>{
+        test(`${testRailId} Edit trading account information ${brand}`, {tag:['@secondAccount']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 90000);
         let signIn = new SignIn(page);
-        let mainPage = new MainPage(page);
         let addAccountForm = new AddAcountForm(page);
         await test.step(`Login to platform by ${user} to ${brand}`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
@@ -73,11 +72,11 @@ const testAccountSwitchingParams: tradingAcTypes[] = [
     {testRailId: '@25187', brand: '@Markets', user: 'userWithAccounts2@i.ua'}
 ]
 for(const{testRailId, brand, user} of testAccountSwitchingParams){
-    test(`${testRailId} Switching between trading accounts`, {tag:['@secondAccount', '@prodSanity']}, async({page}, testInfo)=>{
+    test(`${testRailId} ${brand} Switching between trading accounts`, {tag:['@secondAccount', '@prodSanity']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 70000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
-        await test.step("Login to platform", async()=>{
+        await test.step(`Login to platform by ${user} user`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
@@ -121,16 +120,15 @@ test.describe('Naga Markets - Trading accounts', async()=>{
 })
 test.describe('Naga Mena - Trading accounts', async()=>{
    
-    test(`@25400 Create 2nd live account`, {tag:['@secondAccount', '@prodSanity', '@debug']},
+    test(`@25400 Create 2nd live account`, {tag:['@secondAccount', '@prodSanity']},
         async({page, NagaMena}, testInfo)=>{
-    testInfo.setTimeout(testInfo.timeout + 30000);
+    testInfo.setTimeout(testInfo.timeout + 120000);
     let addAccount = new AddAcountForm(page);
     let headerMenu = new HeaderMenuUserProfile(page);
     let email = await new RandomUser().getRandomUserEmail() 
     await test.step(`Create lead user with ${email}`, async()=>{
-        await new KYC_General(page).NagaMena_UserLead(
+        await new KYC_General(page).NagaMena_FullRegUser(
             email,
-            'United Arab Emirates',
             NagaMena)
     })
     await test.step('Add second live account', async()=>{

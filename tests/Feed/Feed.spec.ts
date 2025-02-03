@@ -4,8 +4,6 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
-import { getLocalization } from "../../pageObjects/localization/getText";
-import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
 test.describe("Feed", async()=>{
@@ -68,7 +66,7 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
     let feed = new Feed(page)
     let userProfile = new UserProfile(page)
     let myAccounts = new MyAccounts(page)
-    await test.step(`login by user ${user}`, async()=>{
+    await test.step(`login by user ${user} to ${brand} platform`, async()=>{
         await signIn.goto(await signIn.chooseBrand(brand),'login');
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
     })
@@ -105,7 +103,7 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
         let feed = new Feed(page);
         let signIn = new SignIn(page);
         let myAccounts = new MyAccounts(page)
-        await test.step(`login by user ${user}`, async()=>{
+        await test.step(`login by user ${user} to ${brand} platform`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
@@ -146,7 +144,7 @@ for(const{testRailId, brand, user}of testShareCommentParams){
         let feed = new Feed(page);
         let signIn = new SignIn(page);
         let myAccounts = new MyAccounts(page)
-        await test.step("login by user", async()=>{
+        await test.step(`login by user ${user} to ${brand} platform`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
@@ -184,7 +182,7 @@ for(const{testRailId, brand, user}of testParamsUserCabinet){
         let signIn = new SignIn(page);
         let feed = new Feed(page);
         let textForPost = 'Hello World'
-        await test.step(`login by user ${user}`, async()=>{
+        await test.step(`login by user ${user} to ${brand} platform`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
@@ -220,7 +218,7 @@ for(const{testRailId, brand, user, localization}of testNotVerifieduser){
         let signIn = new SignIn(page);
         let feed = new Feed(page)
         let myAccounts = new MyAccounts(page)
-        await test.step(`Login to platform with not verified ${user} user`, async()=>{
+        await test.step(`Login to ${brand} platform with not verified ${user} user`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })

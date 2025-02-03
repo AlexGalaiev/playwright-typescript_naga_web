@@ -37,6 +37,7 @@ export class Deposit{
         //popup with input value
         await this.depositInputValuePoopup.waitFor({state:"visible"});
         await this.inputFieldDepositPopup.pressSequentially(value);
+        await this.page.waitForTimeout(3000)
         // Wait for response after click sub,it btn
         const [response] = await Promise.all([
             this.page.waitForResponse(depositUrl),

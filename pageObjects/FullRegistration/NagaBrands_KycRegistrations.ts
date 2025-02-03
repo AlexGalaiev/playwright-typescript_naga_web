@@ -12,6 +12,7 @@ import { PhoneVerification } from "./NAGACapital-PhoneVerification";
 import { FullRegistration } from "./NagaMarkets_FullRegistration";
 import { FinalStep } from "./NAGAMarkets_KYCFinalStep";
 import { Captcha } from "../../pageObjects/captcha";
+import { MenaFullRegistration } from "./NagaMena_FullRegistration";
 
 export class KYC_General{
     page: Page
@@ -93,7 +94,7 @@ export class KYC_General{
         //await new YouAreInNagaMarkets(this.page).openNagaPlatform()
     }
 
-    async NagaMena_UserLead(email: string, country: string, brand: string){
+    async NagaMena_UserLead(email: string, brand: string){
         //create lead user via short registration
         await new SignUp(this.page).goto(brand, "register");
         await new Captcha(this.page).removeCaptcha()
@@ -105,7 +106,7 @@ export class KYC_General{
         await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
     }
 
-    async NagaMena_FullRegUser(email: string, country: string, brand: string){
+    async NagaMena_FullRegUser(email: string, brand: string){
         //create lead user via short registration
         await new SignUp(this.page).goto(brand, "register");
         await new Captcha(this.page).removeCaptcha()
@@ -115,6 +116,10 @@ export class KYC_General{
         //phone verification
         await new PhoneVerification(this.page).insertVerificationCode()
         await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
+        await new MainPage(this.page).clickOnWidgepPoint('Upgrade to Live')
+        await new KYC_Start(this.page).clickStartVerificationBtn()
+        await new MenaFullRegistration(this.page).fillKYC('Advance')
+        await new FinalStep(this.page).clickBtn('Deposit');
     }
 
 
