@@ -77,7 +77,7 @@ test.describe('Naga Markets', async()=>{
         test(`@25190 Naga start login banner ${stepName}`,{tag: '@UI'}, async({page, NagaMarkets})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
-            await test.step('Login to platform', async()=>{
+            await test.step(`Login to platform by user ${email}`, async()=>{
                 await signIn.goto(NagaMarkets, 'login')
                 await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })

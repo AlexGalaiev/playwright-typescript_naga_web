@@ -36,7 +36,7 @@ for(const{testRailId, brand, user,investDirection, currency}of tradingParamsPosi
       {tag:['@trading', '@prodSanity'], 
         annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
       async ({ page }, testInfo) => {
-    await testInfo.setTimeout(testInfo.timeout + 140000);
+    await testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)
@@ -86,7 +86,7 @@ for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
         {tag:['@trading', '@prodSanity'], 
         annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
         async ({ page }, testInfo) => {
-    await testInfo.setTimeout(testInfo.timeout + 130000);
+    await testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)

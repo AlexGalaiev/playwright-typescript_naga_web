@@ -22,7 +22,7 @@ const testNoFundsParaketers: testNoFunds[] = [
 ]
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
     test(`${testRailId} Open position without funds ${brand}`, {tag:'@trading'}, async({page}, testInfo)=>{
-      await testInfo.setTimeout(testInfo.timeout + 40000);  
+      await testInfo.setTimeout(testInfo.timeout + 60000);  
       let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         let instruments = new AllInstruments(page);

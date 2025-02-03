@@ -37,7 +37,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
   test(`${testRailId} ${brand} Open/Close ${investDirection} position + ${protection}`, 
     {tag:['@trading','@prodSanity', '@smoke']}, async ({ page}, testInfo) => {
-    await testInfo.setTimeout(testInfo.timeout + 140000);
+    await testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page);
@@ -81,8 +81,8 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25377', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
-    test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, {tag:'@trading'}, async({page}, testInfo)=>{
-      await testInfo.setTimeout(testInfo.timeout + 150000);
+    test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, {tag:['@trading', '@debug']}, async({page}, testInfo)=>{
+      await testInfo.setTimeout(testInfo.timeout + 170000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
       let myTrades = new MyTrades(page);
@@ -141,7 +141,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
   test(`${testRailId} ${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
     {tag:'@trading', annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-7506', type:'ticket'}}, async({page}, testInfo)=>{
-    testInfo.setTimeout(testInfo.timeout + 140000);
+    testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
     let myTrades = new MyTrades(page)

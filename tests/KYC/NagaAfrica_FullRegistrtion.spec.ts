@@ -8,11 +8,12 @@ import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "../../test-options"
 
 test.describe('Naga Africa', async()=>{
+    let email = ''
 
     test.beforeEach('Create lead user', async({page, NagaAfrica, NagaAfricaCountry})=>{
         let signUp = new SignUp(page)
         let personalInformation = new PersonalInformation(page)
-        let email = await new RandomUser().getRandomUserEmail()
+        email = await new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user with ${email}`, async()=>{
             await signUp.goto(NagaAfrica, 'register')
             await new Captcha(page).removeCaptcha()
@@ -25,7 +26,7 @@ test.describe('Naga Africa', async()=>{
         })
     })
 
-    test('@25366 KYC - Advance score',async({page})=>{
+    test(`@25366 KYC - Advance score. User email-${email}`,async({page})=>{
         let personalDetails = new PersonalDetails(page)
         await test.step(`Fill personal details step`, async()=>{
             await personalDetails.fillPersonalDetail()

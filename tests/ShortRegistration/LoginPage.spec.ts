@@ -139,7 +139,7 @@ const testParamsGuestMode: testTypesGuestMode[] = [
     {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
-    test(`${testRailId} Open platform in Guest mode ${brand}`, {tag:'@UI'}, async({page}, testInfo)=>{
+    test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:'@UI'}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 50000);
         let localizationPage = new getLocalization(localization);
         let signUp = new SignUp(page);
@@ -175,7 +175,7 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
                 let signIn = new SignIn(page);
                 let pageAfterLogOut = new PageAfterLogout(page)
                 let myAccountsMenu = new MyAccounts(page)
-                await test.step(`Login to platform by ${email}`, async()=>{
+                await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
                     await signIn.goto(await signIn.chooseBrand(brand), 'login')
                     await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
                 })
