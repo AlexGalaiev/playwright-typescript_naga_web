@@ -34,9 +34,10 @@ export default defineConfig<TestOptions>({
       name: "qa",
       use: {
         ...devices["Desktop Safari"],
-        //NagaMarkets: "https://sxdevmarkets.com",
-        NagaMarkets: "https://nagamarkets.com",
-        NagaCapital: "https://nagacap.com",
+        NagaMarkets: "https://sxdevmarkets.com",
+        //NagaMarkets: "https://nagamarkets.com",
+        //NagaCapital: "https://nagacap.com",
+        NagaCapital: "https://sxdevcap.com",
         NagaMena: "https://sxdevmena.com",
         //NagaAfrica: "https://nagaafrica.com",
         NagaAfrica: "https://sxdevafrica.com",

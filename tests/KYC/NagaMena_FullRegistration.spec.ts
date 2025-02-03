@@ -20,7 +20,6 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
     let kycStart = new KYC_Start(page);
     email = new RandomUser().getRandomUserEmail()
     let mainPage = new MainPage(page)
-    console.log(email)
     await test.step(`Create lead user with ${email} via Short registration form`, async () => {
       await signUp.goto(NagaMena, "register");
       await new Captcha(page).removeCaptcha()

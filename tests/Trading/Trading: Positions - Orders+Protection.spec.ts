@@ -81,8 +81,8 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25377', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
-    test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, {tag:['@trading', '@debug']}, async({page}, testInfo)=>{
-      await testInfo.setTimeout(testInfo.timeout + 170000);
+    test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, {tag:['@trading']}, async({page}, testInfo)=>{
+      testInfo.setTimeout(testInfo.timeout + 170000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
       let myTrades = new MyTrades(page);

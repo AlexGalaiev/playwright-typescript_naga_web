@@ -145,15 +145,15 @@ jobs:
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
             export ENV="$ENV" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=2 --config=playwright.service.config.ts | tee test-log.txt;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
             echo "Running production tests for tag @prodSanity due to push"
             export ENV="$ENV" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=2 --config=playwright.service.config.ts | tee test-log.txt;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         else
             echo "Running all tests with $TAGS"
             export ENV="$ENV" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=2 --config=playwright.service.config.ts | tee test-log.txt;
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         fi   
 
     - uses: actions/upload-artifact@v4

@@ -11,56 +11,55 @@ import { register } from "module"
 import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations"
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
 
-test.describe("NagaCapital. Settings", async()=>{
-    test("@23920 Change password via settings", {tag:['@settings', '@prodSanity']}, async({page, NagaCapital}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 40000);
-        let signIn = new SignIn(page)
-        let myAccounts = new MyAccounts(page)
-        let settings = new SettingsPage(page)
-        let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
-        let email = await new RandomUser().getRandomUserEmail()
-        await test.step(`Create lead user ${email} with personal information`, async()=>{
-            await new KYC_General(page).NagaCapital_UserLead(
-                email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina', NagaCapital)
-            await new YouAreInNagaMarkets(page).clickExplorePlatform()
-        })
-        await test.step(`Change password. User opens header menu  and change to Test2345!`, async()=>{
-            await myAccounts.openUserMenu();
-            await myAccounts.openMyAccountsMenuItem('Settings')
-            await settings.openSettingsMenuItem('Password & Security')
-            await settings.changePasswordToNew("Test12345!")
-            expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
-            await settings.acceptSuccessPopup()
-        })
-        await test.step(`Check possibility of Login to platform with new password`, async()=>{
-            await signIn.signInUserToPlatform(email, "Test12345!");
-            expect(await new MainPage(page).checkWidgetStepVisibility('NAGA Start')).toBe(true);
-        })})
 
-    test("@23598 Change password via settings",{tag:['@settings', '@prodSanity']}, 
-            async({page, NagaMarkets}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 120000);
-        let newLead = new KYC_General(page)
-        let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
-        let email = new RandomUser().getRandomUserEmail()
-        let myAccounts = new MyAccounts(page)
-        let settings = new SettingsPage(page)
-        let signIn = new SignIn(page)
-        await test.step(`Create lead user - ${email}, fill personal information, verify phone number`, async()=>{
-            await newLead.NagaMarkets_UserLead(email, process.env.USER_PASSWORD || '','France', '+387', '603039647', NagaMarkets)
-        })
-        await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
-            await myAccounts.openUserMenu();
-            await myAccounts.openMyAccountsMenuItem('Settings')
-            await settings.openSettingsMenuItem('Password & Security')
-            await settings.changePasswordToNew("Test12345!")
-            expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
-            await settings.acceptSuccessPopup()
-        })
-        await test.step('Login to platform with new password', async()=>{
-            await signIn.signInUserToPlatform(email, "Test12345!");
-            expect(await new MainPage(page).checkWidgetStepVisibility('Upgrade to Live')).toBe(true);
-        })
+test("@23920 NagaCapital. Change password via settings", {tag:['@settings', '@prodSanity']}, 
+    async({page, NagaCapital}, testInfo)=>{
+    testInfo.setTimeout(testInfo.timeout + 40000);
+    let signIn = new SignIn(page)
+    let myAccounts = new MyAccounts(page)
+    let settings = new SettingsPage(page)
+    let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
+    let email = await new RandomUser().getRandomUserEmail()
+    await test.step(`Create lead user ${email} with personal information`, async()=>{
+        await new KYC_General(page).NagaCapital_UserLead(
+            email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina', NagaCapital)
+        await new YouAreInNagaMarkets(page).clickExplorePlatform()
+    })
+    await test.step(`Change password. User opens header menu  and change to Test2345!`, async()=>{
+        await myAccounts.openUserMenu();
+        await myAccounts.openMyAccountsMenuItem('Settings')
+        await settings.openSettingsMenuItem('Password & Security')
+        await settings.changePasswordToNew("Test12345!")
+        expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
+        await settings.acceptSuccessPopup()
+    })
+    await test.step(`Check possibility of Login to platform with new password`, async()=>{
+        await signIn.signInUserToPlatform(email, "Test12345!");
+        expect(await new MainPage(page).checkWidgetStepVisibility('NAGA Start')).toBe(true);
+    })})
+
+test("@23598 NagaMarkets. Change password via settings",{tag:['@settings', '@prodSanity']}, 
+        async({page, NagaMarkets}, testInfo)=>{
+    testInfo.setTimeout(testInfo.timeout + 120000);
+    let newLead = new KYC_General(page)
+    let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
+    let email = new RandomUser().getRandomUserEmail()
+    let myAccounts = new MyAccounts(page)
+    let settings = new SettingsPage(page)
+    let signIn = new SignIn(page)
+    await test.step(`Create lead user - ${email}, fill personal information, verify phone number`, async()=>{
+        await newLead.NagaMarkets_UserLead(email, process.env.USER_PASSWORD || '','France', '+387', '603039647', NagaMarkets)
+    })
+    await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
+        await myAccounts.openUserMenu();
+        await myAccounts.openMyAccountsMenuItem('Settings')
+        await settings.openSettingsMenuItem('Password & Security')
+        await settings.changePasswordToNew("Test12345!")
+        expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
+        await settings.acceptSuccessPopup()
+    })
+    await test.step('Login to platform with new password', async()=>{
+        await signIn.signInUserToPlatform(email, "Test12345!");
+        expect(await new MainPage(page).checkWidgetStepVisibility('Upgrade to Live')).toBe(true);
     })
 })
-

@@ -1,0 +1,70 @@
+{
+    "tin_absence_reason":{
+        "text":"Please choose the appropriate reason:",
+        "answer":"No TIN is required"
+    },
+    "pep":{
+        "text":"Do you currently (or during the last 12 months) hold a political office, or have ties to a politically active person? ",
+        "answer":"No"
+    },
+    "citizen":{
+        "text":"Are you a US resident for tax purposes?",
+        "answer":"No"
+    },
+    "employment_status":{
+        "text":"What best describes your employment status?",
+        "answer":"Employed"
+    },
+    "employment_type":{
+        "text":"What is your occupation - work industry?",
+        "answer":"Legal"
+    },
+    "source_of_income":{
+        "text":"What is the origin of funds you plan to invest on NAGA?",
+        "answer":"Investments"
+    },
+    "annual_income":{
+        "text":"What is your annual net income in USD?",
+        "answer":"Less than €10,000"
+    },
+    "net_worth":{
+        "text":"Your Net Worth in USD (Assets less Liabilities)?",
+        "answer":"Less than 10,000"
+    },
+    "anticipated_amount":{
+        "text":"How much do you plan to deposit into NAGA account in USD over 1 year?",
+        "answer":"Less than 10,000"
+    },
+    "expected_deposit_and_withdrawal_method":{
+        "text":"How do you plan to deposit your funds to NAGA?",
+        "answer":"Bank Transfer"
+    },
+    "investment_objectives_naga":{
+        "text":"What best describes your primary purpose of trading with us?",
+        "answer":"Speculative Trading"
+    },
+    "trading_experience":{
+        "text":"Do you have any trading experience?",
+        "answer":"No, I have no trading experience"
+    },
+    "past_years_i_have":{
+        "text":"In the past year(s) I have:",
+        "answer":"Did nothing from above"
+    },
+    "bull_market":{
+        "text":"If we are in a Bull market the general prices in financial markets are:",
+        "answer":"Unchanged"
+    },
+    "position_describing":{
+        "text":"If you buy 1 lot of EUR/USD you can describe your position as:",
+        "answer":"Flat"
+    },
+    "trading_with_leverage":{
+        "text":"When trading with Leverage which one of the following applies?",
+        "answer":"None of the above"
+    },
+    "level_of_risk_to_tolerate_in_exchange":{
+        "text":"Please state the level of risk (volatility) you will tolerate in exchange for the expected gain from your annual investments with us?",
+        "answer":"Potential gain 80% / Potential loss -80%"
+    }
+}
