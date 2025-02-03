@@ -38,12 +38,6 @@ export class MenaFullRegistration{
         await this.page.waitForTimeout(1000)
     }
 
-    // async clickBtnOther(questionName:string, answerText:string){
-    //     let question = await this.page.locator(`//label[@for='employment_status']//..//..`).first()
-    //     let answer = await question.locator(`//button[text()='${answerText}']`)
-    //     await answer.click()
-    //     await this.page.waitForTimeout(1000)
-    // }
     async inputDateOfBirth(){
         let dateObBirth = await this.page.locator('#date_of_birth')
         await dateObBirth.pressSequentially("12.12.1980")

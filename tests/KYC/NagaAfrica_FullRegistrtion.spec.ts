@@ -1,40 +1,51 @@
 import { Captcha } from "../../pageObjects/captcha"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
-import { PersonalDetails } from "../../pageObjects/FullRegistration/NagaAfrica_PersonalDetails"
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage"
-import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification"
+import { KYC_Africa } from "../../pageObjects/FullRegistration/NagaAfrica_FullRegistrations"
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "../../test-options"
+import { MainPage } from "../../pageObjects/MainPage/MainPage";
+import { expect } from "@playwright/test"
+import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep"
+import { getLocalization } from "../../pageObjects/localization/getText"
 
 test.describe('Naga Africa', async()=>{
     let email = ''
 
-    test.beforeEach('Create lead user', async({page, NagaAfrica, NagaAfricaCountry})=>{
+    test.beforeEach('Create lead user', async({page, NagaAfrica, NagaAfricaCountry}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 120000);
         let signUp = new SignUp(page)
-        let personalInformation = new PersonalInformation(page)
         email = await new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user with ${email}`, async()=>{
             await signUp.goto(NagaAfrica, 'register')
             await new Captcha(page).removeCaptcha()
-            await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', NagaAfricaCountry)
-        })
-        await test.step(`Fill personal information`, async()=>{
-            await personalInformation.fillPersonalInformation('Verify with SMS')
-            await new PhoneVerification(page).insertVerificationCode()
-            await new YouAreInNagaMarkets(page).openNagaKyc()
+            await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', NagaAfricaCountry, '+387', '603039647')
+            await new YouAreInNagaMarkets(page).clickOpenRealMoneyAccount()
         })
     })
 
-    test(`@25366 KYC - Advance score. User email-${email}`,async({page})=>{
-        let personalDetails = new PersonalDetails(page)
-        await test.step(`Fill personal details step`, async()=>{
-            await personalDetails.fillPersonalDetail()
-            await personalDetails.fillAddressResidence()
+    test(`@25366 KYC - Advance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke','@debug']},async({page})=>{
+        let KYC = new KYC_Africa(page)
+        let mainPage = new MainPage(page)
+        let KYC_scorring = 'Advance'
+        let KYC_FinalStep = new FinalStep(page);
+        let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
+        let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
+        await test.step(`Test fill NAGA Start information. User email ${email}`, async()=>{
+            await KYC.fillStartInformation()
         })
-        await test.step('Scorring popup', async()=>{
-            
+        await test.step('Switch to main page and open kyc', async()=>{
+            await mainPage.openHeaderMenuPoint('feed')
+            await mainPage.clickOnWidgepPoint('NAGA Progress')
+            await KYC.waitNagaProgress()
         })
-        console.log(2)
+        await test.step(`Test manually fill KYC -${KYC_Africa} scorring`, async()=>{
+            await KYC.fillKYC(KYC_scorring)
+        })
+        await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
+            expect(await KYC_FinalStep.getUserScorringText()).toContain("Advanced");
+            expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+            await KYC_FinalStep.clickBtn('Deposit');  
+        })
     })
 })

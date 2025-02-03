@@ -182,7 +182,8 @@ export class MainPage{
     }
 
     async clickOnWidgepPoint(nameOfTheStep:string){
-        await this.page.locator(`//div[text()='${nameOfTheStep}']`).click()
+        await this.page.waitForTimeout(3500)
+        await this.page.locator(`//div[text()='${nameOfTheStep}']//..`).first().click()
         await this.page.waitForTimeout(1000)
     }
     async checkWidgetStepVisibility(nameOfTheStep: string){
