@@ -17,15 +17,15 @@
     },
     "employment_type":{
         "text":"What is your occupation - work industry?",
-        "answer":"Legal"
+        "answer":"Agriculture/Farming"
     },
     "source_of_income":{
         "text":"What is the origin of funds you plan to invest on NAGA?",
-        "answer":"Investments"
+        "answer":"Pension and other public benefits"
     },
     "annual_income":{
         "text":"What is your annual net income in USD?",
-        "answer":"Less than €10,000"
+        "answer":"Less than 10,000"
     },
     "net_worth":{
         "text":"Your Net Worth in USD (Assets less Liabilities)?",
@@ -41,7 +41,7 @@
     },
     "investment_objectives_naga":{
         "text":"What best describes your primary purpose of trading with us?",
-        "answer":"Speculative Trading"
+        "answer":"Capital Protection"
     },
     "trading_experience":{
         "text":"Do you have any trading experience?",

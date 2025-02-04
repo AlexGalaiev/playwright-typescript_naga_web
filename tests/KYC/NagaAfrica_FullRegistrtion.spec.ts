@@ -16,21 +16,14 @@ test.describe('Naga Africa', async()=>{
         testInfo.setTimeout(testInfo.timeout + 120000);
         let signUp = new SignUp(page)
         email = await new RandomUser().getRandomUserEmail()
+        let KYC = new KYC_Africa(page)
+        let mainPage = new MainPage(page)
         await test.step(`Create lead user with ${email}`, async()=>{
             await signUp.goto(NagaAfrica, 'register')
             await new Captcha(page).removeCaptcha()
             await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', NagaAfricaCountry, '+387', '603039647')
             await new YouAreInNagaMarkets(page).clickOpenRealMoneyAccount()
         })
-    })
-
-    test(`@25366 KYC - Advance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke','@debug']},async({page})=>{
-        let KYC = new KYC_Africa(page)
-        let mainPage = new MainPage(page)
-        let KYC_scorring = 'Advance'
-        let KYC_FinalStep = new FinalStep(page);
-        let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-        let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
         await test.step(`Test fill NAGA Start information. User email ${email}`, async()=>{
             await KYC.fillStartInformation()
         })
@@ -39,11 +32,47 @@ test.describe('Naga Africa', async()=>{
             await mainPage.clickOnWidgepPoint('NAGA Progress')
             await KYC.waitNagaProgress()
         })
-        await test.step(`Test manually fill KYC -${KYC_Africa} scorring`, async()=>{
+    })
+
+    test(`@25366 KYC - Advance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke']},async({page})=>{
+        let KYC = new KYC_Africa(page)
+        let KYC_scorring = 'Advance'
+        let KYC_FinalStep = new FinalStep(page);
+        let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
+        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring`, async()=>{
             await KYC.fillKYC(KYC_scorring)
         })
         await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
             expect(await KYC_FinalStep.getUserScorringText()).toContain("Advanced");
+            expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+            await KYC_FinalStep.clickBtn('Deposit');  
+        })
+    })
+
+    test(`@25401 KYC - PreAdvance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke']},async({page})=>{
+        let KYC = new KYC_Africa(page)
+        let KYC_scorring = 'PreAdvance'
+        let KYC_FinalStep = new FinalStep(page);
+        let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
+        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring`, async()=>{
+            await KYC.fillKYC(KYC_scorring)
+        })
+        await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
+            expect(await KYC_FinalStep.getUserScorringText()).toContain("Pre-Advanced");
+            expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+            await KYC_FinalStep.clickBtn('Deposit');  
+        })
+    })
+    test(`@25402 KYC - Intermediate score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke']},async({page})=>{
+        let KYC = new KYC_Africa(page)
+        let KYC_scorring = 'Intermediate'
+        let KYC_FinalStep = new FinalStep(page);
+        let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
+        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring`, async()=>{
+            await KYC.fillKYC(KYC_scorring)
+        })
+        await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
+            expect(await KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
             expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
             await KYC_FinalStep.clickBtn('Deposit');  
         })
