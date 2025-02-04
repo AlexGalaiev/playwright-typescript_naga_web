@@ -39,7 +39,7 @@ test.describe('Naga Africa', async()=>{
         let KYC_scorring = 'Advance'
         let KYC_FinalStep = new FinalStep(page);
         let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring`, async()=>{
+        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring, user-${email}`, async()=>{
             await KYC.fillKYC(KYC_scorring)
         })
         await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
@@ -49,12 +49,12 @@ test.describe('Naga Africa', async()=>{
         })
     })
 
-    test(`@25401 KYC - PreAdvance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke']},async({page})=>{
+    test(`@25401 KYC - PreAdvance score. User email-${email}`,{tag:['@kyc']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'PreAdvance'
         let KYC_FinalStep = new FinalStep(page);
         let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring`, async()=>{
+        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring, user-${email}`, async()=>{
             await KYC.fillKYC(KYC_scorring)
         })
         await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
@@ -63,12 +63,12 @@ test.describe('Naga Africa', async()=>{
             await KYC_FinalStep.clickBtn('Deposit');  
         })
     })
-    test(`@25402 KYC - Intermediate score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke']},async({page})=>{
+    test(`@25402 KYC - Intermediate score. User email-${email}`,{tag:['@kyc']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'Intermediate'
         let KYC_FinalStep = new FinalStep(page);
         let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring`, async()=>{
+        await test.step(`Test manually fill KYC - ${KYC_scorring} scorring, user-${email}`, async()=>{
             await KYC.fillKYC(KYC_scorring)
         })
         await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{

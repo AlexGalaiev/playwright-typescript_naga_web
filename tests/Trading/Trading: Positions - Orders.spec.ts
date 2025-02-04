@@ -16,7 +16,7 @@ type tradingTypes = {
   investDirection: string,
   currency: string
 }
-const tradingInstrument = "Dogecoin/USD";
+const tradingInstrument = "EUR/USD";
 const realStockInstrument = 'Agilent Technologies'
 let investmentValue;
 let units;
@@ -29,11 +29,14 @@ const tradingParamsPositions: tradingTypes[] = [
   {testRailId: '@23675', brand: '@Markets', user:'testTrading2Markets', investDirection:'Short', currency:'$'},
   {testRailId: '@25164', brand: '@Markets', user:'testTrading2Markets', investDirection:'Long', currency:'$'},
   {testRailId: '@25369', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short',currency:'€'},
-  {testRailId: '@25368', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long',currency:'€'}
+  {testRailId: '@25368', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long',currency:'€'},
+  {testRailId: '@25410', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long',currency:'$'},
+  {testRailId: '@25409', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short',currency:'$'},
+
 ]
 for(const{testRailId, brand, user,investDirection, currency}of tradingParamsPositions){
   test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,
-      {tag:['@trading', '@prodSanity'], 
+      {tag:['@trading', '@prodSanity', '@debug'], 
         annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
       async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 170000);
@@ -80,6 +83,8 @@ const tradingParamsOrders: tradingTypes[] = [
   {testRailId: '@25015', brand: '@Markets', user:'testTrading2Markets', investDirection:'Long',currency:'$'},
   {testRailId: '@25371', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long',currency:'€'},
   {testRailId: '@25372', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short',currency:'€'},
+  {testRailId: '@25411', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long',currency:'$'},
+  {testRailId: '@25412', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short',currency:'$'}
 ]
 for(const{testRailId, brand, user,investDirection}of tradingParamsOrders){
   test(`${testRailId} ${brand} Open/Close pending ${investDirection} position`,
