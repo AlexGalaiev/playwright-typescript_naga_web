@@ -19,7 +19,7 @@ type tradingTypesWithProtection = {
   protection: string,
   tradeField: string
 }
-let tradingInstrument = "Dogecoin/USD";
+let tradingInstrument = "EUR/USD";
 let NagaProtectionValue;
 let SL; 
 let TP;
@@ -33,6 +33,8 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
   {testRailId: '@25017', brand: '@Markets', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
   {testRailId: '@25374', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
   {testRailId: '@25375', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
+  {testRailId: '@25413', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
+  {testRailId: '@25414', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
   test(`${testRailId} ${brand} Open/Close ${investDirection} position + ${protection}`, 
@@ -79,6 +81,8 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     {testRailId: '@25170', brand: '@Markets', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
     {testRailId: '@25376', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
     {testRailId: '@25377', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
+    {testRailId: '@25415', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
+    {testRailId: '@25416', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'}
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
     test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, {tag:['@trading']}, async({page}, testInfo)=>{
@@ -136,7 +140,8 @@ type changeLimittypes = {
 const tradingParametersSLTP: changeLimittypes[] = [
   {testRailId: '@25173', brand: '@Capital', user:'testTrading2', investDirection:'Short', protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$'},
   {testRailId: '@25172', brand: '@Markets', user:'testTrading2Markets', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$'},
-  {testRailId: '@25378', brand: '@Mena', user:'testTrading@naga.com', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'€'}
+  {testRailId: '@25378', brand: '@Mena', user:'testTrading@naga.com', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'€'},
+  {testRailId: '@25417', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:"Short", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$'}
 ]
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
   test(`${testRailId} ${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 

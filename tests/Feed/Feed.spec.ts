@@ -16,7 +16,8 @@ type testFeedtypes = {
 const testFeedParams: testFeedtypes[] = [
    {testRailId: '@25122', brand: '@Capital', user: 'testFeedUser'},
    {testRailId: '@25143', brand: '@Markets', user: 'testFeedUserMarkets'},
-   {testRailId: '@25382', brand: '@Mena', user: 'xz932923'} //testFeedUser@naga.com
+   {testRailId: '@25382', brand: '@Mena', user: 'xz932923'}, //testFeedUser@naga.com
+   {testRailId: '@25403', brand: '@Africa', user: 'testAfricaFeed'} //'testAfricaFeed@naga.com'
 ]
 for(const{testRailId, brand, user}of testFeedParams){
     test(`${testRailId} Main actions for post: create, edit, delete ${brand}`,
@@ -45,19 +46,13 @@ for(const{testRailId, brand, user}of testFeedParams){
         await test.step("Test delete post", async()=>{
             await feed.deleteExistedPost(user)
         })
-    })}
-
-type testCryptoTypes = {
-    testRailId: string,
-    brand: string,
-    user: string,
-    userId: string,
-}   
+    })} 
 
 const testFeedParamsActions: testFeedtypes[] = [
     {testRailId: '@25123', brand: '@Capital', user: 'testFeedUser'},
     {testRailId: '@25144', brand: '@Markets', user: 'testFeedUserMarkets'}, 
-    {testRailId: '@25383', brand: '@Mena', user: 'xz932923'} //testFeedUser@naga.com
+    {testRailId: '@25383', brand: '@Mena', user: 'xz932923'}, //testFeedUser@naga.com
+    {testRailId: '@25404', brand: '@Africa', user: 'testAfricaFeed'} //testFeedUser@naga.com
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
     test(`${testRailId} ${brand} Main actions for post: Action - Like`,{tag:'@feed'}, async({page}, testInfo)=>{
@@ -95,7 +90,8 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
 const testFeedCommentParams: testFeedtypes[] = [
     {testRailId: '@25124', brand: '@Capital', user: 'testFeedUser'},
     {testRailId: '@25145', brand: '@Markets', user: 'testFeedUserMarkets'},
-    {testRailId: '@25384', brand: '@Mena', user: 'xz932923'}
+    {testRailId: '@25384', brand: '@Mena', user: 'xz932923'},
+    {testRailId: '@25405', brand: '@Africa', user: 'testAfricaFeed'}
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
     test(`${testRailId} ${brand} Main actions for post: Comment a post ${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
@@ -135,7 +131,8 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
 const testShareCommentParams: testFeedtypes[] = [
     {testRailId: '@25129', brand: '@Capital', user: 'testFeedUser'},
     {testRailId: '@25146', brand: '@Markets', user: 'testFeedUserMarkets'},
-    {testRailId: '@25385', brand: '@Mena', user: 'xz932923'}
+    {testRailId: '@25385', brand: '@Mena', user: 'xz932923'},
+    {testRailId: '@25406', brand: '@Africa', user: 'testAfricaFeed'}
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
     test(`${testRailId} ${brand} Main action for post: Share a post ${brand}`, 
@@ -172,7 +169,8 @@ for(const{testRailId, brand, user}of testShareCommentParams){
 const testParamsUserCabinet: testFeedtypes[] = [
     {testRailId: '@25132', brand: '@Capital', user: 'testFeedUser'},
     {testRailId: '@25147', brand: '@Markets', user: 'testFeedUserMarkets'},
-    {testRailId: '@25386', brand: '@Mena', user: 'xz932923'}
+    {testRailId: '@25386', brand: '@Mena', user: 'xz932923'},
+    {testRailId: '@25407', brand: '@Africa', user: 'testAfricaFeed'}
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){
     test(`${testRailId} ${brand} Check post in user profile ${brand}`, {tag:'@feed'}, async({page}, testInfo)=>{
@@ -210,7 +208,8 @@ type testFeedNotVeried = {
 const testNotVerifieduser: testFeedNotVeried[] = [
     {testRailId: '@25131', brand: '@Capital', user: 'notVerifiedUser', localization: '/pageObjects/localization/NagaCapital_Feed.json'},
     {testRailId: '@25148', brand: '@Markets', user: 'testNotVerifiesUser', localization: '/pageObjects/localization/NagaMarkets_Feed.json'},
-    {testRailId: '@25387', brand: '@Mena', user: 'notVerifiedFeed', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
+    {testRailId: '@25387', brand: '@Mena', user: 'notVerifiedFeed', localization: '/pageObjects/localization/NagaMarkets_Feed.json'},
+    {testRailId: '@25408', brand: '@Africa', user: 'testAfricaNotVer', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
     test(`${testRailId} Not verified user tries to create new post${brand}`, {tag:'@feed'},async({page}, testInfo)=>{

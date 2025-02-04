@@ -30,7 +30,7 @@ export class KYC_Africa{
     async clickBtn(questionName:string, answerText:string){
         let question = await this.page.locator(`//p[text()='${questionName}']//..`).first()
         let answer = await question.locator(`//button[text()='${answerText}']`)
-        await this.page.waitForTimeout(250)
+        await this.page.waitForTimeout(1000)
         await answer.click()
         await this.page.waitForTimeout(1000)
     }
@@ -54,7 +54,7 @@ export class KYC_Africa{
         let question = await this.page.locator(`//p[@for='${questionName}']//..`).first()
         let answer = await question.locator("//div[contains(@class, 'form-select__control')]")
         await answer.click()
-        await this.page.waitForTimeout(500)
+        await this.page.waitForTimeout(1000)
         await answer.press('Enter')
         await this.page.waitForTimeout(1000)
     }
