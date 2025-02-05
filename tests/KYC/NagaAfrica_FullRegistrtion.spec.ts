@@ -34,7 +34,7 @@ test.describe('Naga Africa', async()=>{
         })
     })
 
-    test(`@25366 KYC - Advance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke']},async({page})=>{
+    test(`@25366 KYC - Advance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke','@debug']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'Advance'
         let KYC_FinalStep = new FinalStep(page);
