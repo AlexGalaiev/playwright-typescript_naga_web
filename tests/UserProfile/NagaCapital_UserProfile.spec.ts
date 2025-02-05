@@ -14,7 +14,6 @@ test.describe("NagaCapital - User profile", async()=>{
         let signUp = new SignUp(page);
         let userProfile = new UserProfile(page);
         let headerMenu = new HeaderMenuUserProfile(page);
-        
         let randomUser = new RandomUser()
         let email = randomUser.getRandomUserEmail()
         await test.step(`Create lead user ${email}`, async ()=>{

@@ -122,5 +122,15 @@ export class KYC_General{
         await new FinalStep(this.page).clickBtn('Deposit');
     }
 
+    async NagaAfrica_UserLead(email: string, brand: string){
+        //create user on short registration page
+        await new SignUp(this.page).goto(brand, "register");
+        await new Captcha(this.page).removeCaptcha()
+        await new SignUp(this.page).createCfdUser_All(email, process.env.USER_PASSWORD || "", 'South Africa','+387', '603039647');
+        //Click Explore the platform btn
+        await new YouAreInNagaMarkets(this.page).checkExploreBtn()
+  
+    }
+
 
 }

@@ -80,7 +80,9 @@ export class KYC_Africa{
         let zip = await this.page.locator("#addr_zip")
         await zip.clear()
         await zip.pressSequentially('3443')
+        await this.page.waitForTimeout(500)
         await this.submit.click();
+        await this.page.waitForTimeout(1000)
     }
     //used with Employment status, source of income, annual income, net=worth, anticipated_amount, currency
     async singleSelectOther(QuestionName: string, level: string){

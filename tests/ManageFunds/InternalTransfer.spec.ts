@@ -12,7 +12,8 @@ type testTransfer = {
 const testTransferParams: testTransfer[] = [
     {testRailId: '@23961', brand: '@Capital', user: 'testTrading3'},
     {testRailId: '@25149', brand: '@Markets', user: 'testTrading3Markets'},
-    {testRailId: '@25397', brand: '@Mena', user: 'testTrading2Mena@naga.com'}
+    {testRailId: '@25397', brand: '@Mena', user: 'testTrading2Mena@naga.com'},
+    {testRailId: '@25421', brand: '@Africa', user: 'testTradingAfrica@naga.com'}
 ]
 for(const{testRailId, brand, user} of testTransferParams){
     test(`${testRailId} Internal transfer funds ${brand}`, 
@@ -21,7 +22,7 @@ for(const{testRailId, brand, user} of testTransferParams){
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let internalTransfer = new InternalTransfer(page);
-        await test.step("Login to platform", async()=>{
+        await test.step(`Login to ${brand} platform by ${user} user`, async()=>{
             await signIn.goto(await signIn.chooseBrand(brand),'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         });

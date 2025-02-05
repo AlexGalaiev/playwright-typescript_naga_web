@@ -2,7 +2,6 @@ import { expect } from "@playwright/test";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
-import { MyTrades } from "../../pageObjects/Trading/MyTrades";
 import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 import {test} from "../../test-options"
 
@@ -18,10 +17,11 @@ type testNoFunds = {
 const testNoFundsParaketers: testNoFunds[] = [
    {testRailId: '@25018', brand: '@Capital', user: 'tradingNoFunds', tradingInstrument: "Bitcoin/EUR"},
    {testRailId: '@25176', brand: '@Markets', user: 'tradNoFundsMarket', tradingInstrument: "Cardano/USD"},
-   {testRailId: '@25381', brand: '@Mena', user: 'testNoFundsMena@naga.com', tradingInstrument: "Bitcoin/EUR"}
+   {testRailId: '@25381', brand: '@Mena', user: 'testNoFundsMena@naga.com', tradingInstrument: "Bitcoin/EUR"},
+   {testRailId: '@25420', brand: '@Africa', user: 'testTradingAfrica@naga.com', tradingInstrument: "Bitcoin/EUR"}
 ]
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
-    test(`${testRailId} Open position without funds ${brand}`, {tag:'@trading'}, async({page}, testInfo)=>{
+    test(`${testRailId} Open position without funds ${brand}`, {tag:['@trading']}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 60000);  
       let signIn = new SignIn(page);
         let mainPage = new MainPage(page)

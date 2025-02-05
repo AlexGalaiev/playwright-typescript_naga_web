@@ -11,21 +11,22 @@ type NStestTypes = {
     depositName: string,
     responseMethodKey: string
 }
-test.describe("Naga Capital.", async()=>{
-    type depositNumber = {
-        testRaildId: string,
-        numberOfDepositMethods: number,
-        brand: string,
-        user: string
-    }
+
+type depositNumber = {
+    testRaildId: string,
+    numberOfDepositMethods: number,
+    brand: string,
+    user: string
+}
     const testDepositNumber: depositNumber[] = [
         {testRaildId: '@25351', numberOfDepositMethods:6, brand: '@Capital', user: 'testTrading2'},
         {testRaildId: '@25391', numberOfDepositMethods:8, brand: '@Markets', user: 'depositTestMarkets'},
         {testRaildId: '@25392', numberOfDepositMethods:4, brand: '@Mena', user: 'depositNagaMena@naga.com'},
+        {testRaildId: '@25422', numberOfDepositMethods:5, brand: '@Africa', user: 'depositNagaAfrica'},
     ]
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`${testRaildId} ${brand} Check number of exist deposit methods`, 
-            {tag:['@deposit', '@prodSanity', '@manageFunds']}, async({page})=>{
+            {tag:['@deposit', '@manageFunds']}, async({page})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
@@ -48,8 +49,10 @@ const testNStestParameters: NStestTypes[] = [
     {testRailId: '@25394', brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
     {testRailId: '@25395', brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-cc-applepay', responseMethodKey:'altcreditcard'},
     {testRailId: '@25396', brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-neteller', responseMethodKey:'Credit Card'},
+    {testRailId: '@25423', brand: '@Africa', user: 'depositNagaAfrica', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'},
+    {testRailId: '@25424', brand: '@Africa', user: 'depositNagaAfrica', depositName: 'light-ozow', responseMethodKey:'ozow'},
+    {testRailId: '@25425', brand: '@Africa', user: 'depositNagaAfrica', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
     //{testRailId: '@24077', brand: '@Capital', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
-    
 ]
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
     test(`${testRailId} ${brand} Check deposit methods. Test of ${depositName} deposit`, 
@@ -69,6 +72,7 @@ for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestP
             expect(await deposit.getApiStatusCode(response)).toEqual(200)
         })
     })} 
+    
     test.describe('NagaCapital. Crypto and WireTransfer', async()=>{
 
         test.beforeEach(`Login by testTrading2 to platform`, async({page, NagaCapital}, testInfo)=>{
@@ -96,7 +100,6 @@ for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestP
                 expect(await deposit.getInfoCode(response)).toEqual(200)
             })})
     })
-})
     
 test.describe('Naga Markets', async()=>{
     
