@@ -100,6 +100,7 @@ export class MainPage{
 
     //new
     async openHeaderMenuPoint(NameOfMenuPoint: string){
+        await this.page.waitForTimeout(1000)
         let menuPoint = await this.page.locator(".header__menu__nav-item")
         .filter({has: await this.page.locator(`//a[@href='/${NameOfMenuPoint}']`) })
         await menuPoint.click();
@@ -182,8 +183,9 @@ export class MainPage{
     }
 
     async clickOnWidgepPoint(nameOfTheStep:string){
-        await this.page.waitForTimeout(3500)
-        await this.page.locator(`//div[text()='${nameOfTheStep}']//..`).first().click()
+        let menupoint = await this.page.locator("//div[contains(@class, 'step-wrapper--clickable')]",{hasText:`${nameOfTheStep}`})
+        await menupoint.waitFor({state:'visible'})
+        await this.page.locator(`//div[text()='${nameOfTheStep}']//..//..`).first().click()
         await this.page.waitForTimeout(1000)
     }
     async checkWidgetStepVisibility(nameOfTheStep: string){

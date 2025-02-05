@@ -36,7 +36,7 @@ const tradingParamsPositions: tradingTypes[] = [
 ]
 for(const{testRailId, brand, user,investDirection, currency}of tradingParamsPositions){
   test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,
-      {tag:['@trading', '@prodSanity', '@debug'], 
+      {tag:['@trading', '@prodSanity'], 
         annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
       async ({ page }, testInfo) => {
     await testInfo.setTimeout(testInfo.timeout + 170000);
