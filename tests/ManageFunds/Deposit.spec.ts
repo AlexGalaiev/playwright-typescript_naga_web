@@ -134,7 +134,7 @@ test.describe('Naga Markets', async()=>{
         {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}    ]
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} ${brand} Check ${depositName} deposit`, 
-            {tag:['@deposit', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@manageFunds', '@smoke', '@prodSanity']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
