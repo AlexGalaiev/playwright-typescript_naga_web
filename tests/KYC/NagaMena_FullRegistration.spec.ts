@@ -58,7 +58,7 @@ test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })
-  test('@25361 KYC Mena - PreAdvance Score', {tag:['@kyc']}, async({page})=>{
+  test('@25361 KYC Mena - PreAdvance Score', {tag:['@kyc','@debug']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'PreAdvance'
     let KYC_FinalStep = new FinalStep(page);
