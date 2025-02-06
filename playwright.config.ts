@@ -20,9 +20,9 @@ export default defineConfig<TestOptions>({
   },
   reporter: [["list"], ["html"]],
   use: {
-    video: 'on',
-    screenshot: "only-on-failure",
-    trace:'on',
+    video: 'off',
+    screenshot:'only-on-failure',
+    trace:'retain-on-failure',
   },
   globalSetup: process.env.CI && process.env.CRON_RUN !== "schedule"
     ? require.resolve("./global-setup.ts")
