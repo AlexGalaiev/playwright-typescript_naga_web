@@ -117,9 +117,11 @@ jobs:
         CANARY="false"
         PROJECT=""
         ENV=${{ inputs.environment || github.event.client_payload.environment || 'Prod' }}
+        echo "env from input $ENV"
         
         if [ -z "$TAGS" ]; then
            TAGS=@${{ inputs.tag || github.event.client_payload.tag || 'prodSanity' }}
+           echo "tags from input $TAGS"
         fi
 
         if [[ "$ENV" == *"Canary"* ]]; then
