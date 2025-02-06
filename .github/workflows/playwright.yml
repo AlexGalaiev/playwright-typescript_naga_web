@@ -116,6 +116,9 @@ jobs:
       
         CANARY="false"
         PROJECT=""
+        JEnv=${{github.event.client_payload.environment}}
+        echo "jira button $JEnv"
+
         ENV=${{ inputs.environment || github.event.client_payload.environment || 'Prod' }}
         echo "env from input $ENV"
         
