@@ -94,7 +94,7 @@ const testFeedCommentParams: testFeedtypes[] = [
     {testRailId: '@25405', brand: '@Africa', user: 'testAfricaFeed'}
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
-    test(`${testRailId} ${brand} Main actions for post: Comment a post ${brand}`, {tag:'@feed'},async({page}, testInfo)=>{
+    test(`${testRailId} ${brand} Main actions for post: Comment a post ${brand}`, {tag:['@feed']},async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
@@ -136,7 +136,7 @@ const testShareCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
     test(`${testRailId} ${brand} Main action for post: Share a post ${brand}`, 
-        {tag:['@feed', '@prodSanity']},async({page}, testInfo)=>{
+        {tag:['@feed', '@prodSa']},async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);

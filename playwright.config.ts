@@ -20,7 +20,7 @@ export default defineConfig<TestOptions>({
   },
   reporter: [["list"], ["html"]],
   use: {
-    video: "retain-on-failure",
+    video: 'on',
     screenshot: "only-on-failure",
     trace:'on-first-retry',
   },

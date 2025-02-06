@@ -129,8 +129,9 @@ export class KYC_General{
         await new SignUp(this.page).createCfdUser_All(email, process.env.USER_PASSWORD || "", 'South Africa','+387', '603039647');
         //Click Explore the platform btn
         await new YouAreInNagaMarkets(this.page).checkExploreBtn()
-  
     }
+
+    
 
 
 }

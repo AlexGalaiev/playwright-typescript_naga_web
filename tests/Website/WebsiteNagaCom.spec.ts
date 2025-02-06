@@ -102,8 +102,8 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     }
 
     const fromENtoNMAllert: RedirectTypes[] = [
-        {testRailId: '@25210', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://nagamarkets.com/register'},
-        {testRailId: '@25210', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://nagamarkets.com/register'},
+        {testRailId: '@25210', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://unified.nagamarkets.com/register'},
+        {testRailId: '@25210', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://unified.nagamarkets.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
