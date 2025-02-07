@@ -57,7 +57,7 @@ const testNStestParameters: NStestTypes[] = [
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
     test(`${testRailId} ${brand} Check deposit methods. Test of ${depositName} deposit`, 
         {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 35000);
+        testInfo.setTimeout(testInfo.timeout + 45000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);

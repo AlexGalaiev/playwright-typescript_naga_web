@@ -128,7 +128,7 @@ export class KYC_General{
         await new Captcha(this.page).removeCaptcha()
         await new SignUp(this.page).createCfdUser_All(email, process.env.USER_PASSWORD || "", 'South Africa','+387', '603039647');
         //Click Explore the platform btn
-        await new YouAreInNagaMarkets(this.page).checkExploreBtn()
+        await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
     }
 
     

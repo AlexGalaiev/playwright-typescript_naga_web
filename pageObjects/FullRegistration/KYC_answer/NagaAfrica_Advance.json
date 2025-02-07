@@ -25,7 +25,7 @@
     },
     "annual_income":{
         "text":"What is your annual net income in USD?",
-        "answer":"More than 3,0000,001"
+        "answer":"More than €3,0000,001"
     },
     "net_worth":{
         "text":"Your Net Worth in USD (Assets less Liabilities)?",

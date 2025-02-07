@@ -10,5 +10,11 @@
     },
     "SighUpHeaderTittle":{
         "answer": "Sign Up, it's free!"
+    },
+    "SighUp_RiskDisclaimer_Mena":{
+        "answer":"Key Way Markets LTD provides services to Retail clients, Professional clients, and Market Counterparties. Trading leveraged products is highly speculative, involves significant risk of loss, and is not suitable for all investors. Before trading, you are strongly advised to read and ensure that you understand the relevant Risk Disclosure and warnings here: Risk Disclosure. 23.57% of retail investor accounts generate profits when trading leveraged products with this provider."
+    },
+    "SighUp_RiskDisclaimer_Africa":{
+        "answer":"Risk Warning: Contracts for Difference (‘CFDs’) are leveraged products, incur a high level of risk and can result in the loss of all of your invested capital. As a result, CFDs may not be suitable for all individuals. You should not risk more than you are prepared to lose."
     }
 }

@@ -7,6 +7,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { Captcha } from "../../pageObjects/captcha";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
+import TestRail from "@dlenroc/testrail";
 
 test.describe("Sign up page.", async()=>{
 
@@ -16,16 +17,19 @@ test.describe("Sign up page.", async()=>{
         localization: string
     }
     const testParamsRiskDisclaimer: testRiskDisclaimer[] = [
-        {testRailId: '@24930', brand: '@Capital', localization: '/pageObjects/localization/SignUpPage.json'},
-        {testRailId: '@25142', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighUp.json'}
+        {testRailId: '@24930', brand: '@Capital', localization: 'SighUp_RiskDisclaimer'},
+        {testRailId: '@25142', brand: '@Markets', localization: 'SighUp_RiskDisclaimer'},
+        {testRailId: '@25432', brand: '@Mena', localization: 'SighUp_RiskDisclaimer_Mena'},
+        {testRailId: '@25433', brand: '@Africa', localization: 'SighUp_RiskDisclaimer_Africa'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
         test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI']}, async({page})=>{
-            let localizationText = new getLocalization(localization)
+            let localizationText = new getLocalization('/pageObjects/localization/SignUpPage.json').getLocalizationText(localization)
             let signUp = new SignUp(page);
             await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
-            expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
-    })}
+            expect(await signUp.getRiskWarningText()).toEqual(localizationText)
+        })
+}
 
     type languages = {
         testRailId: string;
@@ -99,40 +103,67 @@ test.describe("Sign up page.", async()=>{
     }
 })
 
-test.describe('Create account per brand', async()=>{
+test.describe('All Brands', async()=>{
+    
+    type loginTypes = {
+        testRailId: string,
+        brand: string,
+        country: string,
 
-    test('@25356 @Markets Create lead user', {tag:['@smoke']}, async({page, NagaMarkets})=>{
+    }
+    const loginParams:loginTypes[] = [
+        {testRailId:'@25356', brand:'@Markets', country:'France'},
+        {testRailId:'@25430', brand:'@Mena', country: 'United Arab Emirates'}
+    ]
+    for(const{testRailId, brand, country}of loginParams){
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke']}, async({page})=>{
         let signUp = new SignUp(page)
-        let localizationText = new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json')
+        let email = new RandomUser().getRandomUserEmail()
         await test.step("Open register page, check number of buttons and remove captcha", async()=>{
-            await signUp.goto(NagaMarkets, 'register')
+            await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
             await new Captcha(page).removeCaptcha()
             expect(await signUp.getNumberObBtns()).toEqual(4)
-            expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
         })
-        await test.step('Create lead user and check Personal Information popup', async()=>{
-            let email = new RandomUser().getRandomUserEmail()
-            await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France', "+387", "603039647")
+        await test.step(`Create lead user - ${email}. country - ${country}. And check visibiity of personal popup`, async()=>{
+            await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', country, "+387", "603039647")
             expect(await signUp.personalInfoPopup()).toBeVisible()
         })
-    })
+    })}
     
-    test('@25357 @Capital Create lead user', {tag:['@smoke']}, async({page, NagaCapital})=>{
+    const LoginParams:loginTypes[] = [
+        {testRailId:'@25357', brand:'@Capital', country:'Bosnia and Herzegovina'}
+    ] 
+    for(const{testRailId, brand, country}of LoginParams){
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@debug']}, async({page})=>{
         let signUp = new SignUp(page)
-        let mainPage = new MainPage(page)
-        let localizationText = new getLocalization('/pageObjects/localization/SignUpPage.json')
+        let email = new RandomUser().getRandomUserEmail()
         await test.step('Open register page, check number of buttons, remove captcha', async()=>{
-            await signUp.goto(NagaCapital, 'register')
+            await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
             await new Captcha(page).removeCaptcha()
             expect(await signUp.getNumberObBtns()).toEqual(4)
-            expect(await signUp.getRiskWarningText()).toEqual(await localizationText.getLocalizationText("SighUp_RiskDisclaimer"))
         })
-        await test.step('Create lead user and check main page', async()=>{
-            let email = new RandomUser().getRandomUserEmail()
-            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', 'Bosnia and Herzegovina')
+        await test.step(`Create lead user - ${email}. country - ${country}.`, async()=>{
+            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', country)
             expect(new YouAreInNagaMarkets(page).checkExploreBtn()).toBeTruthy()
         })
-    })
+    })}
+    const LoginParam:loginTypes[] = [
+        {testRailId:'@25431', brand:'@Africa', country:'South Africa'}
+    ] 
+    for(const{testRailId, brand, country}of LoginParam){
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@debug']}, async({page})=>{
+        let signUp = new SignUp(page)
+        let email = new RandomUser().getRandomUserEmail()
+        await test.step('Open register page, check number of buttons, remove captcha', async()=>{
+            await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
+            await new Captcha(page).removeCaptcha()
+            expect(await signUp.getNumberObBtns()).toEqual(4)
+        })
+        await test.step(`Create lead user - ${email}. country - ${country}.`, async()=>{
+            await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', country, "+387", "603039647")
+            expect(new YouAreInNagaMarkets(page).checkExploreBtn()).toBeTruthy()
+        })
+    })}
 })
 
 
