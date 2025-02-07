@@ -140,7 +140,7 @@ export class SignUp{
         return await this.page.locator("//button[contains(@class, 'button')]").count()
     }
     async personalInfoPopup(){
-        let personalInfoPopup = await this.page.locator('.complete-your-profile-modal__panel')
+        let personalInfoPopup = await this.page.locator("//span[text()='Welcome to NAGA!']")
         await personalInfoPopup.waitFor({state:'visible'})
         return await personalInfoPopup
     }

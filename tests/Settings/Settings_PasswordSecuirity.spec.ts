@@ -63,3 +63,57 @@ test("@23598 NagaMarkets. Change password via settings",{tag:['@settings', '@pro
         expect(await new MainPage(page).checkWidgetStepVisibility('Upgrade to Live')).toBe(true);
     })
 })
+
+test("@25428 NagaMena, Change password via settings",{tag:['@settings', '@prodSanity']}, 
+    async({page, NagaMena}, testInfo)=>{
+    testInfo.setTimeout(testInfo.timeout + 120000);
+    let newLead = new KYC_General(page)
+    let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
+    let email = new RandomUser().getRandomUserEmail()
+    let myAccounts = new MyAccounts(page)
+    let settings = new SettingsPage(page)
+    let signIn = new SignIn(page)
+    await test.step(`Create lead user with ${email}`, async()=>{
+        await newLead.NagaMena_UserLead(email, NagaMena)
+    })
+    await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
+        await myAccounts.openUserMenu();
+        await myAccounts.openMyAccountsMenuItem('Settings')
+        await settings.openSettingsMenuItem('Password & Security')
+        await settings.changePasswordToNew("Test12345!")
+        expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
+        await settings.acceptSuccessPopup()
+    })
+    await test.step('Login to platform with new password', async()=>{
+        await signIn.signInUserToPlatform(email, "Test12345!");
+        expect(await new MainPage(page).checkWidgetStepVisibility('Upgrade to Live')).toBe(true);
+    })
+})
+
+test("@25429 NagaAfrica, Change password via settings",{tag:['@settings', '@prodSanity']}, 
+    async({page, NagaAfrica}, testInfo)=>{
+    testInfo.setTimeout(testInfo.timeout + 120000);
+    let newLead = new KYC_General(page)
+    let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
+    let email = new RandomUser().getRandomUserEmail()
+    let myAccounts = new MyAccounts(page)
+    let settings = new SettingsPage(page)
+    let signIn = new SignIn(page)
+    await test.step(`Create lead user with ${email}`, async()=>{
+        await newLead.NagaAfrica_UserLead(email, NagaAfrica)
+    })
+    await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
+        await myAccounts.openUserMenu();
+        await myAccounts.openMyAccountsMenuItem('Settings')
+        await settings.openSettingsMenuItem('Password & Security')
+        await settings.changePasswordToNew("Test12345!")
+        expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
+        await settings.acceptSuccessPopup()
+    })
+    await test.step('Login to platform with new password', async()=>{
+        await signIn.signInUserToPlatform(email, "Test12345!");
+        expect(await new MainPage(page).checkWidgetStepVisibility('NAGA Start')).toBe(true);
+    })
+})
+
+
