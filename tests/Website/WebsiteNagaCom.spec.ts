@@ -2,8 +2,6 @@ import { expect, BrowserContext, Locator} from "@playwright/test";
 import { NagaCom } from "../../pageObjects/Website/NagaCom";
 import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText";
-import { title } from "process";
-import { VPN } from "../../pageObjects/Website/VPN";
 
 test.describe('Naga.com website. Redirect from website to platform', async()=>{
     
@@ -21,7 +19,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     ]
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@prodSanity', '@website-naga.com']}, async({proxyPage},testInfo)=>{
+            {tag: ['@prodSanity','@website-naga.com']}, async({proxyPage},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 15000)
             let website = new NagaCom(proxyPage)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -235,7 +233,7 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
         {testRailId: '@25229', regulation: 'ae', numberOfLanguages: 2, languages: ['English (Mena)', 'العربية']}
     ]
     for(const{testRailId, regulation, languages,numberOfLanguages}of languageParameters){
-        test(`${testRailId} Check available languages on ${regulation}`,{tag: ['@prodSanity', '@website-naga.com']}, async({page})=>{
+        test(`${testRailId} Check available languages on ${regulation}`,{tag: ['@website-naga.com']}, async({page})=>{
             let website = new NagaCom(page)
             await test.step(`Open naga.com/${regulation} website`, async()=>{
                 await website.open(`https://naga.com/${regulation}`)
@@ -281,7 +279,7 @@ test.describe('Naga.com website. Default languages and translations', async()=>{
         {testRailId: "@25232", tradeType: 'Trade', investType: 'Invest', platform: "https://naga.com/ae", language:'العربية', btn1:'LoginBtn.ar', btn2:"GetStarted.ar", btn3:"Discover more.ar", btn4:"Start trading.ar"},
     ]
     for(const{testRailId,platform,language,btn1,btn2,btn3,btn4,tradeType,investType}of translationParams){
-        test(`${testRailId} Localization of main buttons-${platform}. ${language} language`,{tag: ['@prodSanity', '@website-naga.com']}, async({page}, testInfo)=>{
+        test(`${testRailId} Localization of main buttons-${platform}. ${language} language`,{tag:'@website-naga.com'}, async({page}, testInfo)=>{
             await testInfo.setTimeout(testInfo.timeout + 80000);
             let website = new NagaCom(page)
             let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")

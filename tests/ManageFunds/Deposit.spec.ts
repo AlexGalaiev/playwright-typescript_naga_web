@@ -55,7 +55,7 @@ const testNStestParameters: NStestTypes[] = [
     //{testRailId: '@24077', brand: '@Capital', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
 ]
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
-    test(`${testRailId} ${brand} Check deposit methods. Test of ${depositName} deposit`, 
+    test(`${testRailId} ${brand} Deposit with ${depositName} deposit`, 
         {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 45000);
         let signIn = new SignIn(page);
@@ -134,7 +134,7 @@ test.describe('Naga Markets', async()=>{
         {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}    ]
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} ${brand} Check ${depositName} deposit`, 
-            {tag:['@deposit', '@manageFunds', '@smoke', '@prodSanity']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
