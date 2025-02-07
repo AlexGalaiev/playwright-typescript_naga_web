@@ -12,7 +12,7 @@ import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRe
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
 
 
-test("@23920 NagaCapital. Change password via settings", {tag:['@settings', '@prodSanity']}, 
+test("@23920 NagaCapital. Change password via settings", {tag:['@settings']}, 
     async({page, NagaCapital}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000);
     let signIn = new SignIn(page)
@@ -38,7 +38,7 @@ test("@23920 NagaCapital. Change password via settings", {tag:['@settings', '@pr
         expect(await new MainPage(page).checkWidgetStepVisibility('NAGA Start')).toBe(true);
     })})
 
-test("@23598 NagaMarkets. Change password via settings",{tag:['@settings', '@prodSanity']}, 
+test("@23598 NagaMarkets. Change password via settings",{tag:['@settings']}, 
         async({page, NagaMarkets}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let newLead = new KYC_General(page)
@@ -64,7 +64,7 @@ test("@23598 NagaMarkets. Change password via settings",{tag:['@settings', '@pro
     })
 })
 
-test("@25428 NagaMena, Change password via settings",{tag:['@settings', '@prodSanity']}, 
+test("@25428 NagaMena, Change password via settings",{tag:['@settings']}, 
     async({page, NagaMena}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let newLead = new KYC_General(page)
@@ -90,7 +90,7 @@ test("@25428 NagaMena, Change password via settings",{tag:['@settings', '@prodSa
     })
 })
 
-test("@25429 NagaAfrica, Change password via settings",{tag:['@settings', '@prodSanity']}, 
+test("@25429 NagaAfrica, Change password via settings",{tag:['@settings']}, 
     async({page, NagaAfrica}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let newLead = new KYC_General(page)

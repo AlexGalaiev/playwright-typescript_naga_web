@@ -136,7 +136,7 @@ const testShareCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
     test(`${testRailId} ${brand} Main action for post: Share a post ${brand}`, 
-        {tag:['@feed', '@prodSa']},async({page}, testInfo)=>{
+        {tag:['@feed']},async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
