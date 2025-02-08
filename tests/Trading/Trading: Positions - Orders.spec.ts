@@ -16,7 +16,7 @@ type tradingTypes = {
   investDirection: string,
   currency: string
 }
-const tradingInstrument = "EUR/USD";
+const tradingInstrument = "Solana/USD";
 const realStockInstrument = 'Agilent Technologies'
 let investmentValue;
 let units;

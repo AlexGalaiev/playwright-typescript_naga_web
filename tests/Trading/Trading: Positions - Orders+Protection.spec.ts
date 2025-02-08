@@ -19,7 +19,7 @@ type tradingTypesWithProtection = {
   protection: string,
   tradeField: string
 }
-let tradingInstrument = "EUR/USD";
+let tradingInstrument = "Solana/USD";
 let NagaProtectionValue;
 let SL; 
 let TP;
