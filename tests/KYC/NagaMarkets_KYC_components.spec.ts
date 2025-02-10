@@ -14,7 +14,7 @@ test.beforeEach(`Login by testLeadUser@gmail.com user to NagaMarkets`, async({pa
         await signIn.signInUserToPlatform(testUser, process.env.USER_PASSWORD || '')
     })
 })
-test("@23575 Upgrade account banner",{tag:['@kyc']}, async({page})=>{
+test("@23575 Upgrade account banner",{tag:['@kyc','@KYC_Markets']}, async({page})=>{
     let localization_MainPage = new getLocalization("/pageObjects/localization/NagaMarkets_MainPage.json")
     let localization_KYC_start = new getLocalization("/pageObjects/localization/NagaMarkets_KYC_localization.json")
     let mainPage = new MainPage(page)
@@ -24,7 +24,7 @@ test("@23575 Upgrade account banner",{tag:['@kyc']}, async({page})=>{
         expect(await localization_KYC_start.getLocalizationText("KYC_start_introduction")).toContain(await new startVerification_NagaMarkets(page).getKycIntroductionText())
     })
 })
-test("@23943 KYC categorizations", {tag:['@kyc']},async({page})=>{
+test("@23943 KYC categorizations", {tag:['@kyc','@KYC_Markets']},async({page})=>{
     let mainPage = new MainPage(page)
     let kycStart = new startVerification_NagaMarkets(page)
     let startVerifaication = new startVerification_NagaMarkets(page)
