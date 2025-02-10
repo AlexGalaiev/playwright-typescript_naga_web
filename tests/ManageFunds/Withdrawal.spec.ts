@@ -226,7 +226,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPa
         });
         await test.step(`Make Ecommpay withdrawal`, async()=>{
             await withdrawal.clickMenuPoint('Bank Account')
-            let response = await withdrawal.performManualWithdrawal(20, '**/api/cashier/get-gateway-list-without-details')
+            let response = await withdrawal.performManualWithdrawal(60, '**/api/cashier/get-gateway-list-without-details')
             expect(await withdrawal.getApiPaymentMethodKey(response)).toEqual('Credit Card')
             expect(await withdrawal.getApiStatusCode(response)).toEqual(200)
         })

@@ -5,9 +5,7 @@ import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { Captcha } from "../../pageObjects/captcha";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
-import TestRail from "@dlenroc/testrail";
 
 test.describe("Sign up page.", async()=>{
 
@@ -17,19 +15,31 @@ test.describe("Sign up page.", async()=>{
         localization: string
     }
     const testParamsRiskDisclaimer: testRiskDisclaimer[] = [
-        {testRailId: '@24930', brand: '@Capital', localization: 'SighUp_RiskDisclaimer'},
+        {testRailId: '@24930', brand: '@Capital', localization: 'SighUp_RiskDisclaimer_Capital'},
         {testRailId: '@25142', brand: '@Markets', localization: 'SighUp_RiskDisclaimer'},
-        {testRailId: '@25432', brand: '@Mena', localization: 'SighUp_RiskDisclaimer_Mena'},
         {testRailId: '@25433', brand: '@Africa', localization: 'SighUp_RiskDisclaimer_Africa'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
         test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI']}, async({page})=>{
-            let localizationText = new getLocalization('/pageObjects/localization/SignUpPage.json').getLocalizationText(localization)
+            let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText(localization)
             let signUp = new SignUp(page);
             await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
             expect(await signUp.getRiskWarningText()).toEqual(localizationText)
         })
-}
+    }
+
+    const testParamsRiskDisclaimerMena: testRiskDisclaimer[] = [
+        {testRailId: '@25432', brand: '@Mena', localization: 'SighUp_RiskDisclaimer_Mena'}
+    ]
+    for(const{testRailId, brand, localization} of testParamsRiskDisclaimerMena){
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI']}, async({page})=>{
+            let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText(localization)
+            let signUp = new SignUp(page);
+            await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
+            expect(await signUp.getMenaRiskWarning()).toContain(localizationText)
+        })
+    }
+
 
     type languages = {
         testRailId: string;
@@ -39,6 +49,8 @@ test.describe("Sign up page.", async()=>{
     const platformLanguages :languages[] = [
         {testRailId: '@25241', brand:'@Capital', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
         {testRailId: '@25242', brand:'@Markets', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
+        {testRailId: '@25436', brand:'@Mena', languages: ['English', 'العربية']},
+        {testRailId: '@25437', brand:'@Africa', languages: ['English']},
     ]
     for(const{testRailId, brand, languages}of platformLanguages){
         test(`${testRailId} Check default languages on ${brand}`, {tag:['@UI']}, async({page})=>{
@@ -66,7 +78,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId:'@25244', brand:'@Capital', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '}
     ]
     for(const{testRailId, brand, notCorrectCountry, correctCountry, msgText}of CountryCheckParams){
-        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:'@UI'}, async({page})=>{
+        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:['@UI']}, async({page})=>{
             let sighUp = new SignUp(page)
             await test.step(`Open platform for brand ${brand}`, async()=>{
                 await sighUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
