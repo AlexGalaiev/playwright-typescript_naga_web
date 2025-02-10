@@ -149,4 +149,10 @@ export class Withdrawal{
     async getApiStatusCode(response: any){
         return await response.status()
     }
+    async withdrawalCalculation(currency: string){
+        let value = await this.page.locator("//p[text()='Balance:']//..//span").first().textContent()
+        let amount = value?.replace(currency, '').trim().replace(/,/g, '')
+        let number = Number(amount) * Number(0.2)
+        return number
+    }
 }

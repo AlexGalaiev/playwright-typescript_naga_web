@@ -99,15 +99,14 @@ type NS_WithdrawalTypes = {
     user: string,
     menuPoint: string,
     paymentMethod: string,
-    amount: number,
     responsePaymentMethod: string
 }
 const NS_WithdrawalParams: NS_WithdrawalTypes[] = [
-    {testRailId: '@24098', brand: '@Capital', user: 'testWithdrawal@i.ua', menuPoint: 'eWallet', paymentMethod: 'neteller', amount: 100, responsePaymentMethod:'altneteller'},
-    {testRailId: '@24095', brand: '@Capital', user: 'testWithdrawal2@i.ua', menuPoint: 'eWallet', paymentMethod: 'skrill', amount: 100, responsePaymentMethod:'skrill'},
+    {testRailId: '@24098', brand: '@Capital', user: 'testWithdrawal@i.ua', menuPoint: 'eWallet', paymentMethod: 'neteller', responsePaymentMethod:'altneteller'},
+    {testRailId: '@24095', brand: '@Capital', user: 'testWithdrawal2@i.ua', menuPoint: 'eWallet', paymentMethod: 'skrill', responsePaymentMethod:'skrill'},
 ]
 //difference between NagaMarkets and NagaCapital -> Markets has withdrawal popup, Capital opens iframe
-for(const{testRailId, brand, user, menuPoint, paymentMethod, amount, responsePaymentMethod}of NS_WithdrawalParams){
+for(const{testRailId, brand, user, menuPoint, paymentMethod, responsePaymentMethod}of NS_WithdrawalParams){
     test(`${testRailId} ${brand} EWallet withdrawals. Check ${paymentMethod} withdrawal`, 
         {tag: ["@withdrawal", '@prodSanity', '@manageFunds']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
@@ -123,6 +122,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount, responsePay
         await test.step(`Make ${paymentMethod} withdrawal`, async()=>{
             await withdrawal.clickMenuPoint(menuPoint)
             await withdrawal.clickPaymentMethod(paymentMethod)
+            let amount = await withdrawal.withdrawalCalculation('$')
             let response = await withdrawal.performManualWithdrawal(amount, '**/api/cashier/get-gateway-list-without-details')
             expect(await withdrawal.getApiPaymentMethodKey(response)).toEqual(responsePaymentMethod)
             expect(await withdrawal.getApiStatusCode(response)).toEqual(200)
@@ -136,15 +136,14 @@ type NM_WithdrawalTypes = {
     user: string,
     menuPoint: string,
     paymentMethod: string,
-    amount: number,
     withdrawalPageTitle: string
 }
 const NM_WithdrawalParams: NM_WithdrawalTypes[] = [
-    {testRailId: '@25156', brand: '@Markets', user: 'depositTestMarkets', menuPoint: 'eWallet', paymentMethod: 'sofort', amount: 100, withdrawalPageTitle: 'Neteller'},
-    {testRailId: '@25157', brand: '@Markets', user: 'depositTestMarkets1', menuPoint: 'eWallet', paymentMethod: 'giropay', amount: 100, withdrawalPageTitle: 'Skrill'},
-    {testRailId: '@25158', brand: '@Markets', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', amount: 100, withdrawalPageTitle: 'Perfect Money'}
+    {testRailId: '@25156', brand: '@Markets', user: 'depositTestMarkets', menuPoint: 'eWallet', paymentMethod: 'sofort', withdrawalPageTitle: 'Neteller'},
+    {testRailId: '@25157', brand: '@Markets', user: 'depositTestMarkets1', menuPoint: 'eWallet', paymentMethod: 'giropay', withdrawalPageTitle: 'Skrill'},
+    {testRailId: '@25158', brand: '@Markets', user: 'depositTestMarkets2', menuPoint: 'eWallet', paymentMethod: 'webmoney', withdrawalPageTitle: 'Perfect Money'}
 ]
-for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPageTitle} of NM_WithdrawalParams){
+for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_WithdrawalParams){
     test(`${testRailId} ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
         {tag: ["@withdrawal", '@prodSanity', '@manageFunds']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
@@ -160,12 +159,12 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPa
         await test.step(`Make ${paymentMethod} withdrawal`, async()=>{
             await withdrawal.clickMenuPoint(menuPoint)
             await withdrawal.clickPaymentMethod(paymentMethod)
+            let amount = await withdrawal.withdrawalCalculation('$')
             let response = await withdrawal.performManualWithdrawal(amount, '**/payment/manual_withdraw')
             expect(await withdrawal.getAPIWithdrawalMSG(response)).toEqual('Command has been processed successfully.')
             expect(await withdrawal.getAPIWithdrawalAmount(response)).toEqual(amount)
-        })
-        await test.step(`Check ${withdrawalPageTitle} popup`, async()=>{
             expect(await withdrawal.getNagaMarketsWithdrawalPopupTitle()).toContain(`The withdrawal of $${amount} to your ${menuPoint} is being reviewed.`)
+
         })
     })}
 
@@ -204,14 +203,15 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPa
     type withdrawalEcompayType = {
         testRailId: string,
         brand: string,
-        user: string
+        user: string,
+        currency: string,
     }
     const withdrawalEcompayParams: withdrawalEcompayType[] = [
-        {testRailId: '@25399', brand: '@Mena', user: 'testTrading@naga.com'},
-        {testRailId: '@25427', brand: '@Africa', user: 'testTradingAfrica@naga.com'}
+        {testRailId: '@25399', brand: '@Mena', user: 'testTrading@naga.com', currency:'€'},
+        {testRailId: '@25427', brand: '@Africa', user: 'testTradingAfrica@naga.com', currency:'$'}
     ]
     
-    for(const{testRailId, brand, user}of withdrawalEcompayParams){
+    for(const{testRailId, brand, user, currency}of withdrawalEcompayParams){
         test(`${testRailId} ${brand} Withdrawal. Bank Account. Ecommpay`, 
         {tag:["@withdrawal", '@manageFunds','@prodSanity']},async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
@@ -226,7 +226,8 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, amount,withdrawalPa
         });
         await test.step(`Make Ecommpay withdrawal`, async()=>{
             await withdrawal.clickMenuPoint('Bank Account')
-            let response = await withdrawal.performManualWithdrawal(60, '**/api/cashier/get-gateway-list-without-details')
+            let money = await withdrawal.withdrawalCalculation(currency)
+            let response = await withdrawal.performManualWithdrawal(money, '**/api/cashier/get-gateway-list-without-details')
             expect(await withdrawal.getApiPaymentMethodKey(response)).toEqual('Credit Card')
             expect(await withdrawal.getApiStatusCode(response)).toEqual(200)
         })
