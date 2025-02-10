@@ -29,6 +29,10 @@ on:
           - "messanger"
           - "smoke"
           - "compliance"
+          - "KYC_Capital"
+          - "KYC_Markets"
+          - "KYC_Mena"
+          - "KYC_Africa"
       environment:
         description: 'Choose environment'
         default: "Prod"

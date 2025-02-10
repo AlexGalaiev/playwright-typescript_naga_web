@@ -34,7 +34,7 @@ test.describe('Naga Africa', async()=>{
         })
     })
 
-    test(`@25366 KYC - Advance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke']},async({page})=>{
+    test(`@25366 KYC - Advance score. User email-${email}`,{tag:['@kyc', '@prodSanity','@smoke','@KYC_Africa']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'Advance'
         let KYC_FinalStep = new FinalStep(page);
@@ -49,7 +49,7 @@ test.describe('Naga Africa', async()=>{
         })
     })
 
-    test(`@25401 KYC - PreAdvance score. User email-${email}`,{tag:['@kyc']},async({page})=>{
+    test(`@25401 KYC - PreAdvance score. User email-${email}`,{tag:['@kyc', '@KYC_Africa']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'PreAdvance'
         let KYC_FinalStep = new FinalStep(page);
@@ -63,7 +63,7 @@ test.describe('Naga Africa', async()=>{
             await KYC_FinalStep.clickBtn('Deposit');  
         })
     })
-    test(`@25402 KYC - Intermediate score. User email-${email}`,{tag:['@kyc']},async({page})=>{
+    test(`@25402 KYC - Intermediate score. User email-${email}`,{tag:['@kyc', '@KYC_Africa']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'Intermediate'
         let KYC_FinalStep = new FinalStep(page);
