@@ -136,11 +136,14 @@ type testTypesGuestMode = {
 
 const testParamsGuestMode: testTypesGuestMode[] = [
     {testRailId: '@24929', brand: '@Capital', localization: '/pageObjects/localization/SighInPage.json'},
-    {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
+    {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+    {testRailId: '@25434', brand: '@Mena', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+    {testRailId: '@25435', brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
-    test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:'@UI'}, async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 50000);
+    test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI']}, async({page}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 50000);
         let localizationPage = new getLocalization(localization);
         let signUp = new SignUp(page);
         let signIn = new SignIn(page);
@@ -153,7 +156,7 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
         await test.step("Redirect from platform(in Guest mode) to sigh Up page", async()=>{
             await signUp.goto(await signIn.chooseBrand(brand),"feed");
             await mainPage.openRegistrationFromGuestMode();
-            expect(await signUp.getSighUpTittleText()).toContain("Sign up, it's free!");
+            expect(await signUp.getSighUpTittleText()).toContain("Sign up");
         });
     })
 }

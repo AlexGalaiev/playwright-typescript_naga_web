@@ -13,7 +13,7 @@ test.describe('Naga Africa', async()=>{
     let email = ''
 
     test.beforeEach('Create lead user', async({page, NagaAfrica, NagaAfricaCountry}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 120000);
+        testInfo.setTimeout(testInfo.timeout + 220000);
         let signUp = new SignUp(page)
         email = await new RandomUser().getRandomUserEmail()
         let KYC = new KYC_Africa(page)

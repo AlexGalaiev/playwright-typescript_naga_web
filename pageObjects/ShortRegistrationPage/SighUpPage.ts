@@ -17,6 +17,7 @@ export class SignUp{
     notCorrectCountryMSG: Locator;
     countryCrypto: Locator;
     phoneCode: Locator;
+    riskWarningMena:Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -28,6 +29,7 @@ export class SignUp{
         this.countryCrypto = page.locator("//div[contains(@class, 'dropdown-select__custom__control')]")
         this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
         this.riskWarning = page.locator("//div[contains(@class, 'registration-form__risk-warning')]");
+        this.riskWarningMena = page.locator(".registration-form__terms-and-conditions")
         this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
         this.checkbox_PrivacyPolicy = page.locator("//input[@data-testid='privacy-policy-checkbox']/following-sibling::label");
         this.checkbox_RiskAcceptance = page.locator("//input[@data-testid='data-processing-checkbox']/following-sibling::label");
@@ -147,6 +149,9 @@ export class SignUp{
     async getDocumentHref(documentName: string){
         let document = await this.page.locator(`//a[text()='${documentName}']`).first()
         return await document.getAttribute('href')
+    }
+    async getMenaRiskWarning(){
+        return await this.riskWarningMena.textContent()
     }
 }
 
