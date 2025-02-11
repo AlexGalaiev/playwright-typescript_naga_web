@@ -155,6 +155,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     let changeLimits = new ChangeLimitsPopup(page);
     let changeLimitsSuccessPopup = new ChangeLimitSuccessPopup(page)
     let successfullClosePopup = new ClosePositionSuccessPopup(page)
+    let stopLossValue;
     await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
       await signIn.goto(await signIn.chooseBrand(brand), "login");
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
@@ -163,10 +164,12 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       await mainPage.openHeaderMenuPoint("my-trades");
       await myTrades.closePositionsIfExist();
     });
-    await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
+    await test.step(`Choose ${tradingInstrument} for trading. Open new position page. Enable ${protectionSL} `, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-      //await newPosition.installShortAtCurrentPriceViaMinusBtn()
+      await newPosition.switchToSpecificRateForm()
+      await newPosition.enableProtection(protectionSL)
+      stopLossValue = await newPosition.getStopLossValue(protectionSL)
       await newPosition.submitPosition(); 
     });
     await test.step("Check My-trades", async () => {
@@ -174,25 +177,28 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
       deposit = (await myTrades.getDepositValue(currency));
       units = await myTrades.getUnits();
-    })
-    await test.step(`Open change limit popup and install ${protectionSL}`, async()=>{
+      //SL = await myTrades.getStopLossValue()
+      expect(await myTrades.getStopLossValue()).toContain(stopLossValue)
       await myTrades.openChangeLimitPopup()
-      await changeLimits.switchToSpecificRateForm()
-      await changeLimits.enableStopLoss();
-      SL = await changeLimits.getProtectionValue(protectionSL)
-      await changeLimits.updatePosition()
     })
-    await test.step('Check change limit successfull popup', async()=>{
-      expect(await changeLimitsSuccessPopup.getLotsAmount()).toContain(units)
-      expect(Number(await changeLimitsSuccessPopup.getInvesctmentsAmount(currency))).toBeCloseTo(Number(deposit))
-      expect(await changeLimitsSuccessPopup.getProtectionValue(protectionSL)).toContain(SL)
-      await changeLimitsSuccessPopup.acceptPopup()
-    })
-    await test.step('Check my traders Stop Loss', async()=>{
-      expect(await myTrades.getProtectionValue(tradeFieldSL)).toContain(SL)
-    })
+    // await test.step(`Open change limit popup and install ${protectionSL}`, async()=>{
+    //   await myTrades.openChangeLimitPopup()
+    //   await changeLimits.switchToSpecificRateForm()
+    //   await changeLimits.enableStopLoss();
+    //   SL = await changeLimits.getProtectionValue(protectionSL)
+    //   await changeLimits.updatePosition()
+    // })
+    // await test.step('Check change limit successfull popup', async()=>{
+    //   expect(await changeLimitsSuccessPopup.getLotsAmount()).toContain(units)
+    //   expect(Number(await changeLimitsSuccessPopup.getInvesctmentsAmount(currency))).toBeCloseTo(Number(deposit))
+    //   expect(await changeLimitsSuccessPopup.getProtectionValue(protectionSL)).toContain(SL)
+    //   await changeLimitsSuccessPopup.acceptPopup()
+    // })
+    // await test.step('Check my traders Stop Loss', async()=>{
+    //   expect(await myTrades.getProtectionValue(tradeFieldSL)).toContain(SL)
+    // })
     await test.step(`Enable ${protectionTP} and check result`, async()=>{
-      await myTrades.openChangeLimitPopup();
+      //await myTrades.openChangeLimitPopup();
       await changeLimits.switchToSpecificRateForm()
       await changeLimits.enableStopLoss();
       await changeLimits.enableTakeProgit();
