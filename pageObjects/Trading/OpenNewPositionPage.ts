@@ -114,4 +114,11 @@ export class NewPosition{
         await plusBtn.click()
         await this.page.waitForTimeout(250)
     }
+    async switchToSpecificRateForm(){
+        await this.page.locator("//span[text()='Specific Rate']/preceding-sibling::input").nth(1).click()
+        await this.page.waitForTimeout(250)
+    }
+    async getStopLossValue(nameOfProtection: string){
+        return await this.page.locator(`//span[text()='${nameOfProtection}']//..//..//input[@type='text']`).textContent()
+    }
 }

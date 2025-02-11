@@ -144,5 +144,7 @@ export class MyTrades{
     async getOrderStopLoss(){
         return await this.orderStopLoss.textContent();
     }
-
+    async getStopLossValue(){
+       return await this.page.locator("//div[contains(@class, 'my-trades-table__limits')]//div[@class='sl']").textContent()
+    }
 }
