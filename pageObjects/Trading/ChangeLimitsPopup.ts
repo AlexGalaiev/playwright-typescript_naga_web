@@ -45,9 +45,10 @@ export class ChangeLimitsPopup{
         return await this.updateBtn.click();
     };
     async getProtectionValue(protectionType: string){
-        let mainElement = await this.page.locator(".limit-value__type", {hasText: protectionType})
-        let element = await mainElement.locator("//span[contains(@class, 'limit-value__type__oposite-value')]")
+        let mainElement = await this.page.locator(`//span[text()='${protectionType}']//..//..`)
+        let element = await mainElement.locator("//div[@class='limit-value__input']//input[@type='text']")
         return await element.textContent()
+        ////span[text()='Stop Loss']//..//..//div[@class='limit-value__input']
     }
     async getPopupStopLoss(currency:string){
         let expectedStopLoss = await this.page.locator("//span[@class='change-trade-limits__profit']/following-sibling::span").textContent()
@@ -59,6 +60,10 @@ export class ChangeLimitsPopup{
         await inputField.clear()
         await inputField.pressSequentially(value)
         //await this.page.waitForTimeout(500)
+    }
+    async switchToSpecificRateForm(){
+        await this.page.locator("//span[text()='Specific Rate']/preceding-sibling::input").nth(1).click()
+        await this.page.waitForTimeout(250)
     }
 
 }

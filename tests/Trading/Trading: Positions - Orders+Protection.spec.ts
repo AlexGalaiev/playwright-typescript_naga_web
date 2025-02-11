@@ -177,6 +177,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     })
     await test.step(`Open change limit popup and install ${protectionSL}`, async()=>{
       await myTrades.openChangeLimitPopup()
+      await changeLimits.switchToSpecificRateForm()
       await changeLimits.enableStopLoss();
       SL = await changeLimits.getProtectionValue(protectionSL)
       await changeLimits.updatePosition()
@@ -192,6 +193,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     })
     await test.step(`Enable ${protectionTP} and check result`, async()=>{
       await myTrades.openChangeLimitPopup();
+      await changeLimits.switchToSpecificRateForm()
       await changeLimits.enableStopLoss();
       await changeLimits.enableTakeProgit();
       TP = await changeLimits.getProtectionValue(protectionTP)
