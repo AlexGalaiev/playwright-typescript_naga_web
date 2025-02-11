@@ -30,16 +30,16 @@ export class ChangeLimitsPopup{
     async enableStopLoss(){
         await this.page.waitForSelector(
             "//span[contains(@class, 'change-trade-limits__profit')]//span[contains(@class, 'value-negative')]", {state:'visible'})
-        await this.page.waitForTimeout(1000)
+        await this.page.waitForTimeout(2500)
         await this.stopLossSwitcher.click()
-        await this.page.waitForTimeout(1000);
+        await this.page.waitForTimeout(500);
     };
     async enableTakeProgit(){
         await this.page.waitForSelector(
             "//span[contains(@class, 'change-trade-limits__profit')]//span[contains(@class, 'value-negative')]", {state:'visible'})
-        await this.page.waitForTimeout(1000)
+        await this.page.waitForTimeout(2500)
         await this.takeProfit.click()
-        await this.page.waitForTimeout(1000);
+        await this.page.waitForTimeout(500);
     };
     async updatePosition(){
         return await this.updateBtn.click();
@@ -48,6 +48,17 @@ export class ChangeLimitsPopup{
         let mainElement = await this.page.locator(".limit-value__type", {hasText: protectionType})
         let element = await mainElement.locator("//span[contains(@class, 'limit-value__type__oposite-value')]")
         return await element.textContent()
+    }
+    async getPopupStopLoss(currency:string){
+        let expectedStopLoss = await this.page.locator("//span[@class='change-trade-limits__profit']/following-sibling::span").textContent()
+        let value = expectedStopLoss?.replace(currency, '')
+        return value
+    }
+    async inputProtectionValue(nameOfProtection: string, value: string){
+        let inputField = await this.page.locator(`//span[text()='${nameOfProtection}']//..//..//input[@type='text']`)
+        await inputField.clear()
+        await inputField.pressSequentially(value)
+        //await this.page.waitForTimeout(500)
     }
 
 }
