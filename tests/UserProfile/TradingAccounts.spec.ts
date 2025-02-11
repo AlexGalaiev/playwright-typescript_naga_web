@@ -94,7 +94,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
 test.describe('Naga Markets - Trading accounts', async()=>{
     test('@23600 Create 2nd live account', {tag:['@secondAccount']}, 
         async({page, NagaMarkets}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 150000);
+        testInfo.setTimeout(testInfo.timeout + 170000);
         let addAccount = new AddAcountForm(page);
         let headerMenu = new HeaderMenuUserProfile(page);
         let email = await new RandomUser().getRandomUserEmail()

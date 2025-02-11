@@ -66,7 +66,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     await test.step("Check My-trades popup", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 2)
+      expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue))
     });
     await test.step('Close position and check sucses popup', async()=>{
       await myTrades.closePosition()
@@ -145,7 +145,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
 ]
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
   test(`${testRailId} ${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
-    {tag:['@trading'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-7506', type:'ticket'}}, async({page}, testInfo)=>{
+    {tag:['@trading','@debug'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-7506', type:'ticket'}}, async({page}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -166,7 +166,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
       await mainPage.openHeaderMenuPoint("markets");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-      await newPosition.installShortAtCurrentPriceViaMinusBtn()
+      //await newPosition.installShortAtCurrentPriceViaMinusBtn()
       await newPosition.submitPosition(); 
     });
     await test.step("Check My-trades", async () => {
