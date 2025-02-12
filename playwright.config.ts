@@ -24,9 +24,9 @@ export default defineConfig<TestOptions>({
     screenshot:'only-on-failure',
     trace:'retain-on-failure',
   },
-  globalSetup: process.env.CI && process.env.CRON_RUN !== "schedule"
-    ? require.resolve("./global-setup.ts")
-    : undefined,
+  // globalSetup: process.env.CI && process.env.CRON_RUN !== "schedule"
+  //   ? require.resolve("./global-setup.ts")
+  //   : undefined,
 
   /* Configure projects for major browsers */
   projects: [

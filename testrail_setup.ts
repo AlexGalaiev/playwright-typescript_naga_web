@@ -80,6 +80,7 @@ export class TestRailIntegration{
         try {
           const response = await fetch(`https://naga.testrail.io/index.php?/api/v2/get_tests/${RunId}`, requestOptions);
           const result = await response.json();
+          //console.log('result', result)
           return result;
         } catch (error) {
           console.error(error);
