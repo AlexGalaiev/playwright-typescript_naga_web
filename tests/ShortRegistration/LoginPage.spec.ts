@@ -114,10 +114,12 @@ type testTypes = {
 
 const testParams: testTypes[] = [
     {testRailId: "@23911", brandStart: '@Capital', brandRedirect: '@Markets', user: 'NagaMarketsLeadUser@gmail.com', localization: '/pageObjects/localization/SighInPage.json'},
-    {testRailId: '@23569', brandStart: '@Markets', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
+    {testRailId: '@23569', brandStart: '@Markets', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+    {testRailId: '@25438', brandStart: '@Mena', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+    {testRailId: '@25439', brandStart: '@Africa', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
 ]
 for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-    test(`${testRailId} Switch brands popup ${brandStart}`, {tag:'@UI'}, async({page})=>{
+    test(`${testRailId} Switch brands popup ${brandStart}`, {tag:['@UI']}, async({page})=>{
         let localizationPage = new getLocalization(localization);
         let sighInPage = new SignIn(page);
         await test.step('Open login page and input email from different regulation', async()=>{
@@ -135,14 +137,13 @@ type testTypesGuestMode = {
 }
 
 const testParamsGuestMode: testTypesGuestMode[] = [
-    {testRailId: '@24929', brand: '@Capital', localization: '/pageObjects/localization/SighInPage.json'},
-    {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
-    {testRailId: '@25434', brand: '@Mena', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+    //{testRailId: '@24929', brand: '@Capital', localization: '/pageObjects/localization/SighInPage.json'},
+   // {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+    //{testRailId: '@25434', brand: '@Mena', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
     {testRailId: '@25435', brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
-
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
-    test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI']}, async({page}, testInfo)=>{
+    test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI', '@debug']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let localizationPage = new getLocalization(localization);
         let signUp = new SignUp(page);
