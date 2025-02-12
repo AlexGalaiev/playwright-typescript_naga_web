@@ -137,9 +137,9 @@ type testTypesGuestMode = {
 }
 
 const testParamsGuestMode: testTypesGuestMode[] = [
-    //{testRailId: '@24929', brand: '@Capital', localization: '/pageObjects/localization/SighInPage.json'},
-   // {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
-    //{testRailId: '@25434', brand: '@Mena', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+    {testRailId: '@24929', brand: '@Capital', localization: '/pageObjects/localization/SighInPage.json'},
+    {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+    {testRailId: '@25434', brand: '@Mena', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
     {testRailId: '@25435', brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){

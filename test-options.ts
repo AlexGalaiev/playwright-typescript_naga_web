@@ -97,40 +97,40 @@ export const test = base.extend<TestOptions>({
         let page = await browserContext.newPage()
         await use(page)
         let Tr = await new TestRailIntegration();
-        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
-        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        // await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        // await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserContext.close()
     },
     proxyPage: async({browserProxyContext}, use)=>{
         let page = await browserProxyContext.newPage()
         await use(page)
         let Tr = await new TestRailIntegration();
-        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
-        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        // await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        // await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserProxyContext.close()
     },
     proxyPageUAE: async({browserProxyContextUAE}, use)=>{
         let page = await browserProxyContextUAE.newPage()
         await use(page)
         let Tr = await new TestRailIntegration();
-        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
-        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        // await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        // await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserProxyContextUAE.close()
     },
     proxyPageSA: async({browserProxyContextSA}, use)=>{
         let page = await browserProxyContextSA.newPage()
         await use(page)
         let Tr = await new TestRailIntegration();
-        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
-        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        // await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        // await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserProxyContextSA.close()
     },
     proxyPageUA: async({browserProxyContextUA}, use)=>{
         let page = await browserProxyContextUA.newPage()
         await use(page)
         let Tr = await new TestRailIntegration();
-        await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
-        await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        // await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        // await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserProxyContextUA.close()
     }
 })
