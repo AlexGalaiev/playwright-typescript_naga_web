@@ -179,7 +179,7 @@ for(const{testRailId, brand, localization} of testParamsGuestMode){
         ]
         for(const {testrailId, brand, email} of testParams){
             test(`${testrailId} Login/logout to platform ${brand} by ${email}`, 
-                {tag:['@login', '@prodSanity','@smoke']}, async({page})=>{
+                {tag:['@login', '@prodSanity','@smoke', '@debug']}, async({page})=>{
                 let signIn = new SignIn(page);
                 let pageAfterLogOut = new PageAfterLogout(page)
                 let myAccountsMenu = new MyAccounts(page)
