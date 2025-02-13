@@ -122,13 +122,17 @@ for(const{testRailId, brandStart, localization, user, brandRedirect} of testPara
     test(`${testRailId} Switch brands popup ${brandStart}`, {tag:['@UI']}, async({page})=>{
         let localizationPage = new getLocalization(localization);
         let sighInPage = new SignIn(page);
-        await test.step('Open login page and input email from different regulation', async()=>{
+        await test.step(`Open login page on ${brandStart} and login to platform by ${user}`, async()=>{
             await new SignUp(page).goto(await sighInPage.chooseBrand(brandStart), "login");
             await sighInPage.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        })
+        await test.step(`Check redirection notice on popup and check correct url ${brandRedirect}`, async()=>{
             expect(await localizationPage.getLocalizationText("RedirectionNotice")).toEqual(await sighInPage.getRedirectionNoticeMsg());
             await sighInPage.redirectAccept();
             expect(await page.url()).toContain(await sighInPage.chooseBrand(brandRedirect))
-        })}); }    
+        })
+    })}    
+            
 
 type testTypesGuestMode = {
     testRailId: string,
@@ -143,7 +147,7 @@ const testParamsGuestMode: testTypesGuestMode[] = [
     {testRailId: '@25435', brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
 ] 
 for(const{testRailId, brand, localization} of testParamsGuestMode){
-    test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI', '@debug']}, async({page}, testInfo)=>{
+    test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let localizationPage = new getLocalization(localization);
         let signUp = new SignUp(page);

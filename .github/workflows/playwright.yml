@@ -43,6 +43,14 @@ on:
           - "Prod"
           - "QA-Canary"
           - "Prod-Canary"
+      view:
+        description: 'Choose emulation view'
+        default: "WEB"
+        type: choice
+        required: false
+        options:
+          - "WEB"
+          - "Mobile"
       ticket_id:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string
@@ -120,11 +128,13 @@ jobs:
       
         CANARY="false"
         PROJECT=""
-        JEnv=${{github.event.client_payload.environment}}
-        echo "jira button $JEnv"
+        VIEW=${{ inputs.view || github.event.client_payload.view || 'WEB'}}
+     
+        # JEnv=${{github.event.client_payload.environment}}
+        # echo "jira button $JEnv"
 
-        ENV=${{ inputs.environment || github.event.client_payload.environment || 'Prod' }}
-        echo "env from input $ENV"
+        # ENV=${{ inputs.environment || github.event.client_payload.environment || 'Prod' }}
+        # echo "env from input $ENV"
         
         if [ -z "$TAGS" ]; then
            TAGS=@${{ inputs.tag || github.event.client_payload.tag || 'prodSanity' }}
@@ -135,20 +145,24 @@ jobs:
           CANARY="true"
         fi
 
-        case "$ENV" in
-          "Prod"|"Prod-Canary")
-            PROJECT="production"
-            ;;
-          "QA"|"QA-Canary")
-            PROJECT="qa"
-            ;;
-        esac
+        if [[ "$ENV" == "Prod" || "$ENV" == "Prod-Canary" ]]; then
+          PROJECT="production"
+        elif [[ "$ENV" == "QA" || "$ENV" == "QA-Canary" ]]; then
+          PROJECT="qa"
+        fi
 
+        if [[ "$VIEW" == "Mobile" && "$PROJECT" == "production" ]]; then 
+          PROJECT="mobileProd"
+        elif [[ "$VIEW" == "Mobile" && "$PROJECT" == "qa" ]]; then 
+          PROJECT="mobileQA"
+        fi
+        
         echo "Current ENV: $ENV"
         echo "Current TAGS: $TAGS"
         echo "GitHub Event Name: $GITHUB_EVENT_NAME"
         echo "Canary: $CANARY"
         echo "Project: $PROJECT"
+        echo "View: $VIEW"
         TitleProject="$PROJECT" >> $GITHUB_ENV
               
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
@@ -161,7 +175,8 @@ jobs:
             CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         else
             echo "Running all tests with $TAGS"
-            export ENV="$ENV" 
+            export ENV="$ENV"
+            export CANARY="$CANARY"
             CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         fi   
 

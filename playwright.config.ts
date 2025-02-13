@@ -104,5 +104,45 @@ export default defineConfig<TestOptions>({
         WebsiteNagaCom: "https://naga.com"
       },
     },
+    {
+      name: "mobileQA",
+      use: {
+        ...devices["iPhone 15 Pro Max"],
+        NagaMarkets: "https://sxdevmarkets.com",
+        //NagaMarkets: "https://nagamarkets.com",
+        //NagaCapital: "https://nagacap.com",
+        NagaCapital: "https://sxdevcap.com",
+        NagaMena: "https://sxdevmena.com",
+        //NagaAfrica: "https://nagaafrica.com",
+        NagaAfrica: "https://sxdevafrica.com",
+        NagaX: "https://app.nx-dev.io/eu",
+        //NagaCapital: "https://sxdevcap.com",
+        NSCountry: "Bosnia and Herzegovina",
+        NMCountry: "France",
+        NagaMenaCountry: "United Arab Emirates",
+        NagaAfricaCountry: "South Africa",
+        NagaXCountry: "Bosnia and Herzegovina",
+        WebsiteNagaCom: "https://naga.com"
+      },
+    },
+    {
+      name: "mobileProd",
+      use: {
+        ...devices["iPhone 15 Pro Max"],
+        NagaMarkets: "https://nagamarkets.com",
+        //NagaCapital: "https://sxdevcap.com",
+        NagaCapital: "https://nagacap.com",
+        NagaMena: "https://nagamena.com",
+        NagaAfrica: "https://nagaafrica.com",
+        //NagaAfrica: "https://sxdevafrica.com",
+        NagaX: "https://app.nagax.com/eu",
+        NSCountry: "Bosnia and Herzegovina",
+        NMCountry: "France",
+        NagaMenaCountry: "United Arab Emirates",
+        NagaAfricaCountry: "South Africa",
+        NagaXCountry: "Bosnia and Herzegovina",
+        WebsiteNagaCom: "https://naga.com"
+      },
+    },
   ],
 });
