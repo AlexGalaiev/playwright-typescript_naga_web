@@ -75,7 +75,10 @@ test.describe("Sign up page.", async()=>{
     }
     const CountryCheckParams: countryCheck[] =[
         {testRailId:'@25243', brand:'@Markets', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
-        {testRailId:'@25244', brand:'@Capital', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '}
+        {testRailId:'@25244', brand:'@Capital', notCorrectCountry:'Ukraine', correctCountry:'Bosnia and Herzegovina', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
+        {testRailId:'@25440', brand:'@Mena', notCorrectCountry:'Ukraine', correctCountry:'United Arab Emirates', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
+        {testRailId:'@25441', brand:'@Africa', notCorrectCountry:'Ukraine', correctCountry:'United Arab Emirates', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
+
     ]
     for(const{testRailId, brand, notCorrectCountry, correctCountry, msgText}of CountryCheckParams){
         test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:['@UI']}, async({page})=>{
