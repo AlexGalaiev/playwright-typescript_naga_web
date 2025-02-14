@@ -176,8 +176,9 @@ jobs:
             CRON_RUN=${{github.event_name}} npx playwright test --grep "$TAGS" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         elif [ "$VIEW" = "Mobile" ]; then
             echo "Running Mobile view tests with $TAGS"
-            export ENV="$ENV" 
-            CRON_RUN=${{github.event_name}} npx playwright test --grep "@mobile&&$TAGS" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
+            export ENV="$ENV"
+            echo "--grep "(?=.*@mobile)(?=.*$TAGS)""
+            CRON_RUN=${{github.event_name}} npx playwright test --grep "(?=.*@mobile)(?=.*$TAGS)" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         else
             echo "Running all tests with $TAGS"
             export ENV="$ENV"
@@ -227,7 +228,7 @@ jobs:
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
         status: ${{ steps.set_outcome_title.outcome }}  
-        title: Status- ${{ steps.set_outcome_title.outcome }}; Branch- ${{ github.head_ref || github.ref_name }}; Tags- ${{ inputs.tag || env.TAGS }} Environment-${{ env.TitleProject}} View-${{env.TitleView}}
+        title: Status- ${{ steps.set_outcome_title.outcome }}; Branch- ${{ github.head_ref || github.ref_name }}; Tags- ${{ inputs.tag || env.TAGS }}; Environment- ${{ env.TitleProject}}; View- ${{env.TitleView}};
         message: >-
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
