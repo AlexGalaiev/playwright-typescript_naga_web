@@ -177,7 +177,7 @@ jobs:
         elif [ "$VIEW" = "Mobile" ]; then
             echo "Running Mobile view tests with $TAGS"
             export ENV="$ENV"
-            echo "--grep "(?=.*@mobile)(?=.*$TAGS)""
+            echo "(?=.*@mobile)(?=.*$TAGS)"
             CRON_RUN=${{github.event_name}} npx playwright test --grep "(?=.*@mobile)(?=.*$TAGS)" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         else
             echo "Running all tests with $TAGS"
