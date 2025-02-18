@@ -287,4 +287,10 @@ export class NagaCom{
     async checkInstrumentBar(){
         return await this.page.locator("#prod_types_container").first()
     }
+    /////Mobile view
+    async getMobileLandingPageContainer(){
+        let container = await this.page.locator("//div[contains(@class, 'fullHeightMobile')]").first()
+        await container.waitFor({state:"visible"})
+        return await container
+    }
 }

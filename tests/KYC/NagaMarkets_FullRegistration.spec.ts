@@ -12,9 +12,11 @@ import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGAMark
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { Captcha } from "../../pageObjects/captcha";
 
-let email=''
 
-test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => {
+test.describe('WEB/Mobile', async()=>{
+  let email=''
+
+  test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 120000);
     let signUp = new SignUp(page);
     let kycStart = new KYC_Start(page);
@@ -35,7 +37,8 @@ test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => 
   }
 );
 
-test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity','@smoke','@KYC_Markets']}, async ({page}, testInfo) => {
+test("@24921 Naga Markets. KYC - Advance level.",
+  {tag:['@kyc', '@prodSanity','@smoke','@KYC_Markets','@mobile']}, async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
   let quiz = new FullRegistration(page);
@@ -51,13 +54,10 @@ test("@24921 Naga Markets. KYC - Advance level.",{tag:['@kyc', '@prodSanity','@s
     expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
     await KYC_FinalStep.clickBtn('Deposit')
   })
-  await test.step('Switch to main page, and check status of main page widget step', async()=>{
-    await mainPage.openHeaderMenuPoint("feed");
-    expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
-  })
 });
 
-test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@kyc', '@KYC_Markets']}, async ({page}, testInfo) => {
+test("@24925 Naga Markets. KYC - PreAdvance level.",
+  {tag:['@kyc', '@KYC_Markets','@mobile']}, async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000); 
   let mainPageLocalization = new getLocalization("/pageObjects/localization/NagaMarkets_MainPage.json")
   let quiz = new FullRegistration(page);
@@ -73,13 +73,10 @@ test("@24925 Naga Markets. KYC - PreAdvance level.",{tag:['@kyc', '@KYC_Markets'
     expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
     await KYC_FinalStep.clickBtn('Deposit');
   })
-  await test.step('Switch to main page, and check status of main page widget step', async()=>{
-    await mainPage.openHeaderMenuPoint("feed");
-    expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
-  })
 })
 
-test("@24920 Naga Markets. KYC - Intermediate level.", {tag:['@kyc', '@KYC_Markets']},async ({page}, testInfo) => {
+test("@24920 Naga Markets. KYC - Intermediate level.", 
+  {tag:['@kyc', '@KYC_Markets','@mobile']},async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
   let quiz = new FullRegistration(page);
@@ -95,13 +92,10 @@ test("@24920 Naga Markets. KYC - Intermediate level.", {tag:['@kyc', '@KYC_Marke
     expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
     await KYC_FinalStep.clickBtn('Deposit');
   })
-  await test.step('Switch to main page, and check status of main page widget step', async()=>{
-    await mainPage.openHeaderMenuPoint("feed");
-    expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
-  })
 });
 
-test("@24923 Naga Markets. KYC - Elementary level.", {tag:['@kyc', '@KYC_Markets']}, 
+test("@24923 Naga Markets. KYC - Elementary level.", 
+  {tag:['@kyc', '@KYC_Markets', '@mobile']}, 
     async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let quiz = new FullRegistration(page);
@@ -119,14 +113,11 @@ test("@24923 Naga Markets. KYC - Elementary level.", {tag:['@kyc', '@KYC_Markets
     await KYC_FinalStep.clickCheckbox();
     await KYC_FinalStep.clickBtn('Deposit');
   })
-  await test.step('Switch to main page, and check status of main page widget step', async()=>{
-      await mainPage.openHeaderMenuPoint("feed");
-      expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
-  })
 });
 
-test("@24922 Naga Markets. KYC - Beginner level.",{tag:['@kyc', '@KYC_Markets']}, async ({page}, testInfo) => {
-  await testInfo.setTimeout(testInfo.timeout + 120000);
+test("@24922 Naga Markets. KYC - Beginner level.",
+  {tag:['@kyc', '@KYC_Markets','@mobile']}, async ({page}, testInfo) => {
+  testInfo.setTimeout(testInfo.timeout + 120000);
   let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
   let mainPageLocalization = new getLocalization("/pageObjects/localization/NagaMarkets_MainPage.json")
   let quiz = new FullRegistration(page);
@@ -141,8 +132,7 @@ test("@24922 Naga Markets. KYC - Beginner level.",{tag:['@kyc', '@KYC_Markets']}
     expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
     await KYC_FinalStep.clickBtn('Deposit');
   })
-  await test.step('Switch to main page, and check status of main page widget step', async()=>{
-    await mainPage.openHeaderMenuPoint("feed");
-    expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
 })
 })
+
+

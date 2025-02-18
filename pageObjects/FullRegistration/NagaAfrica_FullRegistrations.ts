@@ -126,8 +126,9 @@ export class KYC_Africa{
         await this.inputAdress()
     }
     async waitNagaProgress(){
+        //await this.page.waitForTimeout(1000)
         await this.page.waitForSelector('.level-intro-modal__title', {state:'visible'})
-        await this.page.locator("//button[text()='Continue'] ").click()
+        await this.page.locator("//button[text()='Continue']").click()
         await this.page.waitForTimeout(1000)
     }
     async fillKYC(level:string){

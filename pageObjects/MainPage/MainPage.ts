@@ -188,6 +188,11 @@ export class MainPage{
         await this.page.locator(`//div[text()='${nameOfTheStep}']//..//..`).first().click()
         await this.page.waitForTimeout(1000)
     }
+    async clickOnMobileWidget(nameOfTheStep:string){
+        let menuPoint = await this.page.locator("//div[@id='news_feed_left']")
+        let banner = await menuPoint.locator("//div[@class='complete-profile-widget--mobile__title']", {hasText:`${nameOfTheStep}`})
+        await banner.click()
+    }
     async checkWidgetStepVisibility(nameOfTheStep: string){
         await this.page.waitForTimeout(3000)
         let step = await this.page.locator(`//div[text()='${nameOfTheStep}']`)
@@ -198,5 +203,11 @@ export class MainPage{
     async getKYCbannerText(){
         let bannerText = await this.page.locator(`//div[contains(@class, 'complete-profile-widget__title--finished')]//..//div[@class='complete-profile-widget__description']`)
         return await bannerText.textContent()
+    }
+    async removeNeedHelpBaloon(){
+        await this.page.waitForTimeout(500)
+        let framme = await this.page.frameLocator('[title="Close message"]')
+        await framme.locator("//button[@aria-label='Close message from company']").click()
+        await this.page.waitForTimeout(500)
     }
 }
