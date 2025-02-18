@@ -74,7 +74,7 @@ jobs:
     steps:
     - name: Output Received values
       run: |
-        echo "${{ inputs.ticket_id }} | ${{ inputs.tag }} | ${{ github.event.client_payload.environment }} | ${{ github.event.client_payload.view }}"
+        echo "${{ inputs.ticket_id }} | ${{ inputs.tag }} | ${{ inputs.environment }} | ${{ inputs.view }}"
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
