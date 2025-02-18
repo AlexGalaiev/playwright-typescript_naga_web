@@ -21,7 +21,8 @@ const testNoFundsParaketers: testNoFunds[] = [
    {testRailId: '@25420', brand: '@Africa', user: 'testTradingAfrica@naga.com', tradingInstrument: "Bitcoin/EUR"}
 ]
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
-    test(`${testRailId} Open position without funds ${brand}`, {tag:['@trading']}, async({page}, testInfo)=>{
+    test(`${testRailId} Open position without funds ${brand}`, 
+      {tag:['@trading']}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 60000);  
       let signIn = new SignIn(page);
         let mainPage = new MainPage(page)

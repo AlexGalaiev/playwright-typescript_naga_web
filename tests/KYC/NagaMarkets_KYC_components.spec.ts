@@ -14,7 +14,7 @@ test.beforeEach(`Login by testLeadUser@gmail.com user to NagaMarkets`, async({pa
         await signIn.signInUserToPlatform(testUser, process.env.USER_PASSWORD || '')
     })
 })
-test("@23575 Upgrade account banner",{tag:['@kyc','@KYC_Markets']}, async({page})=>{
+test("@23575 Upgrade account banner",{tag:['@kyc','@KYC_Markets','@mobile', '@debug']}, async({page})=>{
     let localization_MainPage = new getLocalization("/pageObjects/localization/NagaMarkets_MainPage.json")
     let localization_KYC_start = new getLocalization("/pageObjects/localization/NagaMarkets_KYC_localization.json")
     let mainPage = new MainPage(page)

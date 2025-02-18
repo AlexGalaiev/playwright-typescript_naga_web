@@ -20,6 +20,4 @@ export class StartKYCPopup{
         await this.page.locator("//button[text()='Start Setup']").click()
         await this.page.waitForTimeout(500)
     }
-
-    
 }

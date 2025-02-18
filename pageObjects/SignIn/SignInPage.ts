@@ -72,18 +72,18 @@ export class SignIn{
         } else {}
     }
     async chooseBrandCountry(tag: string){
-        let project = await test.info().project;
-            if(tag === '@Capital'){
-                return await project['use']['NSCountry']
-            } else if (tag === '@Markets'){
-                return await project['use']['NMCountry']
-            } else if (tag === '@Mena'){
-                return await project['use']['NagaMenaCountry']
-            } else if (tag === '@Africa'){
-                return await project['use']['NagaAfricaCountry']
-            } else if (tag === '@NX'){
-                return await project['use']['NagaXCountry']
-            } else {}
+    let project = await test.info().project;
+        if(tag === '@Capital'){
+            return await project['use']['NSCountry']
+        } else if (tag === '@Markets'){
+            return await project['use']['NMCountry']
+        } else if (tag === '@Mena'){
+            return await project['use']['NagaMenaCountry']
+        } else if (tag === '@Africa'){
+            return await project['use']['NagaAfricaCountry']
+        } else if (tag === '@NX'){
+            return await project['use']['NagaXCountry']
+        } else {}
     }
     async openLanguages(){
         await this.languageSwitcher.click();
@@ -100,5 +100,9 @@ export class SignIn{
     async clickLogo(){
         await this.page.locator(".naga-logo"). click()
         await this.page.waitForTimeout(500)
+    }
+    async getLoginMainPageText(){
+        await this.page.waitForSelector(".login-form__wrapper", {state:'visible'})
+        return await this.page.locator(".login-form__headline").textContent()
     }
 }

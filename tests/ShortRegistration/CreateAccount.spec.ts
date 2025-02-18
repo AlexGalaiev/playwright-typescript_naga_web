@@ -7,7 +7,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { Captcha } from "../../pageObjects/captcha";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
-test.describe("Sign up page.", async()=>{
+test.describe("WEB/Mobile. All brands", async()=>{
 
     type testRiskDisclaimer = {
         testRailId: string,
@@ -20,7 +20,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId: '@25433', brand: '@Africa', localization: 'SighUp_RiskDisclaimer_Africa'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI']}, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI', '@mobile']}, async({page})=>{
             let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText(localization)
             let signUp = new SignUp(page);
             await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
@@ -32,7 +32,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId: '@25432', brand: '@Mena', localization: 'SighUp_RiskDisclaimer_Mena'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimerMena){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI']}, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI','@mobile']}, async({page})=>{
             let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText(localization)
             let signUp = new SignUp(page);
             await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
@@ -53,7 +53,7 @@ test.describe("Sign up page.", async()=>{
         {testRailId: '@25437', brand:'@Africa', languages: ['English']},
     ]
     for(const{testRailId, brand, languages}of platformLanguages){
-        test(`${testRailId} Check default languages on ${brand}`, {tag:['@UI']}, async({page})=>{
+        test(`${testRailId} Check default languages on ${brand}`, {tag:['@UI', '@mobile']}, async({page})=>{
             let signIn = new SignIn(page)
             await test.step(`Open platform of ${brand} brand`, async()=>{
                 await signIn.goto(await signIn.chooseBrand(brand), 'login')
@@ -81,7 +81,7 @@ test.describe("Sign up page.", async()=>{
 
     ]
     for(const{testRailId, brand, notCorrectCountry, correctCountry, msgText}of CountryCheckParams){
-        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:['@UI']}, async({page})=>{
+        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:['@UI', '@mobile']}, async({page})=>{
             let sighUp = new SignUp(page)
             await test.step(`Open platform for brand ${brand}`, async()=>{
                 await sighUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
@@ -103,9 +103,11 @@ test.describe("Sign up page.", async()=>{
     const legalDocumentsParams: legalDocuments[] = [
         {testRailId:'@25246', brand:'@Capital', documents: new Map<string, string>([['Privacy Policy', "https://nagacap.com/documents/privacy_policy"],['legal documents',"https://nagacap.com/legal-documentation"],['Client Agreement',"https://nagacap.com/legal-documentation"]])},
         {testRailId:'@25247', brand:'@Markets', documents: new Map<string, string>([['Privacy Policy', "https://nagamarkets.com/documents/privacy_policy"],['legal documents',"https://nagamarkets.com/legal-documentation"]])},
+        {testRailId:'@25442', brand:'@Mena', documents: new Map<string, string>([['Privacy Policy', "https://nagamena.com/documents/privacy_policy"],['legal documents',"https://nagamena.com/legal-documentation"]])},
+        {testRailId:'@25443', brand:'@Africa', documents: new Map<string, string>([['Privacy Policy', "https://nagaafrica.com/documents/privacy_policy"]])},
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
-        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@UI', '@compliance']},async({page}, testInfo)=>{
+        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@UI','@mobile', '@compliance']},async({page}, testInfo)=>{
             let signUp = new SignUp(page)
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open sign up page on brand ${brand}`, async()=>{
@@ -118,7 +120,7 @@ test.describe("Sign up page.", async()=>{
     }
 })
 
-test.describe('All Brands', async()=>{
+test.describe('WEB/Mobile. All Brands', async()=>{
     
     type loginTypes = {
         testRailId: string,
@@ -131,7 +133,7 @@ test.describe('All Brands', async()=>{
         {testRailId:'@25430', brand:'@Mena', country: 'United Arab Emirates'}
     ]
     for(const{testRailId, brand, country}of loginParams){
-    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke','@prodSanity']}, async({page})=>{
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke','@prodSanity','@mobile']}, async({page})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step("Open register page, check number of buttons and remove captcha", async()=>{
@@ -149,7 +151,7 @@ test.describe('All Brands', async()=>{
         {testRailId:'@25357', brand:'@Capital', country:'Bosnia and Herzegovina'}
     ] 
     for(const{testRailId, brand, country}of LoginParams){
-    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity']}, async({page})=>{
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity','@mobile']}, async({page})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step('Open register page, check number of buttons, remove captcha', async()=>{
@@ -166,7 +168,7 @@ test.describe('All Brands', async()=>{
         {testRailId:'@25431', brand:'@Africa', country:'South Africa'}
     ] 
     for(const{testRailId, brand, country}of LoginParam){
-    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity']}, async({page})=>{
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity', '@mobile']}, async({page})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step('Open register page, check number of buttons, remove captcha', async()=>{

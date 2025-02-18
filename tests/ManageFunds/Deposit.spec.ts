@@ -4,20 +4,13 @@ import { Deposit } from "../../pageObjects/ManageFunds/Deposit";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
 
-type NStestTypes = {
-    testRailId: string,
-    brand: string,
-    user: string,
-    depositName: string,
-    responseMethodKey: string
-}
-
-type depositNumber = {
-    testRaildId: string,
-    numberOfDepositMethods: number,
-    brand: string,
-    user: string
-}
+test.describe('WEB/Mobile. All brands', async()=>{
+    type depositNumber = {
+        testRaildId: string,
+        numberOfDepositMethods: number,
+        brand: string,
+        user: string
+    }
     const testDepositNumber: depositNumber[] = [
         {testRaildId: '@25351', numberOfDepositMethods:6, brand: '@Capital', user: 'testTrading2'},
         {testRaildId: '@25391', numberOfDepositMethods:8, brand: '@Markets', user: 'depositTestMarkets'},
@@ -25,7 +18,7 @@ type depositNumber = {
         {testRaildId: '@25422', numberOfDepositMethods:5, brand: '@Africa', user: 'depositNagaAfrica'},
     ]
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
-        test(`${testRaildId} ${brand} Check number of exist deposit methods`, 
+        test(`${testRaildId} WEB ${brand} Check number of exist deposit methods`, 
             {tag:['@deposit', '@manageFunds']}, async({page})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
@@ -38,6 +31,40 @@ type depositNumber = {
                 expect(await deposit.getNumberOfDepositMethods()).toEqual(numberOfDepositMethods)
             })})
     }
+    for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
+        test(`${testRaildId} Mobile ${brand} Check number of exist deposit methods`, 
+            {tag:['@deposit', '@manageFunds', '@mobile', '@debug']}, async({page})=>{
+            let signIn = new SignIn(page);
+            let mainPage = new MainPage(page);
+            let deposit = new Deposit(page);
+            await test.step(`Login by ${user} to ${brand} platform and check number of exist methods`, async()=>{
+                await signIn.goto(await signIn.chooseBrand(brand),'login');
+                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+                
+                await mainPage.openBackMenuPoint('Manage Funds');
+                await deposit.checkActiveDepositTab('deposit')
+                expect(await deposit.getNumberOfDepositMethods()).toEqual(numberOfDepositMethods)
+            })})
+    }
+})
+
+
+
+
+
+
+
+
+
+type NStestTypes = {
+    testRailId: string,
+    brand: string,
+    user: string,
+    depositName: string,
+    responseMethodKey: string
+}
+
+
     
 
 const testNStestParameters: NStestTypes[] = [
@@ -56,7 +83,7 @@ const testNStestParameters: NStestTypes[] = [
 ]
 for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
     test(`${testRailId} ${brand} Deposit with ${depositName} deposit`, 
-        {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
+        {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke', '@mobile']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 45000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
