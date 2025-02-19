@@ -198,7 +198,7 @@ test.describe('Web/Mobile View. All brands',async()=>{
 
     for(const {testrailId, brand, email} of testParams){
         test(`${testrailId} Mobile view. Login/logout to platform ${brand} by ${email}`, 
-            {tag:['@login', '@prodSanity','@smoke', '@mobile']}, async({page})=>{
+            {tag:['@login', '@mobile']}, async({page})=>{
             let signIn = new SignIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)

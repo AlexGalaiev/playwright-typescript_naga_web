@@ -110,7 +110,7 @@ test.describe('Mobile. Naga Africa', async()=>{
     })
 
     test(`@25366 Mobile view. KYC - Advance score. User email-${email}`,
-        {tag:['@kyc', '@prodSanity','@smoke','@KYC_Africa','@mobile']},async({page})=>{
+        {tag:['@KYC_Africa','@mobile']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'Advance'
         let KYC_FinalStep = new FinalStep(page);
@@ -125,7 +125,7 @@ test.describe('Mobile. Naga Africa', async()=>{
         })
     })
     test(`@25401 Mobile view. KYC - PreAdvance score. User email-${email}`,
-        {tag:['@kyc', '@KYC_Africa', '@mobile']},async({page})=>{
+        {tag:['@KYC_Africa', '@mobile']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'PreAdvance'
         let KYC_FinalStep = new FinalStep(page);
@@ -140,7 +140,7 @@ test.describe('Mobile. Naga Africa', async()=>{
         })
     })
     test(`@25402 Mobile view. KYC - Intermediate score. User email-${email}`,
-        {tag:['@kyc', '@KYC_Africa', '@mobile']},async({page})=>{
+        {tag:['@KYC_Africa', '@mobile']},async({page})=>{
         let KYC = new KYC_Africa(page)
         let KYC_scorring = 'Intermediate'
         let KYC_FinalStep = new FinalStep(page);

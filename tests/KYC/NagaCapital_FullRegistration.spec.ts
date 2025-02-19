@@ -46,7 +46,7 @@ test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@
     })
 })
 test("@24917 Mobile view. NAGA Capital. KYC Advance",
-    {tag:['@kyc', '@prodSanity','@smoke', '@KYC_Capital', '@mobile']}, 
+    {tag:['@KYC_Capital', '@mobile']}, 
     async({ page, NagaCapital, NSCountry }, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 80000);
     let signUp = new SignUp(page);
@@ -72,8 +72,6 @@ test("@24917 Mobile view. NAGA Capital. KYC Advance",
         await myAccountsMenu.openUserMenu();
         await myAccountsMenu.openMyAccountsMenuItem('Profile Status')
         await mainPage.clickOnWidgepPoint('NAGA Progress')
-        // expect(await mainPage.getStatusOfWidgetStep('NAGA Start')).toContain('--finished')
-        // expect(await mainPage.getStatusOfWidgetStep('Deposit')).toContain('--active')
     })
     await test.step('Open step:  Naga progres. User clicks on Finished btn(KYC is prefield)', async()=>{
         //await mainPage.clickOnWidgepPoint('NAGA Progress')

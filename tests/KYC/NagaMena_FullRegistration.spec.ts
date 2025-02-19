@@ -171,7 +171,7 @@ test.describe('Mobile', async()=>{
   })
 
   test('@25253 KYC Mena - Advance Score', 
-    {tag:['@kyc', '@prodSanity','@smoke','@KYC_Mena', '@mobile']}, async({page})=>{
+    {tag:['@KYC_Mena', '@mobile']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Advance'
     let KYC_FinalStep = new FinalStep(page);
@@ -186,7 +186,7 @@ test.describe('Mobile', async()=>{
     })
   })
 
-  test('@25361 KYC Mena - PreAdvance Score', {tag:['@kyc', '@KYC_Mena','@mobile']}, async({page})=>{
+  test('@25361 KYC Mena - PreAdvance Score', {tag:['@KYC_Mena','@mobile']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'PreAdvance'
     let KYC_FinalStep = new FinalStep(page);
@@ -200,7 +200,7 @@ test.describe('Mobile', async()=>{
       await KYC_FinalStep.clickBtn('Deposit');  
     })
   })
-  test('@25362 KYC Mena - Intermediate Score', {tag:['@kyc', '@KYC_Mena','@mobile']}, async({page})=>{
+  test('@25362 KYC Mena - Intermediate Score', {tag:['@KYC_Mena','@mobile']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Intermediate'
     let KYC_FinalStep = new FinalStep(page);
@@ -215,7 +215,7 @@ test.describe('Mobile', async()=>{
     })
   })
 
-  test('@25363 KYC Mena - Elementary Score', {tag:['@kyc','@KYC_Mena','@mobile']}, async({page})=>{
+  test('@25363 KYC Mena - Elementary Score', {tag:['@KYC_Mena','@mobile']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Elementary'
     let KYC_FinalStep = new FinalStep(page);
@@ -229,7 +229,7 @@ test.describe('Mobile', async()=>{
       await KYC_FinalStep.clickBtn('Deposit');  
     })
   })
-  test('@25364 KYC Mena - Beginner Score', {tag:['@kyc','@KYC_Mena','@mobile']}, async({page})=>{
+  test('@25364 KYC Mena - Beginner Score', {tag:['@KYC_Mena','@mobile']}, async({page})=>{
     let kyc = new MenaFullRegistration(page)
     let KYC_scorring = 'Beginner'
     let KYC_FinalStep = new FinalStep(page);

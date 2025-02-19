@@ -193,6 +193,11 @@ export class MainPage{
         let banner = await menuPoint.locator("//div[@class='complete-profile-widget--mobile__title']", {hasText:`${nameOfTheStep}`})
         await banner.click()
     }
+    async getMobileStepDescription(){
+        let menuPoint = await this.page.locator("//div[@id='news_feed_left']")
+        let banner = await menuPoint.locator(".complete-profile-widget--mobile__description")
+        return await banner.textContent()
+    }
     async checkWidgetStepVisibility(nameOfTheStep: string){
         await this.page.waitForTimeout(3000)
         let step = await this.page.locator(`//div[text()='${nameOfTheStep}']`)
@@ -209,5 +214,13 @@ export class MainPage{
         let framme = await this.page.frameLocator('[title="Close message"]')
         await framme.locator("//button[@aria-label='Close message from company']").click()
         await this.page.waitForTimeout(500)
+    }
+    async openMobileMenuPoint(nameOfStep:string){
+        let menuPoint = await this.page.locator(".header__menu__nav-item", {hasText:nameOfStep})
+        await menuPoint.click()
+    }
+    async openMobileBackMenuPoint(stepName: string){
+        let menuPoint = await this.page.locator(`[data-testid='navigation-mm_${stepName}']`)
+        await menuPoint.click()
     }
 }
