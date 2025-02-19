@@ -130,11 +130,11 @@ jobs:
         PROJECT=""
         VIEW=${{ inputs.view || github.event.client_payload.view || 'WEB'}}
      
-        JEnv=${{github.event.client_payload.environment}}
-        echo "jira button $JEnv"
+        # JEnv=${{github.event.client_payload.environment}}
+        # echo "jira button $JEnv"
 
         ENV=${{ inputs.environment || github.event.client_payload.environment || 'Prod' }}
-        echo "env from input $ENV"
+
         
         if [ -z "$TAGS" ]; then
            TAGS=@${{ inputs.tag || github.event.client_payload.tag || 'prodSanity' }}
@@ -177,7 +177,6 @@ jobs:
         elif [ "$VIEW" = "Mobile" ]; then
             echo "Running Mobile view tests with $TAGS"
             export ENV="$ENV"
-            echo "(?=.*@mobile)(?=.*$TAGS)"
             CRON_RUN=${{github.event_name}} npx playwright test --grep "(?=.*@mobile)(?=.*$TAGS)" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         else
             echo "Running all tests with $TAGS"

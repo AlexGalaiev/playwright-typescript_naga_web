@@ -27,6 +27,20 @@ export class Deposit{
         ]) 
         return response
     }
+    async performMobileDepositWithoutAmount(depositName:string, depositUrl:string){
+        await this.page.waitForTimeout(1500)
+        //choose deposit method 
+        let depositMethod = await this.page.locator("//div[contains(@class, 'fund-method-item-default')]")
+        .filter({has: await this.page.locator(`//img[contains(@src, '${depositName}')]`)})
+        //await depositMethod.scrollIntoViewIfNeeded()
+        //click on deposit method and get response
+        await depositMethod.click()
+        const [response] = await Promise.all([
+            this.page.waitForResponse(depositUrl),
+            this.page.locator("//button[text()='Continue']").click()
+        ]) 
+        return response
+    }
     async performDepositWithAmount(depositName:string, value:string, depositUrl:string){
         await this.page.waitForTimeout(1500)
         //choose deposit method 
@@ -34,6 +48,28 @@ export class Deposit{
         .filter({has: await this.page.locator(`//img[contains(@src, '${depositName}')]`)})
         await depositMethod.scrollIntoViewIfNeeded()
         await depositMethod.click()
+        //popup with input value
+        await this.depositInputValuePoopup.waitFor({state:"visible"});
+        await this.inputFieldDepositPopup.clear()
+        await this.page.waitForTimeout(1000)
+        await this.inputFieldDepositPopup.pressSequentially(value);
+        await this.page.waitForTimeout(1500)
+        // Wait for response after click sub,it btn
+        const [response] = await Promise.all([
+            this.page.waitForResponse(depositUrl),
+            this.submitDeposit.click()
+        ]) 
+        return response
+    }
+    async performMobileDepositWithAmount(depositName:string, value:string, depositUrl:string){
+        await this.page.waitForTimeout(1500)
+        //choose deposit method 
+        let depositMethod = await this.page.locator("//div[contains(@class, 'fund-method-item-default')]")
+        .filter({has: await this.page.locator(`//img[contains(@src, '${depositName}')]`)})
+        await depositMethod.scrollIntoViewIfNeeded()
+        await depositMethod.click()
+        await this.page.waitForTimeout(750)
+        await this.page.locator("//button[text()='Continue']").click()
         //popup with input value
         await this.depositInputValuePoopup.waitFor({state:"visible"});
         await this.inputFieldDepositPopup.clear()
@@ -66,8 +102,19 @@ export class Deposit{
         await this.page.waitForTimeout(500)
         return await this.page.locator("//div[contains(@class, 'funding-method-table-body__info')]").count()
     }
+    async getNumberOfMobileDeposits(){
+        await this.page.waitForSelector("//div[contains(@class, 'fund-method-item-default')][1]", {state:'visible'})
+        await this.page.waitForTimeout(1000)
+        return await this.page.locator("//div[contains(@class, 'fund-method-item-default')]").count()
+    }
     async checkActiveDepositTab(tabName: string){
         let tab = await this.page.locator(`//a[contains(@id, 'mm_${tabName}')]`)
+        let tabStatus = await tab.getAttribute('class')
+        if(!tabStatus?.includes('active'))
+            await tab.click()
+    }
+    async checkActiveMobileManageTab(nameOfTheTab:string){
+        let tab = await this.page.locator(`//a[contains(@data-location, '/manage-money/${nameOfTheTab}')]//..`).first()
         let tabStatus = await tab.getAttribute('class')
         if(!tabStatus?.includes('active'))
             await tab.click()
