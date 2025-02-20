@@ -155,4 +155,19 @@ export class Withdrawal{
         let number = Number(amount) * Number(0.2)
         return number
     }
+    async chooseMobileWithdrawalMethod(withdrawalMethod:string){
+        let menu = await this.page.locator("//button[@id='withdrawal-navigation']")
+        await menu.click()
+        let menuPoint = await this.page.locator(`//button[@id='withdrawal-navigation']/following-sibling::ul//span[text()='${withdrawalMethod}']`)
+        await menuPoint.click()
+        await this.page.waitForTimeout(500)
+    }
+    async chooseMobileEWalletMethod(methodName:string){
+        await this.page.waitForTimeout(500)
+        await this.page.locator(".ewallet-selection__input").click()
+        await this.page.waitForTimeout(500)
+        await this.page.click(`//img[contains(@src, '${methodName}')]`)
+        await this.page.waitForTimeout(1500)
+
+    }
 }
