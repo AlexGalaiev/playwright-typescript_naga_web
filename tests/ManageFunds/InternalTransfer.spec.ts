@@ -18,7 +18,7 @@ const testTransferParams: testTransfer[] = [
 ]
 for(const{testRailId, brand, user} of testTransferParams){
     test(`${testRailId} Internal transfer funds ${brand}`, 
-        {tag:['@manageFunds', '@prodSanity']}, async({page}, testInfo)=>{
+        {tag:['@manageFunds', '@prodSanity', "@internalTransfer"]}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -38,7 +38,7 @@ for(const{testRailId, brand, user} of testTransferParams){
 
 for(const{testRailId, brand, user} of testTransferParams){
     test(`${testRailId} Mobile Internal transfer funds ${brand}`, 
-        {tag:['@manageFunds','@mobile']}, async({page}, testInfo)=>{
+        {tag:['@internalTransfer','@mobile']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);

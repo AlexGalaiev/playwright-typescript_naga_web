@@ -33,7 +33,7 @@ test.describe('WEB/Mobile. All brands', async()=>{
     }
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`${testRaildId} Mobile ${brand} Check number of exist deposit methods`, 
-            {tag:['@deposit', '@manageFunds', '@mobile']}, async({page})=>{
+            {tag:['@deposit', '@mobile']}, async({page})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
@@ -93,7 +93,7 @@ test.describe('WEB/Mobile. All brands', async()=>{
 
     for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
         test(`${testRailId} Mobile  ${brand} Deposit with ${depositName} deposit`, 
-            {tag:['@deposit', '@manageFunds', '@mobile']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@mobile']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 45000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
@@ -122,7 +122,7 @@ test.describe('WEB/Mobile Naga Capital', async()=>{
             await signIn.signInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
         });
     })
-    test("@24068 Mobile Deposit via Crypto", {tag:['@deposit', '@manageFunds', '@mobile']}, async({page})=>{
+    test("@24068 Mobile Deposit via Crypto", {tag:['@deposit', '@mobile']}, async({page})=>{
         let deposit = new Deposit(page);
         await new MainPage(page).openMobileMenuPoint('Menu');
         await new MainPage(page).openMobileBackMenuPoint('manage-funds')
@@ -148,7 +148,7 @@ test.describe('WEB/Mobile Naga Capital', async()=>{
             expect(await deposit.getSuccessStatus(response)).toEqual(true)
             expect(await deposit.getInfoCode(response)).toEqual(200)
         })})
-    test('@25352 Manual Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds', '@mobile']}, async({page})=>{
+    test('@25352 Mobile Deposit via Wire Transfer',{tag:['@deposit', '@mobile']}, async({page})=>{
         let deposit = new Deposit(page)
         await new MainPage(page).openMobileMenuPoint('Menu');
         await new MainPage(page).openMobileBackMenuPoint('manage-funds')
@@ -187,7 +187,7 @@ test.describe('WEB/Mobile. Naga Markets', async()=>{
         })
     })
     test(`@23995 Mobile Check Pay Pal deposit`, 
-        {tag:['@deposit', '@manageFunds', '@mobile']}, async({page, NagaMarkets}, testInfo)=>{
+        {tag:['@deposit', '@mobile']}, async({page, NagaMarkets}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -231,7 +231,7 @@ test.describe('WEB/Mobile. Naga Markets', async()=>{
     
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} Mobile ${brand} Check ${depositName} deposit`, 
-            {tag:['@deposit', '@manageFunds', '@mobile']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@mobile']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
