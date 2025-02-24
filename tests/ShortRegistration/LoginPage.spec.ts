@@ -120,7 +120,7 @@ test.describe("WEB/Mobile view, All brands", async()=>{
         {testRailId: '@25439', brandStart: '@Africa', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
     ]
     for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-        test(`${testRailId} WEB/Mobile. Switch brands popup ${brandStart}`, {tag:['@UI', '@mobile']}, async({page})=>{
+        test(`${testRailId} WEB/Mobile. Switch brands popup ${brandStart}`, {tag:['@UI', '@mobile','@web']}, async({page})=>{
             let localizationPage = new getLocalization(localization);
             let sighInPage = new SignIn(page);
             await test.step(`Open login page on ${brandStart} and login to platform by ${user}`, async()=>{
@@ -148,7 +148,7 @@ test.describe("WEB/Mobile view, All brands", async()=>{
         {testRailId: '@25435', brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
     ] 
     for(const{testRailId, brand, localization} of testParamsGuestMode){
-        test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI', '@mobile']}, async({page}, testInfo)=>{
+        test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI','@mobile','@web']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 50000);
             let localizationPage = new getLocalization(localization);
             let signUp = new SignUp(page);
@@ -181,7 +181,7 @@ test.describe('Web/Mobile View. All brands',async()=>{
     ]
     for(const {testrailId, brand, email} of testParams){
         test(`${testrailId} Login/logout to platform ${brand} by ${email}`, 
-            {tag:['@login', '@prodSanity','@smoke']}, async({page})=>{
+            {tag:['@login', '@prodSanity','@smoke','@web']}, async({page})=>{
             let signIn = new SignIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)
@@ -227,7 +227,7 @@ test.describe('WEB/Mobile view. All brands', async()=>{
     ]
 
     for(const{testRailId, brand}of logoTestParams){
-        test(`${testRailId} Redirect from ${brand} logo to website`,{tag:['@UI']}, async({page})=>{
+        test(`${testRailId} Redirect from ${brand} logo to website`,{tag:['@UI','@web']}, async({page})=>{
             let signIn = new SignIn(page)
             let website = new NagaCom(page)
             await signIn.goto(await signIn.chooseBrand(brand), 'login')

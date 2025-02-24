@@ -11,7 +11,7 @@ import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/componen
 import { Captcha } from "../../pageObjects/captcha";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
-test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@KYC_Capital']}, 
+test("@24917 NAGA Capital. KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@KYC_Capital','@web']}, 
     async({ page, NagaCapital, NSCountry }, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 80000);
     let signUp = new SignUp(page);

@@ -216,7 +216,8 @@ export class MainPage{
         await this.page.waitForTimeout(500)
     }
     async openMobileMenuPoint(nameOfStep:string){
-        let menuPoint = await this.page.locator(".header__menu__nav-item", {hasText:nameOfStep})
+        let menuPoint = await this.page.locator(".header__menu__nav-item", 
+            {has: await this.page.locator(`//a[@href='/${nameOfStep}']`)})
         await menuPoint.click()
     }
     async openMobileBackMenuPoint(stepName: string){

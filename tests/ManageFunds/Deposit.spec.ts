@@ -19,7 +19,7 @@ test.describe('WEB/Mobile. All brands', async()=>{
     ]
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`${testRaildId} WEB ${brand} Check number of exist deposit methods`, 
-            {tag:['@deposit', '@manageFunds']}, async({page})=>{
+            {tag:['@deposit', '@manageFunds','@web']}, async({page})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
@@ -74,7 +74,7 @@ test.describe('WEB/Mobile. All brands', async()=>{
     ]
     for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
         test(`${testRailId} ${brand} Deposit with ${depositName} deposit`, 
-            {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 45000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
@@ -132,7 +132,7 @@ test.describe('WEB/Mobile Naga Capital', async()=>{
             expect(await deposit.getApiStatusCode(response)).toEqual(200)
         })
     })
-    test("@24068 Deposit via Crypto", {tag:['@deposit', '@manageFunds']}, async({page})=>{
+    test("@24068 Deposit via Crypto", {tag:['@deposit', '@manageFunds','@web']}, async({page})=>{
         let deposit = new Deposit(page);
         await new MainPage(page).openBackMenuPoint('Manage Funds')
         await test.step("Check crypto deposit", async()=>{
@@ -140,7 +140,7 @@ test.describe('WEB/Mobile Naga Capital', async()=>{
             expect(await deposit.getApiStatusCode(response)).toEqual(200)
         })
     })
-    test('@25352 Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds']}, async({page})=>{
+    test('@25352 Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds','@web']}, async({page})=>{
         let deposit = new Deposit(page)
         await new MainPage(page).openBackMenuPoint('Manage Funds')
         await test.step('Check wire trannsfer deposit', async()=>{
@@ -170,7 +170,7 @@ test.describe('WEB/Mobile. Naga Markets', async()=>{
         requestURL: string,
     }
 
-    test(`@23995 Check Pay Pal deposit`, {tag:['@deposit', '@manageFunds']}, async({page, NagaMarkets}, testInfo)=>{
+    test(`@23995 Check Pay Pal deposit`, {tag:['@deposit', '@manageFunds','@web']}, async({page, NagaMarkets}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -212,7 +212,7 @@ test.describe('WEB/Mobile. Naga Markets', async()=>{
         {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}    ]
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} ${brand} Check ${depositName} deposit`, 
-            {tag:['@deposit', '@manageFunds', '@smoke']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@manageFunds', '@smoke','@web']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);

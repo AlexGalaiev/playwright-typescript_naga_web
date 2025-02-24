@@ -1,13 +1,11 @@
 import { Locator, Page } from "@playwright/test";
+import { MainPage } from "../MainPage/MainPage";
 
 export class MyTrades{
     page: Page;
     readonly activeTradesTab: Locator;
     readonly activePendingOrdersTab: Locator;
     readonly openedPosition: Locator;
-    //old
-    //readonly tp: Locator;
-    //readonly sl: Locator;
     readonly dropdownActions: Locator;
     readonly optionDropdown: Locator;
     readonly changeLimits: Locator;
@@ -24,6 +22,7 @@ export class MyTrades{
     //readonly orderUnits: Locator;
     readonly orderTakeProfit: Locator;
     readonly orderStopLoss: Locator;
+    readonly openedMobilePosition: Locator;
     
     constructor(page: Page){
         this.page = page;
@@ -31,11 +30,7 @@ export class MyTrades{
         this.activePendingOrdersTab = page.locator("#my-pending-trades")
         //position values
         this.openedPosition = page.locator("//div[contains(@class, 'my-trades-table__row')]")
-
-        //this.tp = page.locator("//div[contains(@class, 'limits-active')]")
-        //this.sl = page.locator("//div[contains(@class, 'entry-price-active')]//span[@class='not-set']")
-        //orders values
-        //this.orderUnits = page.locator("//div[contains(@class, 'my-trades-table__row')]//div[contains(@class, 'units-pending')]")
+        this.openedMobilePosition = page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]")
         this.orderTakeProfit = page.locator("//div[contains(@class, 'my-trades-table__row')]//div[contains(@class, 'limits-pending')]")
         this.orderStopLoss = page.locator("//div[contains(@class, 'my-trades-table__limits entry-price-pending')]")
         //dropdown actions
@@ -77,9 +72,18 @@ export class MyTrades{
         let value = await this.openedPosition.locator("//div[contains(@class, 'deposit-active')]//span//span").textContent();
         return await value?.replace(currency, '')
     };
+    async getMobileDepositValue(currency: string){
+        await this.openedMobilePosition.waitFor({state:"visible"})
+        let value = await this.openedMobilePosition.locator("//div[@class='my-trades-table-mobile__deposit']//span[contains(@class, 'amount')]").textContent();
+        return await value?.replace(currency, '')
+    };
     async getUnits(){
         await this.openedPosition.waitFor({state:"visible"})
         return await this.openedPosition.locator("//div[contains(@class, 'units-active')]").textContent();
+    }
+    async getMobileUnits(){
+        await this.openedMobilePosition.waitFor({state:"visible"})
+        return await this.openedMobilePosition.locator("//div[@class='my-trades-table-mobile__entry-price']").textContent()
     }
     async getProtectionValue(NameOfProtection: string){
         await this.openedPosition.waitFor({state:"visible"})
@@ -146,5 +150,26 @@ export class MyTrades{
     }
     async getStopLossValue(){
        return await this.page.locator("//div[contains(@class, 'my-trades-table__limits')]//div[@class='sl']").textContent()
+    }
+    async closeMobilePositionsIfExist(){
+        await this.page.waitForTimeout(3000)
+        let openedPosition = await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]")
+        while (await openedPosition.isVisible()){
+            await openedPosition.click();
+            await this.page.waitForSelector("#close_trader_button",{state:'visible'})
+            await this.page.locator("#close_trader_button").click()
+            await this.page.waitForSelector("//button[contains(text(), 'Close at')]", {state:'visible'})
+            await this.page.locator("//button[contains(text(), 'Close at')]").click()
+            await this.page.locator("//button[text()='Ok, thanks!']").click()
+            await this.page.locator("//button[text()='Back']").click()
+            await this.page.waitForTimeout(2000)
+        }
+    }
+    async closeMobilePosition(){
+        await this.openedMobilePosition.click()
+        await this.page.waitForSelector("#close_trader_button", {state:'visible'})
+        await this.page.locator("#close_trader_button").click()
+        await this.page.waitForSelector("//button[contains(text(), 'Close at')]", {state:'visible'})
+        await this.page.locator("//button[contains(text(), 'Close at')]").click()
     }
 }

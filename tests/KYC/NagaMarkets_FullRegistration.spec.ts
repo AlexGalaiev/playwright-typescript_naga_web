@@ -38,7 +38,7 @@ test.describe('WEB/Mobile', async()=>{
 );
 
 test("@24921 Naga Markets. KYC - Advance level.",
-  {tag:['@kyc', '@prodSanity','@smoke','@KYC_Markets','@mobile']}, async ({page}, testInfo) => {
+  {tag:['@kyc', '@prodSanity','@smoke','@KYC_Markets','@mobile','@web']}, async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
   let quiz = new FullRegistration(page);
@@ -57,7 +57,7 @@ test("@24921 Naga Markets. KYC - Advance level.",
 });
 
 test("@24925 Naga Markets. KYC - PreAdvance level.",
-  {tag:['@kyc', '@KYC_Markets','@mobile']}, async ({page}, testInfo) => {
+  {tag:['@kyc', '@KYC_Markets','@mobile','@web']}, async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000); 
   let mainPageLocalization = new getLocalization("/pageObjects/localization/NagaMarkets_MainPage.json")
   let quiz = new FullRegistration(page);
@@ -76,7 +76,7 @@ test("@24925 Naga Markets. KYC - PreAdvance level.",
 })
 
 test("@24920 Naga Markets. KYC - Intermediate level.", 
-  {tag:['@kyc', '@KYC_Markets','@mobile']},async ({page}, testInfo) => {
+  {tag:['@kyc', '@KYC_Markets','@mobile','@web']},async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
   let quiz = new FullRegistration(page);
@@ -95,7 +95,7 @@ test("@24920 Naga Markets. KYC - Intermediate level.",
 });
 
 test("@24923 Naga Markets. KYC - Elementary level.", 
-  {tag:['@kyc', '@KYC_Markets', '@mobile']}, 
+  {tag:['@kyc', '@KYC_Markets', '@mobile','@web']}, 
     async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let quiz = new FullRegistration(page);
@@ -116,7 +116,7 @@ test("@24923 Naga Markets. KYC - Elementary level.",
 });
 
 test("@24922 Naga Markets. KYC - Beginner level.",
-  {tag:['@kyc', '@KYC_Markets','@mobile']}, async ({page}, testInfo) => {
+  {tag:['@kyc', '@KYC_Markets','@mobile','@web']}, async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
   let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
   let mainPageLocalization = new getLocalization("/pageObjects/localization/NagaMarkets_MainPage.json")

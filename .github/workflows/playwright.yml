@@ -63,7 +63,6 @@ on:
     - cron: '10 1 * * 0-6'
     - cron: '30 6 * * 0-6'
     - cron: '45 0 * * 0-6'
-    - cron: '30 0 * * 0-6'
     - cron: '05 0 * * 0-6'
 jobs:
   test:
@@ -120,7 +119,6 @@ jobs:
                 "10 1 * * 0-6") echo "TAGS=@manageFunds" >> $GITHUB_ENV ;;
                 "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
                 "45 0 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
-                "30 0 * * 0-6") echo "TAGS=@login" >> $GITHUB_ENV ;;
                 "05 0 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
