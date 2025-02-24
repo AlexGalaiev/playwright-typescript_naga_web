@@ -35,7 +35,7 @@ test.describe("WEB/Mobile", async()=>{
             expect(await withdrawal.checkNameOfIframe()).toEqual('_cashier_iframe')
         })
     })
-    test("@24932 Withdrawal validation rulls", {tag:['@withdrawal', '@manageFunds']},async({page})=>{
+    test("@24932 Withdrawal validation rulls", {tag:['@withdrawal', '@manageFunds','@web']},async({page})=>{
         let withdrawal = new Withdrawal(page);
         let valueToWithrawal = '1'
         await test.step('Open withdrawal menu', async()=>{
@@ -71,7 +71,7 @@ test.describe("WEB/Mobile", async()=>{
             expect(await withdrawal.checkModalPopup()).toBeVisible()
         })
     });
-    test("@24091 Check Crypto withdrawal", {tag:['@withdrawal', '@manageFunds']},async({page})=>{
+    test("@24091 Check Crypto withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page})=>{
         let withdrawal = new Withdrawal(page);
         let localization = new getLocalization(ManageFunds_Withdrawal);
         await test.step('Open withdrawal menu', async()=>{
@@ -120,7 +120,7 @@ test.describe("WEB/Mobile", async()=>{
 })
 
 test.describe('WEB/Mobile. Naga Markets', async()=>{
-    test("@24093 PayPal withdrawal", {tag:['@withdrawal', '@manageFunds']},async({page, NagaMarkets}, testInfo)=>{
+    test("@24093 PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page, NagaMarkets}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -179,7 +179,7 @@ const NS_WithdrawalParams: NS_WithdrawalTypes[] = [
 //difference between NagaMarkets and NagaCapital -> Markets has withdrawal popup, Capital opens iframe
 for(const{testRailId, brand, user, menuPoint, paymentMethod, responsePaymentMethod}of NS_WithdrawalParams){
     test(`${testRailId} ${brand} EWallet withdrawals. Check ${paymentMethod} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds']}, async({page}, testInfo)=>{
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -240,7 +240,7 @@ const NM_WithdrawalParams: NM_WithdrawalTypes[] = [
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_WithdrawalParams){
     test(`${testRailId} ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds']}, async({page}, testInfo)=>{
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -303,7 +303,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     ]
     for(const{testRailId, brand, user, numberOfEwalletWithdrawal} of testNumberOfWithdrawals){
         test(`${testRailId} ${brand} Check number of available withdrawals`, 
-            {tag:["@withdrawal", '@manageFunds']}, async({page})=>{
+            {tag:["@withdrawal", '@manageFunds','@web']}, async({page})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
@@ -334,7 +334,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     
     for(const{testRailId, brand, user, currency}of withdrawalEcompayParams){
         test(`${testRailId} ${brand} Withdrawal. Bank Account. Ecommpay`, 
-        {tag:["@withdrawal", '@manageFunds','@prodSanity']},async({page}, testInfo)=>{
+        {tag:["@withdrawal", '@manageFunds','@prodSanity','@web']},async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);

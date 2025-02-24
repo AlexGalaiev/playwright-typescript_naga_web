@@ -16,6 +16,7 @@ export class AllInstruments{
     readonly emptyWatchlistHeader: Locator;
     readonly emptyWatchlistText: Locator;
     readonly addPriceAlert: Locator;
+    readonly mobileSearchBtn: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -31,6 +32,7 @@ export class AllInstruments{
         this.emptyWatchlistHeader = page.locator("//div[@class='no-data__title']")
         this.emptyWatchlistText = page.locator("//div[@class='no-data__description']")
         this.addPriceAlert = page.locator("//div[@class='symbol-row']//i[contains(@class,'icn-price-alert')]")
+        this.mobileSearchBtn = page.locator("//img[@class='symbol-types-nav__search']//..")
     }
 
     async searchInstrument(NameOfInstrument: string){
@@ -91,5 +93,13 @@ export class AllInstruments{
     async clearSearchField(){
         await this.page.locator('[alt="clear search"]').click()
         await this.page.waitForTimeout(500)
+    }
+    async openMobilePosition(nameOfInstrumnet: string, positionType: string){
+        await this.mobileSearchBtn.click()
+        await this.page.waitForTimeout(250)
+        await this.page.locator("//input[@type='text']").pressSequentially(nameOfInstrumnet)
+        await this.page.waitForTimeout(1000)
+        let position = await this.page.locator(`//div[@class='symbol-row-mobile']`).first()
+        await position.locator(`//div[@data-type='${positionType}']`).click()
     }
 }

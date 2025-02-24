@@ -5,7 +5,7 @@ import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
 import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 import {test} from "../../test-options"
 
-test.describe("Trading without funds", async()=>{
+test.describe("WEB/Mobile. All brands", async()=>{
 type testNoFunds = {
     testRailId: string, 
     brand: string,
@@ -22,7 +22,7 @@ const testNoFundsParaketers: testNoFunds[] = [
 ]
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
     test(`${testRailId} Open position without funds ${brand}`, 
-      {tag:['@trading']}, async({page}, testInfo)=>{
+      {tag:['@trading','@web']}, async({page}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 60000);  
       let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
@@ -40,6 +40,27 @@ for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
             expect(await newPosition.getNotEnoughFundsMsg()).toEqual('You have insufficient funds to trade at the moment')
             expect(await newPosition.getSubmitBtnText()).toEqual('Fund account now')
           })
-    })
-}
+    })}
+
+for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
+    test(`${testRailId}Mobile. Open position without funds ${brand}`, 
+      {tag:['@trading','@mobile']}, async({page}, testInfo)=>{
+      await testInfo.setTimeout(testInfo.timeout + 60000);  
+      let signIn = new SignIn(page);
+        let mainPage = new MainPage(page)
+        let instruments = new AllInstruments(page);
+        let newPosition = new NewPosition(page)
+        await test.step(`Login to platfotm by ${user} to ${brand} brand`, async () => {
+            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
+          });
+          await test.step(`Choose ${tradingInstrument} and open position`, async () => {
+            await mainPage.openMobileMenuPoint("markets");
+            await instruments.openMobilePosition(tradingInstrument, 'SELL')
+          });
+          await test.step('Check Not enough money messages', async()=>{
+            expect(await newPosition.getNotEnoughFundsMsg()).toEqual('You have insufficient funds to trade at the moment')
+            expect(await newPosition.getSubmitBtnText()).toEqual('Fund account now')
+          })
+    })}
 })
