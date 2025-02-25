@@ -117,14 +117,14 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
   })}
 
   const tradingParametersOrders: tradingTypesWithProtection[] = [
-    {testRailId: '@25167', brand: '@Capital', user:'testTrading2', investDirection:'Short', protection: 'Stop Loss',tradeField: 'sl'},
-    {testRailId: '@25169', brand: '@Capital', user:'testTrading2', investDirection:"Long", protection: 'Take profit',tradeField: 'tp'},
-    {testRailId: '@25171', brand: '@Markets', user:'testTrading2Markets', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
-    {testRailId: '@25170', brand: '@Markets', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
-    {testRailId: '@25376', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
-    {testRailId: '@25377', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'},
-    {testRailId: '@25415', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp'},
-    {testRailId: '@25416', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl'}
+    {testRailId: '@25167', brand: '@Capital', user:'testTrading2', investDirection:'Short', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL'},
+    {testRailId: '@25169', brand: '@Capital', user:'testTrading2', investDirection:"Long", protection: 'Take profit',tradeField: 'tp', mobileDirection:'BUY'},
+    {testRailId: '@25171', brand: '@Markets', user:'testTrading2Markets', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL'},
+    {testRailId: '@25170', brand: '@Markets', user:'testTrading2Markets', investDirection:'Long', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY'},
+    {testRailId: '@25376', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY'},
+    {testRailId: '@25377', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL'},
+    {testRailId: '@25415', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY'},
+    {testRailId: '@25416', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL'}
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
     test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, {tag:['@trading']}, async({page}, testInfo)=>{
