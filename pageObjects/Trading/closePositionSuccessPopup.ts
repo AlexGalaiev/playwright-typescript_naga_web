@@ -13,7 +13,7 @@ export class ClosePositionSuccessPopup{
         this.page = page
         this.popupBody = page.locator(".trade-modal__body")
         this.popupInvestmentValue = page.locator("//span[text()='Investment']//..//span[contains(@class, 'amount')]")
-        this.lots = page.locator("//span[text()='Lots']//..//span[contains(@class, 'amount')]");
+        this.lots = page.locator("//span[text()='Lots']//..//span[contains(@class, 'amount')]//span");
         this.rate = page.locator("//span[text()='Planned Entry Price']//..//span[contains(@class, 'amount')]//span")
         this.acceptBtn = page.locator("#ot_ok_thx")
     };
@@ -22,12 +22,16 @@ export class ClosePositionSuccessPopup{
         return await value?.replace(currency, '')
     };
     async getLots(){
-        return await this.lots.textContent()
+        let lots = await this.lots.textContent()
+        return await lots
     };
     async acceptPopup(){
         await this.acceptBtn.click()
     };
     async getRate(){
         return await this.rate.textContent();
+    }
+    async successOkBtnclick(){
+        await this.acceptBtn.click()
     }
 }

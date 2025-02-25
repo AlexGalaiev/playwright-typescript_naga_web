@@ -89,6 +89,9 @@ export class MyTrades{
         await this.openedPosition.waitFor({state:"visible"})
         return await this.openedPosition.locator(`//div[@class='${NameOfProtection}']`).textContent()
     }
+    async getMobileProtectionValue(NameOfProtection: string){
+        
+    }
     async closePosition(){
         await this.page.locator("//i[contains(@class, 'trade-actions__close')]").click()
         await this.page.waitForSelector("#confirm_close_trade", {state:'visible'});
@@ -114,6 +117,10 @@ export class MyTrades{
     async getOrdersRate(){
         await this.openedPosition.waitFor({state:"visible"})
         return await this.openedPosition.locator("//div[contains(@class, 'my-trades-table__entry-price')]//span//span").textContent()
+    }
+    async getMobileOrderRate(){
+        let orderValue = await this.page.locator("//div[@class='my-trades-table-mobile__open-price']//span[contains(@class, 'amount')]")
+        return await orderValue.textContent()
     }
     async openChangeLimitPopup(){
         await this.optionDropdown.click();
@@ -153,23 +160,19 @@ export class MyTrades{
     }
     async closeMobilePositionsIfExist(){
         await this.page.waitForTimeout(3000)
-        let openedPosition = await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]")
+        let openedPosition = await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]").first()
         while (await openedPosition.isVisible()){
             await openedPosition.click();
             await this.page.waitForSelector("#close_trader_button",{state:'visible'})
             await this.page.locator("#close_trader_button").click()
-            await this.page.waitForSelector("//button[contains(text(), 'Close at')]", {state:'visible'})
-            await this.page.locator("//button[contains(text(), 'Close at')]").click()
+            await this.page.waitForSelector("#confirm_close_trade", {state:'visible'})
+            await this.page.locator("#confirm_close_trade").click()
             await this.page.locator("//button[text()='Ok, thanks!']").click()
             await this.page.locator("//button[text()='Back']").click()
             await this.page.waitForTimeout(2000)
         }
     }
-    async closeMobilePosition(){
+    async closeMobileAndOpenTradedetails(){
         await this.openedMobilePosition.click()
-        await this.page.waitForSelector("#close_trader_button", {state:'visible'})
-        await this.page.locator("#close_trader_button").click()
-        await this.page.waitForSelector("//button[contains(text(), 'Close at')]", {state:'visible'})
-        await this.page.locator("//button[contains(text(), 'Close at')]").click()
     }
 }

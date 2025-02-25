@@ -32,4 +32,26 @@ export class TradeDetails{
         await this.confirmationPopupClosingPosition.waitFor({state:"visible"})
         await this.confirmCloseTrade.click()
     }
+    async getMobileLots(){
+        await this.page.waitForSelector(".trade-details__detail-info", {state:'visible'})
+        await this.page.waitForTimeout(250)
+        let lots = await this.page.locator("//span[text()='Lots']/following-sibling::span")
+        return await lots.textContent()
+    }
+    async closePosition(){
+        await this.page.waitForSelector("#close_trader_button", {state:'visible'})
+        await this.page.locator("#close_trader_button").click()
+        await this.page.waitForSelector("//div[@class='close-trade-warning__close-action']//button", {state:'visible'})
+        await this.page.locator("//div[@class='close-trade-warning__close-action']//button").click()
+    }
+    async getMobileProtectionValue(nameOfProtection: string){
+        let bar = await this.page.locator(".progress-indicator-values")
+        let value = await bar.locator(`//span[text()='${nameOfProtection}']//..//span[contains(@class, 'amount')]`)
+        return await value.textContent()
+    }
+    async acceptOfClosingPosiion(){
+        await this.page.waitForSelector("//div[@class='close-trade-warning__close-action']//button", {state:'visible'})
+        await this.page.locator("//div[@class='close-trade-warning__close-action']//button").click()
+        await this.page.locator("#ot_ok_thx").click()
+    }
 }
