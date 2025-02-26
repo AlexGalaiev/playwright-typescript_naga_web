@@ -22,7 +22,7 @@ const AddWatchlistPatameters: testTypes[] = [
     {testRailId: '@25418', brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
-    test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@trading']}, async({page}, testInfo)=>{
+    test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@trading','@web']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let tradeInstrument = "EUR/USD"
@@ -59,7 +59,7 @@ const priceAlertParameters: testTypes[] = [
     {testRailId: '@25419', brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{testRailId, brand, user, localization}of priceAlertParameters){
-    test(`${testRailId} Price alerts ${brand} ${user}`,{tag:['@trading']}, async({page}, testInfo)=>{
+    test(`${testRailId} Price alerts ${brand} ${user}`,{tag:['@trading','@web']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let tradeInstrument = "EUR/USD"
         let localizationPage = new getLocalization(localization)

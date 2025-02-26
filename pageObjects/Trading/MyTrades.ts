@@ -90,7 +90,8 @@ export class MyTrades{
         return await this.openedPosition.locator(`//div[@class='${NameOfProtection}']`).textContent()
     }
     async getMobileProtectionValue(NameOfProtection: string){
-        
+        await this.openedMobilePosition.waitFor({state:'visible'})
+        return await this.openedMobilePosition.locator(`//div[@class='${NameOfProtection}']`).textContent()
     }
     async closePosition(){
         await this.page.locator("//i[contains(@class, 'trade-actions__close')]").click()
@@ -172,7 +173,7 @@ export class MyTrades{
             await this.page.waitForTimeout(2000)
         }
     }
-    async closeMobileAndOpenTradedetails(){
+    async clickMobilePositionAndOpenTradedetails(){
         await this.openedMobilePosition.click()
     }
 }

@@ -46,7 +46,7 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         {testRailId: '@23602', brand: '@Markets', user: 'userWithAccounts2@i.ua'},
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
-        test(`${testRailId} Edit trading account information ${brand}`, {tag:['@secondAccount']}, async({page}, testInfo)=>{
+        test(`${testRailId} Edit trading account information ${brand}`, {tag:['@secondAccount','@web']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 90000);
         let signIn = new SignIn(page);
         let addAccountForm = new AddAcountForm(page);
@@ -72,7 +72,7 @@ const testAccountSwitchingParams: tradingAcTypes[] = [
     {testRailId: '@25187', brand: '@Markets', user: 'userWithAccounts2@i.ua'}
 ]
 for(const{testRailId, brand, user} of testAccountSwitchingParams){
-    test(`${testRailId} ${brand} Switching between trading accounts`, {tag:['@secondAccount']}, async({page}, testInfo)=>{
+    test(`${testRailId} ${brand} Switching between trading accounts`, {tag:['@secondAccount','@web']}, async({page}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 70000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
@@ -92,7 +92,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
         })})}})
 
 test.describe('Naga Markets - Trading accounts', async()=>{
-    test('@23600 Create 2nd live account', {tag:['@secondAccount']}, 
+    test('@23600 Create 2nd live account', {tag:['@secondAccount','@web']}, 
         async({page, NagaMarkets}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 170000);
         let addAccount = new AddAcountForm(page);
@@ -120,7 +120,7 @@ test.describe('Naga Markets - Trading accounts', async()=>{
 })
 test.describe('Naga Mena - Trading accounts', async()=>{
    
-    test(`@25400 Create 2nd live account`, {tag:['@secondAccount']},
+    test(`@25400 Create 2nd live account`, {tag:['@secondAccount','@web']},
         async({page, NagaMena}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let addAccount = new AddAcountForm(page);
