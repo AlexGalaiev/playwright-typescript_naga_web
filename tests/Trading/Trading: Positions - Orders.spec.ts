@@ -25,6 +25,7 @@ let units;
 let rate;
 
 test.describe("Trading - Positions/Orders. Web/Mobile", async () => {
+
   const tradingParamsPositions: tradingTypes[] = [
     {testRailId: '@25159', brand: '@Capital', user:'testTrading2', investDirection:'Short',currency:'$', mobileDirection:'SELL'},
     {testRailId: '@25163', brand: '@Capital', user:'testTrading2', investDirection:"Long", currency:'$', mobileDirection:'BUY'},
@@ -33,8 +34,7 @@ test.describe("Trading - Positions/Orders. Web/Mobile", async () => {
     {testRailId: '@25369', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short',currency:'€', mobileDirection: 'SELL'},
     {testRailId: '@25368', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long',currency:'€', mobileDirection: 'BUY'},
     {testRailId: '@25410', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long',currency:'$', mobileDirection:'BUY'},
-    {testRailId: '@25409', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short',currency:'$', mobileDirection:'SELL'},
-
+    {testRailId: '@25409', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short',currency:'$', mobileDirection:'SELL'}
   ]
   for(const{testRailId, brand, user,investDirection, currency}of tradingParamsPositions){
     test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,

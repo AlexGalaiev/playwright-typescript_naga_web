@@ -54,4 +54,10 @@ export class TradeDetails{
         await this.page.locator("//div[@class='close-trade-warning__close-action']//button").click()
         await this.page.locator("#ot_ok_thx").click()
     }
+    async openEditLimitsPopup(){
+        let editLimitsBtn = await this.page.locator("//button[text()='Change Limits']")
+        await editLimitsBtn.waitFor({state:"visible"})
+        await editLimitsBtn.scrollIntoViewIfNeeded()
+        await editLimitsBtn.click()
+    }
 }
