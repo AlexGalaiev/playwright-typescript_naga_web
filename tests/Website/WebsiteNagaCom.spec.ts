@@ -14,8 +14,8 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     }
     //get started btn is tested in Check allert popup test
     const fromWebsiteToNM: RedirectTypes[] = [
-        {testRailId: '@25208', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://nagamarkets.com/login'},
-        {testRailId: '@25208', type: 'Invest', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://nagamarkets.com/login'},
+        {testRailId: '@25208', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://app.naga.com/login'},
+        {testRailId: '@25208', type: 'Invest', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://app.naga.com/login'},
     ]
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 

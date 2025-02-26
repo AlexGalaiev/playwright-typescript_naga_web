@@ -33,13 +33,13 @@ export default defineConfig<TestOptions>({
     {
       name: "qa",
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices["iPhone 15 Pro Max"],
         NagaMarkets: "https://app.sxdev.io",
         //NagaMarkets: "https://nagamarkets.com",
-        //NagaCapital: "https://nagacap.com",
-        NagaCapital: "https://app.sxdev.io",
-        NagaMena: "https://app.sxdev.io",
-        //NagaMena: "https://nagamena.com",
+        NagaCapital: "https://app.naga.com",
+        //NagaCapital: "https://app.sxdev.io",
+        //NagaMena: "https://app.sxdev.io",
+        NagaMena: "https://app.naga.com",
         //NagaAfrica: "https://nagaafrica.com",
         NagaAfrica: "https://app.sxdev.io",
         NagaX: "https://app.sxdev.io/eu",
