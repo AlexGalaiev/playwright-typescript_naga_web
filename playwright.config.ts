@@ -33,11 +33,11 @@ export default defineConfig<TestOptions>({
     {
       name: "qa",
       use: {
-        ...devices["iPhone 15 Pro Max"],
+        ...devices["Desktop Chrome"],
         NagaMarkets: "https://app.sxdev.io",
         //NagaMarkets: "https://nagamarkets.com",
-        NagaCapital: "https://app.naga.com",
-        //NagaCapital: "https://app.sxdev.io",
+        //NagaCapital: "https://app.naga.com",
+        NagaCapital: "https://app.sxdev.io",
         //NagaMena: "https://app.sxdev.io",
         NagaMena: "https://app.naga.com",
         //NagaAfrica: "https://nagaafrica.com",
@@ -56,7 +56,7 @@ export default defineConfig<TestOptions>({
       name: "production",
       use: {
         ...devices["Desktop Chrome"],
-        NagaMarkets: "https://nagamarkets.com",
+        NagaMarkets: "https://app.naga.com",
         //NagaCapital: "https://sxdevcap.com",
         NagaCapital: "https://app.naga.com",
         NagaMena: "https://app.naga.com",
@@ -75,7 +75,7 @@ export default defineConfig<TestOptions>({
       name: "smoke",
       use: {
         ...devices["Desktop Chrome"],
-        NagaMarkets: "https://nagamarkets.com",
+        NagaMarkets: "https://app.naga.com",
         NagaCapital: "https://app.naga.com",
         NagaMena: "https://app.naga.com",
         NagaAfrica: "https://app.naga.com",
@@ -92,7 +92,7 @@ export default defineConfig<TestOptions>({
       name: "master",
       use: {
         ...devices["Desktop Chrome"],
-        NagaMarkets: "https://nagamarkets.com",
+        NagaMarkets: "https://app.naga.com",
         NagaCapital: "https://app.naga.com",
         NagaMena: "https://app.naga.com",
         NagaAfrica: "https://app.naga.com",
