@@ -52,6 +52,9 @@ export class AllInstruments{
     async getWatchlistedInstrumentName(){
         return await this.watchlistedInstrument.textContent()
     };
+    async getMobileWatchlistedInstrumentName(){
+        return await this.page.locator("//div[@class='symbol-row-mobile__symbol-container__name']//div[1]").textContent()
+    };
     async removeInstrumentFromWatclist(){
         //await this.removeFromWatchlist.click();
         await this.page.locator("//i[contains(@class, ' active-star')]").first().click()
@@ -67,6 +70,12 @@ export class AllInstruments{
         await this.addPriceAlert.first().click();
         await this.page.waitForTimeout(500)
     };
+    async openMobileInstrument(){
+        await this.page.waitForTimeout(500)
+        let instrument = await this.page.locator(".symbol-row-mobile").first()
+        await instrument.locator("//div[contains(@class, 'mini')]").click()
+        await this.page.waitForSelector(".open-trade__right__container", {state:'visible'})
+    }
 
 //new 
     async openPositionOfInstrument(instrumentName: string, positionType: string){
@@ -93,6 +102,7 @@ export class AllInstruments{
     async clearSearchField(){
         await this.page.locator('[alt="clear search"]').click()
         await this.page.waitForTimeout(500)
+        await this.page.locator("//button[text()='Done']").click()
     }
     async openMobilePosition(nameOfInstrumnet: string, positionType: string){
         await this.mobileSearchBtn.click()
@@ -102,4 +112,17 @@ export class AllInstruments{
         let position = await this.page.locator(`//div[@class='symbol-row-mobile']`).first()
         await position.locator(`//div[@data-type='${positionType}']`).click()
     }
+    async openMobileFavorites(){
+        let favorites = await this.page.locator("#favorites_symbol_type")
+        await favorites.scrollIntoViewIfNeeded()
+        await favorites.click()
+        await this.page.waitForTimeout(500)
+    }
+    async openMobileSearchField(){
+        await this.page.locator("//img[@class='symbol-types-nav__search']//..").click()
+    }
+    async openPriceAlerts(){
+        await this.page.locator("#price_alerts_button").click()
+    }
+
 }

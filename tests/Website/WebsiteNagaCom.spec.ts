@@ -14,8 +14,8 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     }
     //get started btn is tested in Check allert popup test
     const fromWebsiteToNM: RedirectTypes[] = [
-        {testRailId: '@25208', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://nagamarkets.com/login'},
-        {testRailId: '@25208', type: 'Invest', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://nagamarkets.com/login'},
+        {testRailId: '@25208', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://app.naga.com/login'},
+        {testRailId: '@25208', type: 'Invest', buttonName: 'Login', baseUrl: 'https://naga.com/en', redirectTo: 'https://app.naga.com/login'},
     ]
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
@@ -99,8 +99,8 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     }
 
     const fromENtoNMAllert: RedirectTypes[] = [
-        {testRailId: '@25210', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://unified.nagamarkets.com/register'},
-        {testRailId: '@25210', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://unified.nagamarkets.com/register'},
+        {testRailId: '@25210', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://app.naga.com/register'},
+        {testRailId: '@25210', type: 'Invest', buttonName: 'Get started', baseUrl:'https://naga.com/en',  redirectTo: 'https://app.naga.com/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
@@ -132,8 +132,8 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
         buttonName: string;
     }
     const EuSearchTypes: searchTypes[] = [
-        {testRailId: '@25214', type: 'trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/eu", categoryName: 'Shares', buttonName:'Trade'},
-        {testRailId: '@25212', type: 'invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagacap.com/open-trade", basePage:"https://naga.com/eu", categoryName: 'Real Stock USA', buttonName: 'Invest'},
+        {testRailId: '@25214', type: 'trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade", basePage:"https://naga.com/eu", buttonName:'Trade'},
+        {testRailId: '@25212', type: 'invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade", basePage:"https://naga.com/eu", buttonName: 'Invest'},
        ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EuSearchTypes){
         test(`${testRailId} VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
@@ -154,8 +154,8 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
             })})
     }
     const AESearchTypes: searchTypes[] = [
-         {testRailId: "@25235", type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: 'https://nagamena.com/open-trade', basePage:'https://naga.com/ae', categoryName: 'Shares', buttonName:'Trade'},
-         {testRailId: "@25236", type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: 'https://nagamena.com/open-trade', basePage:'https://naga.com/ae', categoryName: 'Shares', buttonName:'Invest'}
+         {testRailId: "@25235", type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: 'https://app.naga.com/open-trade/FB.OQ?type=BUY', basePage:'https://naga.com/ae', buttonName:'Trade'},
+         {testRailId: "@25236", type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: 'https://app.naga.com/open-trade/FB.re?type=BUY', basePage:'https://naga.com/ae', buttonName:'Invest'}
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of AESearchTypes){
         test(`${testRailId} VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
@@ -175,7 +175,7 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
             })})
     }
     const ZASearchTypes: searchTypes[] = [
-         {testRailId: '@25224', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagaafrica.com/open-trade", basePage:"https://naga.com/za", buttonName:'Trade'}
+         {testRailId: '@25224', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade/FB.OQ?type=BUY", basePage:"https://naga.com/za", buttonName:'Trade'}
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of ZASearchTypes){
         test(`${testRailId} VPN(ZA) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
@@ -196,8 +196,8 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
     }
 
     const EnSearchTypes: searchTypes[] = [
-        {testRailId: '@25213', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagamarkets.com/open-trade", basePage:"https://naga.com/en", buttonName:'Trade'},
-        {testRailId: '@25211', type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://nagamarkets.com/open-trade", basePage:"https://naga.com/en", buttonName: 'Invest'},
+        {testRailId: '@25213', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade/AUDUSD_Pro?type=BUY", basePage:"https://naga.com/en", buttonName:'Trade'},
+        {testRailId: '@25211', type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade/FB.re?type=BUY", basePage:"https://naga.com/en", buttonName: 'Invest'},
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EnSearchTypes){
         test(`${testRailId} VPN(Italy). Redirect from ${basePage}/${type} to platfotm. Search ${nameOfInstrument} on page`, 

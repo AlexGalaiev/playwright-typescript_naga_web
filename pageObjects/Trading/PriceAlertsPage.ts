@@ -77,4 +77,13 @@ export class PriceAlert{
             await this.page.waitForTimeout(1500)
         }
     }   
-    }
+    async cleanMobilePriceAlerts(){
+        await this.page.waitForTimeout(2000)
+        let removePriceAlert = await this.page.locator("#dropdown-price-alert-options").first();
+        while(await removePriceAlert.isVisible()){
+            await removePriceAlert.click();
+            await this.page.locator("//div[text()='Delete']").first().click()
+            await this.page.waitForTimeout(500)
+        }
+    }   
+}

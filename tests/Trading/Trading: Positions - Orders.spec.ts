@@ -113,7 +113,7 @@ test.describe("Trading - Positions/Orders. Web/Mobile", async () => {
         await mainPage.openMobileMenuPoint("my-trades");
         expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
         investmentValue = await myTrades.getMobileDepositValue(currency);
-        await myTrades.closeMobileAndOpenTradedetails()
+        await myTrades.clickMobilePositionAndOpenTradedetails()
       });
       await test.step('Check trade details', async()=>{
         units = await tradeDetails.getMobileLots();
@@ -217,7 +217,7 @@ test.describe('Trading - Pending orders. WEB/Mobile', async()=>{
         await mainPage.openMobileMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         rate = await myTrades.getMobileOrderRate()
-        await myTrades.closeMobileAndOpenTradedetails()
+        await myTrades.clickMobilePositionAndOpenTradedetails()
       })
       await test.step('Check trade details', async()=>{
         units = await tradeDetails.getMobileLots();

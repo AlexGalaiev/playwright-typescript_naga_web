@@ -121,4 +121,8 @@ export class NewPosition{
     async getStopLossValue(nameOfProtection: string){
         return await this.page.locator(`//span[text()='${nameOfProtection}']//..//..//input[@type='text']`).textContent()
     }
+    async addPriceAlert(){
+        await this.page.locator("//i[contains(@class, 'add-price-alert')]").click()
+        await this.page.waitForSelector(".create-price-alert-modal__header__title", {state:'visible'})
+    }
 }
