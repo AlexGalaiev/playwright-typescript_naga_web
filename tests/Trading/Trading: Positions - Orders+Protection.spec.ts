@@ -10,7 +10,7 @@ import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 import { TradeDetails } from "../../pageObjects/Trading/TradeDetails";
 import { test } from "../../test-options";
 
-test.describe("Trading. Trading by positions/orders + protection. WEB/Mobile", async () => {
+test.describe("Trading. Positions/Orders + protection", async () => {
 type tradingTypesWithProtection = {
   testRailId: string,
   brand: string,

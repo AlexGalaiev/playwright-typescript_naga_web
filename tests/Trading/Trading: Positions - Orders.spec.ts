@@ -24,7 +24,7 @@ let investmentValue;
 let units;
 let rate;
 
-test.describe("Trading - Positions/Orders. Web/Mobile", async () => {
+test.describe("Trading - Positions/Orders.", async () => {
 
   const tradingParamsPositions: tradingTypes[] = [
     {testRailId: '@25159', brand: '@Capital', user:'testTrading2', investDirection:'Short',currency:'$', mobileDirection:'SELL'},
@@ -127,7 +127,7 @@ test.describe("Trading - Positions/Orders. Web/Mobile", async () => {
   }
 })
 
-test.describe('Trading - Pending orders. WEB/Mobile', async()=>{
+test.describe('Trading - Pending orders', async()=>{
   
   const tradingParamsOrders: tradingTypes[] = [
     {testRailId: '@25161', brand: '@Capital', user:'testTrading2', investDirection:'Short', currency:'$', mobileDirection:'SELL'},
@@ -140,7 +140,7 @@ test.describe('Trading - Pending orders. WEB/Mobile', async()=>{
     {testRailId: '@25412', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short',currency:'$', mobileDirection:'SELL'}
   ]
   for(const{testRailId, brand, user,investDirection, mobileDirection}of tradingParamsOrders){
-    test(`${testRailId} ${brand} Open/Close pending ${investDirection} position`,
+    test(`${testRailId} ${brand} Open/Close pending ${investDirection} order`,
           {tag:['@trading', '@web'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
           async ({ page }, testInfo) => {
@@ -162,7 +162,7 @@ test.describe('Trading - Pending orders. WEB/Mobile', async()=>{
       });
       await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
         await mainPage.openHeaderMenuPoint("markets");
-        await instruments.openPositionOfInstrument(tradingInstrument, mobileDirection)
+        await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
       await test.step('Open order with manual rate value', async()=>{
         await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
@@ -183,7 +183,7 @@ test.describe('Trading - Pending orders. WEB/Mobile', async()=>{
   })}
 
   for(const{testRailId, brand, user,investDirection,mobileDirection}of tradingParamsOrders){
-    test(`${testRailId} ${brand} Mobile Open/Close pending ${investDirection} position`,
+    test(`${testRailId} ${brand} Mobile. Open/Close pending ${investDirection} order`,
           {tag:['@trading', '@mobile'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
           async ({ page }, testInfo) => {

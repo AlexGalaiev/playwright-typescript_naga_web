@@ -7,7 +7,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { Captcha } from "../../pageObjects/captcha";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
-test.describe("WEB/Mobile. All brands", async()=>{
+test.describe("Short regitration page elements", async()=>{
 
     type testRiskDisclaimer = {
         testRailId: string,
@@ -39,7 +39,6 @@ test.describe("WEB/Mobile. All brands", async()=>{
             expect(await signUp.getMenaRiskWarning()).toContain(localizationText)
         })
     }
-
 
     type languages = {
         testRailId: string;
@@ -107,7 +106,7 @@ test.describe("WEB/Mobile. All brands", async()=>{
         {testRailId:'@25443', brand:'@Africa', documents: new Map<string, string>([['Privacy Policy', "https://nagaafrica.com/documents/privacy_policy"]])},
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
-        test(`${testRailId} Check legal documents on sigh up page. ${brand} brand`, {tag:['@UI','@mobile','@compliance','@web']},async({page}, testInfo)=>{
+        test(`${testRailId} Legal documents on sigh up page. ${brand} brand`, {tag:['@UI','@mobile','@compliance','@web']},async({page}, testInfo)=>{
             let signUp = new SignUp(page)
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open sign up page on brand ${brand}`, async()=>{
@@ -120,7 +119,7 @@ test.describe("WEB/Mobile. All brands", async()=>{
     }
 })
 
-test.describe('WEB/Mobile. All Brands', async()=>{
+test.describe('Lead registration', async()=>{
     
     type loginTypes = {
         testRailId: string,

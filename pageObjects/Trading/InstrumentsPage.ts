@@ -99,10 +99,14 @@ export class AllInstruments{
             await this.page.waitForTimeout(1500)
         }
     }
-    async clearSearchField(){
+    async clearMobileSearchField(){
         await this.page.locator('[alt="clear search"]').click()
         await this.page.waitForTimeout(500)
         await this.page.locator("//button[text()='Done']").click()
+    }
+    async clearSearchField(){
+        await this.page.locator('[alt="clear search"]').click()
+        await this.page.waitForTimeout(500) 
     }
     async openMobilePosition(nameOfInstrumnet: string, positionType: string){
         await this.mobileSearchBtn.click()

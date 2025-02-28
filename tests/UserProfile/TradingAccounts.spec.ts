@@ -8,9 +8,9 @@ import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations";
 
-test.describe("NagaCapital - Trading Accounts", async()=>{
+test.describe("New Trading account", async()=>{
     
-  test("@23922 Create 2nd live account", {tag:['@secondAccount']}, 
+  test("@23922 Naga Capital. Create 2nd live account", {tag:['@secondAccount']}, 
     async({page, NagaCapital}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 70000);
     let addAccount = new AddAcountForm(page);
@@ -46,7 +46,7 @@ test.describe("NagaCapital - Trading Accounts", async()=>{
         {testRailId: '@23602', brand: '@Markets', user: 'userWithAccounts2@i.ua'},
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
-        test(`${testRailId} Edit trading account information ${brand}`, {tag:['@secondAccount','@web']}, async({page}, testInfo)=>{
+        test(`${testRailId} ${brand} Edit trading account information `, {tag:['@secondAccount','@web']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 90000);
         let signIn = new SignIn(page);
         let addAccountForm = new AddAcountForm(page);
@@ -91,8 +91,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
             await mainPage.switchUserToNotActiveAccount();
         })})}})
 
-test.describe('Naga Markets - Trading accounts', async()=>{
-    test('@23600 Create 2nd live account', {tag:['@secondAccount','@web']}, 
+    test('@23600 Naga Markets. Create 2nd live account', {tag:['@secondAccount','@web']}, 
         async({page, NagaMarkets}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 170000);
         let addAccount = new AddAcountForm(page);
@@ -117,10 +116,9 @@ test.describe('Naga Markets - Trading accounts', async()=>{
             await addAccount.create_EUR_DemoAccount();
             expect(await addAccount.checkNewDemoAccount()).toBeTruthy
         })})
-})
-test.describe('Naga Mena - Trading accounts', async()=>{
+
    
-    test(`@25400 Create 2nd live account`, {tag:['@secondAccount','@web']},
+    test(`@25400 NagaMena Create 2nd live account`, {tag:['@secondAccount','@web']},
         async({page, NagaMena}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let addAccount = new AddAcountForm(page);
@@ -142,5 +140,4 @@ test.describe('Naga Mena - Trading accounts', async()=>{
         expect(await addAccount.checkNewDemoAccount()).toBeTruthy
     })
 
-    })
 })

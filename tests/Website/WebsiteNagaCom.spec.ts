@@ -3,7 +3,7 @@ import { NagaCom } from "../../pageObjects/Website/NagaCom";
 import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText";
 
-test.describe('Naga.com website. Redirect from website to platform', async()=>{
+test.describe('Naga.com website', async()=>{
     
     type RedirectTypes = {
         testRailId: string
@@ -28,6 +28,23 @@ test.describe('Naga.com website. Redirect from website to platform', async()=>{
             await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
                 await website.checkTradeInstrument(`${type}`)
                 await website.clickBtn(`${buttonName}`)
+                expect(await website.checkUrl()).toContain(`${redirectTo}`)
+            })
+        })
+    }
+    for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
+        test(`${testRailId} Mobile. Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
+            {tag: ['@prodSanity','@website-naga.com','@mobile', '@debug']}, async({proxyPage},testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 15000)
+            let website = new NagaCom(proxyPage)
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
+                await website.openMobileMenu()
+            })
+            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
+                await website.acceptAllCookies()
+                await website.checkMobileTradeInstrument(`${type}`)
+                await website.clickMobileBtn(`${buttonName}`)
                 expect(await website.checkUrl()).toContain(`${redirectTo}`)
             })
         })

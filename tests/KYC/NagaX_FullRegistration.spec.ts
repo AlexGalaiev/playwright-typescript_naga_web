@@ -15,8 +15,8 @@ import { NagaXAddPopup } from "../../pageObjects/FullRegistration/components/Nag
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
 import { Captcha } from "../../pageObjects/captcha"
 
-test.describe('Naga X ', async()=>{
-    test('@25365 KYC - High score', {tag:['@prodSanity', '@kyc']}, async({page, NagaX, NagaXCountry}, testInfo)=>{
+test.describe('KYC', async()=>{
+    test('@25365 NAGA X - High score', {tag:['@prodSanity', '@kyc']}, async({page, NagaX, NagaXCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000);
         let signUp = new SignUp(page)
         let mainPage = new MainPage(page)

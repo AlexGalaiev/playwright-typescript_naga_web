@@ -10,7 +10,7 @@ import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFin
 import { getLocalization } from "../../pageObjects/localization/getText"
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 
-test.describe('WEB. Naga Africa', async()=>{
+test.describe('KYC WEB. Naga Africa', async()=>{
     let email = ''
 
     test.beforeEach('Create lead user', async({page, NagaAfrica, NagaAfricaCountry}, testInfo)=>{
@@ -81,7 +81,7 @@ test.describe('WEB. Naga Africa', async()=>{
     })
 })
 
-test.describe('Mobile. Naga Africa', async()=>{
+test.describe('KYC Mobile - Naga Africa', async()=>{
     let email = ''
     test.beforeEach('Create lead user', async({page, NagaAfrica, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 220000);
