@@ -6,7 +6,7 @@ import {test} from "../../test-options"
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
-test.describe("WEB/Mobile. All brands", async()=>{
+test.describe("Feed", async()=>{
     
 type testFeedtypes = {
     testRailId: string,

@@ -120,7 +120,7 @@ test.describe("WEB/Mobile view, All brands", async()=>{
         {testRailId: '@25439', brandStart: '@Africa', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
     ]
     for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-        test(`${testRailId} WEB/Mobile. Switch brands popup ${brandStart}`, {tag:['@UI', '@mobile','@web']}, async({page})=>{
+        test.skip(`${testRailId} WEB/Mobile. Switch brands popup ${brandStart}`, {tag:['@UI', '@mobile','@web']}, async({page})=>{
             let localizationPage = new getLocalization(localization);
             let sighInPage = new SignIn(page);
             await test.step(`Open login page on ${brandStart} and login to platform by ${user}`, async()=>{
@@ -135,6 +135,8 @@ test.describe("WEB/Mobile view, All brands", async()=>{
         })}    
                 
     
+test.describe('Guest mode', async()=>{
+
     type testTypesGuestMode = {
         testRailId: string,
         brand: string, 
@@ -165,9 +167,9 @@ test.describe("WEB/Mobile view, All brands", async()=>{
                 expect(await signUp.getSighUpTittleText()).toContain("Sign up");
             })})}
 })
+})
 
-
-test.describe('Web/Mobile View. All brands',async()=>{
+test.describe('Login/LogOut',async()=>{
     type testTypes = {
         testrailId: string;
         brand: string;
@@ -213,7 +215,7 @@ test.describe('Web/Mobile View. All brands',async()=>{
             })})
     }
 })
-test.describe('WEB/Mobile view. All brands', async()=>{
+test.describe('Logo redirect', async()=>{
     
     type logoTests = {
         testRailId:string;

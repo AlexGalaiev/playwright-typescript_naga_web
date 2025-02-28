@@ -4,7 +4,7 @@ import { Deposit } from "../../pageObjects/ManageFunds/Deposit";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
 
-test.describe('WEB/Mobile. All brands', async()=>{
+test.describe('Deposit', async()=>{
     type depositNumber = {
         testRaildId: string,
         numberOfDepositMethods: number,
@@ -48,7 +48,7 @@ test.describe('WEB/Mobile. All brands', async()=>{
     }
 })
 
-test.describe('WEB/Mobile. All brands', async()=>{
+test.describe('Deposit', async()=>{
 
     type NStestTypes = {
         testRailId: string,
@@ -112,7 +112,7 @@ test.describe('WEB/Mobile. All brands', async()=>{
             })
         })}
 }) 
-test.describe('WEB/Mobile Naga Capital', async()=>{
+test.describe('Deposit', async()=>{
 
     test.beforeEach(`Login by testTrading2 to platform`, async({page, NagaCapital}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
@@ -160,7 +160,7 @@ test.describe('WEB/Mobile Naga Capital', async()=>{
         })})
 })
 
-test.describe('WEB/Mobile. Naga Markets', async()=>{
+test.describe('Deposit', async()=>{
     
     type NMtestTypes = {
         testRailId: string,

@@ -13,7 +13,7 @@ import { Captcha } from "..//..//pageObjects/captcha"
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 
 
-test.describe('WEB', async()=>{
+test.describe('KYC WEB', async()=>{
   let email =''
 
   test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
@@ -143,7 +143,7 @@ test.describe('WEB', async()=>{
   })
 })
 
-test.describe('Mobile', async()=>{
+test.describe('KYC Mobile', async()=>{
   let email =''
 
   test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {

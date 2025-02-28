@@ -44,7 +44,7 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
             await watchlist.clearSearchField()
         })
         await test.step("Check instrument in watchlist. Remove instrument and check empty page", async()=>{
-            //await watchlist.openWatclistTab();
+            await watchlist.openWatclistTab();
             expect(await watchlist.getWatchlistedInstrumentName()).toEqual(tradeInstrument);
             await watchlist.removeInstrumentFromWatclist();
             expect(await localizationPage.getLocalizationText("Empty_watchlist_header")).toEqual(await watchlist.getEmptyWatchlistHeader())
@@ -73,7 +73,7 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
             await watchlist.openMobileSearchField()
             await watchlist.searchInstrument(tradeInstrument);
             await watchlist.addToWatchlist(tradeInstrument)
-            await watchlist.clearSearchField()
+            await watchlist.clearMobileSearchField()
         })
         await test.step("Check instrument in watchlist. Remove instrument and check empty page", async()=>{
             await watchlist.openMobileFavorites()

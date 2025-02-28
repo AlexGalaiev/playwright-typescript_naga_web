@@ -6,7 +6,7 @@ import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { Deposit } from "../../pageObjects/ManageFunds/Deposit";
 
-test.describe("WEB/Mobile", async()=>{
+test.describe("Withdrawal Capital", async()=>{
     const ManageFunds_Withdrawal = "/pageObjects/localization/ManageFunds_Withdrawal.json";
     let amountValueToWithrawal = '55'
 
@@ -71,7 +71,7 @@ test.describe("WEB/Mobile", async()=>{
             expect(await withdrawal.checkModalPopup()).toBeVisible()
         })
     });
-    test("@24091 Check Crypto withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page})=>{
+    test("@24091 Crypto withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page})=>{
         let withdrawal = new Withdrawal(page);
         let localization = new getLocalization(ManageFunds_Withdrawal);
         await test.step('Open withdrawal menu', async()=>{
@@ -93,7 +93,7 @@ test.describe("WEB/Mobile", async()=>{
             expect(await withdrawal.checkCryptoSuccessPopupText()).toEqual(await localization.getLocalizationText("CryptoWithdrawalSuccessPopupText"))
         })
     })
-    test("@24091 Mobile Check Crypto withdrawal", {tag:['@withdrawal', '@mobile']},async({page})=>{
+    test("@24091 Mobile. Crypto withdrawal", {tag:['@withdrawal', '@mobile']},async({page})=>{
         let withdrawal = new Withdrawal(page);
         let localization = new getLocalization(ManageFunds_Withdrawal);
         let mainPage = new MainPage(page)
@@ -119,7 +119,7 @@ test.describe("WEB/Mobile", async()=>{
     })
 })
 
-test.describe('WEB/Mobile. Naga Markets', async()=>{
+test.describe('Withdrawal Markets', async()=>{
     test("@24093 PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page, NagaMarkets}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
@@ -162,7 +162,7 @@ test.describe('WEB/Mobile. Naga Markets', async()=>{
     })
 })
 
-test.describe('WEB/Mobile. All brands', async()=>{
+test.describe('Withdrawal. All brands', async()=>{
 
 type NS_WithdrawalTypes = {
     testRailId: string,

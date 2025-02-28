@@ -5,7 +5,7 @@ import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
 import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 import {test} from "../../test-options"
 
-test.describe("WEB/Mobile. All brands", async()=>{
+test.describe("Trading with No funds", async()=>{
 type testNoFunds = {
     testRailId: string, 
     brand: string,
@@ -16,9 +16,9 @@ type testNoFunds = {
 
 const testNoFundsParaketers: testNoFunds[] = [
    {testRailId: '@25018', brand: '@Capital', user: 'tradingNoFunds', tradingInstrument: "Bitcoin/EUR"},
-   {testRailId: '@25176', brand: '@Markets', user: 'tradNoFundsMarket', tradingInstrument: "Cardano/USD"},
+   {testRailId: '@25176', brand: '@Markets', user: 'tradNoFundsMarket', tradingInstrument: "Bitcoin/EUR"},
    {testRailId: '@25381', brand: '@Mena', user: 'testNoFundsMena@naga.com', tradingInstrument: "Bitcoin/EUR"},
-   {testRailId: '@25420', brand: '@Africa', user: 'testTradingAfrica@naga.com', tradingInstrument: "Bitcoin/EUR"}
+   {testRailId: '@25420', brand: '@Africa', user: 'testNoFundsAfrica@naga.com', tradingInstrument: "Bitcoin/EUR"}
 ]
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
     test(`${testRailId} Open position without funds ${brand}`, 
