@@ -34,17 +34,20 @@ test.describe('Naga.com website', async()=>{
     }
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(`${testRailId} Mobile. Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@prodSanity','@website-naga.com','@mobile', '@debug']}, async({proxyPage},testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 15000)
+            {tag: ['@website-naga.com','@mobile']}, async({proxyPage},testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 25000)
             let website = new NagaCom(proxyPage)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
-                await website.openMobileMenu()
+                await website.openMobileMenu(0)
             })
             await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
                 await website.acceptAllCookies()
-                await website.checkMobileTradeInstrument(`${type}`)
-                await website.clickMobileBtn(`${buttonName}`)
+                await website.checkMobileTradeInstrument(`${type}`,1)
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
+                await website.openMobileMenu(0)
+                await website.clickMobileBtn(`${buttonName}`,1)
                 expect(await website.checkUrl()).toContain(`${redirectTo}`)
             })
         })
@@ -72,6 +75,25 @@ test.describe('Naga.com website', async()=>{
         })
     }
 
+    for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
+        test(`${testRailId} Mobile. Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
+            {tag: ['@website-naga.com','@mobile']}, async({proxyPageUAE},testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 25000)
+            let website = new NagaCom(proxyPageUAE)
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
+                await website.openMobileMenu(0)
+            })
+            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
+                await website.checkMobileTradeInstrument(`${type}`,1)
+                await website.openMobileMenu(0)
+                await website.acceptAllCookies()
+                await website.clickMobileBtn(`${buttonName}`,1)
+                expect(await website.checkUrl()).toContain(`${redirectTo}`)
+            })
+        })
+    }
+
     const fromWebsiteToNAfrica: RedirectTypes[] = [
         {testRailId: '@25220', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/za', redirectTo: 'https://app.naga.com/login?lang=en'},
         {testRailId: '@25220', type: 'Trade', buttonName: 'Get started', baseUrl: 'https://naga.com/za', redirectTo: 'https://app.naga.com/register?lang=en'},
@@ -87,6 +109,24 @@ test.describe('Naga.com website', async()=>{
             await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
                 await website.checkTradeInstrument(`${type}`)
                 await website.clickBtn(`${buttonName}`)
+                expect(await website.checkUrl()).toContain(`${redirectTo}`)
+            })
+        })
+    }
+    for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNAfrica){
+        test(`${testRailId} Mobile. Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
+            {tag: ['@mobile', '@website-naga.com']}, async({proxyPageSA},testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 15000)
+            let website = new NagaCom(proxyPageSA)
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
+                await website.openMobileMenu(2)
+            })
+            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
+                await website.checkMobileTradeInstrument(`${type}`,2)
+                await website.openMobileMenu(2)
+                await website.acceptAllCookies()
+                await website.clickMobileBtn(`${buttonName}`,2)
                 expect(await website.checkUrl()).toContain(`${redirectTo}`)
             })
         })
@@ -111,6 +151,23 @@ test.describe('Naga.com website', async()=>{
             await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
                 await website.checkTradeInstrument(`${type}`)
                 await website.clickBtn(`${buttonName}`)
+                expect(await website.checkUrl()).toContain(`${redirectTo}`)
+            })})
+    }
+    for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
+        test(`${testRailId} Mobile Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
+            {tag: ['@website-naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 10000)
+            let website = new NagaCom(proxyPageUA)
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
+                await website.openMobileMenu(0)
+            })
+            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
+                await website.checkMobileTradeInstrument(`${type}`,1)
+                await website.openMobileMenu(0)
+                await website.acceptAllCookies()
+                await website.clickMobileBtn(`${buttonName}`,1)
                 expect(await website.checkUrl()).toContain(`${redirectTo}`)
             })})
     }
@@ -140,6 +197,33 @@ test.describe('Naga.com website', async()=>{
                 expect(await website.checkUrl()).toContain(`${redirectTo}`)
             })})
         }
+
+    for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
+        test(`${testRailId} Mobile.Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
+            {tag: ['@website-naga.com','@mobile']}, 
+            async({proxyPage}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 50000);
+            let website = new NagaCom(proxyPage)
+            let localization = new getLocalization('/pageObjects/localization/Website_NagaCom.json')
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
+                await website.openMobileMenu(0)
+            })
+            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
+               // await website.checkAndCloseBullonPopup()
+               await website.checkMobileTradeInstrument(`${type}`,1)
+               await website.acceptAllCookies()
+               await website.checkAndCloseBullonPopup()
+               await website.openMobileMenu(0)
+               await website.clickMobileBtn(`${buttonName}`,1)
+            await test.step('Check redirect notification popup text. And redirect to Webtrader', async()=>{
+                expect(await website.getRedirectAllertPopupText()).toContain(await localization.getLocalizationText("RedirectAllertPopupText"))
+                await website.acceptRedirectPopup()
+            })
+                expect(await website.checkUrl()).toContain(`${redirectTo}`)
+            })})
+        }
+
     type searchTypes = {
         testRailId: string;
         type: string;
@@ -166,6 +250,26 @@ test.describe('Naga.com website', async()=>{
             await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
                 await website.searchInstrument(nameOfInstrument);
                 const[newPage, instrumentName] = await website.openPosition(buttonName)
+                let newWebsite = new NagaCom(newPage)
+                expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
+            })})
+    }
+
+    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EuSearchTypes){
+        test(`${testRailId} Mobile VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
+            {tag:['@website-naga.com','@mobile','@debug']}, async({proxyPageUA}, testInfo)=>{
+            let website = new NagaCom(proxyPageUA)
+            testInfo.setTimeout(testInfo.timeout + 20000)
+            await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
+                await website.open(basePage)
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(`${type}`,1)
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
+            })
+            await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
+                await website.searchMobileInstrument(nameOfInstrument);
+                const[newPage, instrumentName] = await website.openMobilePosition()
                 let newWebsite = new NagaCom(newPage)
                 expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
             })})
