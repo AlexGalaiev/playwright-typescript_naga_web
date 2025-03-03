@@ -67,12 +67,12 @@ export class NagaCom{
             await instrument.click()
         }
     }
-    async checkMobileTradeInstrument(nameOfInstrument: string){
-        let instrument = await this.page.locator(`#prod_type_${nameOfInstrument}`).nth(1)
-        let instrumentsAtr = await instrument.getAttribute('class')
-        if(instrumentsAtr?.includes('active')){}else{
-            await instrument.click()
-        }
+    async checkMobileTradeInstrument(nameOfInstrument: string, numberOfElement: number){
+        let instrument = await this.page.locator(`#prod_type_${nameOfInstrument}`).nth(numberOfElement)
+        // let instrumentsAtr = await instrument.getAttribute('class')
+        // if(instrumentsAtr?.includes('active')){}else{
+        await instrument.click()
+        
     }
     async open(url: string){
         await this.page.goto(url);
@@ -84,8 +84,8 @@ export class NagaCom{
         await elementToClick.click()
         await this.page.waitForTimeout(1500)
     }
-    async clickMobileBtn(ButtonName:string){
-        let elementToClick = await this.page.locator(`//span[text()='${ButtonName}']`).nth(1)
+    async clickMobileBtn(ButtonName:string, numberElement: number){
+        let elementToClick = await this.page.locator(`//span[text()='${ButtonName}']`).nth(numberElement)
         await elementToClick.scrollIntoViewIfNeeded()
         await elementToClick.click()
         await this.page.waitForTimeout(1500)
@@ -146,6 +146,12 @@ export class NagaCom{
         await searchField.pressSequentially(nameOfInstrument)
         await this.page.waitForTimeout(500);
     }
+    async searchMobileInstrument(nameOfInstrument: string){
+        let searchField = await this.page.locator("//input[@placeholder='Search NAGA for assets...']")
+        await searchField.scrollIntoViewIfNeeded();
+        // await searchField.pressSequentially(nameOfInstrument)
+        // await this.page.waitForTimeout(500);
+    }
     async openPosition(buttonName: string):Promise<[Page, instrumentName:any]>{
         let instrument = await this.page.locator("//ul[contains(@class, 'InstrumentsTableRow')]")
         let name = await instrument.locator('//span').first();
@@ -154,6 +160,19 @@ export class NagaCom{
         const [newPage] = await Promise.all([
             contexts.waitForEvent('page'),
             instrument.locator(`//div[text()='${buttonName}']`).first().click()
+        ])
+        await this.page.waitForTimeout(10000)
+        return [newPage, instrumentName?.replace(/[()]/g, "")]
+    }
+
+    async openMobilePosition():Promise<[Page, instrumentName:any]>{
+        let instrument = await this.page.locator("//ul[contains(@class, 'InstrumentsTableRow')]").first()
+        let name = await instrument.locator("//div[contains(@class, 'text-xs')]")
+        let instrumentName = await name.textContent()
+        let contexts =  await this.page.context()
+        const [newPage] = await Promise.all([
+            contexts.waitForEvent('page'),
+            name.click()
         ])
         await this.page.waitForTimeout(10000)
         return [newPage, instrumentName?.replace(/[()]/g, "")]
@@ -254,7 +273,7 @@ export class NagaCom{
         }
     }
     async checkAndCloseBullonPopup(){
-        await this.page.waitForTimeout(3500)
+        await this.page.waitForTimeout(3000)
         let pushPopup = await this.page.locator("//div[contains(@class, 'mantine-Paper-root')]")
         if(await pushPopup.isVisible()){
             await pushPopup.locator("//button[contains(@class, 'mantine-CloseButton-root')]").click()
@@ -288,8 +307,8 @@ export class NagaCom{
         return await instrument.locator(`//..//..//td[${dataIndex}]`).textContent()
     }
     async acceptAllCookies(){
+        await this.page.waitForTimeout(4000)
         let cookieBtn = await this.page.locator("//button[text()='Accept all cookies']")
-        await this.page.waitForTimeout(1000)
         if(await cookieBtn.isVisible())
             {await cookieBtn.click()}
     }
@@ -306,8 +325,9 @@ export class NagaCom{
         await container.waitFor({state:"visible"})
         return await container
     }
-    async openMobileMenu(){
-        let hamburger = await this.page.locator(".hamburger").first()
+    async openMobileMenu(numberOfElement: number){
+        await this.page.waitForLoadState()
+        let hamburger = await this.page.locator(".hamburger").nth(numberOfElement)
         await hamburger.click()
         let menu = await this.page.locator("//div[contains(@class, 'product-tabs')]").nth(1)
         await menu.waitFor({state:"visible"})
