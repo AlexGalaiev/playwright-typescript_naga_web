@@ -22,7 +22,7 @@ on:
           - "support"
           - "secondAccount"
           - "prodSanity"
-          - "website-naga.com"
+          - "naga.com"
           - "debug"
           - "forgotPassword"
           - "UI"
@@ -113,13 +113,14 @@ jobs:
               echo "Schedule: ${{ github.event.schedule }}"
               case "${{ github.event.schedule }}" in
                 "30 4 * * 0-6") echo "TAGS=@prodSanity" >> $GITHUB_ENV ;;
-                "20 3 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
+                "20 3 * * 0-6") echo "TAGS=@naga.com" >> $GITHUB_ENV ;;
                 "00 2 * * 0-6") echo "TAGS=@KYC" >> $GITHUB_ENV ;;
                 "30 1 * * 0-6") echo "TAGS=@feed" >> $GITHUB_ENV ;;
                 "10 1 * * 0-6") echo "TAGS=@manageFunds" >> $GITHUB_ENV ;;
                 "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
                 "45 0 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
                 "05 0 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
+                "12 10 * * 0-6") echo "TAGS=@naga.com" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
@@ -168,6 +169,7 @@ jobs:
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
             export ENV="$ENV" 
+            echo "grep params (?=.*@web)(?=.*$TAGS)"
             CRON_RUN=${{github.event_name}} npx playwright test --grep "(?=.*@web)(?=.*$TAGS)" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
             echo "Running production tests for tag @prodSanity due to push"
