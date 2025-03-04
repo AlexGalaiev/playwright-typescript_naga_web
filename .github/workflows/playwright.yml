@@ -64,6 +64,7 @@ on:
     - cron: '30 6 * * 0-6'
     - cron: '45 0 * * 0-6'
     - cron: '05 0 * * 0-6'
+    - cron: '59 9 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -120,6 +121,7 @@ jobs:
                 "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
                 "45 0 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
                 "05 0 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
+                "59 9 * * 0-6") echo "TAGS=@website-naga.com" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
@@ -168,6 +170,8 @@ jobs:
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
             export ENV="$ENV" 
+            GrepVa = "(?=.*@web)(?=.*$TAGS)"
+            echo
             CRON_RUN=${{github.event_name}} npx playwright test --grep "(?=.*@web)(?=.*$TAGS)" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         elif [ "$GITHUB_EVENT_NAME" = "push" ]; then
             echo "Running production tests for tag @prodSanity due to push"
