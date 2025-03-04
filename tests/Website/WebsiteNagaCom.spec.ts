@@ -19,7 +19,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@prodSanity','@website-naga.com','@web']}, async({proxyPage},testInfo)=>{
+            {tag: ['@prodSanity','@naga.com','@web']}, async({proxyPage},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 15000)
             let website = new NagaCom(proxyPage)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -34,7 +34,7 @@ test.describe('Website redirect', async()=>{
     }
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(`${testRailId} Mobile. Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@website-naga.com','@mobile']}, async({proxyPage},testInfo)=>{
+            {tag: ['@naga.com','@mobile']}, async({proxyPage},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 25000)
             let website = new NagaCom(proxyPage)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -61,7 +61,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
         test(`${testRailId} Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@prodSanity', '@website-naga.com','@web']}, async({proxyPageUAE},testInfo)=>{
+            {tag: ['@prodSanity', '@naga.com','@web']}, async({proxyPageUAE},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 25000)
             let website = new NagaCom(proxyPageUAE)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -77,7 +77,7 @@ test.describe('Website redirect', async()=>{
 
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
         test(`${testRailId} Mobile. Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@website-naga.com','@mobile']}, async({proxyPageUAE},testInfo)=>{
+            {tag: ['@naga.com','@mobile']}, async({proxyPageUAE},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 25000)
             let website = new NagaCom(proxyPageUAE)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -100,7 +100,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNAfrica){
         test(`${testRailId} Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@prodSanity', '@website-naga.com','@web']}, async({proxyPageSA},testInfo)=>{
+            {tag: ['@prodSanity', '@naga.com','@web']}, async({proxyPageSA},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 15000)
             let website = new NagaCom(proxyPageSA)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -115,7 +115,7 @@ test.describe('Website redirect', async()=>{
     }
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNAfrica){
         test(`${testRailId} Mobile. Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@mobile', '@website-naga.com']}, async({proxyPageSA},testInfo)=>{
+            {tag: ['@mobile', '@naga.com']}, async({proxyPageSA},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 15000)
             let website = new NagaCom(proxyPageSA)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -142,7 +142,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
         test(`${testRailId} Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
-            {tag: ['@prodSanity', '@website-naga.com','@web']}, async({proxyPageUA}, testInfo)=>{
+            {tag: ['@prodSanity', '@naga.com','@web']}, async({proxyPageUA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 10000)
             let website = new NagaCom(proxyPageUA)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -156,7 +156,7 @@ test.describe('Website redirect', async()=>{
     }
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
         test(`${testRailId} Mobile Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
-            {tag: ['@website-naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
+            {tag: ['@naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 10000)
             let website = new NagaCom(proxyPageUA)
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -178,7 +178,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
-            {tag: ['@website-naga.com','@web']}, 
+            {tag: ['@naga.com','@web']}, 
             async({proxyPage}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 50000);
             let website = new NagaCom(proxyPage)
@@ -200,7 +200,7 @@ test.describe('Website redirect', async()=>{
 
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
         test(`${testRailId} Mobile.Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
-            {tag: ['@website-naga.com','@mobile']}, 
+            {tag: ['@naga.com','@mobile']}, 
             async({proxyPage}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 50000);
             let website = new NagaCom(proxyPage)
@@ -238,7 +238,7 @@ test.describe('Website redirect', async()=>{
        ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EuSearchTypes){
         test(`${testRailId} VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
-            {tag:['@website-naga.com','@web']}, async({proxyPageUA}, testInfo)=>{
+            {tag:['@naga.com','@web']}, async({proxyPageUA}, testInfo)=>{
             let website = new NagaCom(proxyPageUA)
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
@@ -257,7 +257,7 @@ test.describe('Website redirect', async()=>{
 
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EuSearchTypes){
         test(`${testRailId} Mobile VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
-            {tag:['@website-naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
+            {tag:['@naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
             let website = new NagaCom(proxyPageUA)
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
@@ -280,7 +280,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of AESearchTypes){
         test(`${testRailId} VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
-            {tag:['@website-naga.com','@web']}, async({proxyPageUAE}, testInfo)=>{
+            {tag:['@naga.com','@web']}, async({proxyPageUAE}, testInfo)=>{
             let website = new NagaCom(proxyPageUAE)
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
@@ -300,7 +300,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of ZASearchTypes){
         test(`${testRailId} VPN(ZA) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
-            {tag:['@website-naga.com','@web']}, async({proxyPageSA}, testInfo)=>{
+            {tag:['@naga.com','@web']}, async({proxyPageSA}, testInfo)=>{
             let website = new NagaCom(proxyPageSA)
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
@@ -322,7 +322,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EnSearchTypes){
         test(`${testRailId} VPN(Italy). Redirect from ${basePage}/${type} to platfotm. Search ${nameOfInstrument} on page`, 
-            {tag: ['@website-naga.com','@web']}, async({proxyPage}, testInfo)=>{
+            {tag: ['@naga.com','@web']}, async({proxyPage}, testInfo)=>{
             let website = new NagaCom(proxyPage)
             testInfo.setTimeout(testInfo.timeout + 10000)
             await test.step(`Open website ${basePage}. Check instrument ${type}`,async()=>{
@@ -354,7 +354,7 @@ test.describe('Website. Languages and translations', async()=>{
     ]
     for(const{testRailId, regulation, languages,numberOfLanguages}of languageParameters){
         test(`${testRailId} Check available languages on ${regulation}`,
-            {tag: ['@website-naga.com','@web']}, async({page})=>{
+            {tag: ['@naga.com','@web']}, async({page})=>{
             let website = new NagaCom(page)
             await test.step(`Open naga.com/${regulation} website`, async()=>{
                 await website.open(`https://naga.com/${regulation}`)
@@ -401,7 +401,7 @@ test.describe('Website. Languages and translations', async()=>{
     ]
     for(const{testRailId,platform,language,btn1,btn2,btn3,btn4,tradeType,investType}of translationParams){
         test(`${testRailId} Localization of main buttons-${platform}. ${language} language`,
-            {tag:['@website-naga.com','@web']}, async({page}, testInfo)=>{
+            {tag:['@naga.com','@web']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 80000);
             let website = new NagaCom(page)
             let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
@@ -443,7 +443,7 @@ test.describe('Website. Languages and translations', async()=>{
     ]
     for(const{testRailId, platform, language, type, btn1, btn2}of cryptoParams){
         test(`${testRailId} Localization of main buttons, Language-${language} on ${platform}, ${type}`,
-            {tag: ['@website-naga.com','@web']}, async({page}, testInfo)=>{
+            {tag: ['@naga.com','@web']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 30000);
             let website = new NagaCom(page)
             let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
@@ -476,7 +476,7 @@ test.describe('Website. Languages and translations', async()=>{
     ]
     for(const{testRailId, platform, language, btn1,type}of payTranslationsParams){
         test(`${testRailId} Localization of main buttons, Language-${language} on ${platform}, Pay page`,
-            {tag:['@website-naga.com','@web']}, async({page}, testInfo)=>{
+            {tag:['@naga.com','@web']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 30000);
             let website = new NagaCom(page)
             let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
@@ -504,7 +504,7 @@ test.describe('Website. Footer and header elements', async()=>{
     ]
     for(const{testRailId, type } of footer){
         test(`${testRailId} naga.com/eu footer ->${type} page`, 
-            {tag:['@website-naga.com','@web']}, async({page})=>{
+            {tag:['@naga.com','@web']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step(`Open website https://naga.com/eu`, async()=>{
@@ -522,7 +522,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {testRailId: '@25205', type: 'crypto'},
     ]
     for(const{testRailId, type} of EuFooterCryptoParams){
-        test(`${testRailId} naga.com/eu footer ->${type} page`, {tag:['@website-naga.com','@web']}, async({page})=>{
+        test(`${testRailId} naga.com/eu footer ->${type} page`, {tag:['@naga.com','@web']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website https://naga.com/eu", async()=>{
@@ -541,7 +541,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {testRailId: '@25207', type: 'pay'},
     ]
     for(const{testRailId, type} of EuFooterPayParams){
-        test(`${testRailId} naga.com/eu footer ->${type} page`, {tag:['@website-naga.com','@web']}, async({page})=>{
+        test(`${testRailId} naga.com/eu footer ->${type} page`, {tag:['@naga.com','@web']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website https://naga.com/eu", async()=>{
@@ -560,7 +560,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {testRailId: "@25203", type: 'Invest'},
     ]
     for(const{testRailId, type}of EnFooterParams){
-        test(`${testRailId} naga.com/en footer ->${type} page`, {tag:['@website-naga.com','@web']}, async({page})=>{
+        test(`${testRailId} naga.com/en footer ->${type} page`, {tag:['@naga.com','@web']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/en", async()=>{
@@ -577,7 +577,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {testRailId: "@25223", type: 'Trade'},
     ]
     for(const{testRailId, type}of ZA_FooterParams){
-        test(`${testRailId} naga.com/za footer ->${type} page`, {tag:['@website-naga.com','@web']}, async({page})=>{
+        test(`${testRailId} naga.com/za footer ->${type} page`, {tag:['@naga.com','@web']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/za", async()=>{
@@ -594,7 +594,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {testRailId: '@25231', type: 'Invest'}
     ]
     for(const{testRailId, type}of AE_FooterParams){
-        test(`${testRailId} naga.com/ae footer ->${type} page`, {tag:['@website-naga.com','@web']}, async({page})=>{
+        test(`${testRailId} naga.com/ae footer ->${type} page`, {tag:['@naga.com','@web']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/ae", async()=>{
@@ -619,7 +619,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'Fees', page2:'IPO', page3:'Privacy Policy'}
     ]
     for(const{testRailId, type, baseUrl,page1, page2, page3}of EuRiskWarningFooter){
-        test(`${testRailId} ${baseUrl} ->Risk Warning footer /${type} page`, {tag:['@website-naga.com','@web']}, async({page})=>{
+        test(`${testRailId} ${baseUrl} ->Risk Warning footer /${type} page`, {tag:['@naga.com','@web']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -657,7 +657,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'https://www.youtube.com/@nagamena'], ['facebook', 'https://www.facebook.com/NAGA.ADGM'],['instagram', 'https://www.instagram.com/naga_adgm/'],['tiktok','https://www.tiktok.com/@naga_mena'],['linkedin','https://www.linkedin.com/company/naga-mena/']])},
     ]
     for(const{testRailId, regulation, networks}of socialParamsZA){
-        test(`${testRailId} Social networks. ${regulation} regulation`,{tag:['@website-naga.com','@web']},async({page}, testInfo)=>{
+        test(`${testRailId} Social networks. ${regulation} regulation`,{tag:['@naga.com','@web']},async({page}, testInfo)=>{
             let website = new NagaCom(page);
             await testInfo.setTimeout(testInfo.timeout + 40000);
             await test.step(`Open naga.com/${regulation}`, async()=>{
@@ -681,7 +681,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {type:'Invest', page1:'Futures', page2:'Economic Calendar', page3:'Partnerships'}
     ]
     for(const{type, page1, page2, page3}of headerParams){
-        test(`@25234 Header disclaimer on ${type} page`,{tag:['@website-naga.com','@web']}, async({page}, testInfo)=>{
+        test(`@25234 Header disclaimer on ${type} page`,{tag:['@naga.com','@web']}, async({page}, testInfo)=>{
             let website = new NagaCom(page);
             await testInfo.setTimeout(testInfo.timeout + 10000);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
@@ -722,7 +722,7 @@ test.describe('Website. Footer and header elements', async()=>{
     ]
     for(const{testRailId, type, platform, documents, regulation}of pdfParams){
         test(`${testRailId} Check legal documents on ${type} page. Base url ${platform}`,
-            {tag: ['@website-naga.com', '@compliance','@web']}, async({page}, testInfo)=>{
+            {tag: ['@naga.com', '@compliance','@web']}, async({page}, testInfo)=>{
             await testInfo.setTimeout(testInfo.timeout + 40000);
             let website = new NagaCom(page);
             await test.step(`Open ${platform}`, async()=>{
@@ -760,7 +760,7 @@ test.describe('Website. Footer and header elements', async()=>{
         ]
         for(const{testRailId, regulation, type, landingPages}of mainPageParams){
             test(`${testRailId} Landing pages on ${regulation}/ ${type}`, 
-                {tag: ['@website-naga.com','@web']},async({page}, testInfo)=>{
+                {tag: ['@naga.com','@web']},async({page}, testInfo)=>{
                 let website = new NagaCom(page);
                 await testInfo.setTimeout(testInfo.timeout + 30000);
                 let localization = new getLocalization('/pageObjects/localization/Website_Naga.com_landingPages.json')
@@ -781,7 +781,7 @@ test.describe('Website. Footer and header elements', async()=>{
             {testRailId:'@25250', regulation:'eu', type:'pay', landingPages:['miketyson', 'trading', 'social', 'money']}
         ]
         for(const{testRailId, regulation, type, landingPages}of mainPageLandings){
-            test(`${testRailId} Landing page on ${type} page`,{tag: ['@website-naga.com','@web']},async({page})=>{
+            test(`${testRailId} Landing page on ${type} page`,{tag: ['@naga.com','@web']},async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization('/pageObjects/localization/Website_Naga.com_landingPages.json')
             await test.step(`Open naga.com/${regulation}=>${type} page`, async()=>{
@@ -809,7 +809,7 @@ test.describe('Website. Footer and header elements', async()=>{
     ]
     for(const{testRailId, regulation, tabsName}of tabParams){
         test(`${testRailId} Check Pricing and Markets hours page.${regulation}`,
-            {tag:['@website-naga.com','@web']}, async({page},testInfo)=>{
+            {tag:['@naga.com','@web']}, async({page},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 70000);
             let website = new NagaCom(page)
             await test.step(`Open website naga.com/${regulation}`, async()=>{
@@ -837,7 +837,7 @@ test.describe('Website. Footer and header elements', async()=>{
     // ]
     // for(const{testRailId, regulation, tabsName}of otherFeeParams){
     //     test.skip(`${testRailId} Check other Fees tab. ${regulation} tab`,
-    //         {tag:['@website-naga.com','@web']},async({page}, testInfo)=>{
+    //         {tag:['@naga.com','@web']},async({page}, testInfo)=>{
     //         let website = new NagaCom(page)
     //         await testInfo.setTimeout(testInfo.timeout + 50000);
     //         await test.step(`Open website naga.com/${regulation}`, async()=>{
