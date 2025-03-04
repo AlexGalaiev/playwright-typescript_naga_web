@@ -736,10 +736,12 @@ test.describe('Website. Footer and header elements', async()=>{
                     expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
                     expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
                     await website.closePopup()
-                }})})
-    }
+                }}
+            )})
+    }})
 
     test.describe('Website. Landing pages', async()=>{
+
         type mainPage = {
             testRailId: string;
             regulation: string;
@@ -853,5 +855,4 @@ test.describe('Website. Footer and header elements', async()=>{
     //                     expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '3')).not.toBeNull()
     //                     expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '3')).not.toEqual('-')
     //                 }}
-    //     })})}
-    })
+        })
