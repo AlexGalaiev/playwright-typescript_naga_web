@@ -29,11 +29,13 @@ export class NagaCom{
     aeHeaderDisclaimer: Locator;
     mainPageContent: Locator;
     mikeTysonTab: Locator;
+    languageSwitcherMobile: Locator;
 
     constructor(page: Page){
         this.page = page
         this.headerContainer = page.locator("//div[@id='header-container']")
         this.languageSwitcher = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div").first()
+        this.languageSwitcherMobile = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div")
         this.redirectPopupText = page.locator("//button//span[text()='OK']//..//..//preceding-sibling::div[1]")
         this.riskWarning_EU = page.locator("//span[text()='RISK WARNING:']//..//..//p[1]")
         this.riskWarning_EU_main = page.locator("//span[text()='RISK WARNING:']//..//..//p[2]")
@@ -111,6 +113,10 @@ export class NagaCom{
     }
     async openLanguages(){
         await this.languageSwitcher.click();
+        await this.page.waitForSelector("//div[contains(@class, 'LanguageSelector_menuBody')]",{state:"visible"})
+    }
+    async openMobileLanguages(numberOdElement: number){
+        await this.languageSwitcherMobile.nth(numberOdElement).click()
         await this.page.waitForSelector("//div[contains(@class, 'LanguageSelector_menuBody')]",{state:"visible"})
     }
     async getName(exampleName: string){
