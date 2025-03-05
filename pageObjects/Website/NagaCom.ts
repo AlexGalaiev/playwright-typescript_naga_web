@@ -29,11 +29,13 @@ export class NagaCom{
     aeHeaderDisclaimer: Locator;
     mainPageContent: Locator;
     mikeTysonTab: Locator;
+    languageSwitcherMobile: Locator;
 
     constructor(page: Page){
         this.page = page
         this.headerContainer = page.locator("//div[@id='header-container']")
         this.languageSwitcher = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div").first()
+        this.languageSwitcherMobile = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div")
         this.redirectPopupText = page.locator("//button//span[text()='OK']//..//..//preceding-sibling::div[1]")
         this.riskWarning_EU = page.locator("//span[text()='RISK WARNING:']//..//..//p[1]")
         this.riskWarning_EU_main = page.locator("//span[text()='RISK WARNING:']//..//..//p[2]")
@@ -113,6 +115,10 @@ export class NagaCom{
         await this.languageSwitcher.click();
         await this.page.waitForSelector("//div[contains(@class, 'LanguageSelector_menuBody')]",{state:"visible"})
     }
+    async openMobileLanguages(numberOdElement: number){
+        await this.languageSwitcherMobile.nth(numberOdElement).click()
+        await this.page.waitForSelector("//div[contains(@class, 'LanguageSelector_menuBody')]",{state:"visible"})
+    }
     async getName(exampleName: string){
         return await this.page.locator(`//span[text()='${exampleName}']`).first().textContent()
     }
@@ -125,6 +131,13 @@ export class NagaCom{
         await btn.first().scrollIntoViewIfNeeded();
         return await btn
     }
+    async getMobileBtnText(buttonName: string){
+        return await this.page.locator("//div[contains(@class, 'mobile-header')]//a[contains(@class, 'ButtonBaseV2_btn__WH_wc')]", {hasText: buttonName})
+    }
+    async getMobileBtnTextPay(buttonName: string){
+        return await this.page.locator("//div[contains(@class, 'mobile-header')]//button[contains(@class, 'ButtonBaseV2_btn')]", {hasText:buttonName})
+    }
+
     async getBtnHeaderTextPay(buttonName: string){
         let btn = await this.userLoginSectionPay.locator(`//span[text()='${buttonName}']`)
         await btn.first().scrollIntoViewIfNeeded();
@@ -183,6 +196,17 @@ export class NagaCom{
         let langTitle = await this.languageSwitcher.getAttribute('title') || ''
         if(langTitle.includes(language)){}else{
             await this.languageSwitcher.click();
+            await this.page.waitForTimeout(200)
+            await this.page.waitForSelector("//div[contains(@class, 'LanguageSelector_menuBody')]", {state:"visible"})
+            await this.page.locator("//a[contains(@id, 'language_menu_item')]", {hasText:language}).click()
+        }
+        await this.page.waitForTimeout(1500)
+    }
+    async switchMobileLanguageTo(language: string){
+        await this.page.waitForTimeout(1000)
+        let langTitle = await this.languageSwitcherMobile.nth(1).getAttribute('title') || ''
+        if(langTitle.includes(language)){}else{
+            await this.languageSwitcherMobile.nth(1).click();
             await this.page.waitForTimeout(200)
             await this.page.waitForSelector("//div[contains(@class, 'LanguageSelector_menuBody')]", {state:"visible"})
             await this.page.locator("//a[contains(@id, 'language_menu_item')]", {hasText:language}).click()
@@ -308,7 +332,7 @@ export class NagaCom{
     }
     async acceptAllCookies(){
         await this.page.waitForTimeout(4000)
-        let cookieBtn = await this.page.locator("//button[text()='Accept all cookies']")
+        let cookieBtn = await this.page.locator("//button[contains(@id, 'CybotCookiebot')]").nth(1)
         if(await cookieBtn.isVisible())
             {await cookieBtn.click()}
     }
