@@ -664,6 +664,24 @@ test.describe('Website. Footer and header elements', async()=>{
                 expect(await website.getText(await website.riskWarning_EU_main)).toEqual(await localization.getLocalizationText('EU_footer_RiskWarning_main'))
             })})
     }
+
+    for(const{testRailId, type } of footer){
+        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, 
+            {tag:['@naga.com','@mobile']}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step(`Open website https://naga.com/eu`, async()=>{
+                await website.open('https://naga.com/eu')
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(type, 1)
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
+            })
+            await test.step("Check naga.com/eu footer elements", async()=>{
+                expect(await website.getText(await website.riskWarning_EU)).toEqual(await localization.getLocalizationText('EU_footer_RiskWarning_header'))
+                expect(await website.getText(await website.riskWarning_EU_main)).toEqual(await localization.getLocalizationText('EU_footer_RiskWarning_main'))
+            })})
+    }
     
     
     const EuFooterCryptoParams: footerTypes[] = [
@@ -676,6 +694,25 @@ test.describe('Website. Footer and header elements', async()=>{
             await test.step("Open website https://naga.com/eu", async()=>{
                 await website.open('https://naga.com/eu')
                 await website.checkTradeInstrument(type)
+            })
+            await test.step("Check naga.com/eu footer elements", async()=>{
+                expect(await website.getText(await website.euCryptoAdressFooter)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_address'))
+                expect(await website.getText(await website.euCryptoRegulationFooter)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_regulation'))
+                expect(await website.getText(await website.euCryptoRiskNotification)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_riskNotification'))
+                expect(await website.getText(await website.euCryptoRestrictedCountries)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_restrictedCountries'))
+            })
+        })}
+
+    for(const{testRailId, type} of EuFooterCryptoParams){
+        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website https://naga.com/eu", async()=>{
+                await website.open('https://naga.com/eu')
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(type, 1)
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
             })
             await test.step("Check naga.com/eu footer elements", async()=>{
                 expect(await website.getText(await website.euCryptoAdressFooter)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_address'))
@@ -703,6 +740,24 @@ test.describe('Website. Footer and header elements', async()=>{
             })
         })}
 
+    for(const{testRailId, type} of EuFooterPayParams){
+        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website https://naga.com/eu", async()=>{
+                await website.open('https://naga.com/eu')
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(type, 1)
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
+            })
+            await test.step("Check naga.com/eu footer elements", async()=>{
+                expect(await website.getText(await website.euPayAddress)).toEqual(await localization.getLocalizationText('EU_payFooter_address'))
+                expect(await website.getText(await website.euPayRegistrationNumber)).toEqual(await localization.getLocalizationText('EU_payFooter_registrationNumber'))
+                expect(await website.getText(await website.euPayRiskNotification)).toEqual(await localization.getLocalizationText('EU_payFooter_riskNotification'))
+            })
+        })}
+
     const EnFooterParams: footerTypes[] = [
         {testRailId: "@25201", type: 'Trade'},
         {testRailId: "@25203", type: 'Invest'},
@@ -714,6 +769,23 @@ test.describe('Website. Footer and header elements', async()=>{
             await test.step("Open website naga.com/en", async()=>{
                 await website.open('https://naga.com/en')
                 await website.checkTradeInstrument(type)
+            })
+            await test.step("Check footer naga.com/en footer elemets", async()=>{
+                expect(await website.getText(await website.riskWarning_EN)).toEqual(await localization.getLocalizationText("EN_footer_RiskWarning"))
+                expect(await website.getText(await website.restrictedRegions_EN)).toEqual(await localization.getLocalizationText("EN_footer_RestrictedRegions"))
+            })})
+    }
+
+    for(const{testRailId, type}of EnFooterParams){
+        test(`${testRailId} Mobile naga.com/en footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website naga.com/en", async()=>{
+                await website.open('https://naga.com/en')
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(type, 1)
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
             })
             await test.step("Check footer naga.com/en footer elemets", async()=>{
                 expect(await website.getText(await website.riskWarning_EN)).toEqual(await localization.getLocalizationText("EN_footer_RiskWarning"))
@@ -737,6 +809,21 @@ test.describe('Website. Footer and header elements', async()=>{
             })})
     }
 
+    for(const{testRailId, type}of ZA_FooterParams){
+        test(`${testRailId} Mobile naga.com/za footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website naga.com/za", async()=>{
+                await website.open('https://naga.com/za')
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
+            })
+            await test.step("Check footer naga.com/en footer elemets", async()=>{
+                expect(await website.getText(await website.zaRiskWarning)).toEqual(await localization.getLocalizationText("ZA_RiskWarning"))
+                expect(await website.getText(await website.zaRegualtion)).toEqual(await localization.getLocalizationText("ZA_Regulation"))
+            })})
+    }
+
     const AE_FooterParams: footerTypes[] = [
         {testRailId: '@25230', type: "Trade"},
         {testRailId: '@25231', type: 'Invest'}
@@ -747,6 +834,23 @@ test.describe('Website. Footer and header elements', async()=>{
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/ae", async()=>{
                 await website.open('https://naga.com/ae')
+            })
+            await test.step("Check footer naga.com/en footer elemets", async()=>{
+                expect(await website.getText(await website.aeFooterRiskWarning)).toEqual(await localization.getLocalizationText("AE_RiskWarning"))
+                expect(await website.getText(await website.aeFooterDisclaimer)).toEqual(await localization.getLocalizationText("AE_Disclaimer"))
+            })})
+    }
+
+    for(const{testRailId, type}of AE_FooterParams){
+        test(`${testRailId} Mobile naga.com/ae footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step("Open website naga.com/ae", async()=>{
+                await website.open('https://naga.com/ae')
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(type, 1)
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
             })
             await test.step("Check footer naga.com/en footer elemets", async()=>{
                 expect(await website.getText(await website.aeFooterRiskWarning)).toEqual(await localization.getLocalizationText("AE_RiskWarning"))
