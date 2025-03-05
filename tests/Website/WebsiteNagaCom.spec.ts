@@ -505,6 +505,32 @@ test.describe('Website. Languages and translations', async()=>{
             })})
         }
 
+    for(const{testRailId,platform,language,btn1,btn2,btn3,btn4,tradeType,investType}of translationParams){
+        test(`${testRailId} Mobile Localization of main buttons-${platform}. ${language} language`,
+            {tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 80000);
+            let website = new NagaCom(page)
+            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
+            await test.step(`Open ${platform} and switch to ${language}`, async()=>{
+                await website.open(platform)
+                await website.switchMobileLanguageTo(language)
+                await website.acceptAllCookies()
+                await website.openMobileMenu(0)
+                await website.checkAndCloseBullonPopup()
+            })
+            await test.step(`Check ${tradeType} page buttons`, async()=>{
+                expect(await website.getMobileBtnText(await localization.getTranslation(btn1))).toBeVisible()
+                expect(await website.getMobileBtnText(await localization.getTranslation(btn2))).toBeVisible()
+            })
+            await test.step(`Check ${investType} page buttons`, async()=>{
+                await website.checkMobileTradeInstrument(`${investType}`,1)
+                await website.openMobileMenu(0)
+                await website.acceptAllCookies()
+                expect(await website.getMobileBtnText(await localization.getTranslation(btn1))).toBeVisible()
+                expect(await website.getMobileBtnText(await localization.getTranslation(btn2))).toBeVisible()
+            })})
+        }
+
     type translationsCrypto = {
         testRailId: string;
         platform: string;
@@ -536,7 +562,29 @@ test.describe('Website. Languages and translations', async()=>{
             await test.step(`Check main button ${type} page`, async()=>{
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn1))).toBeVisible()
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
-            })})}
+            })})
+        }
+        
+    for(const{testRailId, platform, language, type, btn1, btn2}of cryptoParams){
+        test(`${testRailId} Mobile Localization of main buttons, Language-${language} on ${platform}, ${type}`,
+            {tag: ['@naga.com','@mobile']}, async({page}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 30000);
+            let website = new NagaCom(page)
+            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
+            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
+                await website.open(platform)
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(type, 1)
+                await website.switchMobileLanguageTo(language)
+                await website.acceptAllCookies()
+                await website.openMobileMenu(0)
+                await website.checkAndCloseBullonPopup()
+            })
+            await test.step(`Check main button ${type} page`, async()=>{
+                expect(await website.getMobileBtnText(await localization.getTranslation(btn1))).toBeVisible()
+                expect(await website.getMobileBtnText(await localization.getTranslation(btn2))).toBeVisible()
+            })})
+        }
 
     type payTranslations = {
         testRailId: string,
@@ -568,6 +616,26 @@ test.describe('Website. Languages and translations', async()=>{
             })
             await test.step(`Check main button ${type} page`, async()=>{
                 expect(await website.getBtnHeaderTextPay(await localization.getTranslation(btn1))).toBeVisible()
+            })
+        })}
+
+    for(const{testRailId, platform, language, btn1,type}of payTranslationsParams){
+        test(`${testRailId} Mobile. Localization of main buttons, Language-${language} on ${platform}, Pay page`,
+            {tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 30000);
+            let website = new NagaCom(page)
+            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
+            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
+                await website.open(platform)
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(type, 1)
+                await website.switchMobileLanguageTo(language)
+                await website.acceptAllCookies()
+                await website.openMobileMenu(0)
+                await website.checkAndCloseBullonPopup()
+            })
+            await test.step(`Check main button ${type} page`, async()=>{
+                expect(await website.getMobileBtnTextPay(await localization.getTranslation(btn1))).toBeVisible()
             })
         })}
 })
