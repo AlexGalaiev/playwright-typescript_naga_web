@@ -242,6 +242,12 @@ export class NagaCom{
         await category.click()
         await this.page.waitForTimeout(1500)
     }
+    async openMobileFooterCategory(categoryName: string, subcategory: string){
+        await this.footerContainer.scrollIntoViewIfNeeded();
+        await this.footerContainer.locator(`//div[text()='${categoryName}']`).click()
+        await this.footerContainer.locator(`//a[text()='${subcategory}']`).click()
+        await this.page.waitForTimeout(1500)
+    }
     async openSocialNetwork(networkName: string):Promise<Page>{
         let icon = await this.page.locator(`//a[contains(@aria-label, '${networkName}')]`).first()
         await icon.scrollIntoViewIfNeeded();
@@ -297,7 +303,7 @@ export class NagaCom{
         }
     }
     async checkAndCloseBullonPopup(){
-        await this.page.waitForTimeout(3000)
+        await this.page.waitForTimeout(2000)
         let pushPopup = await this.page.locator("//div[contains(@class, 'mantine-Paper-root')]")
         if(await pushPopup.isVisible()){
             await pushPopup.locator("//button[contains(@class, 'mantine-CloseButton-root')]").click()
@@ -331,7 +337,7 @@ export class NagaCom{
         return await instrument.locator(`//..//..//td[${dataIndex}]`).textContent()
     }
     async acceptAllCookies(){
-        await this.page.waitForTimeout(4000)
+        await this.page.waitForTimeout(3000)
         let cookieBtn = await this.page.locator("//button[contains(@id, 'CybotCookiebot')]").nth(1)
         if(await cookieBtn.isVisible())
             {await cookieBtn.click()}
