@@ -895,6 +895,44 @@ test.describe('Website. Footer and header elements', async()=>{
                 expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
             })})
     }
+    type mobileFooterTypeEU = {
+        testRailId: string,
+        type: string,
+        baseUrl: string,
+        page1: string,
+        page2: string,
+        subcategory1: string,
+        subcategory2: string
+    }
+
+    const EuMobileRiskWarningFooter: mobileFooterTypeEU[] = [
+        {testRailId: '@25199', type: 'trade', baseUrl:'https://naga.com/eu', page1:"Markets", page2:"Company", subcategory1:'Forex', subcategory2:'Contact us'},
+        {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'Platforms', page2:'Help & Support', subcategory1:'NAGA Web', subcategory2:'Contact us'}
+    ]
+    for(const{testRailId, type, baseUrl,page1, page2, subcategory1, subcategory2}of EuMobileRiskWarningFooter){
+        test(`${testRailId} Mobile ${baseUrl} -> Risk Warning footer /${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+            let website = new NagaCom(page);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step(`Open website ${baseUrl}`, async()=>{
+                await website.open(`${baseUrl}`)
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(type, 1)
+            })
+            await test.step('Check risk warning footer', async()=>{
+                await website.acceptAllCookies()
+                await website.checkAndCloseBullonPopup()
+                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
+            })
+            await test.step(`Check footer on ${page1} page`, async()=>{
+                await website.openMobileFooterCategory(page1, subcategory1)
+                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
+            })
+            await test.step(`Check footer on ${page2} page`, async()=>{
+                await website.openMobileFooterCategory(page2, subcategory2)
+                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
+            })
+        })
+    }
 
     type socialNetworksZA = {
         testRailId: string;
@@ -909,7 +947,7 @@ test.describe('Website. Footer and header elements', async()=>{
         {testRailId:'@25240', regulation:'ae', networks: new Map<string, string>([['youtube', 'https://www.youtube.com/@nagamena'], ['facebook', 'https://www.facebook.com/NAGA.ADGM'],['instagram', 'https://www.instagram.com/naga_adgm/'],['tiktok','https://www.tiktok.com/@naga_mena'],['linkedin','https://www.linkedin.com/company/naga-mena/']])},
     ]
     for(const{testRailId, regulation, networks}of socialParamsZA){
-        test(`${testRailId} Social networks. ${regulation} regulation`,{tag:['@naga.com','@web']},async({page}, testInfo)=>{
+        test(`${testRailId} Social networks. ${regulation} regulation`,{tag:['@naga.com','@web','@mobile']},async({page}, testInfo)=>{
             let website = new NagaCom(page);
             await testInfo.setTimeout(testInfo.timeout + 40000);
             await test.step(`Open naga.com/${regulation}`, async()=>{
@@ -920,7 +958,7 @@ test.describe('Website. Footer and header elements', async()=>{
                     expect(await website.getSocialNetworkHref(icon)).toEqual(url)
                 }
             })})
-    }})
+    }
 
     type headerTypes = {
         type: string;
@@ -956,6 +994,35 @@ test.describe('Website. Footer and header elements', async()=>{
                 expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
             })})
         }
+        
+    const AEMobileRiskWarningFooter: mobileFooterTypeEU[] = [
+        {testRailId: '@25199', type: 'Trade', baseUrl:'https://naga.com/eu', page1:"Markets", page2:"Company", subcategory1:'Forex', subcategory2:'Contact us'},
+        {testRailId: '@25198', type: 'Invest', baseUrl:'https://naga.com/eu', page1:'Platforms', page2:'Help & Support', subcategory1:'NAGA Web app', subcategory2:'Contact us'}
+    ]
+    for(const{type, page1, page2, subcategory1, subcategory2}of AEMobileRiskWarningFooter){
+        test(`@25234 Footer disclaimer on ${type} page`,{tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
+            let website = new NagaCom(page);
+            testInfo.setTimeout(testInfo.timeout + 10000);
+            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
+            await test.step('Open naga.com/ae and check header discleimer', async()=>{
+                await website.open('https://naga.com/ae');
+                await website.openMobileMenu(0)
+                await website.checkMobileTradeInstrument(`${type}`, 1)
+                await website.checkAndCloseBullonPopup()
+                await website.acceptAllCookies();
+                //await website.checkTradeInstrument(type);
+                expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
+            })
+            await test.step(`Check header on ${page1} page`, async()=>{
+                await website.openMobileFooterCategory(page1, subcategory1)
+                expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
+            })
+            await test.step(`Check header on ${page2} page`, async()=>{
+                await website.openMobileFooterCategory(page2, subcategory2)
+                expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
+            })
+        })
+        }})
     test.describe('Website. Legal documents', async()=>{
    
     type pdfTypes = {
@@ -990,7 +1057,28 @@ test.describe('Website. Footer and header elements', async()=>{
                     await website.closePopup()
                 }}
             )})
-    }})
+        }
+
+    for(const{testRailId, type, platform, documents, regulation}of pdfParams){
+        test(`${testRailId} Mobile. Check legal documents on ${type} page. Base url ${platform}`,
+            {tag: ['@naga.com', '@compliance','@mobile']}, async({page}, testInfo)=>{
+            await testInfo.setTimeout(testInfo.timeout + 40000);
+            let website = new NagaCom(page);
+            await test.step(`Open ${platform}`, async()=>{
+                await website.open(platform)
+            })
+            await test.step('Check documents in popup', async()=>{
+                for(let index in documents){
+                    await website.openLegalDocument(documents[index])
+                    expect(await website.getPopupHeader()).toEqual(documents[index])
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
+                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
+                    await website.closePopup()
+                }}
+            )})
+        }
+})
 
     test.describe('Website. Landing pages', async()=>{
 
@@ -1080,31 +1168,4 @@ test.describe('Website. Footer and header elements', async()=>{
                         expect(await website.getTableData(allInstruments[index], '6')).not.toBeNull()
                     }}}
             )})}
-        
-    // const otherFeeParams: tabTypes[] = [
-    //     {testRailId:'@25254', regulation:'eu', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
-    //     {testRailId:'@25255', regulation:'en', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
-    //     {testRailId:'@25256', regulation:'ae', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
-    //     {testRailId:'@25257', regulation:'za', tabsName:['Deposit','Withdrawals','Copy Fee Schedule']},
-    // ]
-    // for(const{testRailId, regulation, tabsName}of otherFeeParams){
-    //     test.skip(`${testRailId} Check other Fees tab. ${regulation} tab`,
-    //         {tag:['@naga.com','@web']},async({page}, testInfo)=>{
-    //         let website = new NagaCom(page)
-    //         await testInfo.setTimeout(testInfo.timeout + 50000);
-    //         await test.step(`Open website naga.com/${regulation}`, async()=>{
-    //             await website.open(`https://naga.com/${regulation}/trading/hours-and-fees`)
-    //         })
-    //         await test.step('Check available instruments and tabs', async()=>{
-    //             await website.scrollToOtherFees();
-    //             for(let index in tabsName){ 
-    //                 await website.openMarketAndHoursTab(tabsName[index])
-    //                 await website.acceptAllCookies()
-    //                 let allInstruments = await website.getOtherFeeAvailabelInstruments();
-    //                 for(let index in allInstruments){
-    //                     expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '2')).not.toBeNull()
-    //                     expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '2')).not.toEqual('-')
-    //                     expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '3')).not.toBeNull()
-    //                     expect(await website.getDataForInstrument_OtherFee(allInstruments[index], '3')).not.toEqual('-')
-    //                 }}
         })
