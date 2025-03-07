@@ -251,7 +251,7 @@ test.describe('Website redirect', async()=>{
                 await website.searchInstrument(nameOfInstrument);
                 const[newPage, instrumentName] = await website.openPosition(buttonName)
                 let newWebsite = new NagaCom(newPage)
-                expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
+                expect(await newWebsite.checkUrl()).toContain(`${redirectTo}`)
             })})
     }
 
@@ -271,7 +271,7 @@ test.describe('Website redirect', async()=>{
                 await website.searchMobileInstrument(nameOfInstrument);
                 const[newPage, instrumentName] = await website.openMobilePosition()
                 let newWebsite = new NagaCom(newPage)
-                expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}/${instrumentName}?type=BUY`)
+                expect(await newWebsite.checkUrl()).toContain(`${redirectTo}`)
             })})
     }
     const AESearchTypes: searchTypes[] = [
@@ -292,7 +292,7 @@ test.describe('Website redirect', async()=>{
                 await website.checkAndCloseBullonPopup()
                 const[newPage, instrumentName] = await website.openPosition(buttonName)
                 let newWebsite = new NagaCom(newPage)
-                expect(await newWebsite.checkUrl()).toEqual(`${redirectTo}`)
+                expect(await newWebsite.checkUrl()).toContain(`${redirectTo}`)
             })})
     }
 

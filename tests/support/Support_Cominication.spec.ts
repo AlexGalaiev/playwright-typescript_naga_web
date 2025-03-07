@@ -5,9 +5,9 @@ import { HelpPage } from "../../pageObjects/Support/HelpPage";
 import {test} from "../../test-options"
 test.describe('NagaCapital. Support links', async()=>{
 
-    test.beforeEach("Login to platform", async({page, NagaCapital})=>{
+    test.beforeEach("Login to platform", async({page, AppNAGA})=>{
         let signIn = new SignIn(page);
-        await signIn.goto(NagaCapital, 'login');
+        await signIn.goto(AppNAGA, 'login');
         await signIn.signInUserToPlatform("testSupport@i.ua", process.env.USER_PASSWORD || '')
         await new MainPage(page).openBackMenuPoint('F.A.Q');
     })
@@ -28,10 +28,10 @@ test.describe('NagaCapital. Support links', async()=>{
 
 test.describe('Naga Markets. Support links', async()=>{
     
-    test.beforeEach("Login to platform", async({page, NagaMarkets}, testInfo)=>{
+    test.beforeEach("Login to platform", async({page, AppNAGA}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
-        await signIn.goto(NagaMarkets, 'login');
+        await signIn.goto(AppNAGA, 'login');
         await signIn.signInUserToPlatform("testSupportMarkets@i.ua", process.env.USER_PASSWORD || '')
         await new MainPage(page).openBackMenuPoint('F.A.Q');
     })

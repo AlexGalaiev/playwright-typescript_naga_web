@@ -21,14 +21,14 @@ test.describe("Naga Capital. SignIn Page", async()=>{
 
     test.skip("@23916 Forgot password link test",
             {tag:['@forgotPassword'], annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
-        async({page, NagaCapital, NSCountry})=>{
+        async({page, AppNAGA, NSCountry})=>{
         let signInPage = new SignIn(page);
         let forgotPassword = new ForgotPassword(page);
         let signUp = new SignUp(page)
         let myAccountsMenu = new MyAccounts(page)
         testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
-            await signUp.goto(NagaCapital, 'register');
+            await signUp.goto(AppNAGA, 'register');
             await new Captcha(page).removeCaptcha()
             await signUp.createCFDUser(testUser, process.env.USER_PASSWORD || "", NSCountry)
             await new YouAreInNagaMarkets(page).clickExplorePlatform()
@@ -120,11 +120,11 @@ test.describe("WEB/Mobile view, All brands", async()=>{
         {testRailId: '@25439', brandStart: '@Africa', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
     ]
     for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-        test.skip(`${testRailId} WEB/Mobile. Switch brands popup ${brandStart}`, {tag:['@UI', '@mobile','@web']}, async({page})=>{
+        test.skip(`${testRailId} WEB/Mobile. Switch brands popup ${brandStart}`, {tag:['@UI', '@mobile','@web']}, async({page, AppNAGA})=>{
             let localizationPage = new getLocalization(localization);
             let sighInPage = new SignIn(page);
             await test.step(`Open login page on ${brandStart} and login to platform by ${user}`, async()=>{
-                await new SignUp(page).goto(await sighInPage.chooseBrand(brandStart), "login");
+                await new SignUp(page).goto(AppNAGA, "login");
                 await sighInPage.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             })
             await test.step(`Check redirection notice on popup and check correct url ${brandRedirect}`, async()=>{
@@ -150,14 +150,14 @@ test.describe('Guest mode', async()=>{
         {testRailId: '@25435', brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
     ] 
     for(const{testRailId, brand, localization} of testParamsGuestMode){
-        test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI','@mobile','@web']}, async({page}, testInfo)=>{
+        test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI','@mobile','@web']}, async({page,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 50000);
             let localizationPage = new getLocalization(localization);
             let signUp = new SignUp(page);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             await test.step("Redirect from platform (in Guest mode) to sigh in page", async()=>{
-                await signUp.goto(await signIn.chooseBrand(brand),"feed");
+                await signUp.goto(AppNAGA,"feed");
                 await mainPage.openLoginFromGuestMode();
                 expect(await signIn.getSignInHeaderText()).toEqual(await localizationPage.getLocalizationText("SighInHeaderMainText"));
             });
@@ -183,12 +183,12 @@ test.describe('Login/LogOut',async()=>{
     ]
     for(const {testrailId, brand, email} of testParams){
         test(`${testrailId} Login/logout to platform ${brand} by ${email}`, 
-            {tag:['@login', '@prodSanity','@smoke','@web']}, async({page})=>{
+            {tag:['@login', '@prodSanity','@smoke','@web']}, async({page,AppNAGA})=>{
             let signIn = new SignIn(page);
             let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)
             await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand), 'login')
+                await signIn.goto(AppNAGA, 'login')
                 await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
             await test.step('Log out from platform', async()=>{
@@ -200,12 +200,11 @@ test.describe('Login/LogOut',async()=>{
 
     for(const {testrailId, brand, email} of testParams){
         test(`${testrailId} Mobile view. Login/logout to platform ${brand} by ${email}`, 
-            {tag:['@login', '@mobile']}, async({page})=>{
+            {tag:['@login', '@mobile']}, async({page, AppNAGA})=>{
             let signIn = new SignIn(page);
-            let pageAfterLogOut = new PageAfterLogout(page)
             let myAccountsMenu = new MyAccounts(page)
             await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand), 'login')
+                await signIn.goto(AppNAGA, 'login')
                 await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
             await test.step('Log out from platform', async()=>{
@@ -229,19 +228,19 @@ test.describe('Logo redirect', async()=>{
     ]
 
     for(const{testRailId, brand}of logoTestParams){
-        test(`${testRailId} Redirect from ${brand} logo to website`,{tag:['@UI','@web']}, async({page})=>{
+        test(`${testRailId} Redirect from ${brand} logo to website`,{tag:['@UI','@web']}, async({page,AppNAGA})=>{
             let signIn = new SignIn(page)
             let website = new NagaCom(page)
-            await signIn.goto(await signIn.chooseBrand(brand), 'login')
+            await signIn.goto(AppNAGA, 'login')
             await signIn.clickLogo()
             expect(await website.checkInstrumentBar()).toBeVisible()
         })
     }
     for(const{testRailId, brand}of logoTestParams){
-        test(`${testRailId} Mobile. view. Redirect from ${brand} logo to website`,{tag:['@UI','@mobile']}, async({page})=>{
+        test(`${testRailId} Mobile. view. Redirect from ${brand} logo to website`,{tag:['@UI','@mobile']}, async({page,AppNAGA})=>{
             let signIn = new SignIn(page)
             let website = new NagaCom(page)
-            await signIn.goto(await signIn.chooseBrand(brand), 'login')
+            await signIn.goto(AppNAGA, 'login')
             await signIn.clickLogo()
             expect(await website.getMobileLandingPageContainer()).toBeVisible()
         })

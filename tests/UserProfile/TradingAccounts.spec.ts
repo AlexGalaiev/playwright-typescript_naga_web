@@ -11,7 +11,7 @@ import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRe
 test.describe("New Trading account", async()=>{
     
   test("@23922 Naga Capital. Create 2nd live account", {tag:['@secondAccount']}, 
-    async({page, NagaCapital}, testInfo)=>{
+    async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 70000);
     let addAccount = new AddAcountForm(page);
     let headerMenu = new HeaderMenuUserProfile(page);
@@ -22,7 +22,7 @@ test.describe("New Trading account", async()=>{
         await KYC_Registration.NagaCapital_KYC_HighScore(email, 
             process.env.USER_PASSWORD || '', 
             'Bosnia and Herzegovina',
-            NagaCapital)
+            AppNAGA)
     })
         await test.step('Add second live account in My Accounts', async()=>{
         await headerMenu.openAddNewTradingAccount();
@@ -46,12 +46,12 @@ test.describe("New Trading account", async()=>{
         {testRailId: '@23602', brand: '@Markets', user: 'userWithAccounts2@i.ua'},
     ]
     for(const{testRailId, brand, user} of testTrAccountsParams){
-        test(`${testRailId} ${brand} Edit trading account information `, {tag:['@secondAccount','@web']}, async({page}, testInfo)=>{
+        test(`${testRailId} ${brand} Edit trading account information `, {tag:['@secondAccount','@web']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 90000);
         let signIn = new SignIn(page);
         let addAccountForm = new AddAcountForm(page);
         await test.step(`Login to platform by ${user} to ${brand}`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step('Change account name of exist trading account', async()=>{
@@ -72,12 +72,12 @@ const testAccountSwitchingParams: tradingAcTypes[] = [
     {testRailId: '@25187', brand: '@Markets', user: 'userWithAccounts2@i.ua'}
 ]
 for(const{testRailId, brand, user} of testAccountSwitchingParams){
-    test(`${testRailId} ${brand} Switching between trading accounts`, {tag:['@secondAccount','@web']}, async({page}, testInfo)=>{
+    test(`${testRailId} ${brand} Switching between trading accounts`, {tag:['@secondAccount','@web']}, async({page, AppNAGA}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 70000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         await test.step(`Login to platform by ${user} user`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Switch to second trading account", async()=>{
@@ -92,7 +92,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
         })})}})
 
     test('@23600 Naga Markets. Create 2nd live account', {tag:['@secondAccount','@web']}, 
-        async({page, NagaMarkets}, testInfo)=>{
+        async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 170000);
         let addAccount = new AddAcountForm(page);
         let headerMenu = new HeaderMenuUserProfile(page);
@@ -104,7 +104,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
                 'France',
                 '+387',
                 '603039647',
-                NagaMarkets)
+                AppNAGA)
         })
         await test.step('Add second live account', async()=>{
             await headerMenu.openAddNewTradingAccount();
@@ -119,7 +119,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
 
    
     test(`@25400 NagaMena Create 2nd live account`, {tag:['@secondAccount','@web']},
-        async({page, NagaMena}, testInfo)=>{
+        async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let addAccount = new AddAcountForm(page);
     let headerMenu = new HeaderMenuUserProfile(page);
@@ -127,7 +127,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
     await test.step(`Create lead user with ${email}`, async()=>{
         await new KYC_General(page).NagaMena_FullRegUser(
             email,
-            NagaMena)
+            AppNAGA)
     })
     await test.step('Add second live account', async()=>{
         await headerMenu.openAddNewTradingAccount();

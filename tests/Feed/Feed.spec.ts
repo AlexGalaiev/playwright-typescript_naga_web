@@ -21,13 +21,13 @@ const testFeedParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedParams){
     test(`${testRailId} Main actions for post: create, edit, delete ${brand}`,
-        {tag:['@feed', '@prodSanity','@mobile','@web']}, async({page}, testInfo)=>{
+        {tag:['@feed', '@prodSanity','@mobile','@web']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let feed = new Feed(page)
         let myAccounts = new MyAccounts(page)
         await test.step(`Login by ${user}. ${brand} brand`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Test opens user profile and delete previously created posts (if they exist)", async()=>{
@@ -56,14 +56,14 @@ const testFeedParamsActions: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
     test(`${testRailId} ${brand} Main actions for post: Action - Like`,
-        {tag:['@feed', '@mobile','@web']}, async({page}, testInfo)=>{
+        {tag:['@feed', '@mobile','@web']}, async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 50000);
     let signIn = new SignIn(page);
     let feed = new Feed(page)
     let userProfile = new UserProfile(page)
     let myAccounts = new MyAccounts(page)
     await test.step(`login by user ${user} to ${brand} platform`, async()=>{
-        await signIn.goto(await signIn.chooseBrand(brand),'login');
+        await signIn.goto(AppNAGA,'login');
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
     })
     await test.step("Closed opened posts is they exist (Test goes to User profile and delete posts)", async()=>{
@@ -96,13 +96,13 @@ const testFeedCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
     test(`${testRailId} ${brand} Main actions for post: Comment a post ${brand}`, 
-        {tag:['@feed', '@mobile','@web']},async({page}, testInfo)=>{
+        {tag:['@feed', '@mobile','@web']},async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
         let myAccounts = new MyAccounts(page)
         await test.step(`login by user ${user} to ${brand} platform`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("In user profile, closed opened posts is they exist", async()=>{
@@ -138,13 +138,13 @@ const testShareCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
     test(`${testRailId} ${brand} Main action for post: Share a post ${brand}`, 
-        {tag:['@feed', '@mobile','@web']},async({page}, testInfo)=>{
+        {tag:['@feed', '@mobile','@web']},async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
         let myAccounts = new MyAccounts(page)
         await test.step(`login by user ${user} to ${brand} platform`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("In user profile, close posts if they exist", async()=>{
@@ -176,7 +176,7 @@ const testParamsUserCabinet: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){
     test(`${testRailId} ${brand} Check post in user profile ${brand}`, 
-        {tag:['@feed', '@mobile','@web']}, async({page}, testInfo)=>{
+        {tag:['@feed', '@mobile','@web']}, async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let myAccounts = new MyAccounts(page);
         let userProfile = new UserProfile(page)
@@ -184,7 +184,7 @@ for(const{testRailId, brand, user}of testParamsUserCabinet){
         let feed = new Feed(page);
         let textForPost = 'Hello World'
         await test.step(`login by user ${user} to ${brand} platform`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Open user profile cabinet and close previously created posts", async()=>{
@@ -216,13 +216,13 @@ const testNotVerifieduser: testFeedNotVeried[] = [
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
     test(`${testRailId} Not verified user tries to create new post${brand}`, 
-        {tag:['@feed', '@mobile','@web']},async({page}, testInfo)=>{
+        {tag:['@feed', '@mobile','@web']},async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let feed = new Feed(page)
         let myAccounts = new MyAccounts(page)
         await test.step(`Login to ${brand} platform with not verified ${user} user`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA, 'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Delete previously created posts, if exist(in user profile)", async()=>{

@@ -18,12 +18,12 @@ test.describe("Verification center", async() => {
   ]
 
   for(const{testRailId, user, brand}of testVerificatrionParams){
-    test(`${testRailId} ${brand} Check My documents(My accounts) page`, {tag:"@verification"},async({page})=>{
+    test(`${testRailId} ${brand} Check My documents(My accounts) page`, {tag:"@verification"},async({page, AppNAGA})=>{
       let signIn = new SignIn(page);
       let myAccounts = new MyAccounts(page);
       let verificationPopup = new VerificationPopup(page);
       await test.step(`Login by ${user} user, to ${brand}`, async()=>{
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
       await test.step('Check statuses of uploaded documents in My Accounts', async()=>{
         await myAccounts.openUserMenu()

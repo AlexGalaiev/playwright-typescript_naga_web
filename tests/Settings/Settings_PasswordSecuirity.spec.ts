@@ -13,7 +13,7 @@ import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/componen
 
 
 test("@23920 NagaCapital. Change password via settings", {tag:['@settings']}, 
-    async({page, NagaCapital}, testInfo)=>{
+    async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000);
     let signIn = new SignIn(page)
     let myAccounts = new MyAccounts(page)
@@ -22,7 +22,7 @@ test("@23920 NagaCapital. Change password via settings", {tag:['@settings']},
     let email = await new RandomUser().getRandomUserEmail()
     await test.step(`Create lead user ${email} with personal information`, async()=>{
         await new KYC_General(page).NagaCapital_UserLead(
-            email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina', NagaCapital)
+            email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina', AppNAGA)
         await new YouAreInNagaMarkets(page).clickExplorePlatform()
     })
     await test.step(`Change password. User opens header menu  and change to Test2345!`, async()=>{
@@ -39,7 +39,7 @@ test("@23920 NagaCapital. Change password via settings", {tag:['@settings']},
     })})
 
 test("@23598 NagaMarkets. Change password via settings",{tag:['@settings']}, 
-        async({page, NagaMarkets}, testInfo)=>{
+        async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let newLead = new KYC_General(page)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -48,7 +48,7 @@ test("@23598 NagaMarkets. Change password via settings",{tag:['@settings']},
     let settings = new SettingsPage(page)
     let signIn = new SignIn(page)
     await test.step(`Create lead user - ${email}, fill personal information, verify phone number`, async()=>{
-        await newLead.NagaMarkets_UserLead(email, process.env.USER_PASSWORD || '','France', '+387', '603039647', NagaMarkets)
+        await newLead.NagaMarkets_UserLead(email, process.env.USER_PASSWORD || '','France', '+387', '603039647', AppNAGA)
     })
     await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
         await myAccounts.openUserMenu();
@@ -65,7 +65,7 @@ test("@23598 NagaMarkets. Change password via settings",{tag:['@settings']},
 })
 
 test("@25428 NagaMena, Change password via settings",{tag:['@settings']}, 
-    async({page, NagaMena}, testInfo)=>{
+    async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let newLead = new KYC_General(page)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -74,7 +74,7 @@ test("@25428 NagaMena, Change password via settings",{tag:['@settings']},
     let settings = new SettingsPage(page)
     let signIn = new SignIn(page)
     await test.step(`Create lead user with ${email}`, async()=>{
-        await newLead.NagaMena_UserLead(email, NagaMena)
+        await newLead.NagaMena_UserLead(email, AppNAGA)
     })
     await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
         await myAccounts.openUserMenu();
@@ -91,7 +91,7 @@ test("@25428 NagaMena, Change password via settings",{tag:['@settings']},
 })
 
 test("@25429 NagaAfrica, Change password via settings",{tag:['@settings']}, 
-    async({page, NagaAfrica}, testInfo)=>{
+    async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let newLead = new KYC_General(page)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -100,7 +100,7 @@ test("@25429 NagaAfrica, Change password via settings",{tag:['@settings']},
     let settings = new SettingsPage(page)
     let signIn = new SignIn(page)
     await test.step(`Create lead user with ${email}`, async()=>{
-        await newLead.NagaAfrica_UserLead(email, NagaAfrica)
+        await newLead.NagaAfrica_UserLead(email, AppNAGA)
     })
     await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
         await myAccounts.openUserMenu();

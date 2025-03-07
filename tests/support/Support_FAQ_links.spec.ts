@@ -22,12 +22,12 @@ const testFAQParams: faqTypes[] = [
 ]
 
 for(const{testRailId, brand, user, categories} of testFAQParams){
-    test(`${testRailId} FAQ support links ${brand}`, {tag:'@support'},async({page}, testInfo)=>{
-        await testInfo.setTimeout(testInfo.timeout + 70000);
+    test(`${testRailId} FAQ support links ${brand}`, {tag:'@support'},async({page, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 70000);
         let signIn = new SignIn(page)
         let faq = new FAQ(page, categories)
         await test.step('Login to platform', async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand), 'login')
+            await signIn.goto(AppNAGA, 'login')
             await signIn.signInUserToPlatform(user,  process.env.USER_PASSWORD || '')
             await new MainPage(page).openBackMenuPoint('F.A.Q');
         })

@@ -10,12 +10,11 @@ test.describe("Withdrawal Capital", async()=>{
     const ManageFunds_Withdrawal = "/pageObjects/localization/ManageFunds_Withdrawal.json";
     let amountValueToWithrawal = '55'
 
-    test.beforeEach("Login by trade user", async({page, NagaCapital}, testInfo)=>{
+    test.beforeEach("Login by trade user", async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
-        let mainPage = new MainPage(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
-            await signIn.goto(NagaCapital,'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
         });
     })
@@ -120,14 +119,14 @@ test.describe("Withdrawal Capital", async()=>{
 })
 
 test.describe('Withdrawal Markets', async()=>{
-    test("@24093 PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page, NagaMarkets}, testInfo)=>{
+    test("@24093 PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page)
         let amountValueToWithrawal = 100
         await test.step('Login by depositTestMarkets3 to NagaMarkets and open withdrawal', async()=>{
-            await signIn.goto(NagaMarkets,'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform("depositTestMarkets3", process.env.USER_PASSWORD || '');
             await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
@@ -140,14 +139,14 @@ test.describe('Withdrawal Markets', async()=>{
         })
     })
     test("@24093 Mobile PayPal withdrawal", 
-        {tag:['@withdrawal', '@mobile']},async({page, NagaMarkets}, testInfo)=>{
+        {tag:['@withdrawal', '@mobile']},async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page)
         let amountValueToWithrawal = 100
         await test.step('Login by depositTestMarkets3 to NagaMarkets and open withdrawal', async()=>{
-            await signIn.goto(NagaMarkets,'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform("depositTestMarkets3", process.env.USER_PASSWORD || '');
             await mainPage.openMobileMenuPoint('Menu');
             await mainPage.openMobileBackMenuPoint('manage-funds')
@@ -179,13 +178,13 @@ const NS_WithdrawalParams: NS_WithdrawalTypes[] = [
 //difference between NagaMarkets and NagaCapital -> Markets has withdrawal popup, Capital opens iframe
 for(const{testRailId, brand, user, menuPoint, paymentMethod, responsePaymentMethod}of NS_WithdrawalParams){
     test(`${testRailId} ${brand} EWallet withdrawals. Check ${paymentMethod} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, async({page}, testInfo)=>{
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login by ${user} to ${brand} platform and open withdrawal`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
@@ -202,13 +201,13 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, responsePaymentMeth
 }
 for(const{testRailId, brand, user, menuPoint, paymentMethod, responsePaymentMethod}of NS_WithdrawalParams){
     test(`${testRailId} Mobile ${brand} EWallet withdrawals. Check ${paymentMethod} withdrawal`, 
-        {tag: ["@withdrawal", '@mobile']}, async({page}, testInfo)=>{
+        {tag: ["@withdrawal", '@mobile']}, async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login by ${user} to ${brand} platform and open ${paymentMethod} withdrawal`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await mainPage.openMobileMenuPoint('Menu');
             await mainPage.openMobileBackMenuPoint('manage-funds')
@@ -240,13 +239,13 @@ const NM_WithdrawalParams: NM_WithdrawalTypes[] = [
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_WithdrawalParams){
     test(`${testRailId} ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, async({page}, testInfo)=>{
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login by ${user} to ${brand} plarform  and open withdrawal`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
@@ -265,13 +264,13 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
 
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_WithdrawalParams){
     test(`${testRailId} Mobile ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
-        {tag: ["@withdrawal", '@mobile']}, async({page}, testInfo)=>{
+        {tag: ["@withdrawal", '@mobile']}, async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login by ${user} to ${brand} plarform  and open withdrawal`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await mainPage.openMobileMenuPoint('Menu');
             await mainPage.openMobileBackMenuPoint('manage-funds')
@@ -303,12 +302,12 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     ]
     for(const{testRailId, brand, user, numberOfEwalletWithdrawal} of testNumberOfWithdrawals){
         test(`${testRailId} ${brand} Check number of available withdrawals`, 
-            {tag:["@withdrawal", '@manageFunds','@web']}, async({page})=>{
+            {tag:["@withdrawal", '@manageFunds','@web']}, async({page,AppNAGA})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login by ${user} to ${brand} platform`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
@@ -334,13 +333,13 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     
     for(const{testRailId, brand, user, currency}of withdrawalEcompayParams){
         test(`${testRailId} ${brand} Withdrawal. Bank Account. Ecommpay`, 
-        {tag:["@withdrawal", '@manageFunds','@prodSanity','@web']},async({page}, testInfo)=>{
+        {tag:["@withdrawal", '@manageFunds','@prodSanity','@web']},async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login to ${brand} by ${user} and open withdrawal`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await mainPage.openBackMenuPoint('Manage Funds');
             await new Withdrawal(page).chooseWithdrawalMenu();
@@ -355,13 +354,13 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     })}
     for(const{testRailId, brand, user, currency}of withdrawalEcompayParams){
         test(`${testRailId} Mobile ${brand} Withdrawal. Bank Account. Ecommpay`, 
-        {tag:["@withdrawal",'@mobile']},async({page}, testInfo)=>{
+        {tag:["@withdrawal",'@mobile']},async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login to ${brand} by ${user} and open withdrawal`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand),'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await mainPage.openMobileMenuPoint('Menu');
             await mainPage.openMobileBackMenuPoint('manage-funds')

@@ -39,7 +39,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
 ]
 for(const{testRailId, brand, user, investDirection, protection,tradeField,mobileDirection} of tradingParametersPositionsSL){
   test(`${testRailId} ${brand} Mobile Open/Close ${investDirection} position + ${protection}`, 
-    {tag:['@trading','@mobile']}, async ({ page}, testInfo) => {
+    {tag:['@trading','@mobile']}, async ({ page,AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -49,7 +49,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
     let successPopup = new ClosePositionSuccessPopup(page);
     let tradeDetails = new TradeDetails(page)
     await test.step(`Login to platfotm ${brand} by ${user}`, async () => {
-      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.goto(AppNAGA, "login");
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions and close if they exist", async () => {
@@ -80,7 +80,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
 
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
   test(`${testRailId} ${brand} Open/Close ${investDirection} position + ${protection}`, 
-    {tag:['@trading','@web', '@prodSanity']}, async ({ page}, testInfo) => {
+    {tag:['@trading','@web', '@prodSanity']}, async ({ page, AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -89,7 +89,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     let newPosition = new NewPosition(page);
     let successPopup = new ClosePositionSuccessPopup(page);
     await test.step(`Login to platfotm ${brand} by ${user}`, async () => {
-      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.goto(AppNAGA, "login");
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions and close if they exist", async () => {
@@ -128,7 +128,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
   ]
   for(const{testRailId, brand, user, investDirection, protection, tradeField}of tradingParametersOrders){
     test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, 
-      {tag:['@trading', '@web']}, async({page}, testInfo)=>{
+      {tag:['@trading', '@web']}, async({page, AppNAGA}, testInfo)=>{
       testInfo.setTimeout(testInfo.timeout + 170000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -137,7 +137,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       let newPosition = new NewPosition(page);
       let successPopup = new ClosePositionSuccessPopup(page);
       await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened orders and close if they exist", async () => {
@@ -170,7 +170,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
 
   for(const{testRailId, brand, user, investDirection, protection, tradeField, mobileDirection}of tradingParametersOrders){
     test(`${testRailId} ${brand} Mobile Open/Close pending ${investDirection} position + ${protection}`, 
-      {tag:['@trading', '@mobile']}, async({page}, testInfo)=>{
+      {tag:['@trading', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
       testInfo.setTimeout(testInfo.timeout + 170000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -179,7 +179,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       let newPosition = new NewPosition(page);
       let successPopup = new ClosePositionSuccessPopup(page);
       await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened orders and close if they exist", async () => {
@@ -232,7 +232,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
 ]
 for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
   test(`${testRailId} ${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
-    {tag:['@trading','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-7506', type:'ticket'}}, async({page}, testInfo)=>{
+    {tag:['@trading','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-7506', type:'ticket'}}, async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -244,7 +244,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
     let successfullClosePopup = new ClosePositionSuccessPopup(page)
     let stopLossValue;
     await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
-      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.goto(AppNAGA, "login");
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions. Close it if exist", async () => {
@@ -290,7 +290,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
 
 for(const{testRailId, brand, user, protectionSL, protectionTP, currency, mobileDirection} of tradingParametersSLTP){
   test(`${testRailId} ${brand} Mobile Edit position popup with ${protectionSL}/${protectionTP}`, 
-    {tag:['@trading','@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-7506', type:'ticket'}}, async({page}, testInfo)=>{
+    {tag:['@trading','@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-7506', type:'ticket'}}, async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);
@@ -303,7 +303,7 @@ for(const{testRailId, brand, user, protectionSL, protectionTP, currency, mobileD
     let tradeDetails = new TradeDetails(page)
     let stopLossValue;
     await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
-      await signIn.goto(await signIn.chooseBrand(brand), "login");
+      await signIn.goto(AppNAGA, "login");
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions. Close it if exist", async () => {

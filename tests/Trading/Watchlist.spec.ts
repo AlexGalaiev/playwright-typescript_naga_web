@@ -23,14 +23,14 @@ const AddWatchlistPatameters: testTypes[] = [
     {testRailId: '@25418', brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
-    test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@trading','@web']}, async({page}, testInfo)=>{
+    test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@trading','@web']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let tradeInstrument = "EUR/USD"
         let localizationPage = new getLocalization(localization)
         let watchlist = new AllInstruments(page);
         await test.step(`Login to ${brand} platform by ${user}`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await new MainPage(page).openHeaderMenuPoint('markets');
         })        
@@ -54,14 +54,14 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
 }
 
 for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
-    test(`${testRailId} Mobile Add/Remove from Favorites ${brand}`,{tag:['@trading','@mobile']}, async({page}, testInfo)=>{
+    test(`${testRailId} Mobile Add/Remove from Favorites ${brand}`,{tag:['@trading','@mobile']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let tradeInstrument = "EUR/USD"
         let localizationPage = new getLocalization(localization)
         let watchlist = new AllInstruments(page);
         await test.step(`Login to ${brand} platform by ${user}`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await new MainPage(page).openMobileMenuPoint('markets');
         })        
@@ -92,7 +92,7 @@ const priceAlertParameters: testTypes[] = [
     {testRailId: '@25419', brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{testRailId, brand, user, localization}of priceAlertParameters){
-    test(`${testRailId} Price alerts ${brand} ${user}`,{tag:['@trading','@web']}, async({page}, testInfo)=>{
+    test(`${testRailId} Price alerts ${brand} ${user}`,{tag:['@trading','@web']}, async({page,AppNAGA}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let tradeInstrument = "EUR/USD"
         let localizationPage = new getLocalization(localization)
@@ -100,7 +100,7 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
         let priceAlert = new PriceAlert(page)
         let signIn = new SignIn(page)
         await test.step(`Login to platform ${brand} by ${user}`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await new MainPage(page).openHeaderMenuPoint('markets');
         })     
@@ -130,7 +130,7 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
 }  
 
 for(const{testRailId, brand, user, localization}of priceAlertParameters){
-    test(`${testRailId} Mobile Price alerts ${brand} ${user}`,{tag:['@trading','@mobile']}, async({page}, testInfo)=>{
+    test(`${testRailId} Mobile Price alerts ${brand} ${user}`,{tag:['@trading','@mobile']}, async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let tradeInstrument = "EUR/USD"
         let localizationPage = new getLocalization(localization)
@@ -138,7 +138,7 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
         let priceAlert = new PriceAlert(page)
         let signIn = new SignIn(page)
         await test.step(`Login to platform ${brand} by ${user}`, async()=>{
-            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             await new MainPage(page).openMobileMenuPoint('markets');
         })     

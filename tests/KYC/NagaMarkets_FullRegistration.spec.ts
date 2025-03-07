@@ -16,13 +16,13 @@ import { Captcha } from "../../pageObjects/captcha";
 test.describe('KYC', async()=>{
   let email=''
 
-  test.beforeEach("Naga Markets. KYC", async ({ page, NagaMarkets }, testInfo) => {
+  test.beforeEach("Naga Markets. KYC", async ({ page, AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 120000);
     let signUp = new SignUp(page);
     let kycStart = new KYC_Start(page);
     email = await new RandomUser().getRandomUserEmail()
     await test.step(`Create lead user with ${email} on short registration form`, async () => {
-      await signUp.goto(NagaMarkets, 'register')
+      await signUp.goto(AppNAGA, 'register')
       await new Captcha(page).removeCaptcha()
       await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', 'France', '+387', '603039647');
     });

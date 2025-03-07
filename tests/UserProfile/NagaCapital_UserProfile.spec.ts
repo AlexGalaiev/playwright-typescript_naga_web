@@ -9,7 +9,7 @@ import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 
 test.describe("NagaCapital - User profile", async()=>{
-    test.skip("@23573 User profile. General", {tag:'@settings'}, async({page, NagaCapital, NSCountry}, testInfo)=>{
+    test.skip("@23573 User profile. General", {tag:'@settings'}, async({page, AppNAGA, NSCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let signUp = new SignUp(page);
         let userProfile = new UserProfile(page);
@@ -18,7 +18,7 @@ test.describe("NagaCapital - User profile", async()=>{
         let email = randomUser.getRandomUserEmail()
         await test.step(`Create lead user ${email}`, async ()=>{
             //let email = await signUp.createLeadUserApiNagaCapital('BA', page)
-            await signUp.goto(NagaCapital, 'register')
+            await signUp.goto(AppNAGA, 'register')
             await signUp.createCFDUser(email, process.env.USER_PASSWORD || "", NSCountry)
             await new PersonalInformation(page).fillPersonalInformation('Continue')
             await new PersonalInformation(page).clickExploreNaga()

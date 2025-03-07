@@ -13,14 +13,14 @@ import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 test.describe('KYC WEB. Naga Africa', async()=>{
     let email = ''
 
-    test.beforeEach('Create lead user', async({page, NagaAfrica, NagaAfricaCountry}, testInfo)=>{
+    test.beforeEach('Create lead user', async({page, AppNAGA, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 220000);
         let signUp = new SignUp(page)
         email = await new RandomUser().getRandomUserEmail()
         let KYC = new KYC_Africa(page)
         let mainPage = new MainPage(page)
         await test.step(`Create lead user with ${email}`, async()=>{
-            await signUp.goto(NagaAfrica, 'register')
+            await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
             await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', NagaAfricaCountry, '+387', '603039647')
             await new YouAreInNagaMarkets(page).clickOpenRealMoneyAccount()
@@ -83,7 +83,7 @@ test.describe('KYC WEB. Naga Africa', async()=>{
 
 test.describe('KYC Mobile - Naga Africa', async()=>{
     let email = ''
-    test.beforeEach('Create lead user', async({page, NagaAfrica, NagaAfricaCountry}, testInfo)=>{
+    test.beforeEach('Create lead user', async({page, AppNAGA, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 220000);
         let signUp = new SignUp(page)
         email = await new RandomUser().getRandomUserEmail()
@@ -91,7 +91,7 @@ test.describe('KYC Mobile - Naga Africa', async()=>{
         let mainPage = new MainPage(page)
         let myAccountsMenu = new MyAccounts(page)
         await test.step(`Create lead user with ${email}`, async()=>{
-            await signUp.goto(NagaAfrica, 'register')
+            await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
             await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', NagaAfricaCountry, '+387', '603039647')
             await new YouAreInNagaMarkets(page).clickOpenRealMoneyAccount()
