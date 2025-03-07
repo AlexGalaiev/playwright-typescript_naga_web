@@ -4,11 +4,7 @@ import { TestError } from "playwright/types/testReporter";
 import { VPN } from "./pageObjects/Website/VPN";
 
 export type TestOptions = {
-    NagaMarkets: string;
-    NagaCapital: string;
-    NagaMena: string;
-    NagaAfrica: string;
-    NagaX: string;
+    AppNAGA: string;
     baseUrl: string;
     browserContext: BrowserContext;
     testInfo: TestInfo;
@@ -30,10 +26,7 @@ export type TestOptions = {
 
 export const test = base.extend<TestOptions>({
     NagaMarkets:['', {option: true}],
-    NagaCapital:['', {option: true}],
-    NagaAfrica:['', {option: true}],
-    NagaMena:['', {option: true}],
-    NagaX:['', {option: true}],
+    AppNAGA:['', {option: true}],
     NSCountry:['', {option: true}],
     NMCountry:['', {option: true}],
     NagaMenaCountry:['', {option: true}],

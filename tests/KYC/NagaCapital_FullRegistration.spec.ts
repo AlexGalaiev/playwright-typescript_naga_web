@@ -13,7 +13,7 @@ import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
 test.describe('KYC - Capital', async()=>{
     test("@24917 WEB KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@KYC_Capital','@web']}, 
-        async({ page, NagaCapital, NSCountry }, testInfo)=>{
+        async({ page, AppNAGA, NSCountry }, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 80000);
         let signUp = new SignUp(page);
         let mainPage = new MainPage(page);
@@ -21,7 +21,7 @@ test.describe('KYC - Capital', async()=>{
         let verificationPopup = new VerificationPopup(page);
         let email = await new RandomUser().getRandomUserEmail() 
         await test.step(`Create lead user with ${email} on Short registration page.`, async ()=>{
-            await signUp.goto(NagaCapital, 'register')
+            await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
             await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry)
         });
@@ -48,7 +48,7 @@ test.describe('KYC - Capital', async()=>{
     })
     test("@24917 Mobile. KYC Advance",
         {tag:['@KYC_Capital', '@mobile']}, 
-        async({ page, NagaCapital, NSCountry }, testInfo)=>{
+        async({ page, AppNAGA, NSCountry }, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 80000);
         let signUp = new SignUp(page);
         let mainPage = new MainPage(page);
@@ -57,7 +57,7 @@ test.describe('KYC - Capital', async()=>{
         let email = await new RandomUser().getRandomUserEmail() 
         let myAccountsMenu = await new MyAccounts(page) 
         await test.step(`Create lead user with ${email} on Short registration page.`, async ()=>{
-            await signUp.goto(NagaCapital, 'register')
+            await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
             await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry)
         });

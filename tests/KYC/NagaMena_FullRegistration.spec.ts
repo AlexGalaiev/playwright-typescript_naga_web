@@ -16,14 +16,14 @@ import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/componen
 test.describe('KYC WEB', async()=>{
   let email =''
 
-  test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
+  test.beforeEach("Naga Mena. KYC", async ({ page, AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 200000);
     let signUp = new SignUp(page);
     let kycStart = new KYC_Start(page);
     email = new RandomUser().getRandomUserEmail()
     let mainPage = new MainPage(page)
     await test.step(`Create lead user with ${email} via Short registration form`, async () => {
-      await signUp.goto(NagaMena, "register");
+      await signUp.goto(AppNAGA, "register");
       await new Captcha(page).removeCaptcha()
       await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates','+387', '603039647');
     });
@@ -146,14 +146,14 @@ test.describe('KYC WEB', async()=>{
 test.describe('KYC Mobile', async()=>{
   let email =''
 
-  test.beforeEach("Naga Mena. KYC", async ({ page, NagaMena }, testInfo) => {
+  test.beforeEach("Naga Mena. KYC", async ({ page, AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 200000);
     let signUp = new SignUp(page);
     let kycStart = new KYC_Start(page);
     email = new RandomUser().getRandomUserEmail()
     let mainPage = new MainPage(page)
     await test.step(`Create lead user with ${email} via Short registration form`, async () => {
-      await signUp.goto(NagaMena, "register");
+      await signUp.goto(AppNAGA, "register");
       await new Captcha(page).removeCaptcha()
       await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates','+387', '603039647');
     });

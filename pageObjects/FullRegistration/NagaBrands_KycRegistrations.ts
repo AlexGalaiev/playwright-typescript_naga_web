@@ -130,8 +130,4 @@ export class KYC_General{
         //Click Explore the platform btn
         await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
     }
-
-    
-
-
 }

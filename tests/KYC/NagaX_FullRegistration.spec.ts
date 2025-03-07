@@ -16,7 +16,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { Captcha } from "../../pageObjects/captcha"
 
 test.describe('KYC', async()=>{
-    test('@25365 NAGA X - High score', {tag:['@prodSanity', '@kyc']}, async({page, NagaX, NagaXCountry}, testInfo)=>{
+    test('@25365 NAGA X - High score', {tag:['@prodSanity', '@kyc']}, async({page, AppNAGA, NagaXCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000);
         let signUp = new SignUp(page)
         let mainPage = new MainPage(page)
@@ -26,7 +26,7 @@ test.describe('KYC', async()=>{
         let localization = new getLocalization('/pageObjects/localization/NagaX_KYC.json')
         let email = await new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user with ${email} on short registration form`, async()=>{
-            await signUp.goto(NagaX, 'register')
+            await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
             await signUp.createCryptoUser(email, process.env.USER_PASSWORD || "", NagaXCountry)
         })

@@ -22,12 +22,12 @@ test.describe('Main Page elements', async()=>{
         {testRailId: '@25192', brand: '@Capital', loginUser:'testTrading2', searchUser: 'testTrading2Markets', flag:'de.png'}
     ]
     for(const{testRailId, brand, loginUser, searchUser, flag} of searchParams){
-        test(`${testRailId} Search functionality`, {tag: '@UI'},async({page})=>{
+        test(`${testRailId} Search functionality`, {tag: '@UI'},async({page, AppNAGA})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page)
             let userProfile = new UserProfile(page)
-            await test.step(`Login to platform by ${loginUser}`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand), 'login')
+            await test.step(`Login to platform by ${loginUser}, ${brand} brand`, async()=>{
+                await signIn.goto(AppNAGA, 'login')
                 await signIn.signInUserToPlatform(loginUser, process.env.USER_PASSWORD || '')
             })
             await test.step(`Search ${searchUser} from other platform. Open user. Check flag`, async()=>{
@@ -50,11 +50,11 @@ test.describe('Naga Capital', async()=>{
         {email: "testUserUpgraded@i.ua", stepName:"NAGA Start", text: 'Provide basic info to open a Real-Money account with a $2,000 deposit limit.'}
     ]
     for(const {email, stepName, text} of testBannerParams){
-    test(`@23926 Status on widget step ${email}`,{tag: '@UI'}, async({page, NagaCapital})=>{
+    test(`@23926 Status on widget step ${email}`,{tag: '@UI'}, async({page, AppNAGA})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         await test.step(`Login to platform by ${email}`, async()=>{
-            await signIn.goto(NagaCapital, 'login')
+            await signIn.goto(AppNAGA, 'login')
             await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
         })
         await test.step('Check statuses of steps', async()=>{
@@ -74,11 +74,11 @@ test.describe('Naga Markets', async()=>{
         {email: "user460", stepName:"Verify Identity", textOfStep: 'Submit proof of identity and address to verify your profile and activate trading.'},
     ]
     for(const{email, stepName, textOfStep} of testBannerParams){
-        test(`@25190 Naga start login banner ${stepName}`,{tag: '@UI'}, async({page, NagaMarkets})=>{
+        test(`@25190 Naga start login banner ${stepName}`,{tag: '@UI'}, async({page, AppNAGA})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             await test.step(`Login to platform by user ${email}`, async()=>{
-                await signIn.goto(NagaMarkets, 'login')
+                await signIn.goto(AppNAGA, 'login')
                 await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
             await test.step('Check banners with different scorrings', async()=>{

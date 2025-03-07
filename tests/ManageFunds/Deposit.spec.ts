@@ -19,12 +19,12 @@ test.describe('Deposit', async()=>{
     ]
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`${testRaildId} WEB ${brand} Check number of exist deposit methods`, 
-            {tag:['@deposit', '@manageFunds','@web']}, async({page})=>{
+            {tag:['@deposit', '@manageFunds','@web']}, async({page, AppNAGA})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
             await test.step(`Login by ${user} to ${brand} platform and check number of exist methods`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand),'login');
+                await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
                 await mainPage.openBackMenuPoint('Manage Funds');
                 await deposit.checkActiveDepositTab('deposit')
@@ -33,12 +33,12 @@ test.describe('Deposit', async()=>{
     }
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`${testRaildId} Mobile ${brand} Check number of exist deposit methods`, 
-            {tag:['@deposit', '@mobile']}, async({page})=>{
+            {tag:['@deposit', '@mobile']}, async({page, AppNAGA})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
             await test.step(`Login by ${user} to ${brand} platform and check number of exist methods`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand),'login');
+                await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
                 await mainPage.openMobileMenuPoint('Menu');
                 await mainPage.openMobileBackMenuPoint('manage-funds')
@@ -74,13 +74,13 @@ test.describe('Deposit', async()=>{
     ]
     for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
         test(`${testRailId} ${brand} Deposit with ${depositName} deposit`, 
-            {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web']}, async({page,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 45000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
             await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand),'login');
+                await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
                 await mainPage.openBackMenuPoint('Manage Funds');
             });
@@ -93,13 +93,13 @@ test.describe('Deposit', async()=>{
 
     for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
         test(`${testRailId} Mobile  ${brand} Deposit with ${depositName} deposit`, 
-            {tag:['@deposit', '@mobile']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@mobile']}, async({page,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 45000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
             await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand),'login');
+                await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
                 await mainPage.openMobileMenuPoint('Menu');
             });
@@ -114,11 +114,11 @@ test.describe('Deposit', async()=>{
 }) 
 test.describe('Deposit', async()=>{
 
-    test.beforeEach(`Login by testTrading2 to platform`, async({page, NagaCapital}, testInfo)=>{
+    test.beforeEach(`Login by testTrading2 to platform`, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
-            await signIn.goto(NagaCapital,'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
         });
     })
@@ -170,12 +170,12 @@ test.describe('Deposit', async()=>{
         requestURL: string,
     }
 
-    test(`@23995 Check Pay Pal deposit`, {tag:['@deposit', '@manageFunds','@web']}, async({page, NagaMarkets}, testInfo)=>{
+    test(`@23995 Check Pay Pal deposit`, {tag:['@deposit', '@manageFunds','@web']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         await test.step(`Login to platform by depositTestMarkets user`, async()=>{
-            await signIn.goto(NagaMarkets,'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform('depositTestMarkets', process.env.USER_PASSWORD || '');
             await mainPage.openBackMenuPoint('Manage Funds');
         })
@@ -187,12 +187,12 @@ test.describe('Deposit', async()=>{
         })
     })
     test(`@23995 Mobile Check Pay Pal deposit`, 
-        {tag:['@deposit', '@mobile']}, async({page, NagaMarkets}, testInfo)=>{
+        {tag:['@deposit', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         await test.step(`Login to platform by depositTestMarkets user`, async()=>{
-            await signIn.goto(NagaMarkets,'login');
+            await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform('depositTestMarkets', process.env.USER_PASSWORD || '');
             await mainPage.openMobileMenuPoint('Menu');
             await mainPage.openMobileBackMenuPoint('manage-funds')
@@ -212,13 +212,13 @@ test.describe('Deposit', async()=>{
         {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}    ]
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} ${brand} Check ${depositName} deposit`, 
-            {tag:['@deposit', '@manageFunds', '@smoke','@web']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@manageFunds', '@smoke','@web']}, async({page,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
             await test.step(`Login by ${user} user`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand),'login');
+                await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
                 await mainPage.openBackMenuPoint('Manage Funds');
             });
@@ -231,13 +231,13 @@ test.describe('Deposit', async()=>{
     
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} Mobile ${brand} Check ${depositName} deposit`, 
-            {tag:['@deposit', '@mobile']}, async({page}, testInfo)=>{
+            {tag:['@deposit', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
             await test.step(`Login by ${user} user`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand),'login');
+                await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
                 await mainPage.openMobileMenuPoint('Menu');
                 await mainPage.openMobileBackMenuPoint('manage-funds')

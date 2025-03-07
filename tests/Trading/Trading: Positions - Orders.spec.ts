@@ -40,7 +40,7 @@ test.describe("Trading - Positions/Orders.", async () => {
     test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,
         {tag:['@trading', '@prodSanity', '@web'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
-        async ({ page }, testInfo) => {
+        async ({ page, AppNAGA }, testInfo) => {
       testInfo.setTimeout(testInfo.timeout + 170000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -49,7 +49,7 @@ test.describe("Trading - Positions/Orders.", async () => {
       let newPosition = new NewPosition(page);
       let successfullClosePopup = new ClosePositionSuccessPopup(page)
       await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Test check's previously opened positions. Test close's, if positions exist", async () => {
@@ -83,7 +83,7 @@ test.describe("Trading - Positions/Orders.", async () => {
     test(`${testRailId} ${brand} Mobile Open/Close ${investDirection} trading position`,
         {tag:['@trading', '@mobile'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
-        async ({ page }, testInfo) => {
+        async ({ page, AppNAGA }, testInfo) => {
       testInfo.setTimeout(testInfo.timeout + 170000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -93,7 +93,7 @@ test.describe("Trading - Positions/Orders.", async () => {
       let successfullClosePopup = new ClosePositionSuccessPopup(page)
       let tradeDetails = new TradeDetails(page)
       await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Test check's previously opened positions. Test close's, if positions exist", async () => {
@@ -143,7 +143,7 @@ test.describe('Trading - Pending orders', async()=>{
     test(`${testRailId} ${brand} Open/Close pending ${investDirection} order`,
           {tag:['@trading', '@web'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
-          async ({ page }, testInfo) => {
+          async ({ page,AppNAGA }, testInfo) => {
       testInfo.setTimeout(testInfo.timeout + 170000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -152,7 +152,7 @@ test.describe('Trading - Pending orders', async()=>{
       let newPosition = new NewPosition(page);
       let successfullClosePopup = new ClosePositionSuccessPopup(page)
       await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened positions. Close it if exist", async () => {
@@ -186,7 +186,7 @@ test.describe('Trading - Pending orders', async()=>{
     test(`${testRailId} ${brand} Mobile. Open/Close pending ${investDirection} order`,
           {tag:['@trading', '@mobile'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
-          async ({ page }, testInfo) => {
+          async ({ page,AppNAGA }, testInfo) => {
       testInfo.setTimeout(testInfo.timeout + 170000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -196,7 +196,7 @@ test.describe('Trading - Pending orders', async()=>{
       let successfullClosePopup = new ClosePositionSuccessPopup(page)
       let tradeDetails = new TradeDetails(page)
       await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened positions. Close it if exist", async () => {
@@ -235,7 +235,7 @@ test.describe('Trading - Pending orders', async()=>{
   ]
   for(const{testRailId, brand, user, investDirection}of tradingParameters){
     test(`${testRailId} Open short position of real stock ${brand}`,
-      {tag:['@trading', '@web']}, async({page}, testInfo)=>{
+      {tag:['@trading', '@web']}, async({page, AppNAGA}, testInfo)=>{
       testInfo.setTimeout(testInfo.timeout + 140000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -244,7 +244,7 @@ test.describe('Trading - Pending orders', async()=>{
       let realStockPopup = new RealStockPopup(page)
       let localization = new getLocalization('/pageObjects/localization/NagaCapital_Trading.json')
       await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened positions. Close it if exist", async () => {
@@ -261,7 +261,7 @@ test.describe('Trading - Pending orders', async()=>{
 
   for(const{testRailId, brand, user, investDirection, mobileDirection}of tradingParameters){
     test(`${testRailId} Mobile Open short position of real stock ${brand}`,
-      {tag:['@trading', '@mobile']}, async({page}, testInfo)=>{
+      {tag:['@trading', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
       testInfo.setTimeout(testInfo.timeout + 140000);
       let signIn = new SignIn(page);
       let mainPage = new MainPage(page);
@@ -270,7 +270,7 @@ test.describe('Trading - Pending orders', async()=>{
       let realStockPopup = new RealStockPopup(page)
       let localization = new getLocalization('/pageObjects/localization/NagaCapital_Trading.json')
       await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(await signIn.chooseBrand(brand), "login");
+        await signIn.goto(AppNAGA, "login");
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened positions. Close it if exist", async () => {

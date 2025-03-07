@@ -20,10 +20,10 @@ test.describe("Short regitration page elements", async()=>{
         {testRailId: '@25433', brand: '@Africa', localization: 'SighUp_RiskDisclaimer_Africa'}
     ]
     for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI', '@mobile','@web']}, async({page})=>{
+        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI', '@mobile','@web']}, async({page, AppNAGA})=>{
             let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText(localization)
             let signUp = new SignUp(page);
-            await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
+            await signUp.goto(AppNAGA, "register")
             expect(await signUp.getRiskWarningText()).toEqual(localizationText)
         })
     }
@@ -52,10 +52,10 @@ test.describe("Short regitration page elements", async()=>{
         {testRailId: '@25437', brand:'@Africa', languages: ['English']},
     ]
     for(const{testRailId, brand, languages}of platformLanguages){
-        test(`${testRailId} Check default languages on ${brand}`, {tag:['@UI', '@mobile','@web']}, async({page})=>{
+        test(`${testRailId} Check default languages on ${brand}`, {tag:['@UI', '@mobile','@web']}, async({page,AppNAGA})=>{
             let signIn = new SignIn(page)
             await test.step(`Open platform of ${brand} brand`, async()=>{
-                await signIn.goto(await signIn.chooseBrand(brand), 'login')
+                await signIn.goto(AppNAGA, 'login')
             })
             await test.step('Check languages', async()=>{
                 await signIn.openLanguages();
@@ -80,10 +80,10 @@ test.describe("Short regitration page elements", async()=>{
 
     ]
     for(const{testRailId, brand, notCorrectCountry, correctCountry, msgText}of CountryCheckParams){
-        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:['@UI', '@mobile','@web']}, async({page})=>{
+        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:['@UI', '@mobile','@web']}, async({page,AppNAGA})=>{
             let sighUp = new SignUp(page)
             await test.step(`Open platform for brand ${brand}`, async()=>{
-                await sighUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
+                await sighUp.goto(AppNAGA, 'register')
             })
             await test.step(`Check msg appear after input ${notCorrectCountry}`, async()=>{
                 await sighUp.inputCountry(notCorrectCountry)
@@ -106,11 +106,11 @@ test.describe("Short regitration page elements", async()=>{
         {testRailId:'@25443', brand:'@Africa', documents: new Map<string, string>([['Privacy Policy', "https://nagaafrica.com/documents/privacy_policy"]])},
     ]
     for(const{testRailId, brand, documents}of legalDocumentsParams){
-        test(`${testRailId} Legal documents on sigh up page. ${brand} brand`, {tag:['@UI','@mobile','@compliance','@web']},async({page}, testInfo)=>{
+        test(`${testRailId} Legal documents on sigh up page. ${brand} brand`, {tag:['@UI','@mobile','@compliance','@web']},async({page,AppNAGA}, testInfo)=>{
             let signUp = new SignUp(page)
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open sign up page on brand ${brand}`, async()=>{
-                await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
+                await signUp.goto(AppNAGA, 'register')
             })
             await test.step('Check legal documents', async()=>{
                 for(let[documentName, url] of documents){
@@ -132,11 +132,11 @@ test.describe('Lead registration', async()=>{
         {testRailId:'@25430', brand:'@Mena', country: 'United Arab Emirates'}
     ]
     for(const{testRailId, brand, country}of loginParams){
-    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke','@prodSanity','@mobile','@web']}, async({page})=>{
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke','@prodSanity','@mobile','@web']}, async({page,AppNAGA})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step("Open register page, check number of buttons and remove captcha", async()=>{
-            await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
+            await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
             expect(await signUp.getNumberObBtns()).toEqual(4)
         })
@@ -150,11 +150,11 @@ test.describe('Lead registration', async()=>{
         {testRailId:'@25357', brand:'@Capital', country:'Bosnia and Herzegovina'}
     ] 
     for(const{testRailId, brand, country}of LoginParams){
-    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity','@mobile','@web']}, async({page})=>{
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity','@mobile','@web']}, async({page,AppNAGA})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step('Open register page, check number of buttons, remove captcha', async()=>{
-            await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
+            await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
             expect(await signUp.getNumberObBtns()).toEqual(4)
         })
@@ -167,11 +167,11 @@ test.describe('Lead registration', async()=>{
         {testRailId:'@25431', brand:'@Africa', country:'South Africa'}
     ] 
     for(const{testRailId, brand, country}of LoginParam){
-    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity', '@mobile','@web']}, async({page})=>{
+    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity', '@mobile','@web']}, async({page,AppNAGA})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step('Open register page, check number of buttons, remove captcha', async()=>{
-            await signUp.goto(await new SignIn(page).chooseBrand(brand), 'register')
+            await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
             expect(await signUp.getNumberObBtns()).toEqual(4)
         })

@@ -22,14 +22,14 @@ const testNoFundsParaketers: testNoFunds[] = [
 ]
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
     test(`${testRailId} Open position without funds ${brand}`, 
-      {tag:['@trading','@web']}, async({page}, testInfo)=>{
+      {tag:['@trading','@web']}, async({page, AppNAGA}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 60000);  
       let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         let instruments = new AllInstruments(page);
         let newPosition = new NewPosition(page)
         await test.step(`Login to platfotm by ${user} to ${brand} brand`, async () => {
-            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
           });
           await test.step(`Choose ${tradingInstrument} and open position`, async () => {
@@ -44,14 +44,14 @@ for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
 
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
     test(`${testRailId}Mobile. Open position without funds ${brand}`, 
-      {tag:['@trading','@mobile']}, async({page}, testInfo)=>{
+      {tag:['@trading','@mobile']}, async({page,AppNAGA}, testInfo)=>{
       await testInfo.setTimeout(testInfo.timeout + 60000);  
       let signIn = new SignIn(page);
         let mainPage = new MainPage(page)
         let instruments = new AllInstruments(page);
         let newPosition = new NewPosition(page)
         await test.step(`Login to platfotm by ${user} to ${brand} brand`, async () => {
-            await signIn.goto(await signIn.chooseBrand(brand), "login");
+            await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
           });
           await test.step(`Choose ${tradingInstrument} and open position`, async () => {

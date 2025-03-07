@@ -7,11 +7,11 @@ import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import {test} from "..//..//test-options"
 
 test.describe('KYC components', async()=>{
-    test.beforeEach(`Login by testLeadUser@gmail.com user to NagaMarkets`, async({page, NagaMarkets})=>{
+    test.beforeEach(`Login by testLeadUser@gmail.com user to NagaMarkets`, async({page, AppNAGA})=>{
         let testUser = "testLeadUser@gmail.com"
         let signIn = new SignIn(page)
         await test.step(`Login by ${testUser} user`, async()=>{
-            await signIn.goto(NagaMarkets, "login");
+            await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(testUser, process.env.USER_PASSWORD || '')
         })
     })
