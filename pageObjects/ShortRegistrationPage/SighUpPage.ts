@@ -41,18 +41,18 @@ export class SignUp{
         await this.page.goto(`${MainPage}/${pageTest}`);
     };
 
-    async createCFDUser(email: string, password: string,  country: string){
+    async createCFDUser(email: string, password: string,  country: string, countryCode: string, phone: string ){
         await this.page.waitForTimeout(500)
         await this.email.pressSequentially(email);
         await this.password.pressSequentially(password)
         await this.checkCountry(country)
-        //await this.page.locator("//label[contains(@class, 'registration-form')]").click()
-        await this.phone.pressSequentially('603039647')
+        await this.checkPhoneCode(countryCode)
+        await this.phone.pressSequentially(phone)
         await this.page.waitForTimeout(750)
         await this.page.locator("//button[text()='Sign Up']").click()
     };
     async createCfdUser_All(email: string, password: string,  country: string, countryCode: string, phoneNumber: string){
-        await this.page.waitForTimeout(500)
+        await this.page.waitForLoadState()
         await this.email.pressSequentially(email);
         await this.password.pressSequentially(password)
         await this.checkCountry(country)

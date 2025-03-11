@@ -159,7 +159,7 @@ test.describe('Lead registration', async()=>{
             expect(await signUp.getNumberObBtns()).toEqual(4)
         })
         await test.step(`Create lead user - ${email}. country - ${country}.`, async()=>{
-            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', country)
+            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', country, '+387', '603039647')
             expect(new YouAreInNagaMarkets(page).checkExploreBtn()).toBeTruthy()
         })
     })}

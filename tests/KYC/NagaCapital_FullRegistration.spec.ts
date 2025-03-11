@@ -23,7 +23,7 @@ test.describe('KYC - Capital', async()=>{
         await test.step(`Create lead user with ${email} on Short registration page.`, async ()=>{
             await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
-            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry)
+            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry, '+387', '603039647')
         });
         await test.step('Open main page and switch to Compleate profile KYC. Fill KYC and go to main page.', async() =>{
             await new YouAreInNagaMarkets(page).clickExplorePlatform()
@@ -59,7 +59,7 @@ test.describe('KYC - Capital', async()=>{
         await test.step(`Create lead user with ${email} on Short registration page.`, async ()=>{
             await signUp.goto(AppNAGA, 'register')
             await new Captcha(page).removeCaptcha()
-            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry)
+            await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', NSCountry,'+387', '603039647')
         });
         await test.step('Open main page and switch to Compleate profile KYC. Fill KYC and go to main page.', async() =>{
             await new YouAreInNagaMarkets(page).clickExplorePlatform()

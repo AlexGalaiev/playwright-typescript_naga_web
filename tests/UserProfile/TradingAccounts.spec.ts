@@ -19,9 +19,12 @@ test.describe("New Trading account", async()=>{
     let KYC_Registration = new KYC_General(page)
 
     await test.step(`Create lead user ${email} and finish KYC`, async()=>{
-        await KYC_Registration.NagaCapital_KYC_HighScore(email, 
+        await KYC_Registration.NagaCapital_KYC_HighScore(
+            email, 
             process.env.USER_PASSWORD || '', 
             'Bosnia and Herzegovina',
+            '+387',
+            '603039647',
             AppNAGA)
     })
         await test.step('Add second live account in My Accounts', async()=>{

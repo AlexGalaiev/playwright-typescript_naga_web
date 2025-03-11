@@ -100,7 +100,7 @@ export default defineConfig<TestOptions>({
       name: "mobileProd",
       use: {
         ...devices["iPhone 15 Pro Max"],
-        AppNAGA: "https://app.sxdev.io",
+        AppNAGA: "https://app.naga.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
         NagaMenaCountry: "United Arab Emirates",
