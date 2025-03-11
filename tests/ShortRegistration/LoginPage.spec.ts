@@ -30,7 +30,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
         await test.step(`Create lead user ${testUser}`, async()=>{
             await signUp.goto(AppNAGA, 'register');
             await new Captcha(page).removeCaptcha()
-            await signUp.createCFDUser(testUser, process.env.USER_PASSWORD || "", NSCountry)
+            await signUp.createCFDUser(testUser, process.env.USER_PASSWORD || "", NSCountry,'+387', '603039647')
             await new YouAreInNagaMarkets(page).clickExplorePlatform()
             await myAccountsMenu.openUserMenu();
             await myAccountsMenu.userLogOut()
@@ -62,13 +62,13 @@ test.describe('Naga Markets. Sigh in', async()=>{
     let testUser;
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_SighInPage.json');
 
-    test.beforeEach('Create lead user for tests', async({page, NagaMarkets, NMCountry})=>{
+    test.beforeEach('Create lead user for tests', async({page, AppNAGA, NMCountry})=>{
         let signUp = new SignUp(page)
         let myAccountsMenu = new MyAccounts(page)
         testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
-            await signUp.goto(NagaMarkets, 'register');
-            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || "", NMCountry)
+            await signUp.goto(AppNAGA, 'register');
+            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || "", NMCountry,'+387', '603039647')
             await new PersonalInformation(page).clickLogOut()
             await new PageAfterLogout(page).redirectToSighIn()
         })

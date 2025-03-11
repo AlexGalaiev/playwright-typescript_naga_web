@@ -21,17 +21,15 @@ export class KYC_General{
         this.page = page
     }
 
-    async NagaCapital_KYC_HighScore(email: string, password: string, country: string, brand: string){
+    async NagaCapital_KYC_HighScore(email: string, password: string, country: string, countrycCode: string, phone: string, brand: string){
         let signUp = new SignUp(this.page);
         let mainPage = new MainPage(this.page);
         let personalInfo = new PersonalInformation(this.page)
         //open platform and create lead user
         await signUp.goto(brand, 'register')
         await new Captcha(this.page).removeCaptcha()
-        await signUp.createCFDUser(email, password, country)
+        await signUp.createCFDUser(email, password, country, countrycCode, phone )
         //fill personal information popup
-        //await personalInfo.fillPersonalInformation('Continue');
-        //click on Real money button
         await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
         //switch to main page and click to Naga Start widget step
         await mainPage.clickOnWidgepPoint('NAGA Start')
@@ -39,15 +37,6 @@ export class KYC_General{
         //After previous step - user sees next form. Add more information to personal info
         await personalInfo.compleateYourProfile()
         await this.page.waitForTimeout(3000)
-        //Click on deposit button and redirect to main page
-        //await personalInfo.clickDepositNow()
-        //Wait for Verify identity btn (header of main page) and click ion it
-        //await mainPage.updateUserLevel();
-        //Click start kyc btn on popup
-        //await new StartKYCPopup(this.page).startKYC();
-        //wait for preselected form and click on Finish form
-        //await new UdpateAccount(this.page).clickFinishBtn();
-        //await new VerificationPopup(this.page).skipVerificationStep()
     }
 
     async NagaMarkets_KYC_Advance(email: string, password: string, country:string, countryCode: string, phoneNumber: string, brand: string){
@@ -83,15 +72,11 @@ export class KYC_General{
         await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
     }
 
-    async NagaCapital_UserLead(email: string, password: string, country:string, brand: string){
+    async NagaCapital_UserLead(email: string, password: string, country:string, phoneCode: string, phone: string, brand: string){
         //create lead user via ui
         await new SignUp(this.page).goto(brand, 'register')
         await new Captcha(this.page).removeCaptcha()
-        await new SignUp(this.page).createCFDUser(email, password, country)
-        //fill personal information
-        //await new PersonalInformation(this.page).fillPersonalInformation('Continue')
-        //go to main page 
-        //await new YouAreInNagaMarkets(this.page).openNagaPlatform()
+        await new SignUp(this.page).createCFDUser(email, password, country, phoneCode, phone)
     }
 
     async NagaMena_UserLead(email: string, brand: string){

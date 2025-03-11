@@ -19,7 +19,7 @@ test.describe("NagaCapital - User profile", async()=>{
         await test.step(`Create lead user ${email}`, async ()=>{
             //let email = await signUp.createLeadUserApiNagaCapital('BA', page)
             await signUp.goto(AppNAGA, 'register')
-            await signUp.createCFDUser(email, process.env.USER_PASSWORD || "", NSCountry)
+            await signUp.createCFDUser(email, process.env.USER_PASSWORD || "", NSCountry,'+387', '603039647')
             await new PersonalInformation(page).fillPersonalInformation('Continue')
             await new PersonalInformation(page).clickExploreNaga()
         })

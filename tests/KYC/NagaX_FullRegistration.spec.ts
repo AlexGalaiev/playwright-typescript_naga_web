@@ -14,6 +14,7 @@ import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import { NagaXAddPopup } from "../../pageObjects/FullRegistration/components/NagaX_AdditionalPopup"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
 import { Captcha } from "../../pageObjects/captcha"
+import { VPN } from "../../pageObjects/Website/VPN"
 
 test.describe('KYC', async()=>{
     test('@25365 NAGA X - High score', {tag:['@prodSanity', '@kyc']}, async({page, AppNAGA, NagaXCountry}, testInfo)=>{
@@ -55,5 +56,9 @@ test.describe('KYC', async()=>{
             expect(await finishPopup.getSuccessfulMsg()).toEqual(await localization.getLocalizationText('SuccessfullTextPopup'))
             expect(await finishPopup.getVerificationMsg()).toEqual(await localization.getLocalizationText('SuccessfullTextVerification'))
         })
+    })
+
+    test('get server', async()=>{
+        await new VPN().getRandomVPNServer()
     })
 })
