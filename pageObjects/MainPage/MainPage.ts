@@ -224,4 +224,11 @@ export class MainPage{
         let menuPoint = await this.page.locator(`[data-testid='navigation-mm_${stepName}']`)
         await menuPoint.click()
     }
+    async refreshPage(){
+        await this.page.reload()
+    }
+    async openMobileMenu(nameOfMenuPoint: string){
+        let menu = await this.page.locator('.header__menu__nav-item__text', {hasText:nameOfMenuPoint})
+        await menu.click()
+    }
 }

@@ -5,12 +5,14 @@ export class YouAreInNagaMarkets{
     readonly description: Locator;
     readonly openRealAccount: Locator;
     readonly explorePlatform: Locator;
+    readonly depositNow: Locator;
 
     constructor(page: Page){
         this.page = page;
         this.description = page.locator(".register-success-modal__description")
         this.openRealAccount = page.locator("//button[contains(text(), 'Real Money')]")
         this.explorePlatform = page.locator("//button[contains(text(), 'Explore')]")
+        this.depositNow = page.locator("//button[text()='Deposit Now']")
         
     }
     async getDescriptionText(){
@@ -33,5 +35,8 @@ export class YouAreInNagaMarkets{
     }
     async checkExploreBtn(){
         return await this.explorePlatform.isVisible()
+    }
+    async clickDepositNow(){
+        await this.depositNow.click()
     }
 }

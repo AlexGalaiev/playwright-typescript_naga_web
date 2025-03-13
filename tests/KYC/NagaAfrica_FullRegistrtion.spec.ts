@@ -104,7 +104,7 @@ test.describe('KYC Mobile - Naga Africa', async()=>{
             await myAccountsMenu.openUserMenu();
             await myAccountsMenu.openMyAccountsMenuItem('Profile Status')
             await mainPage.clickOnWidgepPoint('NAGA Progress')
-            await mainPage.removeNeedHelpBaloon()
+            //await mainPage.removeNeedHelpBaloon()
             await KYC.waitNagaProgress()
         })
     })
