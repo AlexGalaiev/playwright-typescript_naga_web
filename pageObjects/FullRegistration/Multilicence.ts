@@ -32,4 +32,9 @@ export class MultiLicense{
         return await kycHeader
     }
 
+    async multiLycensePopup(){
+        let popup = await this.page.locator(".change-department-modal__header")
+        await popup.waitFor({state:"visible"})
+        return await popup.isVisible()
+    }
 }

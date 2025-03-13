@@ -123,4 +123,15 @@ export class Deposit{
         await this.page.waitForTimeout(1500)
         return await this.page.url();
     }
+    async clickDepositMethod(methodName: string){
+        let depositName = await this.page.locator(".method-name__full", {hasText: methodName})
+        await depositName.click()
+        await this.page.waitForTimeout(500)
+    }
+    async clickMobileDepositMethod(methodName: string){
+        let depositMethod = await this.page.locator(".fund-method-item-title", {hasText:methodName})
+        await depositMethod.click()
+        await this.page.waitForTimeout(500)
+        await this.page.locator("//button[text()='Continue']").click()
+    }
 }

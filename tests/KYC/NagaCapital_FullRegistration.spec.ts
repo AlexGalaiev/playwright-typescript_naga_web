@@ -64,7 +64,7 @@ test.describe('KYC - Capital', async()=>{
         await test.step('Open main page and switch to Compleate profile KYC. Fill KYC and go to main page.', async() =>{
             await new YouAreInNagaMarkets(page).clickExplorePlatform()
             await mainPage.clickOnMobileWidget('Step 1/4: NAGA Start')
-            await mainPage.removeNeedHelpBaloon()
+            //await mainPage.removeNeedHelpBaloon()
             await new StartKYCPopup(page).startKYC();
             await personalInfo.compleateYourProfile()
         });

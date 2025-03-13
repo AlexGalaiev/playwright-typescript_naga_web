@@ -120,7 +120,6 @@ jobs:
                 "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
                 "45 0 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
                 "05 0 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
-                "12 10 * * 0-6") echo "TAGS=@naga.com" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
