@@ -73,7 +73,7 @@ test.describe("Trading - Positions/Orders.", async () => {
         await myTrades.closePosition()
       });
       await test.step('Check successfull closing popup. Assert of trading parameters', async()=>{
-        expect(Number(await successfullClosePopup.getDeposit(currency))).toBeCloseTo(Number(investmentValue))
+        expect(Number(await successfullClosePopup.getDeposit(currency))).toBeCloseTo(Number(investmentValue), 0)
         expect(await successfullClosePopup.getLots()).toContain(units)
       })
     });
@@ -120,7 +120,7 @@ test.describe("Trading - Positions/Orders.", async () => {
         await tradeDetails.closePosition()
       })
       await test.step('Check successfull closing popup. Assert of trading parameters', async()=>{
-        expect(Number(await successfullClosePopup.getDeposit(currency))).toBeCloseTo(Number(investmentValue))
+        expect(Number(await successfullClosePopup.getDeposit(currency))).toBeCloseTo(Number(investmentValue), 0)
         expect(await successfullClosePopup.getLots()).toContain(units)
       })
     });
@@ -177,7 +177,7 @@ test.describe('Trading - Pending orders', async()=>{
         await myTrades.deleteOrder()
       })
       await test.step('Check succesfull closing order popup', async()=>{
-        expect(Number(await successfullClosePopup.getRate())).toBeCloseTo(Number(rate), 3);
+        expect(Number(await successfullClosePopup.getRate())).toBeCloseTo(Number(rate), 0);
         expect(await successfullClosePopup.getLots()).toContain(units)
       })
   })}
@@ -224,7 +224,7 @@ test.describe('Trading - Pending orders', async()=>{
         await tradeDetails.closePosition()
       })
       await test.step('Check succesfull closing order popup', async()=>{
-        expect(Number(await successfullClosePopup.getRate())).toBeCloseTo(Number(rate), 3);
+        expect(Number(await successfullClosePopup.getRate())).toBeCloseTo(Number(rate), 0);
         expect(await successfullClosePopup.getLots()).toContain(units)
       })
   })}

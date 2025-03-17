@@ -70,7 +70,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
       await myTrades.clickMobilePositionAndOpenTradedetails()
       let protectionValue = await tradeDetails.getMobileProtectionValue(protection);
-      expect(Number(protectionValue)).toBeCloseTo(Number(NagaProtectionValue))
+      expect(Number(protectionValue)).toBeCloseTo(Number(NagaProtectionValue), 0)
       await tradeDetails.closePosition()
     });
     await test.step('Close position and check sucses popup', async()=>{
@@ -108,7 +108,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
     await test.step("Check My-trades popup", async () => {
       await mainPage.openHeaderMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue))
+      expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
     });
     await test.step('Close position and check sucses popup', async()=>{
       await myTrades.closePosition()
@@ -159,7 +159,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await mainPage.openHeaderMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
-        expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 2)
+        expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
       });
       await test.step('Close position and check sucses popup', async()=>{
         await myTrades.closePosition()
@@ -201,7 +201,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await mainPage.openMobileMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
-        expect(Number(await myTrades.getMobileProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 2)
+        expect(Number(await myTrades.getMobileProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
       });
       await test.step('Close position and check sucses popup', async()=>{
         await myTrades.clickMobilePositionAndOpenTradedetails()

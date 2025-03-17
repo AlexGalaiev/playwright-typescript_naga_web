@@ -153,5 +153,9 @@ export class SignUp{
     async getMenaRiskWarning(){
         return await this.riskWarningMena.textContent()
     }
+    async clickLogo(){
+        await this.page.locator(".naga-logo"). click()
+        await this.page.waitForTimeout(500)
+    }
 }
 
