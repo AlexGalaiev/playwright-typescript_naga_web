@@ -76,4 +76,12 @@ export class UserProfile{
     async getCountryFlag(){
         return await this.flag.getAttribute('src')
     }
+    async StartAutoCopy(){
+        await this.page.locator("//button[contains(text(), 'Autocopy')]").click()
+        await this.page.waitForTimeout(500)
+    }
+    async AutocopyingBtn(){
+        let btn = await this.page.locator("//button[text()='Autocopying']")
+        return await btn.isVisible()
+    }
 }

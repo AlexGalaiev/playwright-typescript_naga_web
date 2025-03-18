@@ -201,6 +201,7 @@ export class MainPage{
     async checkWidgetStepVisibility(nameOfTheStep: string){
         await this.page.waitForTimeout(3000)
         let step = await this.page.locator(`//div[text()='${nameOfTheStep}']`)
+        await step.waitFor({state:'visible'})
         return await step.isVisible()
     }
 

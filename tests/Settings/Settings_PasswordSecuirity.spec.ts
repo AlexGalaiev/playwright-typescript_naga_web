@@ -22,7 +22,7 @@ test("@23920 NagaCapital. Change password via settings", {tag:['@settings']},
     let email = await new RandomUser().getRandomUserEmail()
     await test.step(`Create lead user ${email} with personal information`, async()=>{
         await new KYC_General(page).NagaCapital_UserLead(
-            email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina', AppNAGA)
+            email, process.env.USER_PASSWORD || '','Bosnia and Herzegovina','+387','603039647', AppNAGA)
         await new YouAreInNagaMarkets(page).clickExplorePlatform()
     })
     await test.step(`Change password. User opens header menu  and change to Test2345!`, async()=>{
