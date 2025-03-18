@@ -24,6 +24,7 @@ export type TestOptions = {
     proxyPageSA: any;
     proxyPageUA: any;
     proxyPageBH: any;
+    page2: Page;
 }
 
 export const test = base.extend<TestOptions>({
@@ -98,6 +99,14 @@ export const test = base.extend<TestOptions>({
     },
 
     page: async ({browserContext}, use)=>{
+        let page = await browserContext.newPage()
+        await use(page)
+        let Tr = await new TestRailIntegration();
+        // await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
+        // await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
+        await browserContext.close()
+    },
+    page2: async ({browserContext}, use)=>{
         let page = await browserContext.newPage()
         await use(page)
         let Tr = await new TestRailIntegration();

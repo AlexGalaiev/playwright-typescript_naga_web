@@ -31,7 +31,7 @@ test.describe("Multi licence web", async()=>{
             await new StartKYCPopup(proxyPageBH).startKYC()
         })
         await test.step(`Check MultiLicence popup for user-${email}. Switch to KYC-Capital`, async()=>{
-            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License ')
+            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License')
             await multiLicense.chooseRegulation('NAGA CAPITAL')
             expect(await multiLicense.CapitalKYC()).toBeVisible()
         })
@@ -44,7 +44,7 @@ test.describe("Multi licence web", async()=>{
             await new StartKYCPopup(proxyPageBH).startKYC()
         })
         await test.step(`Check MultiLicence popup for user-${email}. Switch to KYC-ADGM`, async()=>{
-            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License ')
+            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License')
             await multiLicense.chooseRegulation('NAGA FSRA')
             expect(await multiLicense.ADGMKYC()).toBeVisible()
         })
@@ -93,7 +93,7 @@ test.describe("Multi licence", async()=>{
             await new StartKYCPopup(proxyPageBH).startKYC()
         })
         await test.step(`Check MultiLicence popup for user-${email}. Switch to KYC-Capital`, async()=>{
-            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License ')
+            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License')
             await multiLicense.chooseRegulation('NAGA CAPITAL')
             expect(await multiLicense.CapitalKYC()).toBeVisible()
         })
@@ -107,7 +107,7 @@ test.describe("Multi licence", async()=>{
             await new StartKYCPopup(proxyPageBH).startKYC()
         })
         await test.step(`Check MultiLicence popup for user-${email}. Switch to KYC-Capital`, async()=>{
-            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License ')
+            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License')
             await multiLicense.chooseRegulation('NAGA FSRA')
             expect(await multiLicense.ADGMKYC()).toBeVisible()
         })

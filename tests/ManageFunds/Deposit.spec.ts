@@ -13,7 +13,7 @@ test.describe('Deposit', async()=>{
     }
     const testDepositNumber: depositNumber[] = [
         {testRaildId: '@25351', numberOfDepositMethods:6, brand: '@Capital', user: 'testTrading2'},
-        {testRaildId: '@25391', numberOfDepositMethods:7, brand: '@Markets', user: 'depositTestMarkets'},
+        {testRaildId: '@25391', numberOfDepositMethods:8, brand: '@Markets', user: 'depositTestMarkets'},
         {testRaildId: '@25392', numberOfDepositMethods:4, brand: '@Mena', user: 'depositNagaMena@naga.com'},
         {testRaildId: '@25422', numberOfDepositMethods:5, brand: '@Africa', user: 'depositNagaAfrica'},
     ]

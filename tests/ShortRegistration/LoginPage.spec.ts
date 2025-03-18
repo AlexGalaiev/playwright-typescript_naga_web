@@ -11,7 +11,6 @@ import { IncorrectPasswordPopup } from "../../pageObjects/SignIn/IncorrectPasswo
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
-import { NagaCom } from "../../pageObjects/Website/NagaCom";
 import { Captcha } from "../../pageObjects/captcha";
 
 
@@ -102,38 +101,7 @@ test.describe('Naga Markets. Sigh in', async()=>{
             expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Forgot your password?')
         })
     })
-})
-
-test.describe("WEB/Mobile view, All brands", async()=>{
-    type testTypes = {
-        testRailId:string,
-        brandStart: string,
-        brandRedirect: string,
-        localization: string,
-        user: string,
-    }
-    
-    const testParams: testTypes[] = [
-        {testRailId: "@23911", brandStart: '@Capital', brandRedirect: '@Markets', user: 'NagaMarketsLeadUser@gmail.com', localization: '/pageObjects/localization/SighInPage.json'},
-        {testRailId: '@23569', brandStart: '@Markets', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
-        {testRailId: '@25438', brandStart: '@Mena', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
-        {testRailId: '@25439', brandStart: '@Africa', brandRedirect: '@Capital', user: 'NagaCapitalLead@gmail.com', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'}
-    ]
-    for(const{testRailId, brandStart, localization, user, brandRedirect} of testParams){
-        test.skip(`${testRailId} WEB/Mobile. Switch brands popup ${brandStart}`, {tag:['@UI', '@mobile','@web']}, async({page, AppNAGA})=>{
-            let localizationPage = new getLocalization(localization);
-            let sighInPage = new SignIn(page);
-            await test.step(`Open login page on ${brandStart} and login to platform by ${user}`, async()=>{
-                await new SignUp(page).goto(AppNAGA, "login");
-                await sighInPage.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            })
-            await test.step(`Check redirection notice on popup and check correct url ${brandRedirect}`, async()=>{
-                expect(await localizationPage.getLocalizationText("RedirectionNotice")).toEqual(await sighInPage.getRedirectionNoticeMsg());
-                await sighInPage.redirectAccept();
-                expect(await page.url()).toContain(await sighInPage.chooseBrand(brandRedirect))
-            })
-        })}    
-                
+})              
     
 test.describe('Guest mode', async()=>{
 
@@ -162,12 +130,12 @@ test.describe('Guest mode', async()=>{
                 expect(await signIn.getSignInHeaderText()).toEqual(await localizationPage.getLocalizationText("SighInHeaderMainText"));
             });
             await test.step("Redirect from platform(in Guest mode) to sigh Up page", async()=>{
-                await signUp.goto(await signIn.chooseBrand(brand),"feed");
+                await signUp.goto(AppNAGA, "feed");
                 await mainPage.openRegistrationFromGuestMode();
                 expect(await signUp.getSighUpTittleText()).toContain("Sign up");
             })})}
 })
-})
+
 
 test.describe('Login/LogOut',async()=>{
     type testTypes = {
@@ -214,42 +182,3 @@ test.describe('Login/LogOut',async()=>{
             })})
     }
 })
-test.describe('Logo redirect', async()=>{
-    
-    type logoTests = {
-        testRailId:string;
-        brand: string;
-    }
-    const logoTestParams: logoTests[] = [
-        {testRailId: '@25388', brand: '@Markets'},
-        {testRailId: '@25389', brand: '@Capital'},
-        {testRailId: '@25390', brand: '@Mena'},
-        {testRailId: '@25390', brand: '@Africa'}
-    ]
-
-    for(const{testRailId, brand}of logoTestParams){
-        test(`${testRailId} Redirect from ${brand} logo to website`,{tag:['@UI','@web']}, async({page,AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let website = new NagaCom(page)
-            await signIn.goto(AppNAGA, 'login')
-            await signIn.clickLogo()
-            expect(await website.checkInstrumentBar()).toBeVisible()
-        })
-    }
-    for(const{testRailId, brand}of logoTestParams){
-        test(`${testRailId} Mobile. view. Redirect from ${brand} logo to website`,{tag:['@UI','@mobile']}, async({page,AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let website = new NagaCom(page)
-            await signIn.goto(AppNAGA, 'login')
-            await signIn.clickLogo()
-            expect(await website.getMobileLandingPageContainer()).toBeVisible()
-        })
-    }
-})
-    
-
-
-
-    
-    
-

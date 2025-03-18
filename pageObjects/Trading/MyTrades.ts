@@ -134,6 +134,9 @@ export class MyTrades{
     async getEmptyPageText(){
         return await this.emptyPage.textContent()
     }
+    async emptyPageTextIsVisible(){
+        return await this.emptyPage.isVisible()
+    }
     
     async removeOrdersIfExist(){
         await this.page.waitForTimeout(5000)
@@ -175,5 +178,15 @@ export class MyTrades{
     }
     async clickMobilePositionAndOpenTradedetails(){
         await this.openedMobilePosition.click()
+    }
+
+    async getSourceOfOpenedPosition(nameOfInstrument: string){
+        let position = await this.page.locator("//div[contains(@class, 'my-trades-table__row')]", {has: await this.page.locator(`//div[@title='${nameOfInstrument}']`)}).first()
+        let source = await position.locator("//div[contains(@class, 'my-trades-table__trade-source')]").textContent()
+        return await source
+    }
+    async refreshPage(){
+        await this.page.reload()
+        await this.page.waitForTimeout(1000)
     }
 }

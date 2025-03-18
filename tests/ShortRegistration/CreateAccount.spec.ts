@@ -6,117 +6,172 @@ import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { Captcha } from "../../pageObjects/captcha";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
+import { NagaCom } from "../../pageObjects/Website/NagaCom";
 
 test.describe("Short regitration page elements", async()=>{
 
-    type testRiskDisclaimer = {
-        testRailId: string,
-        brand: string,
-        localization: string
-    }
-    const testParamsRiskDisclaimer: testRiskDisclaimer[] = [
-        {testRailId: '@24930', brand: '@Capital', localization: 'SighUp_RiskDisclaimer_Capital'},
-        {testRailId: '@25142', brand: '@Markets', localization: 'SighUp_RiskDisclaimer'},
-        {testRailId: '@25433', brand: '@Africa', localization: 'SighUp_RiskDisclaimer_Africa'}
-    ]
-    for(const{testRailId, brand, localization} of testParamsRiskDisclaimer){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI', '@mobile','@web']}, async({page, AppNAGA})=>{
-            let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText(localization)
-            let signUp = new SignUp(page);
-            await signUp.goto(AppNAGA, "register")
-            expect(await signUp.getRiskWarningText()).toEqual(localizationText)
+    test.describe('Capital', async()=>{
+        
+        test.beforeEach('Create vpn connect', async({proxyPageUA, AppNAGA})=>{
+            await new SignUp(proxyPageUA).goto(AppNAGA, "register")
         })
-    }
 
-    const testParamsRiskDisclaimerMena: testRiskDisclaimer[] = [
-        {testRailId: '@25432', brand: '@Mena', localization: 'SighUp_RiskDisclaimer_Mena'}
-    ]
-    for(const{testRailId, brand, localization} of testParamsRiskDisclaimerMena){
-        test(`${testRailId} Risk Disclaimer text ${brand}`, {tag:['@UI','@mobile','@web']}, async({page})=>{
-            let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText(localization)
-            let signUp = new SignUp(page);
-            await signUp.goto(await new SignIn(page).chooseBrand(brand), "register")
-            expect(await signUp.getMenaRiskWarning()).toContain(localizationText)
+        test(`@24930 Risk Disclaimer text`, {tag:['@UI', '@mobile','@web']}, async({proxyPageUA})=>{
+            let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText('SighUp_RiskDisclaimer_Capital')
+            expect(await new SignUp(proxyPageUA).getRiskWarningText()).toEqual(localizationText)
         })
-    }
 
-    type languages = {
-        testRailId: string;
-        brand: string;
-        languages: string[];
-    }
-    const platformLanguages :languages[] = [
-        {testRailId: '@25241', brand:'@Capital', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
-        {testRailId: '@25242', brand:'@Markets', languages: ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']},
-        {testRailId: '@25436', brand:'@Mena', languages: ['English', 'العربية']},
-        {testRailId: '@25437', brand:'@Africa', languages: ['English']},
-    ]
-    for(const{testRailId, brand, languages}of platformLanguages){
-        test(`${testRailId} Check default languages on ${brand}`, {tag:['@UI', '@mobile','@web']}, async({page,AppNAGA})=>{
-            let signIn = new SignIn(page)
-            await test.step(`Open platform of ${brand} brand`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-            })
-            await test.step('Check languages', async()=>{
-                await signIn.openLanguages();
-                for(let index in languages){
-                    expect(await signIn.checkDefaultLanguage(languages[index])).toBeVisible();
-                }
-            })})
-        }
-    
-    type countryCheck = {
-        testRailId: string,
-        brand: string,
-        notCorrectCountry: string,
-        correctCountry: string,
-        msgText: string
-    }
-    const CountryCheckParams: countryCheck[] =[
-        {testRailId:'@25243', brand:'@Markets', notCorrectCountry:'Ukraine', correctCountry:'France', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
-        {testRailId:'@25244', brand:'@Capital', notCorrectCountry:'Ukraine', correctCountry:'Bosnia and Herzegovina', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
-        {testRailId:'@25440', brand:'@Mena', notCorrectCountry:'Ukraine', correctCountry:'United Arab Emirates', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
-        {testRailId:'@25441', brand:'@Africa', notCorrectCountry:'Ukraine', correctCountry:'United Arab Emirates', msgText:'Firms within the NAGA Group do not provide regulated activities to residents of the '},
+        test('@25241 Check default languages', {tag:['@UI', '@web']}, async({proxyPageUA})=>{
+            let languages = ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']
+            let signIn = new SignIn(proxyPageUA)
+            await signIn.openLanguages();
+            for(let index in languages){
+                expect(await signIn.checkDefaultLanguage(languages[index])).toBeVisible();
+            }
+        })
 
-    ]
-    for(const{testRailId, brand, notCorrectCountry, correctCountry, msgText}of CountryCheckParams){
-        test(`${testRailId} Check not correct country msg. ${brand} brand`, {tag:['@UI', '@mobile','@web']}, async({page,AppNAGA})=>{
-            let sighUp = new SignUp(page)
-            await test.step(`Open platform for brand ${brand}`, async()=>{
-                await sighUp.goto(AppNAGA, 'register')
-            })
-            await test.step(`Check msg appear after input ${notCorrectCountry}`, async()=>{
-                await sighUp.inputCountry(notCorrectCountry)
-                expect(await sighUp.getNotCoorectMsgText()).toContain(msgText)
-            })
-            await test.step(`Check msg dissappear after country change to ${correctCountry}`, async()=>{
-                await sighUp.inputCountry(correctCountry)
-                expect(await sighUp.notCorrectCountryMSG).not.toBeVisible()
-            })})
-        }
-    type legalDocuments = {
-        testRailId: string,
-        brand: string,
-        documents: Map<string, string>
-    }
-    const legalDocumentsParams: legalDocuments[] = [
-        {testRailId:'@25246', brand:'@Capital', documents: new Map<string, string>([['Privacy Policy', "https://nagacap.com/documents/privacy_policy"],['legal documents',"https://nagacap.com/legal-documentation"],['Client Agreement',"https://nagacap.com/legal-documentation"]])},
-        {testRailId:'@25247', brand:'@Markets', documents: new Map<string, string>([['Privacy Policy', "https://nagamarkets.com/documents/privacy_policy"],['legal documents',"https://nagamarkets.com/legal-documentation"]])},
-        {testRailId:'@25442', brand:'@Mena', documents: new Map<string, string>([['Privacy Policy', "https://nagamena.com/documents/privacy_policy"],['legal documents',"https://nagamena.com/legal-documentation"]])},
-        {testRailId:'@25443', brand:'@Africa', documents: new Map<string, string>([['Privacy Policy', "https://nagaafrica.com/documents/privacy_policy"]])},
-    ]
-    for(const{testRailId, brand, documents}of legalDocumentsParams){
-        test(`${testRailId} Legal documents on sigh up page. ${brand} brand`, {tag:['@UI','@mobile','@compliance','@web']},async({page,AppNAGA}, testInfo)=>{
-            let signUp = new SignUp(page)
-            testInfo.setTimeout(testInfo.timeout + 20000)
-            await test.step(`Open sign up page on brand ${brand}`, async()=>{
-                await signUp.goto(AppNAGA, 'register')
-            })
+        test('@25246 Legal documents on Short registrtaion page', {tag:['@UI','@mobile','@compliance','@web']}, async({proxyPageUA})=>{
+            let documents = [['Privacy Policy', "https://naga.com/en/privacy-policy"],['legal documents',"https://nagacap.com/legal-documentation"],['Client Agreement',"https://nagacap.com/legal-documentation"]]
             await test.step('Check legal documents', async()=>{
                 for(let[documentName, url] of documents){
-                    expect(await signUp.getDocumentHref(documentName)).toEqual(url)
-                }})})
-    }
+                    expect(await new SignUp(proxyPageUA).getDocumentHref(documentName)).toEqual(url)}}
+            )}
+        )
+        test.skip(`@25389 Redirect from Capital logo to website`,
+            {tag:['@UI','@web'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageUA})=>{
+            let website = new NagaCom(proxyPageUA)
+            await new SignUp(proxyPageUA).clickLogo()
+            expect(await website.checkInstrumentBar()).toBeVisible()
+        })
+
+        test.skip(`@25389 Mobile. view. Redirect from Capital logo to website`,
+            {tag:['@UI','@mobile'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageUA})=>{
+            let website = new NagaCom(proxyPageUA)
+            await new SignUp(proxyPageUA).clickLogo()
+            expect(await website.getMobileLandingPageContainer()).toBeVisible()
+        })
+    })
+    
+
+    test.describe('Markets', async()=>{
+
+        test.beforeEach('Create vpn connect', async({proxyPage, AppNAGA})=>{
+            await new SignUp(proxyPage).goto(AppNAGA, "register")
+        })
+
+        test(`@25142 @Markets Risk Disclaimer text`, {tag:['@UI', '@mobile','@web']}, async({proxyPage})=>{
+            let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText('SighUp_RiskDisclaimer')
+            expect(await new SignUp(proxyPage).getRiskWarningText()).toEqual(localizationText)
+        })
+        test('@25242 @Markets Check default languages', {tag:['@UI', '@web']}, async({proxyPage})=>{
+            let languages = ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']
+            let signIn = new SignIn(proxyPage)
+            await signIn.openLanguages();
+            for(let index in languages){
+                expect(await signIn.checkDefaultLanguage(languages[index])).toBeVisible();
+            }
+        })
+        test('@25247 Legal documents on Short registrtaion page', {tag:['@UI','@mobile','@compliance','@web']}, async({proxyPage})=>{
+            let documents = [['Privacy Policy', "https://naga.com/eu/privacy-policy"],['legal documents',"https://nagamarkets.com/legal-documentation"]]
+            await test.step('Check legal documents', async()=>{
+                for(let[documentName, url] of documents){
+                    expect(await new SignUp(proxyPage).getDocumentHref(documentName)).toEqual(url)
+                }}
+            )})
+        test.skip(`@25388 Redirect from Markets logo to website`,
+            {tag:['@UI','@web'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPage})=>{
+            let website = new NagaCom(proxyPage)
+            await new SignUp(proxyPage).clickLogo()
+            expect(await website.checkInstrumentBar()).toBeVisible()
+        })
+
+        test.skip(`@25388 Mobile. view. Redirect from Markets logo to website`,
+            {tag:['@UI','@mobile'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPage})=>{
+            let website = new NagaCom(proxyPage)
+            await new SignUp(proxyPage).clickLogo()
+            expect(await website.getMobileLandingPageContainer()).toBeVisible()
+        })
+})
+
+    test.describe('@Africa', async()=>{
+
+        test.beforeEach('Create vpn connect', async({proxyPageSA, AppNAGA})=>{
+            await new SignUp(proxyPageSA).goto(AppNAGA, "register")
+        })
+
+        test(`@25433 @Africa Risk Disclaimer text`, {tag:['@UI', '@mobile','@web']}, async({proxyPageSA})=>{
+            let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText('SighUp_RiskDisclaimer_Africa')
+            expect(await new SignUp(proxyPageSA).getRiskWarningText()).toEqual(localizationText)
+        })
+
+        test('@25437 @Africa Check default languages', {tag:['@UI', '@web']}, async({proxyPageSA})=>{
+            let languages = ['English']
+            let signIn = new SignIn(proxyPageSA)
+            await signIn.openLanguages();
+            for(let index in languages){
+                expect(await signIn.checkDefaultLanguage(languages[index])).toBeVisible();
+            }})
+        test('@25443 Legal documents on Short registrtaion page', {tag:['@UI','@mobile','@compliance','@web']}, async({proxyPageSA})=>{
+            let documents = [['Privacy Policy', "https://naga.com/za/privacy-policy"]]
+            await test.step('Check legal documents', async()=>{
+                for(let[documentName, url] of documents){
+                    expect(await new SignUp(proxyPageSA).getDocumentHref(documentName)).toEqual(url)
+                }}
+            )})
+        test.skip(`@25390 Redirect from Africa logo to website`,
+            {tag:['@UI','@web'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageSA})=>{
+            let website = new NagaCom(proxyPageSA)
+            await new SignUp(proxyPageSA).clickLogo()
+            expect(await website.checkInstrumentBar()).toBeVisible()
+        })
+
+        test.skip(`@25390 Mobile. view. Redirect from Africa logo to website`,
+            {tag:['@UI','@mobile'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageSA})=>{
+            let website = new NagaCom(proxyPageSA)
+            await new SignUp(proxyPageSA).clickLogo()
+            expect(await website.getMobileLandingPageContainer()).toBeVisible()
+        })
+    })
+
+    test.describe('@Mena', async()=>{
+
+        test.beforeEach('Create vpn connect', async({proxyPageUAE, AppNAGA})=>{
+            await new SignUp(proxyPageUAE).goto(AppNAGA, "register")
+        })
+
+        test(`@25432 @Mena Risk Disclaimer text`, {tag:['@UI','@mobile','@web']}, async({proxyPageUAE})=>{
+            let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText('SighUp_RiskDisclaimer_Mena')
+            expect(await new SignUp(proxyPageUAE).getMenaRiskWarning()).toContain(localizationText)
+        })
+        test('@25436 @Mena Check default languages', {tag:['@UI','@web']}, async({proxyPageUAE})=>{
+            let languages = ['English', 'العربية']
+            let signIn = new SignIn(proxyPageUAE)
+            await signIn.openLanguages();
+            for(let index in languages){
+                expect(await signIn.checkDefaultLanguage(languages[index])).toBeVisible();
+            }
+        })
+        test('@25442 Legal documents on Short registrtaion page', {tag:['@UI','@mobile','@compliance','@web']}, async({proxyPageUAE})=>{
+            let documents = [['Privacy Policy', "https://naga.com/ae/privacy-policy"]]
+            await test.step('Check legal documents', async()=>{
+                for(let[documentName, url] of documents){
+                    expect(await new SignUp(proxyPageUAE).getDocumentHref(documentName)).toEqual(url)
+                }}
+            )})
+        test.skip(`@25391 Redirect from Mena logo to website`,
+            {tag:['@UI','@web'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageUAE})=>{
+            let website = new NagaCom(proxyPageUAE)
+            await new SignUp(proxyPageUAE).clickLogo()
+            expect(await website.checkInstrumentBar()).toBeVisible()
+        })
+
+        test.skip(`@25391 Mobile. view. Redirect from Mena logo to website`,
+            {tag:['@UI','@mobile'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageUAE})=>{
+            let website = new NagaCom(proxyPageUAE)
+            await new SignUp(proxyPageUAE).clickLogo()
+            expect(await website.getMobileLandingPageContainer()).toBeVisible()
+        })
+})
 })
 
 test.describe('Lead registration', async()=>{
