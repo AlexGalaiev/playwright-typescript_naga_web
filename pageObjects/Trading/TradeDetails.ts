@@ -8,6 +8,7 @@ export class TradeDetails{
     readonly closeTradeBtn: Locator;
     readonly confirmCloseTrade: Locator;
     readonly confirmationPopupClosingPosition: Locator;
+    readonly tradeDetailsPopupInfo: Locator
 
     constructor(page: Page){
         this.page = page;
@@ -17,6 +18,7 @@ export class TradeDetails{
         this.closeTradeBtn = page.locator("//button[contains(@class, 'btn-success')]")
         this.confirmCloseTrade = page.locator("#confirm_close_trade")
         this.confirmationPopupClosingPosition = page.locator(".close-trade-warning__body")
+        this.tradeDetailsPopupInfo = page.locator('.trade-details__detail-info')
     };
     async getDepositAmount(){
         return await this.depositAmount.textContent();
@@ -33,7 +35,7 @@ export class TradeDetails{
         await this.confirmCloseTrade.click()
     }
     async getMobileLots(){
-        await this.page.waitForSelector(".trade-details__detail-info", {state:'visible'})
+        await this.tradeDetailsPopupInfo.waitFor({state:'visible'})
         await this.page.waitForTimeout(250)
         let lots = await this.page.locator("//span[text()='Lots']/following-sibling::span")
         return await lots.textContent()
@@ -59,5 +61,11 @@ export class TradeDetails{
         await editLimitsBtn.waitFor({state:"visible"})
         await editLimitsBtn.scrollIntoViewIfNeeded()
         await editLimitsBtn.click()
+    }
+    async getDateOfOpenedPosition(){
+        await this.tradeDetailsPopupInfo.waitFor({state:'visible'})
+        await this.page.waitForTimeout(500)
+        let date = await this.page.locator("//span[text()='Open Time']//following-sibling::span").textContent()
+        return await date
     }
 }
