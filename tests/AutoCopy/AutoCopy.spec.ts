@@ -78,5 +78,74 @@ test.describe('Autocopy', async()=>{
             await autoCopyCapital.closeAutoCopiesIfexist()
         })
     })
+
+    test(`Save AUTOCOPIED Mena closed positions for Capital user`, {tag: ['@autocopy', '@web','@debug']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 60000)
+        let signInCapital = new SignIn(page)
+        let signIn2Mena = new SignIn(proxyPageUAE)
+        let mainPageCapital = new MainPage(page)
+        let mainPageMena = new MainPage(proxyPageUAE)
+        let tradingInstrument = "Solana/USD";
+        let CapitalUser = 'testTrading2'
+        let MenaUser = 'testTradingMena'
+        let autoCopyCapital = new AutoCopy(page)
+        let MenaOpenedPositionsDate;
+        await signInCapital.goto(AppNAGA, 'login')
+        await test.step(`Login by Capital user ${CapitalUser}`, async()=>{
+            await signInCapital.switchPage(page)
+            await signInCapital.signInUserToPlatform(CapitalUser, process.env.USER_PASSWORD || "")
+        })
+        await test.step('Check Cpaital My trades and close positions if they exist', async()=>{
+            await mainPageCapital.openHeaderMenuPoint('my-trades')
+            await new MyTrades(page).closePositionsIfExist()
+            await page.waitForTimeout(5000)
+        })
+        await test.step(`Check autocopied users. AutoCopy user - ${MenaUser}`, async()=>{
+            await mainPageCapital.openBackMenuPoint('Copy Trading')
+            await autoCopyCapital.chooseAutocopyTab('Active')
+            await autoCopyCapital.closeAutoCopiesIfexist()
+            await autoCopyCapital.chooseAutocopyTab('Inactive')
+            await autoCopyCapital.chooseUserForCopyTrading(MenaUser)
+            await autoCopyCapital.EnableAutoCopyUser()
+            await page.waitForTimeout(5000)
+
+        })
+        await test.step(`Switch to Naga mena user-${MenaUser}`,async()=>{
+            await signIn2Mena.switchPage(proxyPageUAE)
+            await signIn2Mena.goto(AppNAGA, 'login')
+            await signIn2Mena.signInUserToPlatform(MenaUser, process.env.USER_PASSWORD || "")
+        })
+        await test.step('Check Mena My trades and close positions if they exist', async()=>{
+            await mainPageMena.openHeaderMenuPoint('my-trades')
+            await new MyTrades(proxyPageUAE).closePositionsIfExist()
+            await page.waitForTimeout(5000)
+        })
+        await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
+            await mainPageMena.openHeaderMenuPoint('markets')
+            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
+            await new NewPosition(proxyPageUAE).submitPosition()
+            await page.waitForTimeout(5000)
+        })
+        await test.step('Save date of opened position (Mena user). And Close positon', async()=>{
+            await mainPageMena.openHeaderMenuPoint('my-trades')
+            MenaOpenedPositionsDate = await new MyTrades(proxyPageUAE).getDateOfOpenedPosition()
+            await new MyTrades(proxyPageUAE).closePositionsIfExist()
+        })
+        await test.step(`Switch to ${CapitalUser} and check close postions`, async()=>{
+            await mainPageCapital.openHeaderMenuPoint('my-trades')
+            await new MyTrades(page).openCloseTradesTab()
+            let closeTime = await new MyTrades(page).openLastTrade(tradingInstrument)
+            expect(await closeTime).toEqual(MenaOpenedPositionsDate)
+            await page.waitForTimeout(5000)
+
+        })
+        await test.step('Remove autocopy conection on NagaCapital', async()=>{
+            await mainPageCapital.openBackMenuPoint('Copy Trading')
+            await autoCopyCapital.chooseAutocopyTab('Active')
+            await autoCopyCapital.closeAutoCopiesIfexist()
+            await page.waitForTimeout(5000)
+
+        })
+    })
         
 })
