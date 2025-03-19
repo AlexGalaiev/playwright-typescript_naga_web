@@ -124,15 +124,13 @@ test.describe('Autocopy', async()=>{
         })
         await test.step('Save date of opened position (Mena user). And Close positon', async()=>{
             await mainPageMena.openHeaderMenuPoint('my-trades')
-            MenaOpenedPositionsDate = await new MyTrades(proxyPageUAE).getDateOfOpenedPosition()
             await new MyTrades(proxyPageUAE).closePositionsIfExist()
         })
         await test.step(`Switch to ${CapitalUser} and check close postions`, async()=>{
             await signInCapital.switchPage(page)
             await mainPageCapital.openHeaderMenuPoint('my-trades')
             await new MyTrades(page).openCloseTradesTab()
-            let closeTime = await new MyTrades(page).openLastTrade(tradingInstrument)
-            expect(MenaOpenedPositionsDate).toContain(closeTime)
+            expect(await new MyTrades(page).getSourceOfOpenedPosition(tradingInstrument)).toEqual('AUTOCOPIED')
         })
         await test.step('Remove autocopy conection on NagaCapital', async()=>{
             await mainPageCapital.openBackMenuPoint('Copy Trading')
