@@ -7,6 +7,7 @@ import { UserProfile } from '../../pageObjects/UserProfile/UserProfile'
 import{test} from '..//..//test-options'
 import { AllInstruments } from '../../pageObjects/Trading/InstrumentsPage'
 import { NewPosition } from '../../pageObjects/Trading/OpenNewPositionPage'
+import { TradeDetails } from '../../pageObjects/Trading/TradeDetails'
 
 test.describe('Autocopy', async()=>{
     test('Autocopy of opened position  Mena user by Capital user', {tag: ['@autocopy', '@web']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
@@ -127,10 +128,11 @@ test.describe('Autocopy', async()=>{
             await new MyTrades(proxyPageUAE).closePositionsIfExist()
         })
         await test.step(`Switch to ${CapitalUser} and check close postions`, async()=>{
+            await signInCapital.switchPage(page)
             await mainPageCapital.openHeaderMenuPoint('my-trades')
             await new MyTrades(page).openCloseTradesTab()
             let closeTime = await new MyTrades(page).openLastTrade(tradingInstrument)
-            expect(await closeTime).toEqual(MenaOpenedPositionsDate)
+            expect(MenaOpenedPositionsDate).toContain(closeTime)
         })
         await test.step('Remove autocopy conection on NagaCapital', async()=>{
             await mainPageCapital.openBackMenuPoint('Copy Trading')

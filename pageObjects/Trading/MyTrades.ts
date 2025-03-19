@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { MainPage } from "../MainPage/MainPage";
+import { TradeDetails } from "./TradeDetails";
 
 export class MyTrades{
     page: Page;
@@ -196,12 +197,16 @@ export class MyTrades{
     }
     async openCloseTradesTab(){
         await this.closeTradesTab.click()
+        await this.openedPosition.first().waitFor({state:'visible'})
     }
     async openLastTrade(instrumentName: string){
+        await this.openedPosition.first().waitFor({state:'visible'})
         let instrumentContainer = await this.page.locator("//div[contains(@class, 'my-trades-table__row')]", {has: 
             await this.page.locator(`//div[text()='${instrumentName}']`)
         }).first()
-        return await instrumentContainer.locator("//div[@class='my-trades-table__time time-closed']").textContent()
-
+        await instrumentContainer.click()
+        let date = await new TradeDetails(this.page).getDateOfOpenedPosition()
+        let time = date?.split(', ')[1]
+        return await time
     }
 }
