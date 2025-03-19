@@ -23,6 +23,7 @@ export class MyTrades{
     readonly orderTakeProfit: Locator;
     readonly orderStopLoss: Locator;
     readonly openedMobilePosition: Locator;
+    readonly closeTradesTab: Locator;
     
     constructor(page: Page){
         this.page = page;
@@ -48,6 +49,7 @@ export class MyTrades{
         this.accptanceOfRemovingOrders = page.locator("//div[@class='close-multiple-trades-modal__header-actions']//button[contains(text(), 'Remove')]")
         this.emptyPage = page.locator(".no-data__title");
         this.gotItBtn = page.locator("//button[text()='Got it']")
+        this.closeTradesTab = page.locator("#my-closed-trades")
     }
     // new
     async closePositionsIfExist(){
@@ -188,5 +190,18 @@ export class MyTrades{
     async refreshPage(){
         await this.page.reload()
         await this.page.waitForTimeout(1000)
+    }
+    async getDateOfOpenedPosition(){
+        return await this.page.locator("//div[@class='my-trades-table__time time-active']").textContent()
+    }
+    async openCloseTradesTab(){
+        await this.closeTradesTab.click()
+    }
+    async openLastTrade(instrumentName: string){
+        let instrumentContainer = await this.page.locator("//div[contains(@class, 'my-trades-table__row')]", {has: 
+            await this.page.locator(`//div[text()='${instrumentName}']`)
+        }).first()
+        return await instrumentContainer.locator("//div[@class='my-trades-table__time time-closed']").textContent()
+
     }
 }

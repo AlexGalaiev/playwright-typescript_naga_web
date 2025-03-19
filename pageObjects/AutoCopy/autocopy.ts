@@ -8,12 +8,14 @@ export class AutoCopy{
     activeTradesBanner: Locator
     percenatgePopupInput: Locator;
     startAutoCopyBtn: Locator;
+    enableAutoCopy: Locator;
 
     constructor(page: Page){
         this.page = page
         this.autoCopyContainer = page.locator(".copied-user-details")
         this.manageAutoCopy = page.locator("//div[@class='manage-auto-copy-user']//button[@id='split-button-pull-right']")
         this.pauseAutoCopy = page.locator("//a[text()='Pause Autocopying']")
+        this.enableAutoCopy = page.locator("//a[text()='Enable User']")
         this.activeTradesBanner = page.locator("//span[text()='Active Trades']")
         this.percenatgePopupInput = page.locator("//div[@class='auto-copy-settings__input-container_field']//input")
         this.startAutoCopyBtn = page.locator('#auto_copy_button')
@@ -42,6 +44,14 @@ export class AutoCopy{
         let understandBtn = await this.page.locator("//button[text()='I understand']")
         await understandBtn.waitFor({state:'visible'})
         await understandBtn.click()
+    }
+
+    async chooseUserForCopyTrading(nameOfUser: string){
+        await this.page.locator(`//div[@id='list_of_autocopy_users_container']//div[text()='${nameOfUser}']`).click()
+    }
+    async EnableAutoCopyUser(){
+        await this.manageAutoCopy.click()
+        await this.enableAutoCopy.click()        
     }
 
 
