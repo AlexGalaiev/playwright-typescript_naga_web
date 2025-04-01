@@ -62,6 +62,10 @@
             "money":{
                 "title":"One app. Everything money",
                 "btnRedirect":"https://naga.com/register?lang=en"
+            },
+            "earn":{
+                "title":" Daily interest on your available cash balances",
+                "btnRedirect":"https://naga.com/eu/investing/markets/earn"
             }
         },
         "invest":{

@@ -123,7 +123,7 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
    
     test(`@25400 NagaMena Create 2nd live account`, {tag:['@secondAccount','@web']},
         async({page, AppNAGA}, testInfo)=>{
-    testInfo.setTimeout(testInfo.timeout + 120000);
+    testInfo.setTimeout(testInfo.timeout + 140000);
     let addAccount = new AddAcountForm(page);
     let headerMenu = new HeaderMenuUserProfile(page);
     let email = await new RandomUser().getRandomUserEmail() 

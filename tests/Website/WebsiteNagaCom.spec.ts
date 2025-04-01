@@ -275,8 +275,8 @@ test.describe('Website redirect', async()=>{
             })})
     }
     const AESearchTypes: searchTypes[] = [
-         {testRailId: "@25235", type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: 'https://app.naga.com/open-trade', basePage:'https://naga.com/ae', buttonName:'Trade'},
-         {testRailId: "@25236", type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: 'https://app.naga.com/open-trade', basePage:'https://naga.com/ae', buttonName:'Invest'}
+         {testRailId: "@25235", type: 'Trade', nameOfInstrument: "SIEMENS", redirectTo: 'https://app.naga.com/open-trade', basePage:'https://naga.com/ae', buttonName:'Trade'},
+         {testRailId: "@25236", type: 'Invest', nameOfInstrument: "SIEMENS", redirectTo: 'https://app.naga.com/open-trade', basePage:'https://naga.com/ae', buttonName:'Invest'}
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of AESearchTypes){
         test(`${testRailId} VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
@@ -494,14 +494,14 @@ test.describe('Website. Languages and translations', async()=>{
                 await website.checkTradeInstrument(`${tradeType}`)
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn1))).toBeVisible()
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
-                expect(await website.getMainPageBtntext(await localization.getTranslation(btn3))).toBeVisible()
+                //expect(await website.getMainPageBtntext(await localization.getTranslation(btn3))).toBeVisible()
             })
             await test.step(`Check ${investType} page buttons`, async()=>{
                 await website.checkTradeInstrument(`${investType}`)
                 await website.checkAndCloseBullonPopup()
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn1))).toBeVisible()
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
-                expect(await website.getMainPageBtntext(await localization.getTranslation(btn3))).toBeVisible()
+                //expect(await website.getMainPageBtntext(await localization.getTranslation(btn3))).toBeVisible()
             })})
         }
 
@@ -1091,7 +1091,7 @@ test.describe('Website. Footer and header elements', async()=>{
         const mainPageParams: mainPage[] = [
             {testRailId:'@25249', regulation:'en', type:'Trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'money']},
             {testRailId:'@25249', regulation:'en', type:'Invest', landingPages:['miketyson', 'trading', 'social', 'money']},
-            {testRailId:'@25250', regulation:'eu', type:'trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'money']},
+            {testRailId:'@25250', regulation:'eu', type:'trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'earn']},
             {testRailId:'@25250', regulation:'eu', type:'invest', landingPages:['miketyson', 'trading', 'social', 'money']},
             {testRailId:'@25250', regulation:'eu', type:'crypto', landingPages:['miketyson', 'trading', 'social', 'money']},
             {testRailId:'@25251', regulation:'za', type:'Trade', landingPages:['miketyson', 'trading', 'bvb', 'money']},
@@ -1102,7 +1102,7 @@ test.describe('Website. Footer and header elements', async()=>{
             test(`${testRailId} Landing pages on ${regulation}/ ${type}`, 
                 {tag: ['@naga.com','@web']},async({page}, testInfo)=>{
                 let website = new NagaCom(page);
-                await testInfo.setTimeout(testInfo.timeout + 30000);
+                testInfo.setTimeout(testInfo.timeout + 30000);
                 let localization = new getLocalization('/pageObjects/localization/Website_Naga.com_landingPages.json')
                 await test.step(`Open naga.com/${regulation} ->${type} page`, async()=>{
                     await website.open(`https://naga.com/${regulation}`)

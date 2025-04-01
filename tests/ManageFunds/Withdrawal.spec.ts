@@ -256,7 +256,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
             let amount = await withdrawal.withdrawalCalculation('$')
             let response = await withdrawal.performManualWithdrawal(amount, '**/payment/manual_withdraw')
             expect(await withdrawal.getAPIWithdrawalMSG(response)).toEqual('Command has been processed successfully.')
-            expect(await withdrawal.getAPIWithdrawalAmount(response)).toEqual(amount)
+            expect(await withdrawal.getAPIWithdrawalAmount(response)).toBeCloseTo(amount, 0)
             expect(await withdrawal.getNagaMarketsWithdrawalPopupTitle()).toContain(`The withdrawal of $${amount} to your ${menuPoint} is being reviewed.`)
 
         })

@@ -54,6 +54,7 @@ test.describe('Autocopy', async()=>{
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await mainPageMena.openHeaderMenuPoint('markets')
             await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
+            await new NewPosition(proxyPageUAE).installLotsSize(60, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
         await test.step('Go to Mena My-trades and check source of opened position. Must be -OWN TRADE', async()=>{
@@ -80,7 +81,7 @@ test.describe('Autocopy', async()=>{
         })
     })
 
-    test(`Save AUTOCOPIED Mena closed positions for Capital user`, {tag: ['@autocopy', '@web','@debug']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
+    test(`Save AUTOCOPIED Mena closed positions for Capital user`, {tag: ['@autocopy', '@web']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000)
         let signInCapital = new SignIn(page)
         let signIn2Mena = new SignIn(proxyPageUAE)
@@ -120,6 +121,7 @@ test.describe('Autocopy', async()=>{
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await mainPageMena.openHeaderMenuPoint('markets')
             await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
+            await new NewPosition(proxyPageUAE).installLotsSize(60, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
         await test.step('Save date of opened position (Mena user). And Close positon', async()=>{

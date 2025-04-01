@@ -41,9 +41,9 @@ export class NewPosition{
         return await rateBtn
     }
     async submitPosition(){
-        let submitBtn = await this.page.locator("//button[contains(@class, 'buy-sell-button')]")
+        await this.page.waitForTimeout(2000)
+        let submitBtn = await this.page.locator("#buy_sell_button")
         await submitBtn.scrollIntoViewIfNeeded()
-        await this.page.waitForTimeout(500)
         await submitBtn.click()
         await this.page.locator('.naga-toast').waitFor({state:'visible'})
         await this.page.waitForTimeout(500)
@@ -65,55 +65,7 @@ export class NewPosition{
     async getSubmitBtnText(){
         return await this.submitBtn.textContent()
     }
-    async installLostSizeRate(){
-        await this.page.waitForTimeout(1000)
-        await this.page.locator("//input[@value='units']//..").click()
-        let lotsFieldInput = await this.page.locator("//div[@class='investment-section ']//div[@class='enter-value']//input").nth(1)
-        let value = await lotsFieldInput.getAttribute('value')
-        let newValue = Number(value)*2
-        //await lotsFieldInput.clear()
-        //await lotsFieldInput.pressSequentially(String(newValue))
-        await this.page.waitForTimeout(500)
-    }
-    async installLotsSiveViaPlusBtn(){
-        await this.page.waitForTimeout(1000)
-        await this.page.locator("//input[@value='units']//..").click()
-        await this.page.waitForTimeout(500)
-        let plusBtn = await this.page.locator("//div[@class='investment-section ']//div[@class='enter-value']//div[contains(@class, 'plus-btn')]").nth(1)
-        await plusBtn.dblclick()
-        // await plusBtn.dblclick()
-        // await plusBtn.dblclick()
-        // await plusBtn.dblclick()
-        // await plusBtn.dblclick()
-        await this.page.waitForTimeout(500)
-    }
-    async installShortAtCurrentPriceViaMinusBtn(){
-        await this.page.waitForTimeout(1000)
-        let plusBtn = await this.page.locator("//div[@class='investment-section ']//div[@class='enter-value']//div[contains(@class, 'minus-btn')]").first()
-        await plusBtn.click()
-        await this.page.waitForTimeout(250)
-        await plusBtn.click()
-        // await this.page.waitForTimeout(250)
-        // await plusBtn.click()
-        // await this.page.waitForTimeout(250)
-        // await plusBtn.click()
-        // await this.page.waitForTimeout(250)
-        // await plusBtn.click()
-        // await this.page.waitForTimeout(500)
-    }
-    async installSpecificRateViaMinusBtn(){
-        await this.page.waitForTimeout(1000)
-        await this.page.locator("//label[text()='Short at Specific Rate']").click()
-        let plusBtn = await this.page.locator("//div[@class='open-trade__entry-price ']//div[contains(@class, 'minus-btn')]")
-        await plusBtn.click()
-        await this.page.waitForTimeout(250)
-        await plusBtn.click()
-        await this.page.waitForTimeout(250)
-        await plusBtn.click()
-        await this.page.waitForTimeout(250)
-        await plusBtn.click()
-        await this.page.waitForTimeout(250)
-    }
+
     async switchToSpecificRateForm(){
         await this.page.locator("//span[text()='Specific Rate']/preceding-sibling::input").nth(1).click()
         await this.page.waitForTimeout(250)
@@ -124,5 +76,38 @@ export class NewPosition{
     async addPriceAlert(){
         await this.page.locator("//i[contains(@class, 'add-price-alert')]").click()
         await this.page.waitForSelector(".create-price-alert-modal__header__title", {state:'visible'})
+    }
+    async installLotsSize(numberOfClicks: number, positionOfEleemnt: number){
+        let lostSize = await this.page.locator("//label[text()='Lotsize']")
+        await lostSize.click()
+        //click 120 times(60 double clicks) on minus btn(2nd button on the page)
+        await this.installValueViaMinusBtn(numberOfClicks, positionOfEleemnt)
+    }
+    async installMobileLotsSize(numberOfClicks: number, positionOfEleemnt: number){
+        let lostSize = await this.page.locator("//label[text()='Lotsize']")
+        await lostSize.click()
+        //click 120 times(60 double clicks) on minus btn(2nd button on the page)
+        await this.installMobileValueViaMinusBtn(numberOfClicks, positionOfEleemnt)
+    }
+
+    async installValueViaMinusBtn(iterations: number, elementOnthePage: number){
+        let minusBtn = await this.page.locator("//div[contains(@class, 'minus-btn')]").nth(elementOnthePage)
+        let iteration = 0
+        while(iteration!=iterations){
+            await minusBtn.dblclick()
+            await this.page.waitForTimeout(150)
+            iteration++
+        }
+        await this.page.waitForTimeout(500)
+    }
+    async installMobileValueViaMinusBtn(iterations: number, elementOnthePage: number){
+        let minusBtn = await this.page.locator("//div[contains(@class, 'minus-btn')]").nth(elementOnthePage)
+        let iteration = 0
+        while(iteration!=iterations){
+            await minusBtn.click()
+            await this.page.waitForTimeout(150)
+            iteration++
+        }
+        await this.page.waitForTimeout(500)
     }
 }
