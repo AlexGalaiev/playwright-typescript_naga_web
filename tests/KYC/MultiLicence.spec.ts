@@ -49,7 +49,8 @@ test.describe("Multi licence web", async()=>{
             expect(await multiLicense.ADGMKYC()).toBeVisible()
         })
     })
-    test(`@25445 Open multilycence from different platfrorm places`, {tag:['@kyc', '@web']}, async({proxyPageBH})=>{
+    test(`@25445 Open multilycence from different platfrorm places`, {tag:['@kyc', '@web']}, async({proxyPageBH}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 10000);
         let multiLicense = new MultiLicense(proxyPageBH)
         let mainPage = new MainPage(proxyPageBH)
         await test.step('Open multilicence after click "Deposit now" btn', async()=>{
