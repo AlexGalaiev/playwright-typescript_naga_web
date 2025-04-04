@@ -4,7 +4,7 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { HeaderMenuUserProfile } from "../../pageObjects/UserProfile/HeaderUserProfile";
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
-import {test} from "..//..//test-options";
+import {test} from "../../test-options";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 

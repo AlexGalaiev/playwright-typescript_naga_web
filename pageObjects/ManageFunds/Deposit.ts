@@ -56,7 +56,7 @@ export class Deposit{
         await this.page.waitForTimeout(1500)
         // Wait for response after click sub,it btn
         const [response] = await Promise.all([
-            this.page.waitForResponse(depositUrl),
+            this.page.waitForResponse(depositUrl, {timeout:15000}),
             this.submitDeposit.click()
         ]) 
         return response
@@ -78,7 +78,7 @@ export class Deposit{
         await this.page.waitForTimeout(1500)
         // Wait for response after click sub,it btn
         const [response] = await Promise.all([
-            this.page.waitForResponse(depositUrl),
+            this.page.waitForResponse(depositUrl, {timeout:15000}),
             this.submitDeposit.click()
         ]) 
         return response

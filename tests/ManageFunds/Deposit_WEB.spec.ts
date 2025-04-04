@@ -31,21 +31,7 @@ test.describe('Deposit', async()=>{
                 expect(await deposit.getNumberOfDepositMethods()).toEqual(numberOfDepositMethods)
             })})
     }
-    for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
-        test(`${testRaildId} Mobile ${brand} Check number of exist deposit methods`, 
-            {tag:['@deposit', '@mobile']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page);
-            let mainPage = new MainPage(page);
-            let deposit = new Deposit(page);
-            await test.step(`Login by ${user} to ${brand} platform and check number of exist methods`, async()=>{
-                await signIn.goto(AppNAGA,'login');
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openMobileMenuPoint('Menu');
-                await mainPage.openMobileBackMenuPoint('manage-funds')
-                await deposit.checkActiveMobileManageTab('deposit')
-                expect(await deposit.getNumberOfMobileDeposits()).toEqual(numberOfDepositMethods)
-            })})
-    }
+
 })
 
 test.describe('Deposit', async()=>{
@@ -91,26 +77,7 @@ test.describe('Deposit', async()=>{
             })
         })}
 
-    for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
-        test(`${testRailId} Mobile  ${brand} Deposit with ${depositName} deposit`, 
-            {tag:['@deposit', '@mobile']}, async({page,AppNAGA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 45000);
-            let signIn = new SignIn(page);
-            let mainPage = new MainPage(page);
-            let deposit = new Deposit(page);
-            await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{
-                await signIn.goto(AppNAGA,'login');
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openMobileMenuPoint('Menu');
-            });
-            await test.step(`Check ${depositName} deposit`, async()=>{
-                await mainPage.openMobileBackMenuPoint('manage-funds')
-                await deposit.checkActiveMobileManageTab('deposit')
-                let response = await deposit.performMobileDepositWithAmount(depositName, '100', '**/api/cashier/get-payment-method-list-without-details')
-                expect(await deposit.getApiPaymentMethodKey(response)).toEqual(responseMethodKey)
-                expect(await deposit.getApiStatusCode(response)).toEqual(200)
-            })
-        })}
+    
 }) 
 test.describe('Deposit', async()=>{
 
@@ -122,16 +89,7 @@ test.describe('Deposit', async()=>{
             await signIn.signInUserToPlatform("testTrading2", process.env.USER_PASSWORD || '');
         });
     })
-    test("@24068 Mobile Deposit via Crypto", {tag:['@deposit', '@mobile']}, async({page})=>{
-        let deposit = new Deposit(page);
-        await new MainPage(page).openMobileMenuPoint('Menu');
-        await new MainPage(page).openMobileBackMenuPoint('manage-funds')
-        await deposit.checkActiveMobileManageTab('deposit')
-        await test.step("Check crypto deposit", async()=>{
-            let response = await deposit.performMobileDepositWithAmount('crypto', '100', 'https://payapi.newagecrypto.com/assets/paynow');
-            expect(await deposit.getApiStatusCode(response)).toEqual(200)
-        })
-    })
+
     test("@24068 Deposit via Crypto", {tag:['@deposit', '@manageFunds','@web']}, async({page})=>{
         let deposit = new Deposit(page);
         await new MainPage(page).openBackMenuPoint('Manage Funds')
@@ -148,16 +106,7 @@ test.describe('Deposit', async()=>{
             expect(await deposit.getSuccessStatus(response)).toEqual(true)
             expect(await deposit.getInfoCode(response)).toEqual(200)
         })})
-    test('@25352 Mobile Deposit via Wire Transfer',{tag:['@deposit', '@mobile']}, async({page})=>{
-        let deposit = new Deposit(page)
-        await new MainPage(page).openMobileMenuPoint('Menu');
-        await new MainPage(page).openMobileBackMenuPoint('manage-funds')
-        await deposit.checkActiveMobileManageTab('deposit')
-        await test.step('Check wire trannsfer deposit', async()=>{
-            let response = await deposit.performMobileDepositWithoutAmount('amazonaws', '**/payment/bank_accounts')
-            expect(await deposit.getSuccessStatus(response)).toEqual(true)
-            expect(await deposit.getInfoCode(response)).toEqual(200)
-        })})
+   
 })
 
 test.describe('Deposit', async()=>{
@@ -186,67 +135,30 @@ test.describe('Deposit', async()=>{
             expect(await deposit.getCurrentUrl()).toContain('https://www.paypal.com/')
         })
     })
-    test(`@23995 Mobile Check Pay Pal deposit`, 
-        {tag:['@deposit', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 10000);
-        let signIn = new SignIn(page);
-        let mainPage = new MainPage(page);
-        await test.step(`Login to platform by depositTestMarkets user`, async()=>{
-            await signIn.goto(AppNAGA,'login');
-            await signIn.signInUserToPlatform('depositTestMarkets', process.env.USER_PASSWORD || '');
-            await mainPage.openMobileMenuPoint('Menu');
-            await mainPage.openMobileBackMenuPoint('manage-funds')
-            await new Deposit(page).checkActiveMobileManageTab('deposit')
-        })
-        await test.step('Check Pay Pal deposit', async()=>{
-            let deposit = new Deposit(page);
-            let response = await deposit.performMobileDepositWithAmount('paypal', '100', '**/payments/paypal/deposit_uri')
-            expect(await deposit.getApiStatusCode(response)).toEqual(200)
-            expect(await deposit.getCurrentUrl()).toContain('https://www.paypal.com/')
-        })
-    })
+   
 
     const NMdepositTestParams: NMtestTypes[] = [
         {testRailId: '@23606', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-credit-debit-cards', requestURL: '**/payment/safecharge/url'},
         //{testRailId: '@25151', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-ewallet', requestURL: '**/payment/safecharge/url'},
-        {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}    ]
-    for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
-        test(`${testRailId} ${brand} Check ${depositName} deposit`, 
-            {tag:['@deposit', '@manageFunds', '@smoke','@web']}, async({page,AppNAGA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 20000);
-            let signIn = new SignIn(page);
-            let mainPage = new MainPage(page);
-            let deposit = new Deposit(page);
-            await test.step(`Login by ${user} user`, async()=>{
-                await signIn.goto(AppNAGA,'login');
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openBackMenuPoint('Manage Funds');
-            });
-            await test.step(`Check ${depositName} deposit`, async()=>{
-                let response = await deposit.performDepositWithoutAmount(depositName, requestURL)
-                expect(await deposit.getSuccessStatus(response)).toEqual(true)
-                expect(await deposit.getInfoCode(response)).toEqual(200)
-            })
-        })}
+        {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}
+    ]
     
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
-        test(`${testRailId} Mobile ${brand} Check ${depositName} deposit`, 
-            {tag:['@deposit', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 20000);
-            let signIn = new SignIn(page);
-            let mainPage = new MainPage(page);
-            let deposit = new Deposit(page);
-            await test.step(`Login by ${user} user`, async()=>{
-                await signIn.goto(AppNAGA,'login');
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openMobileMenuPoint('Menu');
-                await mainPage.openMobileBackMenuPoint('manage-funds')
-                await new Deposit(page).checkActiveMobileManageTab('deposit')
-            });
-            await test.step(`Check ${depositName} deposit`, async()=>{
-                let response = await deposit.performMobileDepositWithoutAmount(depositName, requestURL)
-                expect(await deposit.getSuccessStatus(response)).toEqual(true)
-                expect(await deposit.getInfoCode(response)).toEqual(200)
-            })
-        })}
-    })
+    test(`${testRailId} ${brand} Check ${depositName} deposit`, 
+        {tag:['@deposit', '@manageFunds', '@smoke','@web']}, async({page,AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 20000);
+        let signIn = new SignIn(page);
+        let mainPage = new MainPage(page);
+        let deposit = new Deposit(page);
+        await test.step(`Login by ${user} user`, async()=>{
+            await signIn.goto(AppNAGA,'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await mainPage.openBackMenuPoint('Manage Funds');
+        });
+        await test.step(`Check ${depositName} deposit`, async()=>{
+            let response = await deposit.performDepositWithoutAmount(depositName, requestURL)
+            expect(await deposit.getSuccessStatus(response)).toEqual(true)
+            expect(await deposit.getInfoCode(response)).toEqual(200)
+        })
+    })}
+})

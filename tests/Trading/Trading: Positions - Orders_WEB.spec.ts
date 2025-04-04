@@ -80,53 +80,7 @@ test.describe("Trading - Positions/Orders.", async () => {
     });
   }
 
-  for(const{testRailId, brand, user,mobileDirection, currency, investDirection}of tradingParamsPositions){
-    test(`${testRailId} ${brand} Mobile Open/Close ${investDirection} trading position`,
-        {tag:['@trading', '@mobile', '@debug'], 
-          annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
-        async ({ page, AppNAGA }, testInfo) => {
-      testInfo.setTimeout(testInfo.timeout + 170000);
-      let signIn = new SignIn(page);
-      let mainPage = new MainPage(page);
-      let myTrades = new MyTrades(page)
-      let instruments = new AllInstruments(page);
-      let newPosition = new NewPosition(page);
-      let successfullClosePopup = new ClosePositionSuccessPopup(page)
-      let tradeDetails = new TradeDetails(page)
-      await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(AppNAGA, "login");
-        await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
-      });
-      await test.step("Test check's previously opened positions. Test close's, if positions exist", async () => {
-        await mainPage.openMobileMenuPoint("my-trades");
-        await myTrades.closeMobilePositionsIfExist();
-      });
-      await test.step(`Choose ${tradingInstrument} instrument.  Open ${investDirection} type`, async () => {
-        await mainPage.openMobileMenuPoint("markets");
-        await instruments.openMobilePosition(tradingInstrument, mobileDirection)
-      });
-      await test.step(`Check status of ${mobileDirection} button. And click on Submit btn`, async () => {
-        expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(investDirection))).toContain('active')
-        expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${investDirection} at Current Price`))).toContain('active')
-        await newPosition.installMobileLotsSize(35, 2)
-        await newPosition.submitPosition();
-      });
-      await test.step("Switch to My-Trades page. Save trading parameters - Investments and values. Close position", async () => {
-        await mainPage.openMobileMenuPoint("my-trades");
-        expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-        investmentValue = await myTrades.getMobileDepositValue(currency);
-        await myTrades.clickMobilePositionAndOpenTradedetails()
-      });
-      await test.step('Check trade details', async()=>{
-        units = await tradeDetails.getMobileLots();
-        await tradeDetails.closePosition()
-      })
-      await test.step('Check successfull closing popup. Assert of trading parameters', async()=>{
-        expect(Number(await successfullClosePopup.getDeposit(currency))).toBeCloseTo(Number(investmentValue), 0)
-        expect(await successfullClosePopup.getLots()).toContain(units)
-      })
-    });
-  }
+
 })
 
 test.describe('Trading - Pending orders', async()=>{
@@ -183,54 +137,7 @@ test.describe('Trading - Pending orders', async()=>{
         expect(await successfullClosePopup.getLots()).toContain(units)
       })
   })}
-
-  for(const{testRailId, brand, user,investDirection,mobileDirection}of tradingParamsOrders){
-    test(`${testRailId} ${brand} Mobile. Open/Close pending ${investDirection} order`,
-          {tag:['@trading', '@mobile'], 
-          annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
-          async ({ page,AppNAGA }, testInfo) => {
-      testInfo.setTimeout(testInfo.timeout + 170000);
-      let signIn = new SignIn(page);
-      let mainPage = new MainPage(page);
-      let myTrades = new MyTrades(page)
-      let instruments = new AllInstruments(page);
-      let newPosition = new NewPosition(page);
-      let successfullClosePopup = new ClosePositionSuccessPopup(page)
-      let tradeDetails = new TradeDetails(page)
-      await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(AppNAGA, "login");
-        await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
-      });
-      await test.step("Check previously opened positions. Close it if exist", async () => {
-        await mainPage.openMobileMenuPoint("my-trades");
-        await myTrades.openActivePendingOrdersTab();
-        await myTrades.closeMobilePositionsIfExist();
-      });
-      await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
-        await mainPage.openHeaderMenuPoint("markets");
-        await instruments.openMobilePosition(tradingInstrument, mobileDirection)
-      });
-      await test.step('Open order with manual rate value', async()=>{
-        await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
-        await newPosition.installLotsSize(20, 2)
-        await newPosition.submitPosition()
-      })
-      await test.step('Check my-trades', async()=>{
-        await mainPage.openMobileMenuPoint("my-trades");
-        await myTrades.openActivePendingOrdersTab();
-        rate = await myTrades.getMobileOrderRate()
-        await myTrades.clickMobilePositionAndOpenTradedetails()
-      })
-      await test.step('Check trade details', async()=>{
-        units = await tradeDetails.getMobileLots();
-        await tradeDetails.closePosition()
-      })
-      await test.step('Check succesfull closing order popup', async()=>{
-        expect(Number(await successfullClosePopup.getRate())).toBeCloseTo(Number(rate), 0);
-        expect(await successfullClosePopup.getLots()).toContain(units)
-      })
-  })}
-
+  
   const tradingParameters: tradingTypes[] = [
     {testRailId: '@25175', brand: '@Capital', user:'testTrading2', investDirection:'Short', mobileDirection:'SELL', currency:'$'},
     {testRailId: '@25174', brand: '@Markets', user:'testTrading2Markets', investDirection:"Short", mobileDirection:'SELL', currency:'$'}
@@ -260,33 +167,6 @@ test.describe('Trading - Pending orders', async()=>{
       });
     })
   }
-
-  for(const{testRailId, brand, user, investDirection, mobileDirection}of tradingParameters){
-    test(`${testRailId} Mobile Open short position of real stock ${brand}`,
-      {tag:['@trading', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
-      testInfo.setTimeout(testInfo.timeout + 140000);
-      let signIn = new SignIn(page);
-      let mainPage = new MainPage(page);
-      let myTrades = new MyTrades(page);
-      let instruments = new AllInstruments(page);
-      let realStockPopup = new RealStockPopup(page)
-      let localization = new getLocalization('/pageObjects/localization/NagaCapital_Trading.json')
-      await test.step(`Login to ${brand} by ${user}`, async () => {
-        await signIn.goto(AppNAGA, "login");
-        await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
-      });
-      await test.step("Check previously opened positions. Close it if exist", async () => {
-        await mainPage.openMobileMenuPoint("my-trades");
-        await myTrades.closeMobilePositionsIfExist();
-      });
-      await test.step(`Choose ${realStockInstrument} for trading. Open new position page`, async () => {
-        await mainPage.openMobileMenuPoint("markets");
-        await instruments.openMobilePosition(realStockInstrument, mobileDirection)
-        expect(await realStockPopup.getPopupText()).toEqual(await localization.getLocalizationText('RealStock_OpenShortPosition'))
-      });
-    })
-  }
-  
 })
 
 

@@ -232,4 +232,17 @@ export class MainPage{
         let menu = await this.page.locator('.header__menu__nav-item__text', {hasText:nameOfMenuPoint})
         await menu.click()
     }
+    async searchUser(userName: string){
+        await this.page.locator('.ng-ico-search').click()
+        await this.page.locator('#global_search_input').pressSequentially(userName)
+        await this.page.waitForTimeout(500)
+    }
+
+    async searchMobileUser(userName: string){
+        await this.page.locator("//i[@class='ng-ico-search']").click()
+        await this.page.locator('#global_search_input').pressSequentially(userName)
+        await this.page.waitForTimeout(500)
+        let foundResults = await this.page.locator('.global-search__results__group .global-search__results__group__item-user', {hasText:userName})
+        await foundResults.click()
+    }
 }

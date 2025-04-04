@@ -4,13 +4,13 @@ import { MainPage } from '../../pageObjects/MainPage/MainPage'
 import { SignIn } from '../../pageObjects/SignIn/SignInPage'
 import { MyTrades } from '../../pageObjects/Trading/MyTrades'
 import { UserProfile } from '../../pageObjects/UserProfile/UserProfile'
-import{test} from '..//..//test-options'
+import{test} from '../../test-options'
 import { AllInstruments } from '../../pageObjects/Trading/InstrumentsPage'
 import { NewPosition } from '../../pageObjects/Trading/OpenNewPositionPage'
 import { TradeDetails } from '../../pageObjects/Trading/TradeDetails'
 
 test.describe('Autocopy', async()=>{
-    test('Autocopy of opened position  Mena user by Capital user', {tag: ['@autocopy', '@web']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
+    test('Autocopy of opened position (Mena user) by Capital user', {tag: ['@autocopy', '@web']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000)
         let signInCapital = new SignIn(page)
         let signIn2Mena = new SignIn(proxyPageUAE)
@@ -139,6 +139,7 @@ test.describe('Autocopy', async()=>{
             await autoCopyCapital.chooseAutocopyTab('Active')
             await autoCopyCapital.closeAutoCopiesIfexist()
         })
-    })
-        
+    })  
 })
+
+

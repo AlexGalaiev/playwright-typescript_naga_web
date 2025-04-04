@@ -57,8 +57,4 @@ test.describe('KYC', async()=>{
             expect(await finishPopup.getVerificationMsg()).toEqual(await localization.getLocalizationText('SuccessfullTextVerification'))
         })
     })
-
-    test('get server', async()=>{
-        await new VPN().getRandomVPNServer()
-    })
 })
