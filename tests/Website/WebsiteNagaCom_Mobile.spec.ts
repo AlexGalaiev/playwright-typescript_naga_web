@@ -19,7 +19,7 @@ test.describe('Mobile website', async()=>{
     ]
 
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
-        test(`Mobile. Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
+        test(`${testRailId} Mobile. Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
             {tag: ['@naga.com','@mobile']}, async({proxyPage},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 25000)
             let website = new NagaCom(proxyPage)
@@ -47,7 +47,7 @@ test.describe('Mobile website', async()=>{
     ]
 
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
-        test(`Mobile. Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
+        test(`${testRailId} Mobile. Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
             {tag: ['@naga.com','@mobile']}, async({proxyPageUAE},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 25000)
             let website = new NagaCom(proxyPageUAE)
@@ -70,7 +70,7 @@ test.describe('Mobile website', async()=>{
     ]
 
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNAfrica){
-        test(`Mobile. Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
+        test(`${testRailId} Mobile. Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
             {tag: ['@mobile', '@naga.com']}, async({proxyPageSA},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 15000)
             let website = new NagaCom(proxyPageSA)
@@ -96,7 +96,7 @@ test.describe('Mobile website', async()=>{
         {testRailId: '@25195', type: 'crypto', buttonName: 'Get started', baseUrl: 'https://naga.com/eu',  redirectTo: 'https://app.nagax.com/eu/register'},
     ]
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
-    test(`Mobile Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
+    test(`${testRailId} Mobile Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
         {tag: ['@naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000)
         let website = new NagaCom(proxyPageUA)
@@ -119,7 +119,7 @@ test.describe('Mobile website', async()=>{
     ]
 
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
-    test(`Mobile.Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
+    test(`${testRailId} Mobile.Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
         {tag: ['@naga.com','@mobile']}, 
         async({proxyPage}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
@@ -156,7 +156,7 @@ test.describe('Mobile website', async()=>{
         {testRailId: '@25212', type: 'invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade", basePage:"https://naga.com/eu", buttonName: 'Invest'},
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EuSearchTypes){
-        test(`Mobile VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
+        test(`${testRailId} Mobile VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
             let website = new NagaCom(proxyPageUA)
             testInfo.setTimeout(testInfo.timeout + 20000)
@@ -180,7 +180,7 @@ test.describe('Mobile website', async()=>{
    ]
 
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of AESearchTypes){
-        test(`Mobile VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
+        test(`${testRailId} Mobile VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@mobile']}, async({proxyPageUAE}, testInfo)=>{
             let website = new NagaCom(proxyPageUAE)
             testInfo.setTimeout(testInfo.timeout + 20000)
@@ -205,7 +205,7 @@ test.describe('Mobile website', async()=>{
    ]
 
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of ZASearchTypes){
-    test(`Mobile. VPN(ZA) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
+    test(`${testRailId} Mobile. VPN(ZA) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
         {tag:['@naga.com','@mobile']}, async({proxyPageSA}, testInfo)=>{
         let website = new NagaCom(proxyPageSA)
         testInfo.setTimeout(testInfo.timeout + 20000)
@@ -230,7 +230,7 @@ test.describe('Mobile website', async()=>{
         {testRailId: '@25211', type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade", basePage:"https://naga.com/en", buttonName: 'Invest'},
     ]
     for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EnSearchTypes){
-        test(`Mobile VPN(Italy). Redirect from ${basePage}/${type} to platfotm. Search ${nameOfInstrument} on page`, 
+        test(`${testRailId} Mobile VPN(Italy). Redirect from ${basePage}/${type} to platfotm. Search ${nameOfInstrument} on page`, 
             {tag: ['@naga.com','@mobile']}, async({proxyPage}, testInfo)=>{
             let website = new NagaCom(proxyPage)
             testInfo.setTimeout(testInfo.timeout + 10000)
@@ -263,7 +263,7 @@ test.describe('Mobile. Languages and translations', async()=>{
         {testRailId: '@25229', regulation: 'ae', numberOfLanguages: 2, languages: ['English (Mena)', 'العربية']}
     ]
     for(const{testRailId, regulation, languages,numberOfLanguages}of languageParameters){
-        test(`Mobile Check available languages on ${regulation}`,
+        test(`${testRailId} Mobile Check available languages on ${regulation}`,
             {tag: ['@naga.com','@mobile']}, async({page})=>{
             let website = new NagaCom(page)
             await test.step(`Open naga.com/${regulation} website`, async()=>{
@@ -311,34 +311,7 @@ test.describe('Mobile. Languages and translations', async()=>{
     ]
 
     for(const{testRailId,platform,language,btn1,btn2,btn3,btn4,tradeType,investType}of translationParams){
-    test(`Mobile Localization of main buttons-${platform}. ${language} language`,
-        {tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 80000);
-        let website = new NagaCom(page)
-        let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
-        await test.step(`Open ${platform} and switch to ${language}`, async()=>{
-            await website.open(platform)
-            await website.switchMobileLanguageTo(language)
-            await website.acceptAllCookies()
-            await website.openMobileMenu(0)
-            await website.checkAndCloseBullonPopup()
-        })
-        await test.step(`Check ${tradeType} page buttons`, async()=>{
-            expect(await website.getMobileBtnText(await localization.getTranslation(btn1))).toBeVisible()
-            expect(await website.getMobileBtnText(await localization.getTranslation(btn2))).toBeVisible()
-        })
-        await test.step(`Check ${investType} page buttons`, async()=>{
-            await website.checkMobileTradeInstrument(`${investType}`,1)
-            await website.openMobileMenu(0)
-            await website.acceptAllCookies()
-            expect(await website.getMobileBtnText(await localization.getTranslation(btn1))).toBeVisible()
-            expect(await website.getMobileBtnText(await localization.getTranslation(btn2))).toBeVisible()
-        })})
-    }
-
-
-    for(const{testRailId,platform,language,btn1,btn2,btn3,btn4,tradeType,investType}of translationParams){
-    test(`Mobile Localization of main buttons-${platform}. ${language} language`,
+    test(`${testRailId} Mobile Localization of main buttons-${platform}. ${language} language`,
         {tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 80000);
         let website = new NagaCom(page)
@@ -380,7 +353,7 @@ test.describe('Mobile. Languages and translations', async()=>{
         {testRailId: '@25215', platform: 'https://naga.com/eu', type: 'crypto', language:'Polski', btn1: 'LoginBtn.pl', btn2: 'Get started Crypto.pl'},
     ]
     for(const{testRailId, platform, language, type, btn1, btn2}of cryptoParams){
-    test(`Mobile Localization of main buttons, Language-${language} on ${platform}, ${type}`,
+    test(`${testRailId} Mobile Localization of main buttons, Language-${language} on ${platform}, ${type}`,
         {tag: ['@naga.com','@mobile']}, async({page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let website = new NagaCom(page)
@@ -418,7 +391,7 @@ test.describe('Mobile. Languages and translations', async()=>{
     ]
 
     for(const{testRailId, platform, language, btn1,type}of payTranslationsParams){
-        test(`Mobile. Localization of main buttons, Language-${language} on ${platform}, Pay page`,
+        test(`${testRailId} Mobile. Localization of main buttons, Language-${language} on ${platform}, Pay page`,
             {tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 30000);
             let website = new NagaCom(page)
@@ -446,7 +419,7 @@ test.describe('Mobile. Languages and translations', async()=>{
         {testRailId: '@25202', type: 'invest'}
     ]
     for(const{testRailId, type } of footer){
-        test(`Mobile naga.com/eu footer ->${type} page`, 
+        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, 
             {tag:['@naga.com','@mobile']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
@@ -467,7 +440,7 @@ test.describe('Mobile. Languages and translations', async()=>{
     ]
 
     for(const{testRailId, type} of EuFooterCryptoParams){
-        test(`Mobile naga.com/eu footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website https://naga.com/eu", async()=>{
@@ -489,7 +462,7 @@ test.describe('Mobile. Languages and translations', async()=>{
     ]
 
     for(const{testRailId, type} of EuFooterPayParams){
-        test(`Mobile naga.com/eu footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website https://naga.com/eu", async()=>{
@@ -511,7 +484,7 @@ test.describe('Mobile. Languages and translations', async()=>{
     ]
 
     for(const{testRailId, type}of EnFooterParams){
-        test(`Mobile naga.com/en footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+        test(`${testRailId} Mobile naga.com/en footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/en", async()=>{
@@ -531,7 +504,7 @@ test.describe('Mobile. Languages and translations', async()=>{
     ]
 
     for(const{testRailId, type}of ZA_FooterParams){
-        test(`Mobile naga.com/za footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+        test(`${testRailId} Mobile naga.com/za footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/za", async()=>{
@@ -551,7 +524,7 @@ test.describe('Mobile. Languages and translations', async()=>{
     ]
 
     for(const{testRailId, type}of AE_FooterParams){
-        test(`Mobile naga.com/ae footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+        test(`${testRailId} Mobile naga.com/ae footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step("Open website naga.com/ae", async()=>{
@@ -582,7 +555,7 @@ test.describe('Mobile. Languages and translations', async()=>{
         {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'Platforms', page2:'Help & Support', subcategory1:'NAGA Web', subcategory2:'Contact us'}
     ]
     for(const{testRailId, type, baseUrl,page1, page2, subcategory1, subcategory2}of EuMobileRiskWarningFooter){
-        test(`Mobile ${baseUrl} -> Risk Warning footer /${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
+        test(`${testRailId} Mobile ${baseUrl} -> Risk Warning footer /${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
             let website = new NagaCom(page);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -610,8 +583,8 @@ test.describe('Mobile. Languages and translations', async()=>{
         {testRailId: '@25199', type: 'Trade', baseUrl:'https://naga.com/eu', page1:"Markets", page2:"Company", subcategory1:'Forex', subcategory2:'Contact us'},
         {testRailId: '@25198', type: 'Invest', baseUrl:'https://naga.com/eu', page1:'Platforms', page2:'Help & Support', subcategory1:'NAGA Web app', subcategory2:'Contact us'}
     ]
-    for(const{type, page1, page2, subcategory1, subcategory2}of AEMobileRiskWarningFooter){
-        test(`Footer disclaimer on ${type} page`,{tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
+    for(const{type, page1, page2, subcategory1, subcategory2, testRailId}of AEMobileRiskWarningFooter){
+        test(`${testRailId} Footer disclaimer on ${type} page`,{tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
             let website = new NagaCom(page);
             testInfo.setTimeout(testInfo.timeout + 10000);
             let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
@@ -649,7 +622,7 @@ test.describe('Mobile. Languages and translations', async()=>{
         {testRailId: "@25233", type:'Trade',regulation: 'AE', platform:'https://naga.com/ae/legal-documentation', documents: ["Terms & Conditions", 'Disclaimer','W-8 BEN Form', 'Privacy Policy']}
     ]   
     for(const{testRailId, type, platform, documents, regulation}of pdfParams){
-        test(`Mobile. Check legal documents on ${type} page. Base url ${platform}`,
+        test(`${testRailId} Mobile. Check legal documents on ${type} page. Base url ${platform}`,
             {tag: ['@naga.com', '@compliance','@mobile']}, async({page}, testInfo)=>{
             await testInfo.setTimeout(testInfo.timeout + 40000);
             let website = new NagaCom(page);
