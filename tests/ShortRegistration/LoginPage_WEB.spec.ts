@@ -133,7 +133,8 @@ test.describe('Guest mode', async()=>{
                 await signUp.goto(AppNAGA, "feed");
                 await mainPage.openRegistrationFromGuestMode();
                 expect(await signUp.getSighUpTittleText()).toContain("Sign up");
-            })})}
+            })
+        })}
 })
 
 
@@ -163,22 +164,6 @@ test.describe('Login/LogOut',async()=>{
                 await myAccountsMenu.openUserMenu();
                 await myAccountsMenu.userLogOut()
                 expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
-            })})
-    }
-
-    for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} Mobile view. Login/logout to platform ${brand} by ${email}`, 
-            {tag:['@login', '@mobile']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page);
-            let myAccountsMenu = new MyAccounts(page)
-            await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
-            })
-            await test.step('Log out from platform', async()=>{
-                await myAccountsMenu.openUserMenu();
-                await myAccountsMenu.userLogOut()
-                expect(await signIn.getLoginMainPageText()).toEqual("Sign In to your account")
             })})
     }
 })

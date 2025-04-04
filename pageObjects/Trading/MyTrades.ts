@@ -138,6 +138,7 @@ export class MyTrades{
         return await this.emptyPage.textContent()
     }
     async emptyPageTextIsVisible(){
+        await this.page.waitForTimeout(300)
         return await this.emptyPage.isVisible()
     }
     
@@ -188,6 +189,12 @@ export class MyTrades{
         let source = await position.locator("//div[contains(@class, 'my-trades-table__trade-source')]").textContent()
         return await source
     }
+
+    async getMobileSourceOfOpenedPosition(nameOfInstrument: string){
+        let position = await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]", {has: await this.page.locator(`//div[@title='${nameOfInstrument}']`)})
+        let source = await position.locator("//div[contains(@class, 'my-trades-table-mobile__trade-source')]")
+        return await source.textContent()
+    }
     async refreshPage(){
         await this.page.reload()
         await this.page.waitForTimeout(1000)
@@ -208,5 +215,9 @@ export class MyTrades{
         let date = await new TradeDetails(this.page).getDateOfOpenedPosition()
         let time = date?.split(', ')[1]
         return await time
+    }
+    async getMobileSourceOftrade(){
+        await this.page.waitForTimeout(500)
+        return await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__trade-source')]").textContent()
     }
 }

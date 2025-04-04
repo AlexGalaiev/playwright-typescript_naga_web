@@ -74,9 +74,9 @@ export class KYC_Africa{
     async inputAdress(){
         await this.placeOfBirth.click()
         await this.placeOfBirth.pressSequentially("Bosnia and herzegovina association for united nations")
-        await this.page.waitForTimeout(1000)
-        await this.placeOfBirth.press('Enter')
         await this.page.waitForTimeout(1500)
+        await this.placeOfBirth.press('Enter')
+        await this.page.waitForTimeout(2000)
         let zip = await this.page.locator("#addr_zip")
         await zip.clear()
         await zip.pressSequentially('3443')

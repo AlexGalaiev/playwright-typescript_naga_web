@@ -68,4 +68,7 @@ export class TradeDetails{
         let date = await this.page.locator("//span[text()='Open Time']//following-sibling::span").textContent()
         return await date
     }
+    async getTradeOwner(){
+        return await this.page.locator('.trade-owner__text__username').textContent()
+    }
 }

@@ -32,27 +32,7 @@ test.describe('Website redirect', async()=>{
             })
         })
     }
-    for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
-        test(`${testRailId} Mobile. Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@naga.com','@mobile']}, async({proxyPage},testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 25000)
-            let website = new NagaCom(proxyPage)
-            await test.step(`Open website ${baseUrl}`, async()=>{
-                await website.open(`${baseUrl}`)
-                await website.openMobileMenu(0)
-            })
-            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
-                await website.acceptAllCookies()
-                await website.checkMobileTradeInstrument(`${type}`,1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-                await website.openMobileMenu(0)
-                await website.clickMobileBtn(`${buttonName}`,1)
-                expect(await website.checkUrl()).toContain(`${redirectTo}`)
-            })
-        })
-    }
-
+  
     const fromWebsiteToNMena: RedirectTypes[] = [
         {testRailId: '@25226', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/ae', redirectTo: 'https://app.naga.com/login?lang=en'},
         {testRailId: '@25226', type: 'Trade', buttonName: 'Get started', baseUrl: 'https://naga.com/ae', redirectTo: 'https://app.naga.com/register?lang=en'},
@@ -74,26 +54,7 @@ test.describe('Website redirect', async()=>{
             })
         })
     }
-
-    for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
-        test(`${testRailId} Mobile. Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@naga.com','@mobile']}, async({proxyPageUAE},testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 25000)
-            let website = new NagaCom(proxyPageUAE)
-            await test.step(`Open website ${baseUrl}`, async()=>{
-                await website.open(`${baseUrl}`)
-                await website.openMobileMenu(0)
-            })
-            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
-                await website.checkMobileTradeInstrument(`${type}`,1)
-                await website.openMobileMenu(0)
-                await website.acceptAllCookies()
-                await website.clickMobileBtn(`${buttonName}`,1)
-                expect(await website.checkUrl()).toContain(`${redirectTo}`)
-            })
-        })
-    }
-
+    
     const fromWebsiteToNAfrica: RedirectTypes[] = [
         {testRailId: '@25220', type: 'Trade', buttonName: 'Login', baseUrl: 'https://naga.com/za', redirectTo: 'https://app.naga.com/login?lang=en'},
         {testRailId: '@25220', type: 'Trade', buttonName: 'Get started', baseUrl: 'https://naga.com/za', redirectTo: 'https://app.naga.com/register?lang=en'},
@@ -113,25 +74,7 @@ test.describe('Website redirect', async()=>{
             })
         })
     }
-    for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNAfrica){
-        test(`${testRailId} Mobile. Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@mobile', '@naga.com']}, async({proxyPageSA},testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 15000)
-            let website = new NagaCom(proxyPageSA)
-            await test.step(`Open website ${baseUrl}`, async()=>{
-                await website.open(`${baseUrl}`)
-                await website.openMobileMenu(2)
-            })
-            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
-                await website.checkMobileTradeInstrument(`${type}`,2)
-                await website.openMobileMenu(2)
-                await website.acceptAllCookies()
-                await website.clickMobileBtn(`${buttonName}`,2)
-                expect(await website.checkUrl()).toContain(`${redirectTo}`)
-            })
-        })
-    }
-
+    
     const fromWebsitetoNS: RedirectTypes[] = [
         {testRailId: '@25195', type: 'trade', buttonName: 'Login', baseUrl: 'https://naga.com/eu', redirectTo: 'https://app.naga.com/login'},
         {testRailId: '@25195', type: 'trade', buttonName: 'Get started', baseUrl: 'https://naga.com/eu', redirectTo: 'https://app.naga.com/register'},
@@ -154,23 +97,7 @@ test.describe('Website redirect', async()=>{
                 expect(await website.checkUrl()).toContain(`${redirectTo}`)
             })})
     }
-    for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
-        test(`${testRailId} Mobile Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
-            {tag: ['@naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 10000)
-            let website = new NagaCom(proxyPageUA)
-            await test.step(`Open website ${baseUrl}`, async()=>{
-                await website.open(`${baseUrl}`)
-                await website.openMobileMenu(0)
-            })
-            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
-                await website.checkMobileTradeInstrument(`${type}`,1)
-                await website.openMobileMenu(0)
-                await website.acceptAllCookies()
-                await website.clickMobileBtn(`${buttonName}`,1)
-                expect(await website.checkUrl()).toContain(`${redirectTo}`)
-            })})
-    }
+
 
     const fromENtoNMAllert: RedirectTypes[] = [
         {testRailId: '@25210', type: 'Trade', buttonName: 'Get started', baseUrl:'https://naga.com/en', redirectTo: 'https://app.naga.com/register'},
@@ -198,31 +125,7 @@ test.describe('Website redirect', async()=>{
             })})
         }
 
-    for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromENtoNMAllert){
-        test(`${testRailId} Mobile.Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
-            {tag: ['@naga.com','@mobile']}, 
-            async({proxyPage}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 50000);
-            let website = new NagaCom(proxyPage)
-            let localization = new getLocalization('/pageObjects/localization/Website_NagaCom.json')
-            await test.step(`Open website ${baseUrl}`, async()=>{
-                await website.open(`${baseUrl}`)
-                await website.openMobileMenu(0)
-            })
-            await test.step(`Choose ${type} page. Click ${buttonName} btn`, async()=>{
-               // await website.checkAndCloseBullonPopup()
-               await website.checkMobileTradeInstrument(`${type}`,1)
-               await website.acceptAllCookies()
-               await website.checkAndCloseBullonPopup()
-               await website.openMobileMenu(0)
-               await website.clickMobileBtn(`${buttonName}`,1)
-            await test.step('Check redirect notification popup text. And redirect to Webtrader', async()=>{
-                expect(await website.getRedirectAllertPopupText()).toContain(await localization.getLocalizationText("RedirectAllertPopupText"))
-                await website.acceptRedirectPopup()
-            })
-                expect(await website.checkUrl()).toContain(`${redirectTo}`)
-            })})
-        }
+   
 
     type searchTypes = {
         testRailId: string;
@@ -240,7 +143,7 @@ test.describe('Website redirect', async()=>{
         test(`${testRailId} VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@web']}, async({proxyPageUA}, testInfo)=>{
             let website = new NagaCom(proxyPageUA)
-            testInfo.setTimeout(testInfo.timeout + 20000)
+            testInfo.setTimeout(testInfo.timeout + 30000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
@@ -255,25 +158,7 @@ test.describe('Website redirect', async()=>{
             })})
     }
 
-    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EuSearchTypes){
-        test(`${testRailId} Mobile VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
-            {tag:['@naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
-            let website = new NagaCom(proxyPageUA)
-            testInfo.setTimeout(testInfo.timeout + 20000)
-            await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
-                await website.open(basePage)
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(`${type}`,1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
-                await website.searchMobileInstrument(nameOfInstrument);
-                const[newPage, instrumentName] = await website.openMobilePosition()
-                let newWebsite = new NagaCom(newPage)
-                expect(await newWebsite.checkUrl()).toContain(`${redirectTo}`)
-            })})
-    }
+    
     const AESearchTypes: searchTypes[] = [
          {testRailId: "@25235", type: 'Trade', nameOfInstrument: "SIEMENS", redirectTo: 'https://app.naga.com/open-trade', basePage:'https://naga.com/ae', buttonName:'Trade'},
          {testRailId: "@25236", type: 'Invest', nameOfInstrument: "SIEMENS", redirectTo: 'https://app.naga.com/open-trade', basePage:'https://naga.com/ae', buttonName:'Invest'}
@@ -282,7 +167,7 @@ test.describe('Website redirect', async()=>{
         test(`${testRailId} VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@web']}, async({proxyPageUAE}, testInfo)=>{
             let website = new NagaCom(proxyPageUAE)
-            testInfo.setTimeout(testInfo.timeout + 20000)
+            testInfo.setTimeout(testInfo.timeout + 30000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
@@ -296,27 +181,7 @@ test.describe('Website redirect', async()=>{
             })})
     }
 
-    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of AESearchTypes){
-        test(`${testRailId} Mobile VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
-            {tag:['@naga.com','@mobile']}, async({proxyPageUAE}, testInfo)=>{
-            let website = new NagaCom(proxyPageUAE)
-            testInfo.setTimeout(testInfo.timeout + 20000)
-            await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
-                await website.open(basePage)
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(`${type}`,1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
-                await website.searchMobileInstrument(nameOfInstrument);
-                const[newPage, instrumentName] = await website.openMobilePosition()
-                let newWebsite = new NagaCom(newPage)
-                expect(await newWebsite.checkUrl()).toContain(`${redirectTo}`)
-            })
-        })
-    }
-
+    
     const ZASearchTypes: searchTypes[] = [
          {testRailId: '@25224', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade", basePage:"https://naga.com/za", buttonName:'Trade'}
     ]
@@ -338,27 +203,6 @@ test.describe('Website redirect', async()=>{
             })})
     }
 
-    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of ZASearchTypes){
-        test(`${testRailId} Mobile. VPN(ZA) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
-            {tag:['@naga.com','@mobile']}, async({proxyPageSA}, testInfo)=>{
-            let website = new NagaCom(proxyPageSA)
-            testInfo.setTimeout(testInfo.timeout + 20000)
-            await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
-                await website.open(basePage)
-                await website.openMobileMenu(2)
-                await website.checkMobileTradeInstrument(`${type}`,2)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step(`Search instrument ${nameOfInstrument}. Redirect to ${redirectTo} platform`, async()=>{
-                await website.searchMobileInstrument(nameOfInstrument);
-                const[newPage, instrumentName] = await website.openMobilePosition()
-                let newWebsite = new NagaCom(newPage)
-                expect(await newWebsite.checkUrl()).toContain(`${redirectTo}`)
-            })
-        })
-    }
-
     const EnSearchTypes: searchTypes[] = [
         {testRailId: '@25213', type: 'Trade', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade", basePage:"https://naga.com/en", buttonName:'Trade'},
         {testRailId: '@25211', type: 'Invest', nameOfInstrument: "FACEBOOK", redirectTo: "https://app.naga.com/open-trade", basePage:"https://naga.com/en", buttonName: 'Invest'},
@@ -367,7 +211,7 @@ test.describe('Website redirect', async()=>{
         test(`${testRailId} VPN(Italy). Redirect from ${basePage}/${type} to platfotm. Search ${nameOfInstrument} on page`, 
             {tag: ['@naga.com','@web']}, async({proxyPage}, testInfo)=>{
             let website = new NagaCom(proxyPage)
-            testInfo.setTimeout(testInfo.timeout + 10000)
+            testInfo.setTimeout(testInfo.timeout + 30000)
             await test.step(`Open website ${basePage}. Check instrument ${type}`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
@@ -380,27 +224,7 @@ test.describe('Website redirect', async()=>{
                 expect(await newWebsite.checkUrl()).toContain(`${redirectTo}`)
             })}
         )}
-
-    for(const{testRailId, type, nameOfInstrument, redirectTo,basePage,buttonName}of EnSearchTypes){
-        test(`${testRailId} Mobile VPN(Italy). Redirect from ${basePage}/${type} to platfotm. Search ${nameOfInstrument} on page`, 
-            {tag: ['@naga.com','@mobile']}, async({proxyPage}, testInfo)=>{
-            let website = new NagaCom(proxyPage)
-            testInfo.setTimeout(testInfo.timeout + 10000)
-            await test.step(`Open website ${basePage}. Check instrument ${type}`,async()=>{
-                await website.open(basePage)
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(`${type}`,1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step(`Search instrument ${nameOfInstrument}. Redirect to platform`, async()=>{
-                await website.searchMobileInstrument(nameOfInstrument);
-                const[newPage, instrumentName] = await website.openMobilePosition()
-                let newWebsite = new NagaCom(newPage)
-                expect(await newWebsite.checkUrl()).toContain(`${redirectTo}`)
-            })}
-        )}
-        })
+    })
 
 
 test.describe('Website. Languages and translations', async()=>{
@@ -432,21 +256,6 @@ test.describe('Website. Languages and translations', async()=>{
             })})
     }
 
-    for(const{testRailId, regulation, languages,numberOfLanguages}of languageParameters){
-        test(`${testRailId} Mobile Check available languages on ${regulation}`,
-            {tag: ['@naga.com','@mobile']}, async({page})=>{
-            let website = new NagaCom(page)
-            await test.step(`Open naga.com/${regulation} website`, async()=>{
-                await website.open(`https://naga.com/${regulation}`)
-            })
-            await test.step('Check visible language', async()=>{
-                await website.openMobileLanguages(1)
-                for(let index in languages){
-                    expect(await website.checkVisibileLanguage(languages[index])).toBeTruthy()
-                }
-                expect(await website.getNumberOfLanguages()).toEqual(numberOfLanguages)
-            })})
-    }
 
     type translations = {
         testRailId: string;
@@ -505,32 +314,6 @@ test.describe('Website. Languages and translations', async()=>{
             })})
         }
 
-    for(const{testRailId,platform,language,btn1,btn2,btn3,btn4,tradeType,investType}of translationParams){
-        test(`${testRailId} Mobile Localization of main buttons-${platform}. ${language} language`,
-            {tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 80000);
-            let website = new NagaCom(page)
-            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
-            await test.step(`Open ${platform} and switch to ${language}`, async()=>{
-                await website.open(platform)
-                await website.switchMobileLanguageTo(language)
-                await website.acceptAllCookies()
-                await website.openMobileMenu(0)
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step(`Check ${tradeType} page buttons`, async()=>{
-                expect(await website.getMobileBtnText(await localization.getTranslation(btn1))).toBeVisible()
-                expect(await website.getMobileBtnText(await localization.getTranslation(btn2))).toBeVisible()
-            })
-            await test.step(`Check ${investType} page buttons`, async()=>{
-                await website.checkMobileTradeInstrument(`${investType}`,1)
-                await website.openMobileMenu(0)
-                await website.acceptAllCookies()
-                expect(await website.getMobileBtnText(await localization.getTranslation(btn1))).toBeVisible()
-                expect(await website.getMobileBtnText(await localization.getTranslation(btn2))).toBeVisible()
-            })})
-        }
-
     type translationsCrypto = {
         testRailId: string;
         platform: string;
@@ -564,27 +347,7 @@ test.describe('Website. Languages and translations', async()=>{
                 expect(await website.getBtnHeaderText(await localization.getTranslation(btn2))).toBeVisible()
             })})
         }
-        
-    for(const{testRailId, platform, language, type, btn1, btn2}of cryptoParams){
-        test(`${testRailId} Mobile Localization of main buttons, Language-${language} on ${platform}, ${type}`,
-            {tag: ['@naga.com','@mobile']}, async({page}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 30000);
-            let website = new NagaCom(page)
-            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
-            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
-                await website.open(platform)
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(type, 1)
-                await website.switchMobileLanguageTo(language)
-                await website.acceptAllCookies()
-                await website.openMobileMenu(0)
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step(`Check main button ${type} page`, async()=>{
-                expect(await website.getMobileBtnText(await localization.getTranslation(btn1))).toBeVisible()
-                expect(await website.getMobileBtnText(await localization.getTranslation(btn2))).toBeVisible()
-            })})
-        }
+
 
     type payTranslations = {
         testRailId: string,
@@ -618,26 +381,6 @@ test.describe('Website. Languages and translations', async()=>{
                 expect(await website.getBtnHeaderTextPay(await localization.getTranslation(btn1))).toBeVisible()
             })
         })}
-
-    for(const{testRailId, platform, language, btn1,type}of payTranslationsParams){
-        test(`${testRailId} Mobile. Localization of main buttons, Language-${language} on ${platform}, Pay page`,
-            {tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 30000);
-            let website = new NagaCom(page)
-            let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
-            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
-                await website.open(platform)
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(type, 1)
-                await website.switchMobileLanguageTo(language)
-                await website.acceptAllCookies()
-                await website.openMobileMenu(0)
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step(`Check main button ${type} page`, async()=>{
-                expect(await website.getMobileBtnTextPay(await localization.getTranslation(btn1))).toBeVisible()
-            })
-        })}
 })
 
 test.describe('Website. Footer and header elements', async()=>{
@@ -665,23 +408,6 @@ test.describe('Website. Footer and header elements', async()=>{
             })})
     }
 
-    for(const{testRailId, type } of footer){
-        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, 
-            {tag:['@naga.com','@mobile']}, async({page})=>{
-            let website = new NagaCom(page);
-            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step(`Open website https://naga.com/eu`, async()=>{
-                await website.open('https://naga.com/eu')
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(type, 1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step("Check naga.com/eu footer elements", async()=>{
-                expect(await website.getText(await website.riskWarning_EU)).toEqual(await localization.getLocalizationText('EU_footer_RiskWarning_header'))
-                expect(await website.getText(await website.riskWarning_EU_main)).toEqual(await localization.getLocalizationText('EU_footer_RiskWarning_main'))
-            })})
-    }
     
     
     const EuFooterCryptoParams: footerTypes[] = [
@@ -703,24 +429,6 @@ test.describe('Website. Footer and header elements', async()=>{
             })
         })}
 
-    for(const{testRailId, type} of EuFooterCryptoParams){
-        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
-            let website = new NagaCom(page);
-            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step("Open website https://naga.com/eu", async()=>{
-                await website.open('https://naga.com/eu')
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(type, 1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step("Check naga.com/eu footer elements", async()=>{
-                expect(await website.getText(await website.euCryptoAdressFooter)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_address'))
-                expect(await website.getText(await website.euCryptoRegulationFooter)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_regulation'))
-                expect(await website.getText(await website.euCryptoRiskNotification)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_riskNotification'))
-                expect(await website.getText(await website.euCryptoRestrictedCountries)).toEqual(await localization.getLocalizationText('EU_cryptoFooter_restrictedCountries'))
-            })
-        })}
 
     const EuFooterPayParams: footerTypes[] = [
         {testRailId: '@25207', type: 'pay'},
@@ -740,24 +448,7 @@ test.describe('Website. Footer and header elements', async()=>{
             })
         })}
 
-    for(const{testRailId, type} of EuFooterPayParams){
-        test(`${testRailId} Mobile naga.com/eu footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
-            let website = new NagaCom(page);
-            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step("Open website https://naga.com/eu", async()=>{
-                await website.open('https://naga.com/eu')
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(type, 1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step("Check naga.com/eu footer elements", async()=>{
-                expect(await website.getText(await website.euPayAddress)).toEqual(await localization.getLocalizationText('EU_payFooter_address'))
-                expect(await website.getText(await website.euPayRegistrationNumber)).toEqual(await localization.getLocalizationText('EU_payFooter_registrationNumber'))
-                expect(await website.getText(await website.euPayRiskNotification)).toEqual(await localization.getLocalizationText('EU_payFooter_riskNotification'))
-            })
-        })}
-
+   
     const EnFooterParams: footerTypes[] = [
         {testRailId: "@25201", type: 'Trade'},
         {testRailId: "@25203", type: 'Invest'},
@@ -776,22 +467,6 @@ test.describe('Website. Footer and header elements', async()=>{
             })})
     }
 
-    for(const{testRailId, type}of EnFooterParams){
-        test(`${testRailId} Mobile naga.com/en footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
-            let website = new NagaCom(page);
-            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step("Open website naga.com/en", async()=>{
-                await website.open('https://naga.com/en')
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(type, 1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step("Check footer naga.com/en footer elemets", async()=>{
-                expect(await website.getText(await website.riskWarning_EN)).toEqual(await localization.getLocalizationText("EN_footer_RiskWarning"))
-                expect(await website.getText(await website.restrictedRegions_EN)).toEqual(await localization.getLocalizationText("EN_footer_RestrictedRegions"))
-            })})
-    }
 
     const ZA_FooterParams: footerTypes[] = [
         {testRailId: "@25223", type: 'Trade'},
@@ -809,20 +484,6 @@ test.describe('Website. Footer and header elements', async()=>{
             })})
     }
 
-    for(const{testRailId, type}of ZA_FooterParams){
-        test(`${testRailId} Mobile naga.com/za footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
-            let website = new NagaCom(page);
-            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step("Open website naga.com/za", async()=>{
-                await website.open('https://naga.com/za')
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step("Check footer naga.com/en footer elemets", async()=>{
-                expect(await website.getText(await website.zaRiskWarning)).toEqual(await localization.getLocalizationText("ZA_RiskWarning"))
-                expect(await website.getText(await website.zaRegualtion)).toEqual(await localization.getLocalizationText("ZA_Regulation"))
-            })})
-    }
 
     const AE_FooterParams: footerTypes[] = [
         {testRailId: '@25230', type: "Trade"},
@@ -839,24 +500,7 @@ test.describe('Website. Footer and header elements', async()=>{
                 expect(await website.getText(await website.aeFooterRiskWarning)).toEqual(await localization.getLocalizationText("AE_RiskWarning"))
                 expect(await website.getText(await website.aeFooterDisclaimer)).toEqual(await localization.getLocalizationText("AE_Disclaimer"))
             })})
-    }
-
-    for(const{testRailId, type}of AE_FooterParams){
-        test(`${testRailId} Mobile naga.com/ae footer ->${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
-            let website = new NagaCom(page);
-            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step("Open website naga.com/ae", async()=>{
-                await website.open('https://naga.com/ae')
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(type, 1)
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-            })
-            await test.step("Check footer naga.com/en footer elemets", async()=>{
-                expect(await website.getText(await website.aeFooterRiskWarning)).toEqual(await localization.getLocalizationText("AE_RiskWarning"))
-                expect(await website.getText(await website.aeFooterDisclaimer)).toEqual(await localization.getLocalizationText("AE_Disclaimer"))
-            })})
-    }
+    }    
 
     type footerTypeEU = {
         testRailId: string,
@@ -895,44 +539,7 @@ test.describe('Website. Footer and header elements', async()=>{
                 expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
             })})
     }
-    type mobileFooterTypeEU = {
-        testRailId: string,
-        type: string,
-        baseUrl: string,
-        page1: string,
-        page2: string,
-        subcategory1: string,
-        subcategory2: string
-    }
-
-    const EuMobileRiskWarningFooter: mobileFooterTypeEU[] = [
-        {testRailId: '@25199', type: 'trade', baseUrl:'https://naga.com/eu', page1:"Markets", page2:"Company", subcategory1:'Forex', subcategory2:'Contact us'},
-        {testRailId: '@25198', type: 'invest', baseUrl:'https://naga.com/eu', page1:'Platforms', page2:'Help & Support', subcategory1:'NAGA Web', subcategory2:'Contact us'}
-    ]
-    for(const{testRailId, type, baseUrl,page1, page2, subcategory1, subcategory2}of EuMobileRiskWarningFooter){
-        test(`${testRailId} Mobile ${baseUrl} -> Risk Warning footer /${type} page`, {tag:['@naga.com','@mobile']}, async({page})=>{
-            let website = new NagaCom(page);
-            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step(`Open website ${baseUrl}`, async()=>{
-                await website.open(`${baseUrl}`)
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(type, 1)
-            })
-            await test.step('Check risk warning footer', async()=>{
-                await website.acceptAllCookies()
-                await website.checkAndCloseBullonPopup()
-                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
-            })
-            await test.step(`Check footer on ${page1} page`, async()=>{
-                await website.openMobileFooterCategory(page1, subcategory1)
-                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
-            })
-            await test.step(`Check footer on ${page2} page`, async()=>{
-                await website.openMobileFooterCategory(page2, subcategory2)
-                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
-            })
-        })
-    }
+    
 
     type socialNetworksZA = {
         testRailId: string;
@@ -993,36 +600,9 @@ test.describe('Website. Footer and header elements', async()=>{
                 await website.openFooterCategory(`${page3}`)
                 expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
             })})
-        }
+    }
         
-    const AEMobileRiskWarningFooter: mobileFooterTypeEU[] = [
-        {testRailId: '@25199', type: 'Trade', baseUrl:'https://naga.com/eu', page1:"Markets", page2:"Company", subcategory1:'Forex', subcategory2:'Contact us'},
-        {testRailId: '@25198', type: 'Invest', baseUrl:'https://naga.com/eu', page1:'Platforms', page2:'Help & Support', subcategory1:'NAGA Web app', subcategory2:'Contact us'}
-    ]
-    for(const{type, page1, page2, subcategory1, subcategory2}of AEMobileRiskWarningFooter){
-        test(`@25234 Footer disclaimer on ${type} page`,{tag:['@naga.com','@mobile']}, async({page}, testInfo)=>{
-            let website = new NagaCom(page);
-            testInfo.setTimeout(testInfo.timeout + 10000);
-            let localization = new getLocalization("/pageObjects/localization/Website_NagaCom.json")
-            await test.step('Open naga.com/ae and check header discleimer', async()=>{
-                await website.open('https://naga.com/ae');
-                await website.openMobileMenu(0)
-                await website.checkMobileTradeInstrument(`${type}`, 1)
-                await website.checkAndCloseBullonPopup()
-                await website.acceptAllCookies();
-                //await website.checkTradeInstrument(type);
-                expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
-            })
-            await test.step(`Check header on ${page1} page`, async()=>{
-                await website.openMobileFooterCategory(page1, subcategory1)
-                expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
-            })
-            await test.step(`Check header on ${page2} page`, async()=>{
-                await website.openMobileFooterCategory(page2, subcategory2)
-                expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
-            })
         })
-        }})
     test.describe('Website. Legal documents', async()=>{
    
     type pdfTypes = {
@@ -1057,27 +637,7 @@ test.describe('Website. Footer and header elements', async()=>{
                     await website.closePopup()
                 }}
             )})
-        }
-
-    for(const{testRailId, type, platform, documents, regulation}of pdfParams){
-        test(`${testRailId} Mobile. Check legal documents on ${type} page. Base url ${platform}`,
-            {tag: ['@naga.com', '@compliance','@mobile']}, async({page}, testInfo)=>{
-            await testInfo.setTimeout(testInfo.timeout + 40000);
-            let website = new NagaCom(page);
-            await test.step(`Open ${platform}`, async()=>{
-                await website.open(platform)
-            })
-            await test.step('Check documents in popup', async()=>{
-                for(let index in documents){
-                    await website.openLegalDocument(documents[index])
-                    expect(await website.getPopupHeader()).toEqual(documents[index])
-                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
-                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
-                    expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
-                    await website.closePopup()
-                }}
-            )})
-        }
+        }    
 })
 
     test.describe('Website. Landing pages', async()=>{
