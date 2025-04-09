@@ -124,7 +124,7 @@ test.describe('Autocopy', async()=>{
             await new NewPosition(proxyPageUAE).installLotsSize(60, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
-        await test.step('Save date of opened position (Mena user). And Close positon', async()=>{
+        await test.step('Close opened position (Mena user)', async()=>{
             await mainPageMena.openHeaderMenuPoint('my-trades')
             await new MyTrades(proxyPageUAE).closePositionsIfExist()
         })

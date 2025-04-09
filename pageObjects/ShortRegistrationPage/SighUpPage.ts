@@ -4,37 +4,45 @@ import {faker, fakerEN} from '@faker-js/faker'
 
 export class SignUp{
     page: Page;
-    readonly email: Locator;
-    readonly password: Locator;
-    readonly country: Locator;
-    readonly submitBtn: Locator;
-    readonly riskWarning: Locator;
-    readonly sighUpTittle: Locator;
-    readonly checkbox_PrivacyPolicy: Locator;
-    readonly checkbox_RiskAcceptance: Locator;
-    readonly NX_RiskDisclaimer: Locator;
-    readonly phone: Locator;
-    notCorrectCountryMSG: Locator;
-    countryCrypto: Locator;
-    phoneCode: Locator;
-    riskWarningMena:Locator;
+    private readonly email: Locator;
+    private readonly password: Locator;
+    private readonly country: Locator;
+    private readonly countryInput: Locator;
+    private readonly countrySearchResult: Locator;
+    private readonly submitBtn: Locator;
+    private readonly riskWarning: Locator;
+    private readonly sighUpTittle: Locator;
+    private readonly checkbox_PrivacyPolicy: Locator;
+    private readonly checkbox_RiskAcceptance: Locator;
+    private readonly NX_RiskDisclaimer: Locator;
+    private readonly phone: Locator;
+    private readonly notCorrectCountryMSG: Locator;
+    private readonly countryCrypto: Locator;
+    private readonly phoneCode: Locator;
+    private readonly riskWarningMena:Locator;
+    private readonly phoneCodeInput: Locator;
+    private readonly phoneCodeSearchResult: Locator;
 
     constructor(page: Page){
         this.page = page;
         this.email = page.locator("[name='email']");
         this.password = page.locator("[name='password']");
-        this.country = page.locator('//label[text()="Country"]//..//div[@data-testid="naga-dropdown-input"]');
-        this.phoneCode = page.locator("//label[text()='Country Code']//..//div[@data-testid='naga-dropdown-input']")
+        this.country = page.locator("//label[text()='Select Country']//..//div[@class='dropdown-select-field__option']//span");
+        this.phoneCode = page.locator("//div[@class='dropdown-select__option__image']/following-sibling::span")
+        this.phoneCodeInput = page.locator("//textarea[contains(@class, 'dropdown-select-field__search')]")
         this.phone = page.locator('//input[@name="phone"]')
         this.countryCrypto = page.locator("//div[contains(@class, 'dropdown-select__custom__control')]")
-        this.submitBtn = page.locator("//button[contains(@class, 'submit')]");
-        this.riskWarning = page.locator("//div[contains(@class, 'registration-form__risk-warning')]");
+        this.submitBtn = page.locator("//button[@type='submit']");
+        this.riskWarning = page.locator(".registration-form__risk-warning");
         this.riskWarningMena = page.locator(".registration-form__terms-and-conditions")
         this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
         this.checkbox_PrivacyPolicy = page.locator("//input[@data-testid='privacy-policy-checkbox']/following-sibling::label");
         this.checkbox_RiskAcceptance = page.locator("//input[@data-testid='data-processing-checkbox']/following-sibling::label");
         this.NX_RiskDisclaimer = page.locator("//label[contains(@class, 'registration-form__consent')]");
         this.notCorrectCountryMSG = page.locator("//div[contains(@class, 'registration-form__country-error--shown')]")
+        this.countryInput = page.locator("//textarea[contains(@class, 'input')]")
+        this.countrySearchResult = page.locator("//div[contains(@class, 'select__menu-list')]//div[@class='dropdown-select-field__option']")
+        this.phoneCodeSearchResult = page.locator("//div[contains(@class, 'select__menu-list ')]//div[@class='dropdown-select-field__option']")
     };
 
     async goto(MainPage: string, pageTest: string){
@@ -49,7 +57,8 @@ export class SignUp{
         await this.checkPhoneCode(countryCode)
         await this.phone.pressSequentially(phone)
         await this.page.waitForTimeout(750)
-        await this.page.locator("//button[text()='Sign Up']").click()
+        await this.submitBtn.scrollIntoViewIfNeeded()
+        await this.submitBtn.click()
     };
     async createCfdUser_All(email: string, password: string,  country: string, countryCode: string, phoneNumber: string){
         await this.page.waitForLoadState()
@@ -74,18 +83,19 @@ export class SignUp{
     }
 
     async checkCountry(Country: string){
+        await this.country.scrollIntoViewIfNeeded()
         if(await this.country.textContent() !== Country){
             await this.country.click();
-            await this.country.pressSequentially(Country);
-            await this.country.press('Enter')
+            await this.countryInput.pressSequentially(Country);
+            await this.countrySearchResult.press('Enter')
         } else {}
     };
     async checkPhoneCode(code: string){
         if(await this.phoneCode.textContent() !== code){
             await this.phoneCode.click();
             //await this.phoneCode.clear()
-            await this.phoneCode.pressSequentially(code);
-            await this.phoneCode.press('Enter')
+            await this.phoneCodeInput.pressSequentially(code);
+            await this.phoneCodeSearchResult.press('Enter')
         } else {}
     }
 

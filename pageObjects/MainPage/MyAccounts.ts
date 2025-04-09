@@ -21,4 +21,9 @@ export class MyAccounts{
         let menuItem = await this.page.locator("//ul[contains(@class, 'dropdown-menu')]")
         await menuItem.locator(`//span[text()='${nameOfItem}']`).click()
     }
+    async openMobileMyAccountsMenuItem(nameOfItem: string){
+        let menuItem = await this.page.locator(`//span[@class='dropdown-item__content__title']`,{hasText:nameOfItem})
+        await menuItem.click()
+        await this.page.locator("//div[text()='Currently logged in']").waitFor({state:'visible'})
+    }
 }
