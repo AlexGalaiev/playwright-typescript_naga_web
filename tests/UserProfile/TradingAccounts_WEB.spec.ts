@@ -10,7 +10,7 @@ import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRe
 
 test.describe("New Trading account", async()=>{
     
-  test("@23922 Naga Capital. Create 2nd live account", {tag:['@secondAccount']}, 
+  test("@23922 Naga Capital. Create 2nd live account", {tag:['@secondAccount', '@web']}, 
     async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 70000);
     let addAccount = new AddAcountForm(page);

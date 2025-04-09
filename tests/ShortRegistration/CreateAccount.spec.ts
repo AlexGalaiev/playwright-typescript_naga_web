@@ -205,7 +205,8 @@ test.describe('Lead registration', async()=>{
         {testRailId:'@25357', brand:'@Capital', country:'Bosnia and Herzegovina'}
     ] 
     for(const{testRailId, brand, country}of LoginParams){
-    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity','@mobile','@web']}, async({page,AppNAGA})=>{
+    test(`${testRailId} ${brand} Lead short registration`, 
+        {tag:['@smoke', '@prodSanity','@mobile','@web']}, async({page,AppNAGA})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step('Open register page, check number of buttons, remove captcha', async()=>{

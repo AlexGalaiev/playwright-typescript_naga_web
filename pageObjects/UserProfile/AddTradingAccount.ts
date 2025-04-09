@@ -19,12 +19,13 @@ export class AddAcountForm{
     readonly defaultAccountName: Locator;
     readonly showPasswordBtn: Locator;
     readonly passwordContainer: Locator;
-    
+    readonly addNewAccountBtnMobile: Locator;
 
     constructor(page: Page){
         this.page = page;
         //elements for add new account test
         this.addNewAccountBtn = page.locator("//span[contains(text(), 'Add New Account')]");
+        this.addNewAccountBtnMobile = page.locator("//div[text()='Currently logged in']//..//div[@class='content-box-title__button']")
         this.accountTypeLive = page.locator("//input[@value='R']")
         this.accountTypeDemo = page.locator("//input[@value='D']")
         this.accountName = page.locator("//div[@class='modal-body']//input[@type='text']")
@@ -55,7 +56,29 @@ export class AddAcountForm{
         await this.successAddingAccountBtn.waitFor({timeout:4000})
         await this.successAddingAccountBtn.click();
         await this.page.waitForTimeout(1500)
-    };
+    }
+
+    async openMobileAccountCreateForm(){
+        await this.addNewAccountBtnMobile.click()
+        await this.page.locator("//h4[text()='Add New Account']").waitFor({state:'visible'})
+    }
+    async createMobileAccount(typeOfAccount: string, nameOfAccount: string, currency:string){
+        let popup = await this.page.locator("//h4[text()='Add New Account']//..//..")
+        let accountCheckbox = await this.page.locator(`//span[text()='${typeOfAccount}']//preceding-sibling::input`)
+        await accountCheckbox.click()
+        await popup.locator('//input[@placeholder]').pressSequentially(`${nameOfAccount}`)
+        await this.page.waitForTimeout(1000)
+        await popup.locator(`//div[@data-currency="${currency}"]`).click()
+        await popup.locator("//button[text()='Create Account']").click()
+
+    }
+
+    async getMobileStatusMSG(){
+        return await this.page.locator("//span[contains(@class, 'info-modal_title')]").textContent()
+    }
+    async acceptPopup(){
+        await this.page.locator("//span[text()='Ok']").click()
+    }
     async create_EUR_DemoAccount(){
         await this.addNewAccountBtn.waitFor({timeout:3000})
         await this.addNewAccountBtn.click()
@@ -100,5 +123,15 @@ export class AddAcountForm{
 
     async checkPasswordContainerIsVisibel(){
         return this.passwordContainer.isVisible()
+    }
+    async getLoginedAccountId(){
+        let tradeAccount = await this.page.locator("//div[text()='Currently logged in']//../following-sibling::div[@class='trading-account-item']").first()
+        let brokerInfo = await tradeAccount.locator(".trading-account-item__top__broker__info__number").textContent()
+        let id = brokerInfo?.match(/#(\d+)/)
+        return id[1]
+    }
+    async clickAccount(accountId: string){
+        let account = await this.page.locator('trading-account-item', {has: await this.page.locator(`//span[contains(text(), '${accountId}')]`)})
+        await account.click()
     }
 }

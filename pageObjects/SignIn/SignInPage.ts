@@ -23,7 +23,7 @@ export class SignIn{
         this.redirectionButton = page.locator("//div[@class='prompt__actions']//button");
         this.sighInHeaderName = page.locator("//h2[contains(@class, 'login-form__headline')]");
         this.incorrectCredentialsMsg = page.locator(".login-form__error");
-        this.languageSwitcher = page.locator('#registration-language');
+        this.languageSwitcher = page.locator('.registration-header__dropdown-toggle');
     }
     async signInUserToPlatform(UserEmail: string, UserPassword: string){
         await this.signInName.waitFor({state:"visible"})
@@ -89,8 +89,8 @@ export class SignIn{
         await this.languageSwitcher.click();
         await this.page.waitForTimeout(500)
     }
-    async checkDefaultLanguage(language: string){
-        return await this.page.locator(`//a[text()='${language}']`);
+    async checkDefaultLanguage(language: string){ 
+        return await this.page.locator(`//img[@alt='${language}']//..`)
     }
     async checkPageHeader(){
         await this.page.waitForTimeout(500)

@@ -138,7 +138,7 @@ export class MyTrades{
         return await this.emptyPage.textContent()
     }
     async emptyPageTextIsVisible(){
-        await this.page.waitForTimeout(300)
+        await this.page.waitForTimeout(1000)
         return await this.emptyPage.isVisible()
     }
     
@@ -191,7 +191,7 @@ export class MyTrades{
     }
 
     async getMobileSourceOfOpenedPosition(nameOfInstrument: string){
-        let position = await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]", {has: await this.page.locator(`//div[@title='${nameOfInstrument}']`)})
+        let position = await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]", {has: await this.page.locator(`//div[@title='${nameOfInstrument}']`)}).first()
         let source = await position.locator("//div[contains(@class, 'my-trades-table-mobile__trade-source')]")
         return await source.textContent()
     }
@@ -219,5 +219,9 @@ export class MyTrades{
     async getMobileSourceOftrade(){
         await this.page.waitForTimeout(500)
         return await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__trade-source')]").textContent()
+    }
+    async openMobileClosedPositionsTab(){
+        await this.closeTradesTab.click()
+        await this.openedMobilePosition.first().waitFor({state:'visible'})
     }
 }
