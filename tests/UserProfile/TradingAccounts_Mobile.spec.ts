@@ -5,10 +5,11 @@ import { AddAcountForm } from "../../pageObjects/UserProfile/AddTradingAccount";
 import { test } from "../../test-options"
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
+import { MainPage } from "../../pageObjects/MainPage/MainPage";
 
 test.describe('Mobile. Create second account', async()=>{
 
-    test("@23922 Naga Capital. Create 2nd live account", {tag:['@secondAccount', '@mobile']}, 
+    test("@23922 Naga Capital. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let addAccount = new AddAcountForm(page);
@@ -38,7 +39,7 @@ test.describe('Mobile. Create second account', async()=>{
             await addAccount.acceptPopup()
         })
     })
-    test("@23600 Naga Markets. Create 2nd live account", {tag:['@secondAccount', '@mobile']}, 
+    test("@23600 Naga Markets. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let addAccount = new AddAcountForm(page);
@@ -69,7 +70,7 @@ test.describe('Mobile. Create second account', async()=>{
             await addAccount.acceptPopup()
         })
     })
-    test("@25400 Naga Mena. Create 2nd live account", {tag:['@secondAccount', '@mobile']}, 
+    test("@25400 Naga Mena. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let addAccount = new AddAcountForm(page);
@@ -100,7 +101,7 @@ test.describe('Mobile. Create second account', async()=>{
             await addAccount.acceptPopup()
         })
     })
-    test("@25400 Naga Africa. Create 2nd live account", {tag:['@secondAccount', '@mobile']}, 
+    test("@25400 Naga Africa. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let addAccount = new AddAcountForm(page);
@@ -145,21 +146,58 @@ test.describe('Mobile. Actions with accounts', async()=>{
         {brand:'@Africa', user:'userWithAccounts4@i.ua'}
     ]
     for(const{brand, user}of switchingParams){
-        test(`Switching between exist accounts on brand ${brand}`,{tag:['@secondAccount', '@mobile']}, 
+        test(`Switching between exist accounts on brand ${brand}`,{tag:['@secondAccount', '@UI', '@mobile']}, 
             async({page, AppNAGA}, testInfo)=>{
         let signIn = new SignIn(page)
-        let addAccount = new AddAcountForm(page)
-        let myAccounts = new MyAccounts(page)
+        let mainPage = new MainPage(page)
         await test.step(`Login to ${brand} plarform by ${user} user`, async()=>{
             await signIn.goto(AppNAGA, 'login')
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
         })
-        await test.step('Open trading accounts menu and ', async()=>{
-            await myAccounts.openUserMenu()
-            await myAccounts.openMobileMyAccountsMenuItem('Trading Accounts')
-            let loginAccuntId = await addAccount.getLoginedAccountId()
-            await addAccount.clickAccount(loginAccuntId)
+        await test.step('Open trading accounts menu on main page', async()=>{
+            await mainPage.openMobileMenu('Menu')
+            await mainPage.openMobileTradingAccountMenu()
+        })
+        await test.step('Switch to second account', async()=>{
+            await mainPage.switchTo('secondAccount')
+            expect(await mainPage.getloginnedUserAccount()).toEqual('secondAccount')
+        })
+        await test.step('Switch to second account', async()=>{
+            await mainPage.openMobileTradingAccountMenu()
+            await mainPage.switchTo('mainAccount')
+            expect(await mainPage.getloginnedUserAccount()).toEqual('mainAccount')
+        })
+    })}
+
+    const editParams:switchingActions[] = [
+        {brand:'@Capital', user:'leadUserCapital@naga.com'},
+        {brand:'@Markets', user:'leadUserMarkets@naga.com'},
+        {brand:'@Mena', user:'leadUserMena@naga.com'},
+        {brand:'@Africa', user:'leadUserAfrica@naga.com'}
+    ]
+    for (const{brand, user}of editParams){
+        test(`${brand} Edit trading account information `, 
+            {tag:['@secondAccount','@UI', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 90000);
+        let signIn = new SignIn(page);
+        let myAccountsMenu = new MyAccounts(page)
+        let addAccountForm = new AddAcountForm(page);
+        await test.step(`Login to platform by ${user} to ${brand}`, async()=>{
+            await signIn.goto(AppNAGA,'login');
+            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        })
+        await test.step('Change name of exist trading acoount', async()=>{
+            await myAccountsMenu.openUserMenu()
+            await myAccountsMenu.openMobileMyAccountsMenuItem('Trading Accounts')
+            await addAccountForm.openEditForm('NAGA - USD')
+            await addAccountForm.changeMobileNameOfAccount('TestName')
+            expect(await addAccountForm.getChangedName('TestName')).toBeTruthy()
+        })
+        await test.step('Move back name NAGA - USD', async()=>{
+            await addAccountForm.openEditForm('TestName')
+            await addAccountForm.changeMobileNameOfAccount('NAGA - USD')
         })
     })
+    }
 
-}})
+})
