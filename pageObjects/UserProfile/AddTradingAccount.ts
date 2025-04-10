@@ -45,19 +45,6 @@ export class AddAcountForm{
         this.passwordContainer = page.locator("//div[contains(@class, 'password-container')]");
     };
 
-
-    async create_USD_LiveAccount(){
-        await this.addNewAccountBtn.waitFor({timeout:3000})
-        await this.addNewAccountBtn.click()
-        await this.addAccountPopup.waitFor({timeout:4000});
-        await this.accountName.pressSequentially('Live_USD');
-        await this.accountCurrecnyUSD.click();
-        await this.createAccount.click();
-        await this.successAddingAccountBtn.waitFor({timeout:4000})
-        await this.successAddingAccountBtn.click();
-        await this.page.waitForTimeout(1500)
-    }
-
     async openMobileAccountCreateForm(){
         await this.addNewAccountBtnMobile.click()
         await this.page.locator("//h4[text()='Add New Account']").waitFor({state:'visible'})
@@ -70,7 +57,6 @@ export class AddAcountForm{
         await this.page.waitForTimeout(1000)
         await popup.locator(`//div[@data-currency="${currency}"]`).click()
         await popup.locator("//button[text()='Create Account']").click()
-
     }
 
     async getMobileStatusMSG(){
@@ -79,17 +65,7 @@ export class AddAcountForm{
     async acceptPopup(){
         await this.page.locator("//span[text()='Ok']").click()
     }
-    async create_EUR_DemoAccount(){
-        await this.addNewAccountBtn.waitFor({timeout:3000})
-        await this.addNewAccountBtn.click()
-        await this.page.waitForTimeout(3000)
-        await this.accountTypeDemo.click();
-        await this.accountName.pressSequentially('DEMO_EUR');
-        await this.createAccount.click();
-        await this.successAddingAccountBtn.waitFor({timeout:4000})
-        await this.successAddingAccountBtn.click();
-        await this.page.waitForTimeout(1500)
-    };
+
     async checkNewLiveAccount(){
         return this.newLiveUSDAccount.isVisible();
     }
@@ -110,6 +86,14 @@ export class AddAcountForm{
         await this.successAddingAccountBtn.waitFor({timeout:2000})
     };
 
+    async openEditForm(AccountName: string){
+        let account = await this.page.locator('.trading-account-item', {has: await this.page.locator(`//span[text()='${AccountName}']`)}).first()
+        await account.locator("//div[contains(@class, 'trading-account-item__menu')]").click()
+        await this.page.waitForTimeout(200)
+        await account.locator("//a[text()='Edit Account']").click()
+        await this.page.waitForTimeout(500)
+    }
+
     async getDefaultAccountName(){
         return this.defaultAccountName.textContent();
     };
@@ -124,14 +108,34 @@ export class AddAcountForm{
     async checkPasswordContainerIsVisibel(){
         return this.passwordContainer.isVisible()
     }
-    async getLoginedAccountId(){
-        let tradeAccount = await this.page.locator("//div[text()='Currently logged in']//../following-sibling::div[@class='trading-account-item']").first()
-        let brokerInfo = await tradeAccount.locator(".trading-account-item__top__broker__info__number").textContent()
-        let id = brokerInfo?.match(/#(\d+)/)
-        return id[1]
+    async switchToAccount(accountName){
+        let tradeAccount = await this.page.locator('.trading-account-item', {has: await this.page.locator(`//span[@title='${accountName}']`)})
+        await tradeAccount.click()
     }
     async clickAccount(accountId: string){
         let account = await this.page.locator('trading-account-item', {has: await this.page.locator(`//span[contains(text(), '${accountId}')]`)})
         await account.click()
+    }
+    async clickAddAccountBtn(){
+        await this.addNewAccountBtn.waitFor({timeout:3000})
+        await this.addNewAccountBtn.click()
+    }
+    async acceptSuccessPopupWeb(){
+        await this.successAddingAccountBtn.waitFor({timeout:4000})
+        await this.successAddingAccountBtn.click();
+        await this.page.waitForTimeout(1500)
+    }
+    async changeMobileNameOfAccount(testText: string){
+        let inputField = await this.page.locator("//input[@type='text']")
+        await inputField.clear()
+        await inputField.pressSequentially(testText)
+        await this.page.waitForTimeout(500)
+        await this.page.locator("//button[text()='Edit Account']").click()
+        await this.page.locator("//span[text()='Ok']").click()
+    }
+    async getChangedName(accountNameText:string){
+        await this.page.waitForTimeout(300)
+        let name = await this.page.locator(`//span[text()='${accountNameText}']`)
+        return await name.isVisible()
     }
 }

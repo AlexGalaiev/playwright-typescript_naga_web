@@ -161,14 +161,23 @@ export class KYC_General{
         let signUp = new SignUp(this.page)
         email = await new RandomUser().getRandomUserEmail()
         let KYC = new KYC_Africa(this.page)
-        let mainPage = new MainPage(this.page)
-        let myAccountsMenu = new MyAccounts(this.page)
         //create lead user
         await signUp.goto(brand, 'register')
         await new Captcha(this.page).removeCaptcha()
-        await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', country, phoneCode, phone)
+        await signUp.createCfdUser_All(email, password, country, phoneCode, phone)
         await new YouAreInNagaMarkets(this.page).clickOpenRealMoneyAccount()
         //fill start information
+        await KYC.fillStartInformation()
+        await this.page.waitForTimeout(4000)
+    }
+    async NagaAfrica_Lead_web(email: string, password: string, country:string, phoneCode: string, phone: string, brand: string){
+        let signUp = new SignUp(this.page)
+        let KYC = new KYC_Africa(this.page)
+        let mainPage = new MainPage(this.page)
+        await signUp.goto(brand, 'register')
+        await new Captcha(this.page).removeCaptcha()
+        await signUp.createCfdUser_All(email, password, country, phoneCode, phone)
+        await new YouAreInNagaMarkets(this.page).clickOpenRealMoneyAccount()
         await KYC.fillStartInformation()
         await this.page.waitForTimeout(4000)
     }

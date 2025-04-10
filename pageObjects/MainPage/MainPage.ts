@@ -217,6 +217,7 @@ export class MainPage{
         await this.page.waitForTimeout(500)
     }
     async openMobileMenuPoint(nameOfStep:string){
+        await this.page.locator('.header__menu').waitFor({state:'visible'})
         let menuPoint = await this.page.locator(".header__menu__nav-item", 
             {has: await this.page.locator(`//a[@href='/${nameOfStep}']`)})
         await menuPoint.click()
@@ -244,5 +245,19 @@ export class MainPage{
         await this.page.waitForTimeout(500)
         let foundResults = await this.page.locator('.global-search__results__group .global-search__results__group__item-user', {hasText:userName})
         await foundResults.click()
+    }
+
+    async openMobileTradingAccountMenu(){
+        await this.page.locator('.sidebar-trading-account__header').click()
+        await this.page.locator('.sidebar-trading-accounts').waitFor({state:'visible'})
+    }
+    async switchTo(accountName: string){
+        let account = await this.page.locator(".sidebar-trading-account__wrapper", {has:await this.page.locator(`//h2[text()='${accountName}']`)})
+        await account.click()
+        await this.page.waitForTimeout(3500)
+        await this.page.locator('.profile-info').waitFor({state:'visible'})
+    }
+    async getloginnedUserAccount(){
+        return await this.page.locator(".sidebar-trading-account__title").textContent()
     }
 }
