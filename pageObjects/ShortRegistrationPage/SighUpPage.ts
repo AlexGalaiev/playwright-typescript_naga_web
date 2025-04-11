@@ -34,7 +34,7 @@ export class SignUp{
         this.countryCrypto = page.locator("//div[contains(@class, 'dropdown-select__custom__control')]")
         this.submitBtn = page.locator("//button[@type='submit']");
         this.riskWarning = page.locator(".registration-form__risk-warning");
-        this.riskWarningMena = page.locator(".registration-form__terms-and-conditions")
+        this.riskWarningMena = page.locator(".registration-form__info-wrapper")
         this.sighUpTittle = page.locator("//div[@class='registration-form__title']")
         this.checkbox_PrivacyPolicy = page.locator("//input[@data-testid='privacy-policy-checkbox']/following-sibling::label");
         this.checkbox_RiskAcceptance = page.locator("//input[@data-testid='data-processing-checkbox']/following-sibling::label");
@@ -107,7 +107,10 @@ export class SignUp{
     }
     async getRiskWarningText(){
         return await this.riskWarning.textContent();
-    };
+    }
+    async getRiskWarningNM(){
+        return await this.page.locator('.registration-form__risk-warning_nm').textContent()
+    }
     async getRiskWarningText_NX(){
         return await this.NX_RiskDisclaimer.textContent()
     }
@@ -161,7 +164,7 @@ export class SignUp{
         return await document.getAttribute('href')
     }
     async getMenaRiskWarning(){
-        return await this.riskWarningMena.textContent()
+        return await this.riskWarningMena.first().textContent()
     }
     async clickLogo(){
         await this.page.locator(".naga-logo"). click()

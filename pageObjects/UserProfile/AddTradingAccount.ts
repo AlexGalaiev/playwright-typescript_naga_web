@@ -73,8 +73,8 @@ export class AddAcountForm{
         return this.newDemoEURAccount.isVisible();
     };
     async editLiveAccountName(AccountName: string){
-        let account = await this.page.locator('.trading-account-item', {hasText: 'Live'})
-        await account.locator("#dd-edit-account").click();
+        let account = await this.page.locator('.trading-account-item', {hasText: 'Live'}).first()
+        await account.locator("#dd-edit-account").first().click();
         let editBtn = await account.locator("//li[@role='presentation']", 
             {has: await this.page.locator("//a[text()='Edit Account']")})
         await editBtn.click()

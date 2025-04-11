@@ -260,4 +260,16 @@ export class MainPage{
     async getloginnedUserAccount(){
         return await this.page.locator(".sidebar-trading-account__title").textContent()
     }
+
+    async switchToAcIfNeeded(accountName){
+        let account = await this.page.locator('.sidebar-trading-account__title').textContent()
+        if(await account !== accountName){
+            await this.page.locator(".sidebar-trading-account__wrapper").click()
+            await this.page.locator(`//h2[text()='${accountName}']`).click()
+            await this.page.waitForTimeout(300)
+        }
+    }
+    async getLoginedAccountId(){
+        return await this.page.locator(".sidebar-trading-account__info-item--login").textContent()
+    }
 }
