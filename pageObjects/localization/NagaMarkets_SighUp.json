@@ -1,6 +1,6 @@
 {
     "SighUp_RiskDisclaimer":{
-        "answer": "RISK WARNING: CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. 82.65% of retail investor accounts lose money when trading CFDs with this provider. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money."
+        "answer": "RISK WARNING: CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. 82.65% of retail investor accounts lose money when trading CFDs with this provider. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money. By registering for an account you hereby agree with the entire content of all legal documents."
     },
     "SighUp_redirectToOppositeBrand_text":{
         "answer":"NAGA Markets Europe LTD does not provide regulated services to Bosnia and Herzegovina. If you wish to create an account with us, you will be redirected to one of our Group Companies to that effect, specifically NAGA Capital LTD"
@@ -15,7 +15,7 @@
         "answer":"Key Way Markets LTD provides services to Retail clients, Professional clients, and Market Counterparties. Trading leveraged products is highly speculative, involves significant risk of loss, and is not suitable for all investors. Before trading, you are strongly advised to read and ensure that you understand the relevant Risk Disclosure and warnings here: Risk Disclosure. 23.57% of retail investor accounts generate profits when trading leveraged products with this provider."
     },
     "SighUp_RiskDisclaimer_Africa":{
-        "answer":"Risk Warning: Contracts for Difference (‘CFDs’) are leveraged products, incur a high level of risk and can result in the loss of all of your invested capital. As a result, CFDs may not be suitable for all individuals. You should not risk more than you are prepared to lose."
+        "answer":"Risk Warning: Contracts for Difference (‘CFDs’) are leveraged products, incur a high level of risk and can result in the loss of all of your invested capital. As a result, CFDs may not be suitable for all individuals. You should not risk more than you are prepared to lose. "
     },
     "SighUp_RiskDisclaimer_Capital":{
         "answer": "By clicking Sign Up you confirm that you are over 18 years old. You further agree that you accept NAGA Capital LTD Client Agreement and all other applicable legal documents, Privacy Policy and that your data may be used by us or our affiliates to send you news on market events and updates and information via emails, calls, newsletters and/or other means. You can unsubscribe anytime from receiving such material. By registering for an account you hereby agree with the entire content of all legal documents."

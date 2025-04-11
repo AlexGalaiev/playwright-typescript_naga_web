@@ -41,7 +41,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
 
 for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
   test(`${testRailId} ${brand} Open/Close ${investDirection} position + ${protection}`, 
-    {tag:['@trading','@web', '@prodSanity']}, async ({ page, AppNAGA }, testInfo) => {
+    {tag:['@trading','@web']}, async ({ page, AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 170000);
     let signIn = new SignIn(page);
     let mainPage = new MainPage(page);

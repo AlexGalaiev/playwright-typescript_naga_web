@@ -74,7 +74,6 @@ test.describe("Withdrawal Capital", async()=>{
             expect(await withdrawal.checkCryptoSuccessPopupText()).toEqual(await localization.getLocalizationText("CryptoWithdrawalSuccessPopupText"))
         })
     })
-    
 })
 
 test.describe('Withdrawal Markets', async()=>{

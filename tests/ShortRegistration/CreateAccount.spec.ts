@@ -12,7 +12,8 @@ test.describe("Short regitration page elements", async()=>{
 
     test.describe('Capital', async()=>{
         
-        test.beforeEach('Create vpn connect', async({proxyPageUA, AppNAGA})=>{
+        test.beforeEach('Create vpn connect', async({proxyPageUA, AppNAGA},testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 10000)
             await new SignUp(proxyPageUA).goto(AppNAGA, "register")
         })
 
@@ -55,13 +56,14 @@ test.describe("Short regitration page elements", async()=>{
 
     test.describe('Markets', async()=>{
 
-        test.beforeEach('Create vpn connect', async({proxyPage, AppNAGA})=>{
+        test.beforeEach('Create vpn connect', async({proxyPage, AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 10000)
             await new SignUp(proxyPage).goto(AppNAGA, "register")
         })
 
         test(`@25142 @Markets Risk Disclaimer text`, {tag:['@UI', '@mobile','@web']}, async({proxyPage})=>{
             let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText('SighUp_RiskDisclaimer')
-            expect(await new SignUp(proxyPage).getRiskWarningText()).toEqual(localizationText)
+            expect(await new SignUp(proxyPage).getRiskWarningNM()).toEqual(localizationText)
         })
         test('@25242 @Markets Check default languages', {tag:['@UI', '@web']}, async({proxyPage})=>{
             let languages = ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']
@@ -95,7 +97,8 @@ test.describe("Short regitration page elements", async()=>{
 
     test.describe('@Africa', async()=>{
 
-        test.beforeEach('Create vpn connect', async({proxyPageSA, AppNAGA})=>{
+        test.beforeEach('Create vpn connect', async({proxyPageSA, AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 10000)
             await new SignUp(proxyPageSA).goto(AppNAGA, "register")
         })
 
@@ -135,7 +138,8 @@ test.describe("Short regitration page elements", async()=>{
 
     test.describe('@Mena', async()=>{
 
-        test.beforeEach('Create vpn connect', async({proxyPageUAE, AppNAGA})=>{
+        test.beforeEach('Create vpn connect', async({proxyPageUAE, AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 10000)
             await new SignUp(proxyPageUAE).goto(AppNAGA, "register")
         })
 

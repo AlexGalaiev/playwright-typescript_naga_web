@@ -9,7 +9,7 @@
         "answer": "Your account doesn't belong to the NAGA entity you are trying to login to. Please continue and we will direct you to the appropriate one."
     },
     "SighInHeaderMainText":{
-        "answer":"Sign In to your account"
+        "answer":"Sign in to NAGA!"
     },
     "incorrectPassword_1try":{
         "answer":"Unfortunately, the password you entered is not correct. Please try again. You have 4 more attemtps left."
