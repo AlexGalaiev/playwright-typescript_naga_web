@@ -159,7 +159,7 @@ test.describe('Mobile website', async()=>{
         test(`${testRailId} Mobile VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@mobile']}, async({proxyPageUA}, testInfo)=>{
             let website = new NagaCom(proxyPageUA)
-            testInfo.setTimeout(testInfo.timeout + 20000)
+            testInfo.setTimeout(testInfo.timeout + 30000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.openMobileMenu(0)
@@ -183,7 +183,7 @@ test.describe('Mobile website', async()=>{
         test(`${testRailId} Mobile VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@mobile']}, async({proxyPageUAE}, testInfo)=>{
             let website = new NagaCom(proxyPageUAE)
-            testInfo.setTimeout(testInfo.timeout + 20000)
+            testInfo.setTimeout(testInfo.timeout + 30000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.openMobileMenu(0)

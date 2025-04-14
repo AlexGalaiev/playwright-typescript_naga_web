@@ -153,11 +153,14 @@ const NM_WithdrawalParams: NM_WithdrawalTypes[] = [
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_WithdrawalParams){
     test(`${testRailId} ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, async({page,AppNAGA}, testInfo)=>{
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web', '@debug']}, async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
+        let amount;
+        let responseAmount;
+        let response
         await test.step(`Login by ${user} to ${brand} plarform  and open withdrawal`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
@@ -167,16 +170,16 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
         await test.step(`Make ${paymentMethod} withdrawal`, async()=>{
             await withdrawal.clickMenuPoint(menuPoint)
             await withdrawal.clickPaymentMethod(paymentMethod)
-            let amount = await withdrawal.withdrawalCalculation('$')
-            let response = await withdrawal.performManualWithdrawal(amount, '**/payment/manual_withdraw')
+            amount = await withdrawal.withdrawalCalculation('$')
+            response = await withdrawal.performManualWithdrawal(amount, '**/payment/manual_withdraw')
+            responseAmount = await withdrawal.getAPIWithdrawalAmount(response)
+        })
+        await test.step(`withdrawal values: UI-${amount}, responseAmount -${responseAmount}`, async()=>{
             expect(await withdrawal.getAPIWithdrawalMSG(response)).toEqual('Command has been processed successfully.')
             expect(await withdrawal.getAPIWithdrawalAmount(response)).toBeCloseTo(amount, 0)
             expect(await withdrawal.getNagaMarketsWithdrawalPopupTitle()).toContain(`The withdrawal of $${amount} to your ${menuPoint} is being reviewed.`)
-
         })
     })}
-
-
 
     type withdrawalTypes = {
         testRailId: string,

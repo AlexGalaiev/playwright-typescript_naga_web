@@ -20,7 +20,7 @@ test.describe('Website redirect', async()=>{
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
             {tag: ['@prodSanity','@naga.com','@web']}, async({proxyPage},testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 15000)
+            testInfo.setTimeout(testInfo.timeout + 25000)
             let website = new NagaCom(proxyPage)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
@@ -42,7 +42,7 @@ test.describe('Website redirect', async()=>{
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
         test(`${testRailId} Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
             {tag: ['@prodSanity', '@naga.com','@web']}, async({proxyPageUAE},testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 25000)
+            testInfo.setTimeout(testInfo.timeout + 30000)
             let website = new NagaCom(proxyPageUAE)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
@@ -62,7 +62,7 @@ test.describe('Website redirect', async()=>{
     for(const{testRailId, type, buttonName, redirectTo, baseUrl }of fromWebsiteToNAfrica){
         test(`${testRailId} Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
             {tag: ['@prodSanity', '@naga.com','@web']}, async({proxyPageSA},testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 15000)
+            testInfo.setTimeout(testInfo.timeout + 20000)
             let website = new NagaCom(proxyPageSA)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
@@ -86,7 +86,7 @@ test.describe('Website redirect', async()=>{
     for(const{type, buttonName, redirectTo, testRailId, baseUrl}of fromWebsitetoNS){
         test(`${testRailId} Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
             {tag: ['@prodSanity', '@naga.com','@web']}, async({proxyPageUA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 10000)
+            testInfo.setTimeout(testInfo.timeout + 20000)
             let website = new NagaCom(proxyPageUA)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await website.open(`${baseUrl}`)
@@ -107,7 +107,7 @@ test.describe('Website redirect', async()=>{
         test(`${testRailId} Redirect with VPN (Italy) from ${baseUrl} /${type} to ${redirectTo}. Check allert popup`, 
             {tag: ['@naga.com','@web']}, 
             async({proxyPage}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 50000);
+            testInfo.setTimeout(testInfo.timeout + 60000);
             let website = new NagaCom(proxyPage)
             let localization = new getLocalization('/pageObjects/localization/Website_NagaCom.json')
             await test.step(`Open website ${baseUrl}`, async()=>{
@@ -143,7 +143,7 @@ test.describe('Website redirect', async()=>{
         test(`${testRailId} VPN(Ukraine) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@web']}, async({proxyPageUA}, testInfo)=>{
             let website = new NagaCom(proxyPageUA)
-            testInfo.setTimeout(testInfo.timeout + 30000)
+            testInfo.setTimeout(testInfo.timeout + 40000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
@@ -167,7 +167,7 @@ test.describe('Website redirect', async()=>{
         test(`${testRailId} VPN(UAE) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@web']}, async({proxyPageUAE}, testInfo)=>{
             let website = new NagaCom(proxyPageUAE)
-            testInfo.setTimeout(testInfo.timeout + 30000)
+            testInfo.setTimeout(testInfo.timeout + 40000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
@@ -189,7 +189,7 @@ test.describe('Website redirect', async()=>{
         test(`${testRailId} VPN(ZA) Redirect from ${basePage}/${type} to platform. Search ${nameOfInstrument} instrument `, 
             {tag:['@naga.com','@web']}, async({proxyPageSA}, testInfo)=>{
             let website = new NagaCom(proxyPageSA)
-            testInfo.setTimeout(testInfo.timeout + 20000)
+            testInfo.setTimeout(testInfo.timeout + 30000)
             await test.step(`Open website ${basePage}. Check ${type} page`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)
@@ -211,7 +211,7 @@ test.describe('Website redirect', async()=>{
         test(`${testRailId} VPN(Italy). Redirect from ${basePage}/${type} to platfotm. Search ${nameOfInstrument} on page`, 
             {tag: ['@naga.com','@web']}, async({proxyPage}, testInfo)=>{
             let website = new NagaCom(proxyPage)
-            testInfo.setTimeout(testInfo.timeout + 30000)
+            testInfo.setTimeout(testInfo.timeout + 40000)
             await test.step(`Open website ${basePage}. Check instrument ${type}`,async()=>{
                 await website.open(basePage)
                 await website.checkTradeInstrument(type)

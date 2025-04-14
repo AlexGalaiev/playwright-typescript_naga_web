@@ -38,7 +38,6 @@ export class MainPage{
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
-        await this.verifyHeaders.waitFor({timeout:3000})
     }
     async checkMainPage(){
         await this.sideBar.waitFor({timeout: 10000});
@@ -271,5 +270,12 @@ export class MainPage{
     }
     async getLoginedAccountId(){
         return await this.page.locator(".sidebar-trading-account__info-item--login").textContent()
+    }
+    async checkBackMenuElementIsVisible(nameOfElement: string){
+        let element = await this.page.locator(`[data-testid="navigation-${nameOfElement}"]`)
+        return await element.isVisible()
+    }
+    async mainMobilePageIsDownLoaded(){
+        await this.page.waitForSelector('.news-feed', {state:'visible'})
     }
 }

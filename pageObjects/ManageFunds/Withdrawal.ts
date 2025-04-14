@@ -152,7 +152,7 @@ export class Withdrawal{
     async withdrawalCalculation(currency: string){
         let value = await this.page.locator("//p[text()='Balance:']//..//span").first().textContent()
         let amount = value?.replace(currency, '').trim().replace(/,/g, '')
-        let number = Number(amount) * Number(0.2)
+        let number = Number(amount) * Number(0.5)
         return number
     }
     async chooseMobileWithdrawalMethod(withdrawalMethod:string){
