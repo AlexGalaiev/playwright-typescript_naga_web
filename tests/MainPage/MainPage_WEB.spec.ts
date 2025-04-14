@@ -84,6 +84,38 @@ test.describe('Naga Markets', async()=>{
             await test.step('Check banners with different scorrings', async()=>{
                 expect(await mainPage.getTextOfWidgetStep(stepName)).toEqual(textOfStep)
             })
-        })}
+    })}
+
+    test('Spanish user. UI limitation for user', {tag: ['@UI', '@web']}, async({page, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 20000);  
+        let spanishUser = 'spanishLeadUser@naga.com'
+        let polishUser = 'polishUser@naga.com'
+        let signIn = new SignIn(page);
+        let mainPage = new MainPage(page)
+        await test.step(`Login to platform by spanish user - ${spanishUser}`, async()=>{
+            await signIn.goto(AppNAGA, 'login')
+            await signIn.signInUserToPlatform(spanishUser, process.env.USER_PASSWORD || '')
+        })
+        await test.step('Check visibility of UI elements: Discovery, FAQ, Academy.. These elments must be hidden', async()=>{
+            await mainPage.mainPageIsDownLoaded()
+            expect(await mainPage.checkBackMenuElementIsVisible('discover')).toBeFalsy()
+            expect(await mainPage.checkBackMenuElementIsVisible('mm_academy')).toBeFalsy()
+            expect(await mainPage.checkBackMenuElementIsVisible('mm_messenger')).toBeFalsy()
+            expect(await mainPage.checkBackMenuElementIsVisible('mm_trading_signals')).toBeFalsy()
+            await new MyAccounts(page).openUserMenu()
+            await new MyAccounts(page).userLogOut()
+        })
+        await test.step(`Log out and login by ${polishUser}`, async()=>{
+            await signIn.goto(AppNAGA, 'login')
+            await signIn.signInUserToPlatform(polishUser, process.env.USER_PASSWORD || '')
+        })
+        await test.step('Check visibility of UI elements: Discovery, FAQ, Academy.. These elments must be visible', async()=>{
+            await mainPage.mainPageIsDownLoaded()
+            expect(await mainPage.checkBackMenuElementIsVisible('discover')).toBeTruthy()
+            expect(await mainPage.checkBackMenuElementIsVisible('mm_academy')).toBeTruthy()
+            expect(await mainPage.checkBackMenuElementIsVisible('mm_messenger')).toBeTruthy()
+            expect(await mainPage.checkBackMenuElementIsVisible('mm_trading_signals')).toBeTruthy()
+        })
+    })
 })
 

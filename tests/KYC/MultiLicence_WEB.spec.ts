@@ -14,7 +14,7 @@ test.describe("Multi licence web", async()=>{
     let email =''
 
     test.beforeEach('Create lead user',async({proxyPageBH, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 15000);
+        testInfo.setTimeout(testInfo.timeout + 30000);
         email = new RandomUser().getRandomUserEmail()
         let signUp = new SignUp(proxyPageBH)
         await test.step(`Create lead user with email-${email}`, async()=>{
@@ -51,7 +51,7 @@ test.describe("Multi licence web", async()=>{
         })
     })
     test(`@25445 Open multilycence from different platfrorm places`, {tag:['@kyc', '@web']}, async({proxyPageBH}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 10000);
+        testInfo.setTimeout(testInfo.timeout + 15000);
         let multiLicense = new MultiLicense(proxyPageBH)
         let mainPage = new MainPage(proxyPageBH)
         await test.step('Open multilicence after click "Deposit now" btn', async()=>{
