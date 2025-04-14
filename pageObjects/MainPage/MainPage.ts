@@ -275,4 +275,7 @@ export class MainPage{
         let element = await this.page.locator(`[data-testid="navigation-${nameOfElement}"]`)
         return await element.isVisible()
     }
+    async mainMobilePageIsDownLoaded(){
+        await this.page.waitForSelector('.news-feed', {state:'visible'})
+    }
 }
