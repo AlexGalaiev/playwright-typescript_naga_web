@@ -156,7 +156,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
 
     for(const{testRailId, brand, user, protectionSL, protectionTP, currency, mobileDirection} of tradingParametersSLTP){
         test(`${testRailId} ${brand} Mobile Edit position popup with ${protectionSL}/${protectionTP}`, 
-          {tag:['@trading','@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-7506', type:'ticket'}}, async({page, AppNAGA}, testInfo)=>{
+          {tag:['@trading','@mobile']}, async({page, AppNAGA}, testInfo)=>{
           testInfo.setTimeout(testInfo.timeout + 170000);
           let signIn = new SignIn(page);
           let mainPage = new MainPage(page);

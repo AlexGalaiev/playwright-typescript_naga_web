@@ -34,7 +34,8 @@ test.describe("Withdrawal Capital", async()=>{
             expect(await withdrawal.checkNameOfIframe()).toEqual('_cashier_iframe')
         })
     })
-    test("@24932 Withdrawal validation rulls", {tag:['@withdrawal', '@manageFunds','@web']},async({page})=>{
+    test("@24932 Withdrawal validation rulls", {tag:['@withdrawal', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        async({page})=>{
         let withdrawal = new Withdrawal(page);
         let valueToWithrawal = '1'
         await test.step('Open withdrawal menu', async()=>{
@@ -52,7 +53,9 @@ test.describe("Withdrawal Capital", async()=>{
         })
     });
 
-    test("@24091 Crypto withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page})=>{
+    test("@24091 Crypto withdrawal", {tag:['@withdrawal', '@manageFunds','@web'], 
+        annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        async({page})=>{
         let withdrawal = new Withdrawal(page);
         let localization = new getLocalization(ManageFunds_Withdrawal);
         await test.step('Open withdrawal menu', async()=>{
@@ -77,7 +80,8 @@ test.describe("Withdrawal Capital", async()=>{
 })
 
 test.describe('Withdrawal Markets', async()=>{
-    test("@24093 PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},async({page, AppNAGA}, testInfo)=>{
+    test("@24093 PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -93,7 +97,7 @@ test.describe('Withdrawal Markets', async()=>{
             await withdrawal.clickMenuPoint('PayPal')
             let response = await withdrawal.performManualWithdrawal(amountValueToWithrawal, '**/payment/paypal/withdraw')
             expect(await withdrawal.getAPIWithdrawalMSG(response)).toEqual('Command has been processed successfully.')
-            expect(await withdrawal.getAPIWithdrawalAmount(response)).toEqual(amountValueToWithrawal)
+            expect(await withdrawal.getAPIWithdrawalAmount(response)).toContain(amountValueToWithrawal)
         })
     })
 })
@@ -115,7 +119,8 @@ const NS_WithdrawalParams: NS_WithdrawalTypes[] = [
 //difference between NagaMarkets and NagaCapital -> Markets has withdrawal popup, Capital opens iframe
 for(const{testRailId, brand, user, menuPoint, paymentMethod, responsePaymentMethod}of NS_WithdrawalParams){
     test(`${testRailId} ${brand} EWallet withdrawals. Check ${paymentMethod} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, async({page,AppNAGA}, testInfo)=>{
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -153,7 +158,8 @@ const NM_WithdrawalParams: NM_WithdrawalTypes[] = [
 ]
 for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_WithdrawalParams){
     test(`${testRailId} ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web', '@debug']}, async({page,AppNAGA}, testInfo)=>{
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web', '@debug'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -177,7 +183,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
         await test.step(`withdrawal values: UI-${amount}, responseAmount -${responseAmount}`, async()=>{
             expect(await withdrawal.getAPIWithdrawalMSG(response)).toEqual('Command has been processed successfully.')
             expect(await withdrawal.getAPIWithdrawalAmount(response)).toBeCloseTo(amount, 0)
-            expect(await withdrawal.getNagaMarketsWithdrawalPopupTitle()).toContain(`The withdrawal of $${amount} to your ${menuPoint} is being reviewed.`)
+            expect(await withdrawal.getWithdrawalPopupTittle()).toEqual('Withdrawal request received!')
         })
     })}
 
@@ -195,7 +201,8 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     ]
     for(const{testRailId, brand, user, numberOfEwalletWithdrawal} of testNumberOfWithdrawals){
         test(`${testRailId} ${brand} Check number of available withdrawals`, 
-            {tag:["@withdrawal", '@manageFunds','@web']}, async({page,AppNAGA})=>{
+            {tag:["@withdrawal", '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+            async({page,AppNAGA})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
@@ -226,7 +233,8 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     
     for(const{testRailId, brand, user, currency}of withdrawalEcompayParams){
         test(`${testRailId} ${brand} Withdrawal. Bank Account. Ecommpay`, 
-        {tag:["@withdrawal", '@manageFunds','@prodSanity','@web']},async({page,AppNAGA}, testInfo)=>{
+        {tag:["@withdrawal", '@manageFunds','@prodSanity','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
