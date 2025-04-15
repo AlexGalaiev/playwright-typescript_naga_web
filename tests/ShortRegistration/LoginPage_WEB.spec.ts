@@ -19,8 +19,7 @@ test.describe("Naga Capital. SignIn Page", async()=>{
     let testUser: string = '';
 
     test.skip("@23916 Forgot password link test",
-            {tag:['@forgotPassword'], annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, 
-        async({page, AppNAGA, NSCountry})=>{
+            {tag:['@forgotPassword']}, async({page, AppNAGA, NSCountry})=>{
         let signInPage = new SignIn(page);
         let forgotPassword = new ForgotPassword(page);
         let signUp = new SignUp(page)
@@ -74,7 +73,7 @@ test.describe('Naga Markets. Sigh in', async()=>{
     })
     
     test.skip("@23574 Forgot password link test", 
-        {tag:'@forgotPassword', annotation:{'description':'https://keywaygroup.atlassian.net/browse/RG-1275','type':'ticket'}}, async({page})=>{
+        {tag:'@forgotPassword'}, async({page})=>{
         let signInPage = new SignIn(page);
         let forgotPassword = new ForgotPassword(page);
         await test.step("Check forgot password functionality", async()=>{

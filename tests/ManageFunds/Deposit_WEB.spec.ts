@@ -19,7 +19,8 @@ test.describe('Deposit', async()=>{
     ]
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`${testRaildId} WEB ${brand} Check number of exist deposit methods`, 
-            {tag:['@deposit', '@manageFunds','@web']}, async({page, AppNAGA})=>{
+            {tag:['@deposit', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+            async({page, AppNAGA})=>{
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
             let deposit = new Deposit(page);
@@ -31,7 +32,6 @@ test.describe('Deposit', async()=>{
                 expect(await deposit.getNumberOfDepositMethods()).toEqual(numberOfDepositMethods)
             })})
     }
-
 })
 
 test.describe('Deposit', async()=>{
@@ -60,7 +60,8 @@ test.describe('Deposit', async()=>{
     ]
     for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
         test(`${testRailId} ${brand} Deposit with ${depositName} deposit`, 
-            {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web']}, async({page,AppNAGA}, testInfo)=>{
+            {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+            async({page,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 45000);
             let signIn = new SignIn(page);
             let mainPage = new MainPage(page);
@@ -76,8 +77,6 @@ test.describe('Deposit', async()=>{
                 expect(await deposit.getApiStatusCode(response)).toEqual(200)
             })
         })}
-
-    
 }) 
 test.describe('Deposit', async()=>{
 
@@ -98,7 +97,8 @@ test.describe('Deposit', async()=>{
             expect(await deposit.getApiStatusCode(response)).toEqual(200)
         })
     })
-    test('@25352 Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds','@web']}, async({page})=>{
+    test('@25352 Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        async({page})=>{
         let deposit = new Deposit(page)
         await new MainPage(page).openBackMenuPoint('Manage Funds')
         await test.step('Check wire trannsfer deposit', async()=>{
@@ -106,7 +106,6 @@ test.describe('Deposit', async()=>{
             expect(await deposit.getSuccessStatus(response)).toEqual(true)
             expect(await deposit.getInfoCode(response)).toEqual(200)
         })})
-   
 })
 
 test.describe('Deposit', async()=>{
@@ -119,7 +118,8 @@ test.describe('Deposit', async()=>{
         requestURL: string,
     }
 
-    test(`@23995 Check Pay Pal deposit`, {tag:['@deposit', '@manageFunds','@web']}, async({page, AppNAGA}, testInfo)=>{
+    test(`@23995 Check Pay Pal deposit`, {tag:['@deposit', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
@@ -145,7 +145,8 @@ test.describe('Deposit', async()=>{
     
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
     test(`${testRailId} ${brand} Check ${depositName} deposit`, 
-        {tag:['@deposit', '@manageFunds', '@smoke','@web']}, async({page,AppNAGA}, testInfo)=>{
+        {tag:['@deposit', '@manageFunds', '@smoke','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);

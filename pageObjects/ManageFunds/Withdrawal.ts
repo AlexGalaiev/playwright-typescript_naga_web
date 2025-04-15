@@ -168,6 +168,8 @@ export class Withdrawal{
         await this.page.waitForTimeout(500)
         await this.page.click(`//img[contains(@src, '${methodName}')]`)
         await this.page.waitForTimeout(1500)
-
+    }
+    async getWithdrawalPopupTittle(){
+        return await this.page.locator('.withdraw-request-received-modal__title').textContent()
     }
 }
