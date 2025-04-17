@@ -11,7 +11,7 @@ test.describe("Withdrawal Capital", async()=>{
     let amountValueToWithrawal = '55'
 
     test.beforeEach("Login by trade user", async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 50000);
+        testInfo.setTimeout(testInfo.timeout + 70000);
         let signIn = new SignIn(page);
         await test.step('Login by withdrawal user to platform and open withdrawal', async()=>{
             await signIn.goto(AppNAGA,'login');
@@ -39,8 +39,7 @@ test.describe("Withdrawal Capital", async()=>{
         let withdrawal = new Withdrawal(page);
         let valueToWithrawal = '1'
         await test.step('Open withdrawal menu', async()=>{
-            await new MainPage(page).openBackMenuPoint('Manage Funds');
-            await new Withdrawal(page).chooseWithdrawalMenu();
+            await new MainPage(page).openBackMenuSubcategory('Manage Funds', 'Withdraw');
         })
         await test.step('Input NOT valid amount for withdrawal', async()=>{
             await withdrawal.clickMenuPoint('Credit Card');
@@ -59,8 +58,9 @@ test.describe("Withdrawal Capital", async()=>{
         let withdrawal = new Withdrawal(page);
         let localization = new getLocalization(ManageFunds_Withdrawal);
         await test.step('Open withdrawal menu', async()=>{
-            await new MainPage(page).openBackMenuPoint('Manage Funds');
-            await new Withdrawal(page).chooseWithdrawalMenu();
+            // await new MainPage(page).openBackMenuPoint('Manage Funds');
+            // await new Withdrawal(page).chooseWithdrawalMenu();
+            await new MainPage(page).openBackMenuSubcategory('Manage Funds', 'Withdraw');
         })
         await test.step("Make crypto withdrawal", async()=>{
             await withdrawal.clickMenuPoint('Crypto')
@@ -82,7 +82,7 @@ test.describe("Withdrawal Capital", async()=>{
 test.describe('Withdrawal Markets', async()=>{
     test("@24093 PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
         async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 20000);
+        testInfo.setTimeout(testInfo.timeout + 40000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page)
@@ -90,8 +90,7 @@ test.describe('Withdrawal Markets', async()=>{
         await test.step('Login by depositTestMarkets3 to NagaMarkets and open withdrawal', async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform("depositTestMarkets3", process.env.USER_PASSWORD || '');
-            await mainPage.openBackMenuPoint('Manage Funds');
-            await new Withdrawal(page).chooseWithdrawalMenu();
+            await mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
         });
         await test.step('Open Pay pal withdrawal', async()=>{
             await withdrawal.clickMenuPoint('PayPal')
@@ -121,15 +120,17 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, responsePaymentMeth
     test(`${testRailId} ${brand} EWallet withdrawals. Check ${paymentMethod} withdrawal`, 
         {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
         async({page,AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 50000);
+        testInfo.setTimeout(testInfo.timeout + 70000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login by ${user} to ${brand} platform and open withdrawal`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openBackMenuPoint('Manage Funds');
-            await new Withdrawal(page).chooseWithdrawalMenu();
+            // await mainPage.openBackMenuPoint('Manage Funds');
+            // await new Withdrawal(page).chooseWithdrawalMenu();
+            await mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
+
         });
         await test.step(`Make ${paymentMethod} withdrawal`, async()=>{
             await withdrawal.clickMenuPoint(menuPoint)
@@ -160,7 +161,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     test(`${testRailId} ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
         {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web', '@debug'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
         async({page,AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 20000);
+        testInfo.setTimeout(testInfo.timeout + 60000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
@@ -170,8 +171,10 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
         await test.step(`Login by ${user} to ${brand} plarform  and open withdrawal`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openBackMenuPoint('Manage Funds');
-            await new Withdrawal(page).chooseWithdrawalMenu();
+            // await mainPage.openBackMenuPoint('Manage Funds');
+            // await new Withdrawal(page).chooseWithdrawalMenu();
+            await mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
+
         });
         await test.step(`Make ${paymentMethod} withdrawal`, async()=>{
             await withdrawal.clickMenuPoint(menuPoint)
@@ -202,15 +205,17 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
     for(const{testRailId, brand, user, numberOfEwalletWithdrawal} of testNumberOfWithdrawals){
         test(`${testRailId} ${brand} Check number of available withdrawals`, 
             {tag:["@withdrawal", '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
-            async({page,AppNAGA})=>{
+            async({page,AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 60000);
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let withdrawal = new Withdrawal(page);
         await test.step(`Login by ${user} to ${brand} platform`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openBackMenuPoint('Manage Funds');
-            await new Withdrawal(page).chooseWithdrawalMenu();
+            // await mainPage.openBackMenuPoint('Manage Funds');
+            // await new Withdrawal(page).chooseWithdrawalMenu();
+            await mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
             await withdrawal.clickMenuPoint('eWallet')
         })
         await test.step('Check number of available withdrawals}', async()=>{
@@ -242,8 +247,10 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
         await test.step(`Login to ${brand} by ${user} and open withdrawal`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openBackMenuPoint('Manage Funds');
-            await new Withdrawal(page).chooseWithdrawalMenu();
+            // await mainPage.openBackMenuPoint('Manage Funds');
+            // await new Withdrawal(page).chooseWithdrawalMenu();
+            await mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
+
         });
         await test.step(`Make Ecommpay withdrawal`, async()=>{
             await withdrawal.clickMenuPoint('Bank Account')

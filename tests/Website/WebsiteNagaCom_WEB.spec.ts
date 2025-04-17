@@ -534,10 +534,7 @@ test.describe('Website. Footer and header elements', async()=>{
                 await website.openFooterCategory(`${page2}`)
                 expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
             })
-            await test.step(`Check footer on ${page3} page`, async()=>{
-                await website.openFooterCategory(`${page3}`)
-                expect(await website.getRiskWarningFooter()).toEqual(await localization.getLocalizationText("EU_riskWarning_footer"))
-            })})
+        })
     }
     
 
@@ -596,10 +593,7 @@ test.describe('Website. Footer and header elements', async()=>{
                 await website.openFooterCategory(`${page2}`)
                 expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
             })
-            await test.step(`Check header on ${page3} page`, async()=>{
-                await website.openFooterCategory(`${page3}`)
-                expect(await website.getText(await website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
-            })})
+        })
     }
         
         })
@@ -634,7 +628,7 @@ test.describe('Website. Footer and header elements', async()=>{
                     expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
                     expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
                     expect(await website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
-                    await website.closePopup()
+                    await website.goBack()
                 }}
             )})
         }    

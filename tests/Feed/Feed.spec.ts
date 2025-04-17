@@ -32,7 +32,7 @@ for(const{testRailId, brand, user}of testFeedParams){
         })
         await test.step("Test opens user profile and delete previously created posts (if they exist)", async()=>{
             await myAccounts.openUserMenu()
-            await myAccounts.openMyAccountsMenuItem('Profile')
+            await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
             await new MainPage(page).openHeaderMenuPoint('feed')
         })
@@ -68,7 +68,7 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
     })
     await test.step("Closed opened posts is they exist (Test goes to User profile and delete posts)", async()=>{
         await myAccounts.openUserMenu()
-        await myAccounts.openMyAccountsMenuItem('Profile')
+        await myAccounts.openMyAccountMenuItem('My Social Profile')
         await feed.closeOpenedPost(user);
         await new MainPage(page).openHeaderMenuPoint('feed')
     })
@@ -107,7 +107,7 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
         })
         await test.step("In user profile, closed opened posts is they exist", async()=>{
             await myAccounts.openUserMenu()
-            await myAccounts.openMyAccountsMenuItem('Profile')
+            await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
             await new MainPage(page).openHeaderMenuPoint('feed')
         })
@@ -120,7 +120,7 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
         })
         await test.step('In user profile, check text of comment', async()=>{
             await myAccounts.openUserMenu()
-            await myAccounts.openMyAccountsMenuItem('Profile')
+            await myAccounts.openMyAccountMenuItem('My Social Profile')
             expect(await feed.checkTextOfPost(user)).toContain('test commnet')
             await feed.closeTab()
         })
@@ -149,7 +149,7 @@ for(const{testRailId, brand, user}of testShareCommentParams){
         })
         await test.step("In user profile, close posts if they exist", async()=>{
             await myAccounts.openUserMenu()
-            await myAccounts.openMyAccountsMenuItem('Profile')
+            await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
             await new MainPage(page).openHeaderMenuPoint('feed')
         })
@@ -189,7 +189,7 @@ for(const{testRailId, brand, user}of testParamsUserCabinet){
         })
         await test.step("Open user profile cabinet and close previously created posts", async()=>{
             await myAccounts.openUserMenu()
-            await myAccounts.openMyAccountsMenuItem('Profile')
+            await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
         })
         await test.step('Add new post from user profile', async()=>{
@@ -227,7 +227,7 @@ for(const{testRailId, brand, user, localization}of testNotVerifieduser){
         })
         await test.step("Delete previously created posts, if exist(in user profile)", async()=>{
             await myAccounts.openUserMenu()
-            await myAccounts.openMyAccountsMenuItem('Profile')
+            await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
             await new MainPage(page).openHeaderMenuPoint('feed')
         })

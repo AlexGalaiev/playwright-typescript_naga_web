@@ -31,6 +31,7 @@ export class SignIn{
         await this.signInName.pressSequentially(UserEmail);
         await this.signInPassword.pressSequentially(UserPassword);
         await this.signBtn.click();
+        await new SignIn(this.page).closeLearnMoreIfExist()
     };
     async forgotPasswordClick(){
         await this.page.waitForTimeout(500)
@@ -57,34 +58,7 @@ export class SignIn{
     async goto(MainPage: string, pageTest: string){
         await this.page.goto(`${MainPage}/${pageTest}`);
     };
-    async chooseBrand(tag: string){
-        let project = await test.info().project;
-        if(tag === '@Capital'){
-            return await project['use']['NagaCapital']
-        } else if (tag === '@Markets'){
-            return await project['use']['NagaMarkets']
-        } else if (tag === '@Mena'){
-            return await project['use']['NagaMena']
-        } else if (tag === '@Africa'){
-            return await project['use']['NagaAfrica']
-        } else if (tag === '@NX'){
-            return await project['use']['NagaX']
-        } else {}
-    }
-    async chooseBrandCountry(tag: string){
-    let project = await test.info().project;
-        if(tag === '@Capital'){
-            return await project['use']['NSCountry']
-        } else if (tag === '@Markets'){
-            return await project['use']['NMCountry']
-        } else if (tag === '@Mena'){
-            return await project['use']['NagaMenaCountry']
-        } else if (tag === '@Africa'){
-            return await project['use']['NagaAfricaCountry']
-        } else if (tag === '@NX'){
-            return await project['use']['NagaXCountry']
-        } else {}
-    }
+
     async openLanguages(){
         await this.languageSwitcher.click();
         await this.page.waitForTimeout(500)
@@ -109,4 +83,12 @@ export class SignIn{
         await this.page.bringToFront()
         await this.page.waitForTimeout(300)
     }
+    async closeLearnMoreIfExist(){
+        await this.page.waitForTimeout(5000)
+        let learnBtn = await this.page.locator("//button[text()='Learn more']")
+        if (await learnBtn.isVisible()){
+            await this.page.locator('//img[@alt="Close modal"]').click()
+        }
+    }
+  
 }

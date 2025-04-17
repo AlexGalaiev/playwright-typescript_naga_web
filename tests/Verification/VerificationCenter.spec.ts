@@ -27,7 +27,7 @@ test.describe("Verification center", async() => {
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
       await test.step('Check statuses of uploaded documents in My Accounts', async()=>{
         await myAccounts.openUserMenu()
-        await myAccounts.openMyAccountsMenuItem('My Documents')
+        await myAccounts.openMyAccountMenuItem('My Documents')
         expect(await verificationPopup.getStatusOdDocuments()).toEqual('Requested')
       })
     })
