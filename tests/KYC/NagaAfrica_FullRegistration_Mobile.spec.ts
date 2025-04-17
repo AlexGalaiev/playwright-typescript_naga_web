@@ -30,7 +30,7 @@ test.describe('KYC Mobile - Naga Africa', async()=>{
             await KYC.fillStartInformation()
         })
         await test.step('Switch to main page and open kyc', async()=>{
-            await mainPage.openHeaderMenuPoint('feed')
+            await mainPage.openBackMenuPoint('feed')
             await myAccountsMenu.openUserMenu();
             await myAccountsMenu.openMyAccountMenuItem('Profile Status')
             await mainPage.clickOnWidgepPoint('NAGA Progress')

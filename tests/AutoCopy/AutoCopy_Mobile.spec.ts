@@ -56,7 +56,7 @@ test.describe('Autocopy Mobile', async()=>{
             await myTradesMena.closeMobilePositionsIfExist()
         })
         await test.step(`Open position of ${tradingInstrument}`, async()=>{
-            await mainPageMena.openHeaderMenuPoint("markets");
+            await mainPageMena.openBackMenuPoint("markets");
             await instrumentsMena.openMobilePosition(tradingInstrument, 'SELL')
             //await newPositionMena.installMobileLotsSize(20, 2)
             await newPositionMena.submitPosition()
@@ -131,7 +131,7 @@ test.describe('Autocopy Mobile', async()=>{
                 await myTradesMena.closeMobilePositionsIfExist()
             })
             await test.step(`Open position of ${tradingInstrument}`, async()=>{
-                await mainPageMena.openHeaderMenuPoint("markets");
+                await mainPageMena.openBackMenuPoint("markets");
                 await instrumentsMena.openMobilePosition(tradingInstrument, 'SELL')
                 //await newPositionMena.installMobileLotsSize(20, 2)
                 await newPositionMena.submitPosition()

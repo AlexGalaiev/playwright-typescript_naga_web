@@ -72,12 +72,12 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
         await test.step(`Login to platform ${brand} by ${user}`, async()=>{
             await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await new MainPage(page).openHeaderMenuPoint('markets');
+            await new MainPage(page).openBackMenuPoint('markets');
         })     
         await test.step("Check price alert and clean if they exist", async()=>{
             await new AllInstruments(page).openPriceAlerts()
             await priceAlert.cleanPriceAlerts()
-            await new MainPage(page).openHeaderMenuPoint('markets');
+            await new MainPage(page).openBackMenuPoint('markets');
         })
         await test.step(`Choose ${tradeInstrument} and add price alert`, async()=>{
             await watchlist.searchInstrument(tradeInstrument);

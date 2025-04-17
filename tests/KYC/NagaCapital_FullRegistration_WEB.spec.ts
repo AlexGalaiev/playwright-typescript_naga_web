@@ -32,7 +32,7 @@ test.describe('KYC - Capital', async()=>{
             await personalInfo.compleateYourProfile()
         });
         await test.step('Check name of the widget banner "Naga start". Assert that Compleate profile popup is hidden', async()=>{
-            await mainPage.openHeaderMenuPoint("feed");
+            await mainPage.openBackMenuPoint("feed");
             expect(await mainPage.getStatusOfWidgetStep('NAGA Start')).toContain('--finished')
             expect(await mainPage.getStatusOfWidgetStep('Deposit')).toContain('--active')
         })
