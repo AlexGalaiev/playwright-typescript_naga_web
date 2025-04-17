@@ -31,7 +31,7 @@ export class SignIn{
         await this.signInName.pressSequentially(UserEmail);
         await this.signInPassword.pressSequentially(UserPassword);
         await this.signBtn.click();
-        await new SignIn(this.page).closeLearnMoreIfExist()
+        //await new SignIn(this.page).closeLearnMoreIfExist()
     };
     async forgotPasswordClick(){
         await this.page.waitForTimeout(500)

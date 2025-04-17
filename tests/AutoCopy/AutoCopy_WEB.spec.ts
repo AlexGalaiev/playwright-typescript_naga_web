@@ -39,7 +39,7 @@ test.describe('Autocopy', async()=>{
             expect(await userProfileCapital.AutocopyingBtn()).toBeTruthy()
         })
         await test.step('Check Cpaital My trades and close positions if they exist', async()=>{
-            await mainPageCapital.openHeaderMenuPoint('my-trades')
+            await mainPageCapital.openBackMenuPoint('my-trades')
             await new MyTrades(page).closePositionsIfExist()
         })
         await test.step(`Switch to Naga mena user-${MenaUser}`,async()=>{
@@ -48,17 +48,17 @@ test.describe('Autocopy', async()=>{
             await signIn2Mena.signInUserToPlatform(MenaUser, process.env.USER_PASSWORD || "")
         })
         await test.step('Check previously opened positions and close if they exist', async()=>{
-            await mainPageMena.openHeaderMenuPoint('my-trades')
+            await mainPageMena.openBackMenuPoint('my-trades')
             await new MyTrades(proxyPageUAE).closePositionsIfExist()
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
-            await mainPageMena.openHeaderMenuPoint('markets')
+            await mainPageMena.openBackMenuPoint('markets')
             await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
             await new NewPosition(proxyPageUAE).installLotsSize(60, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
         await test.step('Go to Mena My-trades and check source of opened position. Must be -OWN TRADE', async()=>{
-            await mainPageMena.openHeaderMenuPoint('my-trades')
+            await mainPageMena.openBackMenuPoint('my-trades')
             expect(await new MyTrades(proxyPageUAE).getSourceOfOpenedPosition(tradingInstrument)).toEqual('OWN TRADE')
         })
         await test.step(`Switch to Capital. Check source op opened position. Must be - copied`, async()=>{
@@ -98,7 +98,7 @@ test.describe('Autocopy', async()=>{
             await signInCapital.signInUserToPlatform(CapitalUser, process.env.USER_PASSWORD || "")
         })
         await test.step('Check Cpaital My trades and close positions if they exist', async()=>{
-            await mainPageCapital.openHeaderMenuPoint('my-trades')
+            await mainPageCapital.openBackMenuPoint('my-trades')
             await new MyTrades(page).closePositionsIfExist()
         })
         await test.step(`Check autocopied users. AutoCopy user - ${MenaUser}`, async()=>{
@@ -115,22 +115,22 @@ test.describe('Autocopy', async()=>{
             await signIn2Mena.signInUserToPlatform(MenaUser, process.env.USER_PASSWORD || "")
         })
         await test.step('Check Mena My trades and close positions if they exist', async()=>{
-            await mainPageMena.openHeaderMenuPoint('my-trades')
+            await mainPageMena.openBackMenuPoint('my-trades')
             await new MyTrades(proxyPageUAE).closePositionsIfExist()
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
-            await mainPageMena.openHeaderMenuPoint('markets')
+            await mainPageMena.openBackMenuPoint('markets')
             await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
             await new NewPosition(proxyPageUAE).installLotsSize(60, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
         await test.step('Close opened position (Mena user)', async()=>{
-            await mainPageMena.openHeaderMenuPoint('my-trades')
+            await mainPageMena.openBackMenuPoint('my-trades')
             await new MyTrades(proxyPageUAE).closePositionsIfExist()
         })
         await test.step(`Switch to ${CapitalUser} and check close postions`, async()=>{
             await signInCapital.switchPage(page)
-            await mainPageCapital.openHeaderMenuPoint('my-trades')
+            await mainPageCapital.openBackMenuPoint('my-trades')
             await new MyTrades(page).openCloseTradesTab()
             expect(await new MyTrades(page).getSourceOfOpenedPosition(tradingInstrument)).toEqual('AUTOCOPIED')
         })

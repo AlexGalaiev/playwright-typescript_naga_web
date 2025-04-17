@@ -62,7 +62,7 @@ test.describe('Mobile', async()=>{
       await myTrades.closeMobilePositionsIfExist();
       })
       await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
-          await mainPage.openHeaderMenuPoint("markets");
+          await mainPage.openBackMenuPoint("markets");
           await instruments.openMobilePosition(tradingInstrument, mobileDirection)
       })
       await test.step('Open order with manual rate value', async()=>{

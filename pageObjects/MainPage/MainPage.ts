@@ -97,12 +97,12 @@ export class MainPage{
     // }
 
     //new need to remove
-    async openHeaderMenuPoint(NameOfMenuPoint: string){
-        await this.page.waitForTimeout(1000)
-        let menuPoint = await this.page.locator(".header__menu__nav-item")
-        .filter({has: await this.page.locator(`//a[@href='/${NameOfMenuPoint}']`) })
-        await menuPoint.click();
-    };
+    // async openBackMenuPoint(NameOfMenuPoint: string){
+    //     await this.page.waitForTimeout(1000)
+    //     let menuPoint = await this.page.locator(".header__menu__nav-item")
+    //     .filter({has: await this.page.locator(`//a[@href='/${NameOfMenuPoint}']`) })
+    //     await menuPoint.click();
+    // };
 
     async openBackMenuSubcategory(mainCategoryName: string, subcategoryName:string){
         await this.page.waitForTimeout(500)
