@@ -56,7 +56,7 @@ test.describe('KYC WEB', async()=>{
       await KYC_FinalStep.clickBtn('Deposit');  
     })
     await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openHeaderMenuPoint("feed");
+      await mainPage.openBackMenuPoint("feed");
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })
@@ -76,7 +76,7 @@ test.describe('KYC WEB', async()=>{
       await KYC_FinalStep.clickBtn('Deposit');  
     })
     await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openHeaderMenuPoint("feed");
+      await mainPage.openBackMenuPoint("feed");
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })
@@ -96,7 +96,7 @@ test.describe('KYC WEB', async()=>{
       await KYC_FinalStep.clickBtn('Deposit');  
     })
     await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openHeaderMenuPoint("feed");
+      await mainPage.openBackMenuPoint("feed");
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })
@@ -117,7 +117,7 @@ test.describe('KYC WEB', async()=>{
       await KYC_FinalStep.clickBtn('Deposit');  
     })
     await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openHeaderMenuPoint("feed");
+      await mainPage.openBackMenuPoint("feed");
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })
@@ -137,7 +137,7 @@ test.describe('KYC WEB', async()=>{
       await KYC_FinalStep.clickBtn('Deposit');  
     })
     await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openHeaderMenuPoint("feed");
+      await mainPage.openBackMenuPoint("feed");
       expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
     })
   })

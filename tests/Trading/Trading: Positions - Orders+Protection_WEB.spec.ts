@@ -54,11 +54,11 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions and close if they exist", async () => {
-      await mainPage.openHeaderMenuPoint("my-trades");
+      await mainPage.openBackMenuPoint("my-trades");
       await myTrades.closePositionsIfExist();
     });
     await test.step(`Choose ${tradingInstrument} and open position`, async () => {
-      await mainPage.openHeaderMenuPoint("markets");
+      await mainPage.openBackMenuPoint("trade");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
     await test.step(`Open ${investDirection} position + ${protection}`, async () => {
@@ -68,7 +68,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       await newPosition.submitPosition();
     });
     await test.step("Check My-trades popup", async () => {
-      await mainPage.openHeaderMenuPoint("my-trades");
+      await mainPage.openBackMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
       expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
     });
@@ -103,12 +103,12 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened orders and close if they exist", async () => {
-        await mainPage.openHeaderMenuPoint("my-trades");
+        await mainPage.openBackMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         await myTrades.removeOrdersIfExist();
       });
       await test.step(`Choose ${tradingInstrument} and open position`, async () => {
-        await mainPage.openHeaderMenuPoint("markets");
+        await mainPage.openBackMenuPoint("trade");
         await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
       await test.step(`Open ${investDirection} position + ${protection}`, async () => {
@@ -119,7 +119,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
         await newPosition.submitPosition();
       });
       await test.step("Check My-trades popup", async () => {
-        await mainPage.openHeaderMenuPoint("my-trades");
+        await mainPage.openBackMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
         expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
@@ -169,11 +169,11 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions. Close it if exist", async () => {
-      await mainPage.openHeaderMenuPoint("my-trades");
+      await mainPage.openBackMenuPoint("my-trades");
       await myTrades.closePositionsIfExist();
     });
     await test.step(`Choose ${tradingInstrument} for trading. Open new position page. Enable ${protectionSL} `, async () => {
-      await mainPage.openHeaderMenuPoint("markets");
+      await mainPage.openBackMenuPoint("trade");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       await newPosition.switchToSpecificRateForm()
       await newPosition.installLotsSize(35, 2)
@@ -182,7 +182,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       await newPosition.submitPosition(); 
     });
     await test.step("Check My-trades", async () => {
-      await mainPage.openHeaderMenuPoint("my-trades");
+      await mainPage.openBackMenuPoint("my-trades");
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
       deposit = (await myTrades.getDepositValue(currency));
       units = await myTrades.getUnits();
