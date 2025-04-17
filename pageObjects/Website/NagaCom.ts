@@ -224,7 +224,7 @@ export class NagaCom{
         return await this.page.locator("//span[text()='AML and Account Verification']")
     }
     async getPopupHeader(){
-        return await this.page.locator("//div[contains(@class, 'mantine-Modal-header')]").textContent()
+        return await this.page.locator("//h1").textContent()
     }
     async checkDocumentVisibility(type: string, documentName: string, documentField: string){
         let localization = new getLocalization('/pageObjects/localization/Website_Naga.com_documents.json');
@@ -361,5 +361,9 @@ export class NagaCom{
         await hamburger.click()
         let menu = await this.page.locator("//div[contains(@class, 'product-tabs')]").nth(1)
         await menu.waitFor({state:"visible"})
+    }
+    async goBack(){
+        await this.page.goBack()
+        await this.page.waitForTimeout(500)
     }
 }

@@ -36,7 +36,7 @@ test("@24917 Mobile. KYC Advance",
     await test.step('Check name of the widget banner "Naga start". Assert that Compleate profile popup is hidden', async()=>{
         await mainPage.openHeaderMenuPoint("feed");
         await myAccountsMenu.openUserMenu();
-        await myAccountsMenu.openMyAccountsMenuItem('Profile Status')
+        await myAccountsMenu.openMyAccountMenuItem('Profile Status')
         await mainPage.clickOnWidgepPoint('NAGA Progress')
     })
     await test.step('Open step:  Naga progres. User clicks on Finished btn(KYC is prefield)', async()=>{

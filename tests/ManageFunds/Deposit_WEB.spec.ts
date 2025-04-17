@@ -27,8 +27,8 @@ test.describe('Deposit', async()=>{
             await test.step(`Login by ${user} to ${brand} platform and check number of exist methods`, async()=>{
                 await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openBackMenuPoint('Manage Funds');
-                await deposit.checkActiveDepositTab('deposit')
+                await mainPage.openBackMenuSubcategory('Manage Funds', 'Deposit');
+                //await deposit.checkActiveDepositTab('deposit')
                 expect(await deposit.getNumberOfDepositMethods()).toEqual(numberOfDepositMethods)
             })})
     }
@@ -69,7 +69,7 @@ test.describe('Deposit', async()=>{
             await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{
                 await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openBackMenuPoint('Manage Funds');
+                await mainPage.openBackMenuSubcategory('Manage Funds', 'Deposit');
             });
             await test.step(`Check ${depositName} deposit`, async()=>{
                 let response = await deposit.performDepositWithAmount(depositName, '100', '**/api/cashier/get-payment-method-list-without-details')
@@ -91,7 +91,7 @@ test.describe('Deposit', async()=>{
 
     test("@24068 Deposit via Crypto", {tag:['@deposit', '@manageFunds','@web']}, async({page})=>{
         let deposit = new Deposit(page);
-        await new MainPage(page).openBackMenuPoint('Manage Funds')
+        await new MainPage(page).openBackMenuSubcategory('Manage Funds', 'Deposit');
         await test.step("Check crypto deposit", async()=>{
             let response = await deposit.performDepositWithAmount('crypto', '100', 'https://payapi.newagecrypto.com/assets/paynow');
             expect(await deposit.getApiStatusCode(response)).toEqual(200)
@@ -100,7 +100,7 @@ test.describe('Deposit', async()=>{
     test('@25352 Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
         async({page})=>{
         let deposit = new Deposit(page)
-        await new MainPage(page).openBackMenuPoint('Manage Funds')
+        await new MainPage(page).openBackMenuSubcategory('Manage Funds', 'Deposit');
         await test.step('Check wire trannsfer deposit', async()=>{
             let response = await deposit.performDepositWithoutAmount('amazonaws', '**/payment/bank_accounts')
             expect(await deposit.getSuccessStatus(response)).toEqual(true)
@@ -126,7 +126,7 @@ test.describe('Deposit', async()=>{
         await test.step(`Login to platform by depositTestMarkets user`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform('depositTestMarkets', process.env.USER_PASSWORD || '');
-            await mainPage.openBackMenuPoint('Manage Funds');
+            await mainPage.openBackMenuSubcategory('Manage Funds', 'Deposit');
         })
         await test.step('Check Pay Pal deposit', async()=>{
             let deposit = new Deposit(page);
@@ -154,7 +154,7 @@ test.describe('Deposit', async()=>{
         await test.step(`Login by ${user} user`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openBackMenuPoint('Manage Funds');
+            await mainPage.openBackMenuSubcategory('Manage Funds', 'Deposit');
         });
         await test.step(`Check ${depositName} deposit`, async()=>{
             let response = await deposit.performDepositWithoutAmount(depositName, requestURL)

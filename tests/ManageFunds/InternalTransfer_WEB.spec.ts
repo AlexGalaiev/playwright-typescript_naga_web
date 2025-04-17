@@ -29,8 +29,9 @@ test.describe('Funds transfer', async()=>{
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
             });
             await test.step("Make internal transfer", async()=>{
-                await mainPage.openBackMenuPoint('Manage Funds');
-                await internalTransfer.openInternalTransferPage();
+                // await mainPage.openBackMenuPoint('Manage Funds');
+                // await internalTransfer.openInternalTransferPage();
+                await mainPage.openBackMenuSubcategory('Manage Funds', 'Transfer');
                 await internalTransfer.chooseAccount('AccountSource');
                 await internalTransfer.make1$InternalTransfer();
                 expect(await internalTransfer.checkSuccessPopupText()).toContain("You have successufuly transfered")

@@ -1,6 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 import { RandomUser } from "../common/testUserCredentials/randomUser";
 import {faker, fakerEN} from '@faker-js/faker'
+import { SignIn } from "../SignIn/SignInPage";
 
 export class SignUp{
     page: Page;
@@ -59,6 +60,7 @@ export class SignUp{
         await this.page.waitForTimeout(750)
         await this.submitBtn.scrollIntoViewIfNeeded()
         await this.submitBtn.click()
+        await new SignIn(this.page).closeLearnMoreIfExist()
     };
     async createCfdUser_All(email: string, password: string,  country: string, countryCode: string, phoneNumber: string){
         await this.page.waitForLoadState()
@@ -70,6 +72,7 @@ export class SignUp{
         await this.checkbox_PrivacyPolicy.click();
         await this.checkbox_RiskAcceptance.click();
         await this.submitBtn.click();
+        await new SignIn(this.page).closeLearnMoreIfExist()
     }
 
     async createCryptoUser(email: string, password: string, country: string){
@@ -169,6 +172,14 @@ export class SignUp{
     async clickLogo(){
         await this.page.locator(".naga-logo"). click()
         await this.page.waitForTimeout(500)
+    }
+    async timeLaunchOfGoogleBtn(){
+        let startTime = Date.now()
+        let frameLocator = await this.page.frameLocator("//iframe[contains(@src, 'google')]")
+        await frameLocator.locator("//span[contains(text(), 'Google')]").first().waitFor({state:'visible'})
+        let endDate = Date.now()
+        let result = endDate-startTime
+        return result
     }
 }
 

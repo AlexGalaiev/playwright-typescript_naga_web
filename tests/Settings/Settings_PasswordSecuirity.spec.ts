@@ -27,7 +27,7 @@ test("@23920 NagaCapital. Change password via settings", {tag:['@settings']},
     })
     await test.step(`Change password. User opens header menu  and change to Test2345!`, async()=>{
         await myAccounts.openUserMenu();
-        await myAccounts.openMyAccountsMenuItem('Settings')
+        await myAccounts.openMyAccountMenuItem('Settings')
         await settings.openSettingsMenuItem('Password & Security')
         await settings.changePasswordToNew("Test12345!")
         expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
@@ -52,7 +52,7 @@ test("@23598 NagaMarkets. Change password via settings",{tag:['@settings']},
     })
     await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
         await myAccounts.openUserMenu();
-        await myAccounts.openMyAccountsMenuItem('Settings')
+        await myAccounts.openMyAccountMenuItem('Settings')
         await settings.openSettingsMenuItem('Password & Security')
         await settings.changePasswordToNew("Test12345!")
         expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
@@ -78,7 +78,7 @@ test("@25428 NagaMena, Change password via settings",{tag:['@settings']},
     })
     await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
         await myAccounts.openUserMenu();
-        await myAccounts.openMyAccountsMenuItem('Settings')
+        await myAccounts.openMyAccountMenuItem('Settings')
         await settings.openSettingsMenuItem('Password & Security')
         await settings.changePasswordToNew("Test12345!")
         expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
@@ -104,7 +104,7 @@ test("@25429 NagaAfrica, Change password via settings",{tag:['@settings']},
     })
     await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
         await myAccounts.openUserMenu();
-        await myAccounts.openMyAccountsMenuItem('Settings')
+        await myAccounts.openMyAccountMenuItem('Settings')
         await settings.openSettingsMenuItem('Password & Security')
         await settings.changePasswordToNew("Test12345!")
         expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
