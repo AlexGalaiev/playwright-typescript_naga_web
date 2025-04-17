@@ -53,11 +53,11 @@ test.describe("Trading - Positions/Orders.", async () => {
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Test check's previously opened positions. Test close's, if positions exist", async () => {
-        await mainPage.openHeaderMenuPoint("my-trades");
+        await mainPage.openBackMenuPoint("my-trades");
         await myTrades.closePositionsIfExist();
       });
       await test.step(`Choose ${tradingInstrument} instrument.  Open ${investDirection} type`, async () => {
-        await mainPage.openHeaderMenuPoint("markets");
+        await mainPage.openBackMenuPoint("trade");
         await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
       await test.step(`Check status of ${investDirection} button. And click on Submit btn`, async () => {
@@ -79,8 +79,6 @@ test.describe("Trading - Positions/Orders.", async () => {
       })
     });
   }
-
-
 })
 
 test.describe('Trading - Pending orders', async()=>{
@@ -112,12 +110,12 @@ test.describe('Trading - Pending orders', async()=>{
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened positions. Close it if exist", async () => {
-        await mainPage.openHeaderMenuPoint("my-trades");
+        await mainPage.openBackMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         await myTrades.removeOrdersIfExist();
       });
       await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
-        await mainPage.openHeaderMenuPoint("markets");
+        await mainPage.openBackMenuPoint("trade");
         await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
       await test.step('Open order with manual rate value', async()=>{
@@ -126,7 +124,7 @@ test.describe('Trading - Pending orders', async()=>{
         await newPosition.submitPosition()
       })
       await test.step('Check my-trades', async()=>{
-        await mainPage.openHeaderMenuPoint("my-trades");
+        await mainPage.openBackMenuPoint("my-trades");
         await myTrades.openActivePendingOrdersTab();
         units = await myTrades.getOrderUnits()
         rate = await myTrades.getOrdersRate()
@@ -157,11 +155,11 @@ test.describe('Trading - Pending orders', async()=>{
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened positions. Close it if exist", async () => {
-        await mainPage.openHeaderMenuPoint("my-trades");
+        await mainPage.openBackMenuPoint("my-trades");
         await myTrades.closePositionsIfExist();
       });
       await test.step(`Choose ${realStockInstrument} for trading. Open new position page`, async () => {
-        await mainPage.openHeaderMenuPoint("markets");
+        await mainPage.openBackMenuPoint("trade");
         await instruments.openPositionOfInstrument(realStockInstrument, investDirection)
         expect(await realStockPopup.getPopupText()).toEqual(await localization.getLocalizationText('RealStock_OpenShortPosition'))
       });

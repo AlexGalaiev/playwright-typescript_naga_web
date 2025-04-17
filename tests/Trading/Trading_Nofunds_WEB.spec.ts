@@ -33,7 +33,7 @@ for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
           });
           await test.step(`Choose ${tradingInstrument} and open position`, async () => {
-            await mainPage.openHeaderMenuPoint("markets");
+            await mainPage.openBackMenuPoint("trade");
             await instruments.openPositionOfInstrument(tradingInstrument, 'Short')
           });
           await test.step('Check Not enough money messages', async()=>{
