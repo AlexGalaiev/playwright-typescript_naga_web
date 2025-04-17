@@ -34,7 +34,7 @@ for(const{testRailId, brand, user}of testFeedParams){
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
-            await new MainPage(page).openHeaderMenuPoint('feed')
+            await new MainPage(page).openBackMenuPoint('feed')
         })
         await feed.openCreatePostForm()
         await test.step("Test create post with text(Hello World) and edit text to Bye Bye text", async()=>{
@@ -70,7 +70,7 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
         await myAccounts.openUserMenu()
         await myAccounts.openMyAccountMenuItem('My Social Profile')
         await feed.closeOpenedPost(user);
-        await new MainPage(page).openHeaderMenuPoint('feed')
+        await new MainPage(page).openBackMenuPoint('feed')
     })
     await test.step("Add new post to feed with text Hello world", async()=>{
         await feed.openCreatePostForm()
@@ -109,7 +109,7 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
-            await new MainPage(page).openHeaderMenuPoint('feed')
+            await new MainPage(page).openBackMenuPoint('feed')
         })
         await test.step("Add new post to feed with text Hello world", async()=>{
             await feed.openCreatePostForm()
@@ -151,7 +151,7 @@ for(const{testRailId, brand, user}of testShareCommentParams){
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
-            await new MainPage(page).openHeaderMenuPoint('feed')
+            await new MainPage(page).openBackMenuPoint('feed')
         })
         await test.step("Add new post to feed with text Hello world", async()=>{
             await feed.openCreatePostForm()
@@ -229,7 +229,7 @@ for(const{testRailId, brand, user, localization}of testNotVerifieduser){
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('My Social Profile')
             await feed.closeOpenedPost(user);
-            await new MainPage(page).openHeaderMenuPoint('feed')
+            await new MainPage(page).openBackMenuPoint('feed')
         })
         await test.step('User tryes to make post without approval', async()=>{
             await feed.openCreatePostForm()
