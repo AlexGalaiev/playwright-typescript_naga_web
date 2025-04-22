@@ -9,6 +9,7 @@ import {test} from "../../test-options"
 import { MultiLicense } from "../../pageObjects/FullRegistration/Multilicence"
 import { Deposit } from "../../pageObjects/ManageFunds/Deposit"
 import { Withdrawal } from "../../pageObjects/ManageFunds/Withdrawal"
+import { KYCWidgetModalPopup } from "../../pageObjects/FullRegistration/components/Naga_KYCModalPopup"
 
 test.describe("Multi licence web", async()=>{
     let email =''
@@ -60,7 +61,8 @@ test.describe("Multi licence web", async()=>{
         })
         await test.step('Click on manage funds -> deposit', async()=>{
             await mainPage.refreshPage()
-            await mainPage.openBackMenuPoint('Manage Funds')
+            await mainPage.openBackMenuCategory('Manage Funds')
+            
             await new Deposit(proxyPageBH).checkActiveDepositTab('deposit')
             await new Deposit(proxyPageBH).clickDepositMethod('Credit/Debit Cards')
             await new StartKYCPopup(proxyPageBH).startKYC()
@@ -68,11 +70,10 @@ test.describe("Multi licence web", async()=>{
         })
         await test.step('Click on manage funds -> Withdrawal', async()=>{
             await mainPage.refreshPage()
-            await new Withdrawal(proxyPageBH).chooseWithdrawalMenu();
+            await mainPage.openBackMenuCategory('Manage Funds')
+            await new KYCWidgetModalPopup(proxyPageBH).clickOnWidgetMenu('NAGA Start')
             await new StartKYCPopup(proxyPageBH).startKYC()
             expect(await multiLicense.multiLycensePopup()).toBeTruthy()
         })
     })
 })
-
-

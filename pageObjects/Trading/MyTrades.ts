@@ -72,7 +72,7 @@ export class MyTrades{
     }
     async getDepositValue(currency: string){
         await this.openedPosition.waitFor({state:"visible"})
-        let value = await this.openedPosition.locator("//div[contains(@class, 'deposit-active')]//span//span").textContent();
+        let value = await this.openedPosition.locator("//div[contains(@class, 'deposit-active')]//span//span").first().textContent();
         return await value?.replace(currency, '')
     };
     async getMobileDepositValue(currency: string){
@@ -82,7 +82,7 @@ export class MyTrades{
     };
     async getUnits(){
         await this.openedPosition.waitFor({state:"visible"})
-        return await this.openedPosition.locator("//div[contains(@class, 'units-active')]").textContent();
+        return await this.openedPosition.locator("//div[contains(@class, 'units-active')]").first().textContent();
     }
     async getMobileUnits(){
         await this.openedMobilePosition.waitFor({state:"visible"})

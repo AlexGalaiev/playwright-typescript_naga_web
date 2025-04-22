@@ -53,8 +53,6 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
     })
 }
 
-
-
 const priceAlertParameters: testTypes[] = [
     {testRailId: '@23952', brand: '@Capital', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
     {testRailId: '@23678', brand: '@Markets', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
@@ -72,7 +70,7 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
         await test.step(`Login to platform ${brand} by ${user}`, async()=>{
             await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await new MainPage(page).openBackMenuPoint('markets');
+            await new MainPage(page).openBackMenuPoint('trade');
         })     
         await test.step("Check price alert and clean if they exist", async()=>{
             await new AllInstruments(page).openPriceAlerts()
