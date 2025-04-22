@@ -19,7 +19,7 @@ test.describe('Naga EARN, WEB', async()=>{
         await test.step('Check trading account. Switch to EUR if needed. Open Naga Earn', async()=>{
             await mainPage.switchToAcIfNeeded('MainAccount')
             accountId = await mainPage.getLoginedAccountId()
-            await mainPage.openBackMenuPoint('NAGA Earn')
+            await mainPage.openBackMenuSubcategory('Earnings and Referrals', 'NAGA Earn')
         })
         await test.step('Open Naga EARN. Check AccountId, AccountStatus', async()=>{
             expect(await nagaEarn.getEarnHeaderTittle()).toEqual('Earn daily interest on the instantly available cash balance in your trading account.')

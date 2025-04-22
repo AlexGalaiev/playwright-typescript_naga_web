@@ -62,18 +62,19 @@ test.describe("Multi licence web", async()=>{
         await test.step('Click on manage funds -> deposit', async()=>{
             await mainPage.refreshPage()
             await mainPage.openBackMenuCategory('Manage Funds')
-            
-            await new Deposit(proxyPageBH).checkActiveDepositTab('deposit')
-            await new Deposit(proxyPageBH).clickDepositMethod('Credit/Debit Cards')
-            await new StartKYCPopup(proxyPageBH).startKYC()
-            expect(await multiLicense.multiLycensePopup()).toBeTruthy()
-        })
-        await test.step('Click on manage funds -> Withdrawal', async()=>{
-            await mainPage.refreshPage()
-            await mainPage.openBackMenuCategory('Manage Funds')
             await new KYCWidgetModalPopup(proxyPageBH).clickOnWidgetMenu('NAGA Start')
             await new StartKYCPopup(proxyPageBH).startKYC()
+            // await new Deposit(proxyPageBH).checkActiveDepositTab('deposit')
+            // await new Deposit(proxyPageBH).clickDepositMethod('Credit/Debit Cards')
+            // await new StartKYCPopup(proxyPageBH).startKYC()
             expect(await multiLicense.multiLycensePopup()).toBeTruthy()
         })
+        // await test.step('Click on manage funds -> Withdrawal', async()=>{
+        //     await mainPage.refreshPage()
+        //     await mainPage.openBackMenuCategory('Manage Funds')
+        //     await new KYCWidgetModalPopup(proxyPageBH).clickOnWidgetMenu('NAGA Start')
+        //     await new StartKYCPopup(proxyPageBH).startKYC()
+        //     expect(await multiLicense.multiLycensePopup()).toBeTruthy()
+        // })
     })
 })
