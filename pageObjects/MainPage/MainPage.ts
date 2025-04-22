@@ -182,8 +182,8 @@ export class MainPage{
     async switchToAcIfNeeded(accountName){
         let account = await this.page.locator('.selected-trading-account__title').getAttribute('title')
         if(await account !== accountName){
-            await this.page.locator(".sidebar-trading-account__wrapper").click()
-            await this.page.locator(`//h2[text()='${accountName}']`).click()
+            await this.page.locator("//button[contains(@class, 'selected-trading-account__button')]").click()
+            await this.page.locator(`//div[contains(@data-testid, 'open-terminal-${accountName}')]`).click()
             await this.page.waitForTimeout(300)
         }
     }
