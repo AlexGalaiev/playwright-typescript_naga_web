@@ -51,7 +51,7 @@ test.describe('Naga EARN, WEB', async()=>{
             })
             await test.step(`Switch to ${accountName} and open Naga Earn`,async()=>{
                 await mainPage.switchToAcIfNeeded(accountName)
-                await mainPage.openBackMenuPoint('NAGA Earn')
+                await mainPage.openBackMenuSubcategory('Earnings and Referrals', 'NAGA Earn')
             })
             await test.step('Try to enable Naga Earn. Check allert popup. switch to My accounts',async()=>{
                 await nagaEarn.enableEarn()
