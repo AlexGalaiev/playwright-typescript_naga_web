@@ -7,15 +7,6 @@ export class MainPage{
     private readonly GuestRegistration: Locator;
     private readonly tradingAccount: Locator;
     private readonly sideBar: Locator;
-    //readonly verifyHeaders: Locator;
-    //readonly verifyStepHeader: Locator;
-    // private readonly verifyBanner: Locator;
-    // private readonly verifyBannerDisclaimer: Locator;
-    // private readonly IUnderstandBtn: Locator;
-    // private readonly UpgradeButton: Locator;
-    private readonly notActiveTradingAccount: Locator
-    // private readonly bannerName: Locator;
-    // private readonly leadMarketsBanner: Locator;
     private readonly searchField: Locator;
 
     constructor(page: Page){
@@ -23,37 +14,19 @@ export class MainPage{
         this.GuestLogin = page.locator("//button[contains(@class, 'guest-mode-header-actions__buttons__login')]");
         this.GuestRegistration = page.locator("//button[contains(@class, 'guest-mode-header-actions__buttons__register')]");
         this.tradingAccount = page.locator("//div[contains(@class, 'sidebar-trading-account__wrapper')]")
-        this.notActiveTradingAccount = page.locator("//div[@class='sidebar-trading-account'][2]")
         this.sideBar = page.locator('.sidebar__wrapper');
-        //this.verifyHeaders = page.locator("//div[@class = 'header-verify-account-levels']");
-        //this.CompleatRegistration = page.locator('//div[@data-testid="complete-level-1"]//span[text()="To do"]')
-        //this.verifyStepHeader = page.locator("//div[contains(@class, 'header-verify-account-levels__checkbox')]//div[contains(@class, 'active')]")
-        // this.verifyBanner = page.locator(".header__verify__content")
-        // this.verifyBannerDisclaimer = page.locator(".user-status-box__desc-text")
-        // this.IUnderstandBtn = page.locator("//button[text()='I understand']")
-        // this.UpgradeButton = page.locator("//button[@type='button']//span[text()='Upgrade Now']")
-        // this.bannerName = page.locator('.header-verify-account-levels__checkbox__description_wrapper__text')
-        // this.leadMarketsBanner = page.locator('.header__verify__content')
         this.searchField = page.locator('#global_search_input')
     };
     async mainPageIsDownLoaded(){
         await this.sideBar.waitFor({timeout: 10000});
     }
-    // async checkMainPage(){
-    //     await this.sideBar.waitFor({timeout: 10000});
-    //     return await this.verifyHeaders.isVisible()
-    // }
+
     async proceedRegistration(){
         await this.page.waitForTimeout(1500)
         await this.page.locator("//span[text()='Complete now']").click();
         await this.page.waitForTimeout(500)
     };
-    // async updateUserLevel(){
-    //     let verifyIdentityBtn = await this.page.locator("//span[text()='Verify identity']")
-    //     await verifyIdentityBtn.waitFor({state:'visible'})
-    //     await verifyIdentityBtn.click()
-    //     await this.page.waitForTimeout(1000)  
-    // }
+
     //Naga Capital
     async openLoginFromGuestMode(){
         await this.GuestLogin.waitFor()
@@ -67,42 +40,6 @@ export class MainPage{
         await this.tradingAccount.click();
         await this.page.waitForTimeout(500);
     };
-    // async getNumberOfTradingAccounts(){
-    //     await this.page.waitForTimeout(4000)
-    //     let numberOfTrdingAccounts = (await this.tradingAccount).count();
-    //     return numberOfTrdingAccounts
-    // };
-
-    // async getVerifyBannerContent(){
-    //     let banner = await this.page.locator(".header__verify__content")
-    //     return await banner.textContent()
-    // };
-
-    //Naga Markets
-    // async clickIUnderstanBtn(){
-    //     return await this.IUnderstandBtn.click()
-    // };
-    // async clickUpgradeBtn(){
-    //     await this.UpgradeButton.waitFor({state:'visible'})
-    //     await this.UpgradeButton.click()
-    // };
-    // async getVerifyBannerDisclaimerText(){
-    //     await this.page.waitForSelector(".user-status-box__desc-text", {state:'visible'})
-    //     return await this.verifyBannerDisclaimer.textContent()
-    // };
-    // async getVerifyBannerMiddleScore(){
-    //     //await this.page.waitForSelector('.user-status-box__desc-text', {state:'visible'})
-    //     let middleText = await this.page.locator('.user-status-box__desc-text').textContent();
-    //     return middleText
-    // }
-
-    //new need to remove
-    // async openBackMenuPoint(NameOfMenuPoint: string){
-    //     await this.page.waitForTimeout(1000)
-    //     let menuPoint = await this.page.locator(".header__menu__nav-item")
-    //     .filter({has: await this.page.locator(`//a[@href='/${NameOfMenuPoint}']`) })
-    //     await menuPoint.click();
-    // };
 
     async openBackMenuSubcategory(mainCategoryName: string, subcategoryName:string){
         await this.page.waitForTimeout(500)
@@ -118,36 +55,7 @@ export class MainPage{
         let categoryName = await this.page.locator(`//span[text()='${mainCategoryName}']`)
         await categoryName.click()
     }
-    // async getActiveTradingAccountId(){
-    //     let activeAccount = await this.page.locator(".sidebar-trading-account__wrapper")
-    //     let id = await activeAccount.locator('.sidebar-trading-account__info-item--login').textContent();
-    //     return id;
-    // };
-    // async getActiveTradingAccountType(){
-    //     let activeAccount = await this.page.locator(".sidebar-trading-account__wrapper");
-    //     let status = await activeAccount.locator(".sidebar-trading-account__info-item--d").textContent()
-    //     return status;
-    // };
-    // async getStatusOfHeaderStep(numberOfStep: number){
-    //     await this.page.waitForTimeout(3000);
-    //     let step = await this.page.locator(`[data-testid='complete-level-${numberOfStep}']`)
-    //     let achievments = await step.locator("//span[contains(@class, 'checkbox__description_wrapper__round')]").textContent();
-    //     return achievments
-    // };
-    // async getStatusTextOfHeaderStep(numberOfStep: number){
-    //     await this.page.waitForTimeout(3000)
-    //     let step = await this.page.locator(`[data-testid='complete-level-${numberOfStep}']`)
-    //     let achievments = await step.locator("//span[contains(@class, 'checkbox__description_wrapper__text')]").textContent();
-    //     return achievments
-    // };
-    // async getNotActiveTradingAccountId(){
-    //     let id = await this.notActiveTradingAccount.locator("//span[contains(@class, 'info-item--login')]");
-    //     return await id.textContent();
-    // }
-    // async switchUserToNotActiveAccount(){
-    //     await this.notActiveTradingAccount.click()
-    //     await this.page.waitForTimeout(4000)
-    // }
+
     async getUrl(){
         return await this.page.url()
     }
@@ -169,16 +77,10 @@ export class MainPage{
         await this.page.waitForTimeout(500)
     }
 
-    // async getMainPageBannerText(){
-    //     await this.page.waitForTimeout(1500)
-    //     return await this.page.locator('//div[@class="user-status-box__desc-title"]').textContent()
-    // }
     async openKyc(){
         await this.page.locator("//div[@class='header__verify']//span[text()='Upgrade Now']").click()
     }
-    // async waitForHeaderBanner(){
-    //     await this.page.waitForSelector('.header__verify__content', {state:'visible'})
-    // }
+
     async cryptoOpenKyc(){
         await this.page.waitForSelector("//button//span[text()='Verify now']", {state:'visible'})
         await this.page.locator("//button//span[text()='Verify now']").click()
@@ -221,10 +123,10 @@ export class MainPage{
     }
 
     // main page naga markets
-    async getKYCbannerText(){
-        let bannerText = await this.page.locator(`//div[contains(@class, 'complete-profile-widget__title--finished')]//..//div[@class='complete-profile-widget__description']`)
-        return await bannerText.textContent()
-    }
+    // async getKYCbannerText(){
+    //     let bannerText = await this.page.locator(`//div[contains(@class, 'complete-profile-widget__title--finished')]//..//div[@class='complete-profile-widget__description']`)
+    //     return await bannerText.textContent()
+    // }
     async removeNeedHelpBaloon(){
         await this.page.waitForTimeout(500)
         let framme = await this.page.frameLocator('[title="Close message"]')
@@ -273,11 +175,12 @@ export class MainPage{
         await this.page.locator('.profile-info').waitFor({state:'visible'})
     }
     async getloginnedUserAccount(){
-        return await this.page.locator(".sidebar-trading-account__title").textContent()
+        let loginedAc = await this.page.locator(".selected-trading-account__title").getAttribute('title')
+        return await loginedAc
     }
 
     async switchToAcIfNeeded(accountName){
-        let account = await this.page.locator('.sidebar-trading-account__title').textContent()
+        let account = await this.page.locator('.selected-trading-account__title').getAttribute('title')
         if(await account !== accountName){
             await this.page.locator(".sidebar-trading-account__wrapper").click()
             await this.page.locator(`//h2[text()='${accountName}']`).click()
@@ -285,7 +188,7 @@ export class MainPage{
         }
     }
     async getLoginedAccountId(){
-        return await this.page.locator(".sidebar-trading-account__info-item--login").textContent()
+        return await this.page.locator(".selected-trading-account__info-item--login").textContent()
     }
     async checkBackMenuElementIsVisible(nameOfElement: string){
         let element = await this.page.locator(`[data-testid="navigation-${nameOfElement}"]`)

@@ -9,7 +9,7 @@ export class HeaderMenuUserProfile{
     
     constructor(page: Page){
         this.page = page;
-        this.myAccountsHeader = page.locator("#account-menu");
+        this.myAccountsHeader = page.locator("//button[contains(@class, 'user-avatar-widget')]");
         this.tradingAccountsMenuPoint = page.locator("//li[contains(@class, 'accounts')]");
         this.userProfileMenu = page.locator("//ul[contains(@class, 'open')]");
         this.userProfile = page.locator("//li[contains(@class, 'profile')]")

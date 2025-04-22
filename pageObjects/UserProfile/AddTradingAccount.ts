@@ -2,24 +2,24 @@ import { Locator, Page } from "playwright";
 
 export class AddAcountForm{
     page: Page;
-    readonly addAccountPopup: Locator;
-    readonly addNewAccountBtn: Locator;
-    readonly accountTypeLive: Locator;
-    readonly accountTypeDemo: Locator;
-    readonly accountName: Locator;
-    readonly accountCurrencyEUR: Locator;
-    readonly accountCurrecnyUSD: Locator;
-    readonly createAccount: Locator;
-    readonly successAddingAccountBtn: Locator;
-    readonly newLiveUSDAccount: Locator;
-    readonly newDemoEURAccount: Locator;
-    readonly accountEditMenu: Locator;
-    readonly editAccountBtn: Locator;
-    readonly saveEditPopupBtn: Locator;
-    readonly defaultAccountName: Locator;
-    readonly showPasswordBtn: Locator;
-    readonly passwordContainer: Locator;
-    readonly addNewAccountBtnMobile: Locator;
+    private readonly addAccountPopup: Locator;
+    private readonly addNewAccountBtn: Locator;
+    private readonly accountTypeLive: Locator;
+    private readonly accountTypeDemo: Locator;
+    private readonly accountName: Locator;
+    private readonly accountCurrencyEUR: Locator;
+    private readonly accountCurrecnyUSD: Locator;
+    private readonly createAccount: Locator;
+    private readonly successAddingAccountBtn: Locator;
+    private readonly newLiveUSDAccount: Locator;
+    private readonly newDemoEURAccount: Locator;
+    private readonly accountEditMenu: Locator;
+    private readonly editAccountBtn: Locator;
+    private readonly saveEditPopupBtn: Locator;
+    private readonly defaultAccountName: Locator;
+    private readonly showPasswordBtn: Locator;
+    private readonly passwordContainer: Locator;
+    private readonly addNewAccountBtnMobile: Locator;
 
     constructor(page: Page){
         this.page = page;
@@ -111,9 +111,10 @@ export class AddAcountForm{
     async switchToAccount(accountName){
         let tradeAccount = await this.page.locator('.trading-account-item', {has: await this.page.locator(`//span[@title='${accountName}']`)})
         await tradeAccount.click()
+        await this.page.waitForTimeout(3000)
     }
     async clickAccount(accountId: string){
-        let account = await this.page.locator('trading-account-item', {has: await this.page.locator(`//span[contains(text(), '${accountId}')]`)})
+        let account = await this.page.locator('.trading-account-item', {has: await this.page.locator(`//span[contains(text(), '${accountId}')]`)})
         await account.click()
     }
     async clickAddAccountBtn(){

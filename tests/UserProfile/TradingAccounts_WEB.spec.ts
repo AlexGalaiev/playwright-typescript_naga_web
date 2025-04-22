@@ -7,6 +7,7 @@ import {test} from "../../test-options";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations";
+import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
 test.describe("New Trading account", async()=>{
     
@@ -14,7 +15,7 @@ test.describe("New Trading account", async()=>{
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let addAccount = new AddAcountForm(page);
-        let headerMenu = new HeaderMenuUserProfile(page);
+        let myAccounts = new MyAccounts(page)
         let email = await new RandomUser().getRandomUserEmail()
         let KYC_Registration = new KYC_General(page)
         await test.step(`Create lead user ${email} and finish KYC`, async()=>{
@@ -27,14 +28,14 @@ test.describe("New Trading account", async()=>{
                 AppNAGA)
         })
         await test.step('Add second live account in My Accounts', async()=>{
-            await headerMenu.openAddNewTradingAccount();
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccount.clickAddAccountBtn()
             await addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
             await addAccount.acceptSuccessPopupWeb()
             expect(await addAccount.checkNewLiveAccount()).toBeTruthy
         })
         await test.step('Add second demo account in My Accounts', async()=>{
-            await headerMenu.openAddNewTradingAccount();
             await addAccount.clickAddAccountBtn()
             await addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
             await addAccount.acceptSuccessPopupWeb()
@@ -46,8 +47,8 @@ test.describe("New Trading account", async()=>{
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 170000);
         let addAccount = new AddAcountForm(page);
-        let headerMenu = new HeaderMenuUserProfile(page);
         let email = await new RandomUser().getRandomUserEmail()
+        let myAccounts = new MyAccounts(page)
         await test.step(`Create lead user ${email} and fill KYC`, async()=>{
             await new KYC_General(page).NagaMarkets_KYC_Advance(
                 email, 
@@ -58,14 +59,14 @@ test.describe("New Trading account", async()=>{
                 AppNAGA)
         })
         await test.step('Add second live account in My Accounts', async()=>{
-            await headerMenu.openAddNewTradingAccount();
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccount.clickAddAccountBtn()
             await addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
             await addAccount.acceptSuccessPopupWeb()
             expect(await addAccount.checkNewLiveAccount()).toBeTruthy
         })
         await test.step('Add second demo account in My Accounts', async()=>{
-            await headerMenu.openAddNewTradingAccount();
             await addAccount.clickAddAccountBtn()
             await addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
             await addAccount.acceptSuccessPopupWeb()
@@ -77,22 +78,22 @@ test.describe("New Trading account", async()=>{
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 140000);
         let addAccount = new AddAcountForm(page);
-        let headerMenu = new HeaderMenuUserProfile(page);
-        let email = await new RandomUser().getRandomUserEmail() 
+        let email = await new RandomUser().getRandomUserEmail()
+        let myAccounts = new MyAccounts(page) 
         await test.step(`Create lead user with ${email}`, async()=>{
             await new KYC_General(page).NagaMena_FullRegUser(
                 email,
                 AppNAGA)
         })
         await test.step('Add second live account in My Accounts', async()=>{
-            await headerMenu.openAddNewTradingAccount();
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccount.clickAddAccountBtn()
             await addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
             await addAccount.acceptSuccessPopupWeb()
             expect(await addAccount.checkNewLiveAccount()).toBeTruthy
         })
         await test.step('Add second demo account in My Accounts', async()=>{
-            await headerMenu.openAddNewTradingAccount();
             await addAccount.clickAddAccountBtn()
             await addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
             await addAccount.acceptSuccessPopupWeb()
@@ -104,7 +105,7 @@ test.describe("New Trading account", async()=>{
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 140000);
         let addAccount = new AddAcountForm(page);
-        let headerMenu = new HeaderMenuUserProfile(page);
+        let myAccounts = new MyAccounts(page) 
         let email = await new RandomUser().getRandomUserEmail() 
         await test.step(`Create lead user with ${email}`, async()=>{
             await new KYC_General(page).NagaAfrica_Lead_web(
@@ -117,14 +118,14 @@ test.describe("New Trading account", async()=>{
             )
         })
         await test.step('Add second live account in My Accounts', async()=>{
-            await headerMenu.openAddNewTradingAccount();
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccount.clickAddAccountBtn()
             await addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
             await addAccount.acceptSuccessPopupWeb()
             expect(await addAccount.checkNewLiveAccount()).toBeTruthy
         })
         await test.step('Add second demo account in My Accounts', async()=>{
-            await headerMenu.openAddNewTradingAccount();
             await addAccount.clickAddAccountBtn()
             await addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
             await addAccount.acceptSuccessPopupWeb()
@@ -150,13 +151,15 @@ test.describe('Actions with second account', async()=>{
             {tag:['@secondAccount','@UI', '@web']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 90000);
         let signIn = new SignIn(page);
-        let addAccountForm = new AddAcountForm(page);
+        let addAccountForm = new AddAcountForm(page)
+        let myAccounts = new MyAccounts(page) 
         await test.step(`Login to platform by ${user} to ${brand}`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step('Change account name of exist trading account', async()=>{
-            await new HeaderMenuUserProfile(page).openAddNewTradingAccount();
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccountForm.editLiveAccountName('Default_Live_account')
             expect(await addAccountForm.getDefaultAccountName()).toEqual('Default_Live_account')
             await addAccountForm.editLiveAccountName('NAGA - USD');
@@ -179,19 +182,23 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
         {tag:['@secondAccount', '@UI', '@web']}, async({page, AppNAGA}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 70000);
         let signIn = new SignIn(page);
+        let addAccount = new AddAcountForm(page)
         let mainPage = new MainPage(page)
+        let myAccounts = new MyAccounts(page) 
         await test.step(`Login to platform by ${user} user`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Switch to secondAccount", async()=>{
-            await mainPage.openTradingAssountsMenu();
-            await mainPage.switchTo('secondAccount')
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountMenuItem('Trading Accounts')
+            await addAccount.switchToAccount('secondAccount')
             expect(await mainPage.getloginnedUserAccount()).toEqual('secondAccount')
         })
         await test.step("Switch back to main account", async()=>{
-            await mainPage.openTradingAssountsMenu();
-            await mainPage.switchTo('mainAccount')
+            await myAccounts.openUserMenu()
+            await myAccounts.openMyAccountMenuItem('Trading Accounts')
+            await addAccount.switchToAccount('mainAccount')
             expect(await mainPage.getloginnedUserAccount()).toEqual('mainAccount')
         })})}
 })
