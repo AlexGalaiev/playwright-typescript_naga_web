@@ -112,6 +112,12 @@ export class MainPage{
         await subCategory.click()
         await this.page.waitForTimeout(500)
     }
+    
+    async openBackMenuCategory(mainCategoryName: string){
+        await this.page.waitForTimeout(500)
+        let categoryName = await this.page.locator(`//span[text()='${mainCategoryName}']`)
+        await categoryName.click()
+    }
     // async getActiveTradingAccountId(){
     //     let activeAccount = await this.page.locator(".sidebar-trading-account__wrapper")
     //     let id = await activeAccount.locator('.sidebar-trading-account__info-item--login').textContent();
