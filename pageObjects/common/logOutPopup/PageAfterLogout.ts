@@ -1,10 +1,10 @@
 import { Locator, Page } from "@playwright/test";
 
 export class PageAfterLogout{
-    readonly page: Page;
-    readonly AppPage: Locator;
-    readonly SignInBtn: Locator;
-    readonly logOutFormAppsTittle: Locator
+    private readonly page: Page;
+    private readonly AppPage: Locator;
+    private readonly SignInBtn: Locator;
+    private readonly logOutFormAppsTittle: Locator
 
     constructor(page: Page){
         this.page = page;

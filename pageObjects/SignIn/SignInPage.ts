@@ -2,23 +2,23 @@ import { Locator, Page } from "@playwright/test";
 import {test} from '..//..//test-options'
 
 export class SignIn{
-    readonly page: Page;
-    readonly signInName: Locator;
-    readonly signInPassword: Locator;
-    readonly signBtn: Locator;
-    readonly forgotPasswordLink: Locator;
-    readonly redirectionNotice: Locator;
-    readonly redirectionButton: Locator;
-    readonly sighInHeaderName: Locator;
-    readonly incorrectCredentialsMsg: Locator;
-    readonly languageSwitcher: Locator;
+    private readonly page: Page;
+    private readonly signInName: Locator;
+    private readonly signInPassword: Locator;
+    private readonly signBtn: Locator;
+    private readonly forgotPasswordLink: Locator;
+    private readonly redirectionNotice: Locator;
+    private readonly redirectionButton: Locator;
+    private readonly sighInHeaderName: Locator;
+    private readonly incorrectCredentialsMsg: Locator;
+    private readonly languageSwitcher: Locator;
 
     constructor(page: Page){
         this.page = page;
         this.signInName = page.locator("[name='user_name']");
         this.signInPassword = page.locator("[name='password']");
         this.signBtn = page.locator("[data-cy='login-btn']");
-        this.forgotPasswordLink = page.locator(".login-form__forgot-password");
+        this.forgotPasswordLink = page.locator("//button[text()='Forgot Password?']");
         this.redirectionNotice = page.locator(".prompt__content__message");
         this.redirectionButton = page.locator("//div[@class='prompt__actions']//button");
         this.sighInHeaderName = page.locator("//h2[contains(@class, 'login-form__headline')]");
@@ -90,5 +90,4 @@ export class SignIn{
             await this.page.locator('//img[@alt="Close modal"]').click()
         }
     }
-  
 }
