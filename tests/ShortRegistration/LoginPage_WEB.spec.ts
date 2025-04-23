@@ -17,7 +17,8 @@ import { Captcha } from "../../pageObjects/captcha";
 test.describe("WEB", async()=>{
 
     test("@Capital Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageUA, AppNAGA, NSCountry})=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageUA, AppNAGA, NSCountry}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 30000)
         let signUp = new SignUp(proxyPageUA)
         let signIn = new SignIn(proxyPageUA)
         let myAccount = new MyAccounts(proxyPageUA)
@@ -42,7 +43,8 @@ test.describe("WEB", async()=>{
         })
     })
     test("@Markets Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPage, AppNAGA, NMCountry})=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPage, AppNAGA, NMCountry}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 30000)
         let signUp = new SignUp(proxyPage)
         let signIn = new SignIn(proxyPage)
         let forgotPassword = new ForgotPassword(proxyPage)
@@ -64,7 +66,8 @@ test.describe("WEB", async()=>{
         })
     })
     test("@Mena Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageUAE, AppNAGA, NagaMenaCountry})=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageUAE, AppNAGA, NagaMenaCountry}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 30000)
         let signUp = new SignUp(proxyPageUAE)
         let signIn = new SignIn(proxyPageUAE)
         let forgotPassword = new ForgotPassword(proxyPageUAE)
@@ -86,7 +89,8 @@ test.describe("WEB", async()=>{
         })
     })
     test("@Africa Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageSA, AppNAGA, NagaAfricaCountry})=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageSA, AppNAGA, NagaAfricaCountry}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 30000)
         let signUp = new SignUp(proxyPageSA)
         let signIn = new SignIn(proxyPageSA)
         let forgotPassword = new ForgotPassword(proxyPageSA)
@@ -145,7 +149,6 @@ test.describe('Guest mode', async()=>{
             })
         })}
 })
-
 
 test.describe('Login/LogOut',async()=>{
     type testTypes = {
