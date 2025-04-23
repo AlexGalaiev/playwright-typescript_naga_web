@@ -2,7 +2,6 @@ import { Locator, Page } from "@playwright/test"
 
 export class MainPage{
     page: Page;
-    //readonly CompleatRegistration: Locator;
     private readonly GuestLogin: Locator;
     private readonly GuestRegistration: Locator;
     private readonly tradingAccount: Locator;
@@ -122,11 +121,6 @@ export class MainPage{
         return await step.isVisible()
     }
 
-    // main page naga markets
-    // async getKYCbannerText(){
-    //     let bannerText = await this.page.locator(`//div[contains(@class, 'complete-profile-widget__title--finished')]//..//div[@class='complete-profile-widget__description']`)
-    //     return await bannerText.textContent()
-    // }
     async removeNeedHelpBaloon(){
         await this.page.waitForTimeout(500)
         let framme = await this.page.frameLocator('[title="Close message"]')
@@ -196,5 +190,9 @@ export class MainPage{
     }
     async mainMobilePageIsDownLoaded(){
         await this.page.waitForSelector('.news-feed', {state:'visible'})
+    }
+    async getKYCbannerText(){
+        let text = await this.page.locator("//div[contains(@class, 'complete-profile-widget__title--finished')]//..//div[@class='complete-profile-widget__description']")
+        return await text.textContent()
     }
 }

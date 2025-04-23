@@ -58,8 +58,6 @@ test.describe("Withdrawal Capital", async()=>{
         let withdrawal = new Withdrawal(page);
         let localization = new getLocalization(ManageFunds_Withdrawal);
         await test.step('Open withdrawal menu', async()=>{
-            // await new MainPage(page).openBackMenuPoint('Manage Funds');
-            // await new Withdrawal(page).chooseWithdrawalMenu();
             await new MainPage(page).openBackMenuSubcategory('Manage Funds', 'Withdraw');
         })
         await test.step("Make crypto withdrawal", async()=>{
@@ -127,8 +125,6 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod, responsePaymentMeth
         await test.step(`Login by ${user} to ${brand} platform and open withdrawal`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            // await mainPage.openBackMenuPoint('Manage Funds');
-            // await new Withdrawal(page).chooseWithdrawalMenu();
             await mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
 
         });
@@ -171,10 +167,7 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
         await test.step(`Login by ${user} to ${brand} plarform  and open withdrawal`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            // await mainPage.openBackMenuPoint('Manage Funds');
-            // await new Withdrawal(page).chooseWithdrawalMenu();
             await mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
-
         });
         await test.step(`Make ${paymentMethod} withdrawal`, async()=>{
             await withdrawal.clickMenuPoint(menuPoint)
@@ -213,8 +206,6 @@ for(const{testRailId, brand, user, menuPoint, paymentMethod,withdrawalPageTitle}
         await test.step(`Login by ${user} to ${brand} platform`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            // await mainPage.openBackMenuPoint('Manage Funds');
-            // await new Withdrawal(page).chooseWithdrawalMenu();
             await mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
             await withdrawal.clickMenuPoint('eWallet')
         })

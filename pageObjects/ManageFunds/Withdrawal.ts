@@ -2,22 +2,22 @@ import { Locator, Page } from "playwright";
 
 export class Withdrawal{
     page: Page;
-    readonly WithdrawalMenupoint: Locator;
-    readonly CCWithdrawalAmount: Locator;
-    readonly WithdrawalAmountErrorMSG: Locator;
-    readonly WithdrawalAmointCheck: Locator;
-    readonly WithdrawBtn: Locator;
-    readonly ccCashierModalPopup: Locator;
-    readonly cryptoAdressPopup: Locator;
-    readonly cryptoAdressPopupHeader: Locator;
-    readonly cryptoWalletAdress: Locator;
-    readonly cryptoPopupWithdrawalBtn: Locator;
-    readonly cryptoWithdrawalSuccessPopup: Locator;
-    readonly cryptoSuccessPopupText: Locator;
-    readonly iframeName: Locator;
-    readonly ewalletWithdrawalAmount: Locator;
-    readonly titleOnCashier: Locator;
-    readonly titleOnNagaMarketsPopup: Locator;
+    private readonly WithdrawalMenupoint: Locator;
+    private readonly CCWithdrawalAmount: Locator;
+    private readonly WithdrawalAmountErrorMSG: Locator;
+    private readonly WithdrawalAmointCheck: Locator;
+    private readonly WithdrawBtn: Locator;
+    private readonly ccCashierModalPopup: Locator;
+    private readonly cryptoAdressPopup: Locator;
+    private readonly cryptoAdressPopupHeader: Locator;
+    private readonly cryptoWalletAdress: Locator;
+    private readonly cryptoPopupWithdrawalBtn: Locator;
+    private readonly cryptoWithdrawalSuccessPopup: Locator;
+    private readonly cryptoSuccessPopupText: Locator;
+    private readonly iframeName: Locator;
+    private readonly ewalletWithdrawalAmount: Locator;
+    private readonly titleOnCashier: Locator;
+    private readonly titleOnNagaMarketsPopup: Locator;
 
     constructor(page: Page){
         this.page = page;

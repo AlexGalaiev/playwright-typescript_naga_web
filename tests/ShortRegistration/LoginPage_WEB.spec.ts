@@ -14,90 +14,100 @@ import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/componen
 import { Captcha } from "../../pageObjects/captcha";
 
 
-test.describe("Naga Capital. SignIn Page", async()=>{
-    let localization = new getLocalization('/pageObjects/localization/SighInPage.json');
-    let testUser: string = '';
+test.describe("WEB", async()=>{
 
-    test.skip("@23916 Forgot password link test",
-            {tag:['@forgotPassword']}, async({page, AppNAGA, NSCountry})=>{
-        let signInPage = new SignIn(page);
-        let forgotPassword = new ForgotPassword(page);
-        let signUp = new SignUp(page)
-        let myAccountsMenu = new MyAccounts(page)
-        testUser = new RandomUser().getRandomUserEmail()
+    test("@Capital Forgot password link test",
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageUA, AppNAGA, NSCountry})=>{
+        let signUp = new SignUp(proxyPageUA)
+        let signIn = new SignIn(proxyPageUA)
+        let myAccount = new MyAccounts(proxyPageUA)
+        let forgotPassword = new ForgotPassword(proxyPageUA)
+        let testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
-            await signUp.goto(AppNAGA, 'register');
-            await new Captcha(page).removeCaptcha()
+            await signUp.goto(AppNAGA, 'register')
+            await new Captcha(proxyPageUA).removeCaptcha()
             await signUp.createCFDUser(testUser, process.env.USER_PASSWORD || "", NSCountry,'+387', '603039647')
-            await new YouAreInNagaMarkets(page).clickExplorePlatform()
-            await myAccountsMenu.openUserMenu();
-            await myAccountsMenu.userLogOut()
-            await new PageAfterLogout(page).redirectToSighIn()
+            await new YouAreInNagaMarkets(proxyPageUA).clickExplorePlatform()
+        })
+        test.step('Log out from paltform and open forgot password link', async()=>{
+            await myAccount.openUserMenu()
+            await myAccount.userLogOut()
+            await new PageAfterLogout(proxyPageUA).redirectToSighIn()
         })
         await test.step('Check forgot password messages on UI', async()=>{
-            await signInPage.forgotPasswordClick()
-            expect(await forgotPassword.getForgotPasswordDescription()).toEqual(await localization.getLocalizationText("ForgotPasswordDescription"))
-            await forgotPassword.sendForgotPasswordToEmail(testUser);
-            expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
-        })
-    });
-
-    test.skip("@23915 Account locking functionality",{tag:'@UI'}, async({page})=>{
-        let signIn = new SignIn(page);
-        await test.step("Check login to platform with incorrect password", async()=>{
-            await signIn.signInUserToPlatform(testUser, "111Test123")
-            expect(await signIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_1try"));
-            await signIn.clickSignInBtn();
-            expect(await signIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_2try"));
-            await signIn.clickSignInBtn();
-            expect(await signIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescription"));
-            await signIn.clickSignInBtn();
-            expect(await signIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescriptionLastTry"));
+            await signIn.forgotPasswordClick()
+            await forgotPassword.sendEmailToAddress(testUser)
+            expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
+            expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
         })
     })
-})
-test.describe('Naga Markets. Sigh in', async()=>{
-    let testUser;
-    let localization = new getLocalization('/pageObjects/localization/NagaMarkets_SighInPage.json');
-
-    test.beforeEach('Create lead user for tests', async({page, AppNAGA, NMCountry})=>{
-        let signUp = new SignUp(page)
-        let myAccountsMenu = new MyAccounts(page)
-        testUser = new RandomUser().getRandomUserEmail()
+    test("@Markets Forgot password link test",
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPage, AppNAGA, NMCountry})=>{
+        let signUp = new SignUp(proxyPage)
+        let signIn = new SignIn(proxyPage)
+        let forgotPassword = new ForgotPassword(proxyPage)
+        let testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
-            await signUp.goto(AppNAGA, 'register');
-            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || "", NMCountry,'+387', '603039647')
-            await new PersonalInformation(page).clickLogOut()
-            await new PageAfterLogout(page).redirectToSighIn()
+            await signUp.goto(AppNAGA, 'register')
+            await new Captcha(proxyPage).removeCaptcha()
+            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NMCountry, "+387", "603039647")
+        })
+        test.step('Log out from paltform and open forgot password link', async()=>{
+            await new PersonalInformation(proxyPage).clickLogOut()
+            await new PageAfterLogout(proxyPage).redirectToSighIn()
+        })
+        await test.step('Check forgot password messages on UI', async()=>{
+            await signIn.forgotPasswordClick()
+            await forgotPassword.sendEmailToAddress(testUser)
+            expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
+            expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
         })
     })
-    
-    test.skip("@23574 Forgot password link test", 
-        {tag:'@forgotPassword'}, async({page})=>{
-        let signInPage = new SignIn(page);
-        let forgotPassword = new ForgotPassword(page);
-        await test.step("Check forgot password functionality", async()=>{
-            await signInPage.forgotPasswordClick()
-            expect(await forgotPassword.getForgotPasswordDescription()).toEqual(await localization.getLocalizationText("ForgotPasswordDescription"))
-            await forgotPassword.sendForgotPasswordToEmail(testUser);
-            expect(await forgotPassword.getForgotPasswordConfirmation()).toEqual(await localization.getLocalizationText('ForgotPasswordEmailSendDisclaimerText'));
-        })});
-
-    test.skip("@23896 Account locking", {tag:'@UI'}, async({page})=>{
-        let signIn = new SignIn(page);
-        let incorrectPasPopup = new IncorrectPasswordPopup(page);
-        let forgotPassword = new ForgotPassword(page);
-        await test.step("Check account blocking functionality", async()=>{
-            await signIn.signInUserToPlatform(testUser, "111Test123")
-            expect(await signIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_1try"));
-            await signIn.clickSignInBtn();
-            expect(await signIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("incorrectPassword_2try"));
-            await signIn.clickSignInBtn();
-            expect(await signIn.getLoginErrorMsg()).toEqual(await localization.getLocalizationText("AccountBlockDescription"));
-            await signIn.clickSignInBtn();
-            expect(await incorrectPasPopup.getPopupText()).toEqual(await localization.getLocalizationText("AccountBlockDescriptionLastTry"));
-            await incorrectPasPopup.openForgotPasswordForm();
-            expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Forgot your password?')
+    test("@Mena Forgot password link test",
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageUAE, AppNAGA, NagaMenaCountry})=>{
+        let signUp = new SignUp(proxyPageUAE)
+        let signIn = new SignIn(proxyPageUAE)
+        let forgotPassword = new ForgotPassword(proxyPageUAE)
+        let testUser = new RandomUser().getRandomUserEmail()
+        await test.step(`Create lead user ${testUser}`, async()=>{
+            await signUp.goto(AppNAGA, 'register')
+            await new Captcha(proxyPageUAE).removeCaptcha()
+            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NagaMenaCountry, "+387", "603039647")
+        })
+        test.step('Log out from paltform and open forgot password link', async()=>{
+            await new PersonalInformation(proxyPageUAE).clickLogOut()
+            await new PageAfterLogout(proxyPageUAE).redirectToSighIn()
+        })
+        await test.step('Check forgot password messages on UI', async()=>{
+            await signIn.forgotPasswordClick()
+            await forgotPassword.sendEmailToAddress(testUser)
+            expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
+            expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
+        })
+    })
+    test("@Africa Forgot password link test",
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageSA, AppNAGA, NagaAfricaCountry})=>{
+        let signUp = new SignUp(proxyPageSA)
+        let signIn = new SignIn(proxyPageSA)
+        let forgotPassword = new ForgotPassword(proxyPageSA)
+        let testUser = new RandomUser().getRandomUserEmail()
+        let myAccount = new MyAccounts(proxyPageSA)
+        await test.step(`Create lead user ${testUser}`, async()=>{
+            await signUp.goto(AppNAGA, 'register')
+            await new Captcha(proxyPageSA).removeCaptcha()
+            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NagaAfricaCountry, "+387", "603039647")
+            await new YouAreInNagaMarkets(proxyPageSA).clickExplorePlatform()
+        })
+        test.step('Log out from paltform and open forgot password link', async()=>{
+            await myAccount.openUserMenu()
+            await myAccount.userLogOut()
+            await new PageAfterLogout(proxyPageSA).redirectToSighIn()
+        })
+        await test.step('Check forgot password messages on UI', async()=>{
+            await signIn.forgotPasswordClick()
+            await forgotPassword.sendEmailToAddress(testUser)
+            expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
+            expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
         })
     })
 })              
