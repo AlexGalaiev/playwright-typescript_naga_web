@@ -7,7 +7,6 @@ import {test} from "../../test-options"
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout";
-import { IncorrectPasswordPopup } from "../../pageObjects/SignIn/IncorrectPassword";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
@@ -66,7 +65,8 @@ test.describe("WEB", async()=>{
         })
     })
     test("@Mena Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageUAE, AppNAGA, NagaMenaCountry}, testInfo)=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
+            async({proxyPageUAE, AppNAGA, NagaMenaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000)
         let signUp = new SignUp(proxyPageUAE)
         let signIn = new SignIn(proxyPageUAE)
@@ -89,7 +89,8 @@ test.describe("WEB", async()=>{
         })
     })
     test("@Africa Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageSA, AppNAGA, NagaAfricaCountry}, testInfo)=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
+            async({proxyPageSA, AppNAGA, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000)
         let signUp = new SignUp(proxyPageSA)
         let signIn = new SignIn(proxyPageSA)
@@ -106,6 +107,7 @@ test.describe("WEB", async()=>{
             await myAccount.openUserMenu()
             await myAccount.userLogOut()
             await new PageAfterLogout(proxyPageSA).redirectToSighIn()
+            //await signUp.goto(AppNAGA, 'password/forgot')
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await signIn.forgotPasswordClick()

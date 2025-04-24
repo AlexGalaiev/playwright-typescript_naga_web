@@ -12,16 +12,14 @@ export class MyAccounts{
     async openUserMenu(){
         await this.myAccountsHeaderBtn.click();
     }
-
     async openMyAccountMenuItem(nameOfItem: string){
         let menu = await this.page.locator('.popover-content')
         await menu.locator(`//span[text()='${nameOfItem}']//..`).first().click()
     }
-
     async userLogOut(){
         await this.openMyAccountMenuItem('Logout')
         await this.page.getByRole('button', {name: 'Log out'}).click()
-    };
+    }
 
     //old design
     async openMobileMyAccountsMenuItem(nameOfItem: string){

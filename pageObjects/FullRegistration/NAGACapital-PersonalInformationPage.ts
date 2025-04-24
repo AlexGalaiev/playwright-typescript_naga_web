@@ -66,6 +66,7 @@ export class PersonalInformation{
     async clickLogOut(){
         await this.page.waitForSelector(".complete-your-profile-modal__content", {state:'visible'})
         await this.page.locator("//button[text()='Sign out']").click()
+        await this.page.waitForTimeout(3000)
     }
     async clickExploreNaga(){
         await this.page.locator("//button[text()='Explore NAGA Platform']").click()

@@ -36,10 +36,11 @@ export class ForgotPassword{
     }
 
     async sendEmailToAddress(email: string){
-        await this.page.waitForTimeout(1000)
-        await this.forgotPasswordEmailField.pressSequentially(email);
         await this.page.waitForTimeout(1500)
-        await this.forgotPasswordSendBtn.click()
+        await this.forgotPasswordEmailField.pressSequentially(email);
+        await this.page.waitForTimeout(2000)
+        //await this.forgotPasswordSendBtn.click()
+        await this.forgotPasswordSendBtn.press('Enter')
         await this.page.waitForTimeout(1500)
     }
 }
