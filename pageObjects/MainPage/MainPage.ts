@@ -188,6 +188,14 @@ export class MainPage{
         let element = await this.page.locator(`[data-testid="navigation-${nameOfElement}"]`)
         return await element.isVisible()
     }
+    async checkBackMenuMainCategoryIsVisible(nameOfCategory: string){
+        let category = await this.page.locator(`//span[text()='${nameOfCategory}']`)
+        return await category.isVisible()
+    }
+    async checkMessangerIsVisible(){
+        let msg = await this.page.locator("//div[contains(@class, 'chat-notifications-button')]")
+        return await msg.isVisible()
+    }
     async mainMobilePageIsDownLoaded(){
         await this.page.waitForSelector('.news-feed', {state:'visible'})
     }

@@ -20,7 +20,7 @@ export class PageAfterLogout{
     }
     async redirectToSighIn(){
         await this.page.getByRole('button', {name: 'Sign In'}).click();
-        await this.page.waitForTimeout(300)
+        await this.page.waitForTimeout(3000)
     }
 
 }
