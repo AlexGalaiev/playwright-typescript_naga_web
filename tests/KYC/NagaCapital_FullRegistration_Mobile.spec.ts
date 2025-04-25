@@ -20,7 +20,6 @@ test("@24917 Mobile. KYC Advance",
     let personalInfo = new PersonalInformation(page)
     let verificationPopup = new VerificationPopup(page);
     let email = await new RandomUser().getRandomUserEmail() 
-    let myAccountsMenu = await new MyAccounts(page) 
     await test.step(`Create lead user with ${email} on Short registration page.`, async ()=>{
         await signUp.goto(AppNAGA, 'register')
         await new Captcha(page).removeCaptcha()
@@ -29,18 +28,14 @@ test("@24917 Mobile. KYC Advance",
     await test.step('Open main page and switch to Compleate profile KYC. Fill KYC and go to main page.', async() =>{
         await new YouAreInNagaMarkets(page).clickExplorePlatform()
         await mainPage.clickOnMobileWidget('Step 1/4: NAGA Start')
-        //await mainPage.removeNeedHelpBaloon()
         await new StartKYCPopup(page).startKYC();
         await personalInfo.compleateYourProfile()
     });
     await test.step('Check name of the widget banner "Naga start". Assert that Compleate profile popup is hidden', async()=>{
-        await mainPage.openBackMenuPoint("feed");
-        await myAccountsMenu.openUserMenu();
-        await myAccountsMenu.openMyAccountMenuItem('Profile Status')
+        await mainPage.openMobileBackMenuPoint('Profile Status')
         await mainPage.clickOnWidgepPoint('NAGA Progress')
     })
     await test.step('Open step:  Naga progres. User clicks on Finished btn(KYC is prefield)', async()=>{
-        //await mainPage.clickOnWidgepPoint('NAGA Progress')
         await new StartKYCPopup(page).startKYC();
         await new UdpateAccount(page).clickFinishBtn();
     });

@@ -20,7 +20,7 @@ const testNoFundsParaketers: testNoFunds[] = [
    {testRailId: '@25420', brand: '@Africa', user: 'testNoFundsAfrica@naga.com', tradingInstrument: "Bitcoin/EUR"}
 ]
 for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
-    test(`${testRailId}Mobile. Open position without funds ${brand}`, 
+    test(`${testRailId} Mobile. Open position without funds ${brand}`, 
       {tag:['@trading','@mobile']}, async({page,AppNAGA}, testInfo)=>{
       testInfo.setTimeout(testInfo.timeout + 60000);  
       let signIn = new SignIn(page);
@@ -32,7 +32,7 @@ for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
           });
           await test.step(`Choose ${tradingInstrument} and open position`, async () => {
-            await mainPage.openMobileMenuPoint("markets");
+            await mainPage.openMobileMenu('Trade');
             await instruments.openMobilePosition(tradingInstrument, 'SELL')
           });
           await test.step('Check Not enough money messages', async()=>{

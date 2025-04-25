@@ -28,8 +28,7 @@ test.describe('Deposit Mobile', async()=>{
         await test.step(`Login by ${user} to ${brand} platform and check number of exist methods`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openMobileMenu('Menu')
-            await mainPage.openMobileBackMenuPoint('manage-funds')
+            await mainPage.openMobileBackMenuPoint('Deposit')
             await deposit.checkActiveMobileManageTab('deposit')
             expect(await deposit.getNumberOfMobileDeposits()).toEqual(numberOfDepositMethods)
         })
@@ -70,10 +69,9 @@ test.describe('Deposit Mobile', async()=>{
         await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await new MainPage(page).openMobileMenu('Menu')
+            await mainPage.openMobileBackMenuPoint('Deposit')
         });
         await test.step(`Check ${depositName} deposit`, async()=>{
-            await mainPage.openMobileBackMenuPoint('manage-funds')
             await deposit.checkActiveMobileManageTab('deposit')
             let response = await deposit.performMobileDepositWithAmount(depositName, '100', '**/api/cashier/get-payment-method-list-without-details')
             expect(await deposit.getApiPaymentMethodKey(response)).toEqual(responseMethodKey)
@@ -93,11 +91,11 @@ test.describe('Deposit Mobile. NS Other methods', async()=>{
         });
     })
 
-    test("@24068 Mobile Deposit via Crypto", {tag:['@deposit', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
-        async({page})=>{
-        let deposit = new Deposit(page);
-        await new MainPage(page).openMobileMenu('Menu')
-        await new MainPage(page).openMobileBackMenuPoint('manage-funds')
+    test("@24068 Mobile Deposit via Crypto", 
+        {tag:['@deposit', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},async({page})=>{
+        let deposit = new Deposit(page)
+        let mainPage = new MainPage(page)
+        await mainPage.openMobileBackMenuPoint('Deposit')
         await deposit.checkActiveMobileManageTab('deposit')
         await test.step("Check crypto deposit", async()=>{
             let response = await deposit.performMobileDepositWithAmount('crypto', '100', 'https://payapi.newagecrypto.com/assets/paynow');
