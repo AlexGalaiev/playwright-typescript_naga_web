@@ -32,7 +32,7 @@ test.describe('Trading features Mobile', async()=>{
             await test.step(`Login to ${brand} platform by ${user}`, async()=>{
                 await signIn.goto(AppNAGA, "login");
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await new MainPage(page).openMobileMenuPoint('markets');
+                await new MainPage(page).openMobileMenu('Trade');
             })        
             await test.step("Check watchlist and clean from opened positions if they exist", async()=>{
                 await watchlist.openMobileFavorites();
@@ -68,10 +68,11 @@ test.describe('Trading features Mobile', async()=>{
             let watchlist = new AllInstruments(page);
             let priceAlert = new PriceAlert(page)
             let signIn = new SignIn(page)
+            let mainPage = new MainPage(page)
             await test.step(`Login to platform ${brand} by ${user}`, async()=>{
                 await signIn.goto(AppNAGA, "login");
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await new MainPage(page).openMobileMenuPoint('markets');
+                await mainPage.openMobileMenu('Trade');
             })     
             await test.step("Check price alert and clean if they exist", async()=>{
                 await new AllInstruments(page).openPriceAlerts()
@@ -91,7 +92,7 @@ test.describe('Trading features Mobile', async()=>{
                 await priceAlert.clickSetPriceAlert()
             })
             await test.step("Check price alert tab, remove price alerts and check empty screen", async()=>{
-                await new MainPage(page).openMobileMenuPoint('markets')
+                await mainPage.openMobileMenu('Trade')
                 await new AllInstruments(page).openPriceAlerts()
                 expect(await priceAlert.getInstrumentNameFromTab()).toContain(tradeInstrument)
                 expect(await priceAlert.getAlertType()).toContain("It raises by 100%")

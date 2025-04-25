@@ -57,21 +57,22 @@ test.describe('Mobile', async()=>{
           await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       })
       await test.step("Check previously opened positions. Close it if exist", async () => {
-          await mainPage.openMobileMenuPoint("my-trades");
+          await mainPage.openMobileMenu('My Trades');
           await myTrades.openActivePendingOrdersTab();
-      await myTrades.closeMobilePositionsIfExist();
+          await myTrades.closeMobilePositionsIfExist();
       })
       await test.step(`Choose ${tradingInstrument} for trading. Open new position page`, async () => {
-          await mainPage.openBackMenuPoint("markets");
+          await mainPage.openMobileMenu("Trade");
           await instruments.openMobilePosition(tradingInstrument, mobileDirection)
       })
       await test.step('Open order with manual rate value', async()=>{
           await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
-          await newPosition.installLotsSize(20, 2)
+          //need to add mobile version of install lots
+          await newPosition.installLotsSize(50, 2)
           await newPosition.submitPosition()
       })
       await test.step('Check my-trades', async()=>{
-          await mainPage.openMobileMenuPoint("my-trades");
+        await mainPage.openMobileMenu('My Trades');
           await myTrades.openActivePendingOrdersTab();
           rate = await myTrades.getMobileOrderRate()
       })
@@ -114,21 +115,21 @@ test.describe('Mobile', async()=>{
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       });
       await test.step("Test check's previously opened positions. Test close's, if positions exist", async () => {
-        await mainPage.openMobileMenuPoint("my-trades");
+        await mainPage.openMobileMenu('My Trades');
         await myTrades.closeMobilePositionsIfExist();
       });
       await test.step(`Choose ${tradingInstrument} instrument.  Open ${investDirection} type`, async () => {
-        await mainPage.openMobileMenuPoint("markets");
+        await mainPage.openMobileMenu('Trade');
         await instruments.openMobilePosition(tradingInstrument, mobileDirection)
       });
       await test.step(`Check status of ${mobileDirection} button. And click on Submit btn`, async () => {
         expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(investDirection))).toContain('active')
         expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${investDirection} at Current Price`))).toContain('active')
-        await newPosition.installMobileLotsSize(35, 2)
+        await newPosition.installMobileLotsSize(50, 2)
         await newPosition.submitPosition();
       });
       await test.step("Switch to My-Trades page. Save trading parameters - Investments and values. Close position", async () => {
-        await mainPage.openMobileMenuPoint("my-trades");
+        await mainPage.openMobileMenu('My Trades');
         expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
         investmentValue = await myTrades.getMobileDepositValue(currency);
         await myTrades.clickMobilePositionAndOpenTradedetails()
@@ -163,11 +164,11 @@ test.describe('Mobile', async()=>{
         await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
       })
       await test.step("Check previously opened positions. Close it if exist", async () => {
-        await mainPage.openMobileMenuPoint("my-trades");
+        await mainPage.openMobileMenu('My Trades');
         await myTrades.closeMobilePositionsIfExist();
       })
       await test.step(`Choose ${realStockInstrument} for trading. Open new position page`, async () => {
-        await mainPage.openMobileMenuPoint("markets");
+        await mainPage.openMobileMenu('Trade');
         await instruments.openMobilePosition(realStockInstrument, mobileDirection)
         expect(await realStockPopup.getPopupText()).toEqual(await localization.getLocalizationText('RealStock_OpenShortPosition'))
       })

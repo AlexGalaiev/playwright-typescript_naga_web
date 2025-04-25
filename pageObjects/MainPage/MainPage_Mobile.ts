@@ -7,6 +7,8 @@ export class MainPageMobile{
         this.page = page
     }
 
-    // 
+    // async openMobileMenu(menuPoint: string){
+    //     let menu
+    // }
 
 }

@@ -54,11 +54,11 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
       await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions and close if they exist", async () => {
-      await mainPage.openMobileMenuPoint("my-trades");
+      await mainPage.openMobileMenu('My Trades');
       await myTrades.closeMobilePositionsIfExist();
     });
     await test.step(`Choose ${tradingInstrument} and open position`, async () => {
-      await mainPage.openMobileMenuPoint("markets");
+      await mainPage.openMobileMenu('Trade');
       await instruments.openMobilePosition(tradingInstrument, mobileDirection)
     });
     await test.step(`Open ${investDirection} position + ${protection}`, async () => {
@@ -67,7 +67,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
       await newPosition.submitPosition();
     });
     await test.step("Check My-trades popup", async () => {
-      await mainPage.openMobileMenuPoint("my-trades");
+      await mainPage.openMobileMenu('My Trades');
       expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
       await myTrades.clickMobilePositionAndOpenTradedetails()
       let protectionValue = await tradeDetails.getMobileProtectionValue(protection);
@@ -106,12 +106,12 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
           await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
         });
         await test.step("Check previously opened orders and close if they exist", async () => {
-          await mainPage.openMobileMenuPoint("my-trades");
+          await mainPage.openMobileMenu('My Trades');
           await myTrades.openActivePendingOrdersTab();
           await myTrades.closeMobilePositionsIfExist();
         });
         await test.step(`Choose ${tradingInstrument} and open position`, async () => {
-          await mainPage.openMobileMenuPoint("markets");
+          await mainPage.openMobileMenu('Trade');
           await instruments.openMobilePosition(tradingInstrument, mobileDirection)
         });
         await test.step(`Open ${investDirection} position + ${protection}`, async () => {
@@ -121,7 +121,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
           await newPosition.submitPosition();
         });
         await test.step("Check My-trades popup", async () => {
-          await mainPage.openMobileMenuPoint("my-trades");
+          await mainPage.openMobileMenu('My Trades');
           await myTrades.openActivePendingOrdersTab();
           expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
           expect(Number(await myTrades.getMobileProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
@@ -173,11 +173,11 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
           });
           await test.step("Check previously opened positions. Close it if exist", async () => {
-            await mainPage.openMobileMenuPoint("my-trades");
+            await mainPage.openMobileMenu('My Trades');
             await myTrades.closeMobilePositionsIfExist();
           });
           await test.step(`Choose ${tradingInstrument} for trading. Open new position page. Enable ${protectionSL} `, async () => {
-            await mainPage.openMobileMenuPoint("markets");
+            await mainPage.openMobileMenu('Trade')
             await instruments.openMobilePosition(tradingInstrument, mobileDirection)
             await newPosition.switchToSpecificRateForm()
             await newPosition.enableProtection(protectionSL)
@@ -185,7 +185,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
             await newPosition.submitPosition(); 
           });
           await test.step("Check My-trades. Open trade details ", async () => {
-            await mainPage.openMobileMenuPoint("my-trades");
+            await mainPage.openMobileMenuPoint('My Trades');
             expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
             deposit = (await myTrades.getMobileDepositValue(currency));
             units = await myTrades.getMobileUnits();

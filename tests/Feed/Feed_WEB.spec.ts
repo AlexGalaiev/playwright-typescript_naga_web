@@ -21,7 +21,7 @@ const testFeedParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedParams){
     test(`${testRailId} Main actions for post: create, edit, delete ${brand}`,
-        {tag:['@feed', '@prodSanity','@mobile','@web']}, async({page, AppNAGA}, testInfo)=>{
+        {tag:['@feed', '@prodSanity','@web']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let feed = new Feed(page)
@@ -56,7 +56,7 @@ const testFeedParamsActions: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
     test(`${testRailId} ${brand} Main actions for post: Action - Like`,
-        {tag:['@feed', '@mobile','@web']}, async({page, AppNAGA}, testInfo)=>{
+        {tag:['@feed','@web']}, async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 50000);
     let signIn = new SignIn(page);
     let feed = new Feed(page)
@@ -96,7 +96,7 @@ const testFeedCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
     test(`${testRailId} ${brand} Main actions for post: Comment a post ${brand}`, 
-        {tag:['@feed', '@mobile','@web']},async({page, AppNAGA}, testInfo)=>{
+        {tag:['@feed','@web']},async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
@@ -138,7 +138,7 @@ const testShareCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
     test(`${testRailId} ${brand} Main action for post: Share a post ${brand}`, 
-        {tag:['@feed', '@mobile','@web']},async({page, AppNAGA}, testInfo)=>{
+        {tag:['@feed','@web']},async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let feed = new Feed(page);
         let signIn = new SignIn(page);
@@ -176,7 +176,7 @@ const testParamsUserCabinet: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){
     test(`${testRailId} ${brand} Check post in user profile ${brand}`, 
-        {tag:['@feed', '@mobile','@web']}, async({page,AppNAGA}, testInfo)=>{
+        {tag:['@feed', '@web']}, async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let myAccounts = new MyAccounts(page);
         let userProfile = new UserProfile(page)
@@ -216,7 +216,7 @@ const testNotVerifieduser: testFeedNotVeried[] = [
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
     test(`${testRailId} Not verified user tries to create new post${brand}`, 
-        {tag:['@feed', '@mobile','@web']},async({page, AppNAGA}, testInfo)=>{
+        {tag:['@feed','@web']},async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         let signIn = new SignIn(page);
         let feed = new Feed(page)
@@ -244,4 +244,4 @@ for(const{testRailId, brand, user, localization}of testNotVerifieduser){
             await feed.deleteExistedPost(user)
         })
     })
-    }})
+}})

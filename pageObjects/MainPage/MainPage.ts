@@ -127,23 +127,32 @@ export class MainPage{
         await framme.locator("//button[@aria-label='Close message from company']").click()
         await this.page.waitForTimeout(500)
     }
+
+    //need to remove
     async openMobileMenuPoint(nameOfStep:string){
         await this.page.locator('.header__menu').waitFor({state:'visible'})
         let menuPoint = await this.page.locator(".header__menu__nav-item", 
             {has: await this.page.locator(`//a[@href='/${nameOfStep}']`)})
         await menuPoint.click()
     }
-    async openMobileBackMenuPoint(stepName: string){
-        let menuPoint = await this.page.locator(`[data-testid='navigation-mm_${stepName}']`)
+    //new design 
+    async openMobileBackMenuPoint(pointName: string){
+        await this.page.locator("//span[text()='Menu']").click()
+        await this.page.locator('.sidebar-mobile__wrapper').waitFor({state:'visible'})
+        let menuPoint = await this.page.locator(`//span[text()='${pointName}']`).first()
+        await menuPoint.scrollIntoViewIfNeeded()
+        await this.page.waitForTimeout(500)
         await menuPoint.click()
     }
     async refreshPage(){
         await this.page.reload()
     }
     async openMobileMenu(nameOfMenuPoint: string){
-        let menu = await this.page.locator('.header__menu__nav-item__text', {hasText:nameOfMenuPoint})
+        let header = await this.page.locator('.header__menu')
+        let menu = await header.locator(`//span[text()='${nameOfMenuPoint}']`)
         await menu.click()
     }
+
     async searchUser(userName: string){
         await this.page.locator('.ng-ico-search').click()
         await this.page.locator('#global_search_input').pressSequentially(userName)
@@ -202,5 +211,8 @@ export class MainPage{
     async getKYCbannerText(){
         let text = await this.page.locator("//div[contains(@class, 'complete-profile-widget__title--finished')]//..//div[@class='complete-profile-widget__description']")
         return await text.textContent()
+    }
+    async acceptUserLogout(){
+        await this.page.getByRole('button', {name: 'Log out'}).click()
     }
 }
