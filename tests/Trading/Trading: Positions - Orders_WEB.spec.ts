@@ -63,7 +63,7 @@ test.describe("Trading - Positions/Orders.", async () => {
       await test.step(`Check status of ${investDirection} button. And click on Submit btn`, async () => {
         expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(investDirection))).toContain('active')
         expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${investDirection} at Current Price`))).toContain('active')
-        await newPosition.installLotsSize(60, 2)
+        await newPosition.installLotsSize(65, 2)
         await newPosition.submitPosition();
       });
       await test.step("Switch to My-Trades page. Save trading parameters - Investments and values. Close position", async () => {
@@ -120,7 +120,7 @@ test.describe('Trading - Pending orders', async()=>{
       });
       await test.step('Open order with manual rate value', async()=>{
         await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
-        await newPosition.installLotsSize(60, 2)
+        await newPosition.installLotsSize(65, 2)
         await newPosition.submitPosition()
       })
       await test.step('Check my-trades', async()=>{

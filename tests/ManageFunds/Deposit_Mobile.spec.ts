@@ -105,8 +105,8 @@ test.describe('Deposit Mobile. NS Other methods', async()=>{
 
     test('@25352 Mobile Deposit via Wire Transfer',{tag:['@deposit', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, async({page})=>{
         let deposit = new Deposit(page)
-        await new MainPage(page).openMobileMenu('Menu')
-        await new MainPage(page).openMobileBackMenuPoint('manage-funds')
+        let mainPage = new MainPage(page)
+        await mainPage.openMobileBackMenuPoint('Deposit')
         await deposit.checkActiveMobileManageTab('deposit')
         await test.step('Check wire trannsfer deposit', async()=>{
             let response = await deposit.performMobileDepositWithoutAmount('amazonaws', '**/payment/bank_accounts')
@@ -127,8 +127,7 @@ test.describe('Deposit Mobile. NM. Other methods', async()=>{
         await test.step(`Login to platform by depositTestMarkets user`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform('depositTestMarkets', process.env.USER_PASSWORD || '');
-            await mainPage.openMobileMenu('Menu');
-            await mainPage.openMobileBackMenuPoint('manage-funds')
+            await mainPage.openMobileBackMenuPoint('Deposit')
             await new Deposit(page).checkActiveMobileManageTab('deposit')
         })
         await test.step('Check Pay Pal deposit', async()=>{
@@ -149,7 +148,6 @@ test.describe('Deposit Mobile. NM. Other methods', async()=>{
 
     const NMdepositTestParams: NMtestTypes[] = [
         {testRailId: '@23606', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-credit-debit-cards', requestURL: '**/payment/safecharge/url'},
-        //{testRailId: '@25151', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-ewallet', requestURL: '**/payment/safecharge/url'},
         {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}
     ]
     
@@ -164,8 +162,7 @@ test.describe('Deposit Mobile. NM. Other methods', async()=>{
         await test.step(`Login by ${user} user`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openMobileMenu('Menu');
-            await mainPage.openMobileBackMenuPoint('manage-funds')
+            await mainPage.openMobileBackMenuPoint('Deposit')
             await new Deposit(page).checkActiveMobileManageTab('deposit')
         });
         await test.step(`Check ${depositName} deposit`, async()=>{
