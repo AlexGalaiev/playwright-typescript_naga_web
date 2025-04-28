@@ -63,6 +63,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
     });
     await test.step(`Open ${investDirection} position + ${protection}`, async () => {
       await newPosition.enableProtection(protection)
+      await newPosition.installMobileLotsSize(55, 2)
       NagaProtectionValue = await newPosition.getProtectionValue(protection)
       await newPosition.submitPosition();
     });
@@ -116,6 +117,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
         });
         await test.step(`Open ${investDirection} position + ${protection}`, async () => {
           await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
+          await newPosition.installMobileLotsSize(55, 2)
           await newPosition.enableProtection(protection)
           NagaProtectionValue = await newPosition.getProtectionValue(protection)
           await newPosition.submitPosition();
@@ -180,6 +182,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
             await mainPage.openMobileMenu('Trade')
             await instruments.openMobilePosition(tradingInstrument, mobileDirection)
             await newPosition.switchToSpecificRateForm()
+            await newPosition.installMobileLotsSize(55, 2)
             await newPosition.enableProtection(protectionSL)
             stopLossValue = await newPosition.getStopLossValue(protectionSL)
             await newPosition.submitPosition(); 

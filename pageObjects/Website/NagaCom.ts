@@ -50,7 +50,7 @@ export class NagaCom{
         this.euPayAddress = page.locator("//div[@id='disclaimer-container']//ul//li[2]")
         this.euPayRiskNotification = page.locator("//div[@id='disclaimer-container']//p[6]")
         this.userLoginSection = this.headerContainer.locator("//a[contains(@class, 'ButtonBaseV2_btn')]")
-        this.userLoginSectionPay = this.headerContainer.locator("//button[contains(@class, 'ButtonBaseV2_btn')]")
+        this.userLoginSectionPay = this.headerContainer.locator("//a[contains(@class, 'ButtonBaseV2_btn')]")
         this.languageSwitcherCrypto = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div[@title]").first()
         this.footerContainer = page.locator("#footer-container")
         this.zaRiskWarning = page.locator("//span[text()='RISK WARNING:']//..").first()

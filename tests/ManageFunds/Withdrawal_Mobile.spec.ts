@@ -25,8 +25,7 @@ test.describe('Withdrawal Mobile NS', async()=>{
             let valueToWithrawal = '1'
             let mainPage = new MainPage(page)
             await test.step('Open withdrawal menu', async()=>{
-                await mainPage.openMobileMenu('Menu');
-                await mainPage.openMobileBackMenuPoint('manage-funds')
+                await mainPage.openMobileBackMenuPoint('Withdraw')
                 await new Deposit(page).checkActiveMobileManageTab('withdraw')
             })
             await test.step('Input NOT valid amount for withdrawal', async()=>{
@@ -45,8 +44,7 @@ test.describe('Withdrawal Mobile NS', async()=>{
         let localization = new getLocalization(ManageFunds_Withdrawal);
         let mainPage = new MainPage(page)
         await test.step('Open withdrawal menu', async()=>{
-            await mainPage.openMobileMenu('Menu');
-            await mainPage.openMobileBackMenuPoint('manage-funds')
+            await mainPage.openMobileBackMenuPoint('Withdraw')
             await new Deposit(page).checkActiveMobileManageTab('withdraw')
         })
         await test.step("Make crypto withdrawal", async()=>{
@@ -78,8 +76,7 @@ test.describe('Withdrawal Mobile NM', async()=>{
         await test.step('Login by depositTestMarkets3 to NagaMarkets and open withdrawal', async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform("depositTestMarkets3", process.env.USER_PASSWORD || '');
-            await mainPage.openMobileMenu('Menu');
-            await mainPage.openMobileBackMenuPoint('manage-funds')
+            await mainPage.openMobileBackMenuPoint('Withdraw')
             await new Deposit(page).checkActiveMobileManageTab('withdraw')
         });
         await test.step('Open Pay pal withdrawal', async()=>{
@@ -117,8 +114,7 @@ test.describe('Withdrawal Mobile All brands', async()=>{
             await test.step(`Login by ${user} to ${brand} platform and open ${paymentMethod} withdrawal`, async()=>{
                 await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openMobileMenu('Menu');
-                await mainPage.openMobileBackMenuPoint('manage-funds')
+                await mainPage.openMobileBackMenuPoint('Withdraw')
                 await new Deposit(page).checkActiveMobileManageTab('withdraw')
                 await withdrawal.chooseMobileWithdrawalMethod(menuPoint);
                 await withdrawal.chooseMobileEWalletMethod(paymentMethod)
@@ -156,8 +152,7 @@ test.describe('Withdrawal Mobile All brands', async()=>{
             await test.step(`Login by ${user} to ${brand} plarform  and open withdrawal`, async()=>{
                 await signIn.goto(AppNAGA,'login');
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openMobileMenu('Menu');
-                await mainPage.openMobileBackMenuPoint('manage-funds')
+                await mainPage.openMobileBackMenuPoint('Withdraw')
                 await new Deposit(page).checkActiveMobileManageTab('withdraw');
             });
             await test.step(`Make ${paymentMethod} withdrawal`, async()=>{
@@ -192,8 +187,7 @@ test.describe('Withdrawal Mobile All brands', async()=>{
         await test.step(`Login to ${brand} by ${user} and open withdrawal`, async()=>{
             await signIn.goto(AppNAGA,'login');
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await mainPage.openMobileMenu('Menu');
-            await mainPage.openMobileBackMenuPoint('manage-funds')
+            await mainPage.openMobileBackMenuPoint('Withdraw')
             await new Deposit(page).checkActiveMobileManageTab('withdraw');
         });
         await test.step(`Make Ecommpay withdrawal`, async()=>{
@@ -206,6 +200,5 @@ test.describe('Withdrawal Mobile All brands', async()=>{
         })
     })
     }
-
 })
  

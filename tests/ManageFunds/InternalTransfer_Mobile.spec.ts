@@ -28,8 +28,7 @@ for(const{testRailId, brand, user} of testTransferParams){
             await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         });
         await test.step("Make internal transfer", async()=>{
-            await mainPage.openMobileMenuPoint('Menu');
-            await mainPage.openMobileBackMenuPoint('manage-funds')
+            await mainPage.openMobileBackMenuPoint('Transfer')
             await new Deposit(page).checkActiveMobileManageTab('transfer')
             await internalTransfer.chooseAccount('AccountSource');
             await internalTransfer.make1$InternalTransfer();

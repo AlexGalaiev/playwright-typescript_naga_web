@@ -68,7 +68,7 @@ test.describe('Mobile', async()=>{
       await test.step('Open order with manual rate value', async()=>{
           await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
           //need to add mobile version of install lots
-          await newPosition.installLotsSize(50, 2)
+          await newPosition.installMobileLotsSize(55, 2)
           await newPosition.submitPosition()
       })
       await test.step('Check my-trades', async()=>{
@@ -125,7 +125,7 @@ test.describe('Mobile', async()=>{
       await test.step(`Check status of ${mobileDirection} button. And click on Submit btn`, async () => {
         expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(investDirection))).toContain('active')
         expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${investDirection} at Current Price`))).toContain('active')
-        await newPosition.installMobileLotsSize(50, 2)
+        await newPosition.installMobileLotsSize(55, 2)
         await newPosition.submitPosition();
       });
       await test.step("Switch to My-Trades page. Save trading parameters - Investments and values. Close position", async () => {

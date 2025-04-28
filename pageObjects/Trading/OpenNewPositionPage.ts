@@ -87,13 +87,7 @@ export class NewPosition{
         let lostSize = await this.page.locator("//label[text()='Lotsize']")
         await lostSize.click()
         //click 120 times(60 double clicks) on minus btn(2nd button on the page)
-        //await this.installMobileValueViaMinusBtn(numberOfClicks, positionOfEleemnt)
-        let inputField = await this.page.locator("//div[@class='investment-section ']//input[@type='text']").nth(1)
-        await inputField.clear()
-        await this.page.waitForTimeout(300)
-        await inputField.pressSequentially('1')
-        await this.page.waitForTimeout(300)
-
+        await this.installMobileValueViaMinusBtn(numberOfClicks, positionOfEleemnt)
     }
 
     async installValueViaMinusBtn(iterations: number, elementOnthePage: number){
@@ -104,17 +98,17 @@ export class NewPosition{
             await this.page.waitForTimeout(150)
             iteration++
         }
-        await this.page.waitForTimeout(500)
+        await this.page.waitForTimeout(1000)
     }
     async installMobileValueViaMinusBtn(iterations: number, elementOnthePage: number){
         let minusBtn = await this.page.locator("//div[contains(@class, 'minus-btn')]//i").nth(elementOnthePage)
         let iteration = 0
         while(iteration!=iterations){
-            await minusBtn.dblclick()
+            await minusBtn.tap()
             await this.page.waitForTimeout(150)
             iteration++
         }
-        await this.page.waitForTimeout(500)
+        await this.page.waitForTimeout(1000)
     
     }
 }

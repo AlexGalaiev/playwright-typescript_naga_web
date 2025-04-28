@@ -143,6 +143,7 @@ export class MainPage{
         await menuPoint.scrollIntoViewIfNeeded()
         await this.page.waitForTimeout(500)
         await menuPoint.click()
+        await this.page.waitForTimeout(500)
     }
     async refreshPage(){
         await this.page.reload()
@@ -177,6 +178,23 @@ export class MainPage{
         await this.page.waitForTimeout(3500)
         await this.page.locator('.profile-info').waitFor({state:'visible'})
     }
+
+    async openMobileBalanceMenu(){
+        await this.page.locator("//button[contains(@class, 'account-data-bar__tools__toggle')]").click()
+        await this.page.waitForTimeout(1000)
+    }
+
+    async chooseMobileTradingAccount(accountName: string){
+        let loginedAc = await this.getloginnedUserAccount()
+        if(loginedAc !== accountName){
+            await this.page.locator("//button[contains(@class, 'selected-trading-account__button')]").click()
+            await this.page.waitForTimeout(1500)
+            let dropdown = await this.page.locator(".header-trading-accounts-widget__dropdown")
+            await dropdown.locator(`[data-testid="open-terminal-${accountName}"]`).click()
+            await this.page.waitForTimeout(4000)
+        }
+    }
+
     async getloginnedUserAccount(){
         let loginedAc = await this.page.locator(".selected-trading-account__title").getAttribute('title')
         return await loginedAc
@@ -197,6 +215,11 @@ export class MainPage{
         let element = await this.page.locator(`[data-testid="navigation-${nameOfElement}"]`)
         return await element.isVisible()
     }
+    async checkBackMenuMobileIsVisible(nameOfElement: string){
+        let element = await this.page.locator('.sidebar-menu-group__item-title', {hasText:nameOfElement})
+        //await element.scrollIntoViewIfNeeded()
+        return await element.isVisible()
+    }
     async checkBackMenuMainCategoryIsVisible(nameOfCategory: string){
         let category = await this.page.locator(`//span[text()='${nameOfCategory}']`)
         return await category.isVisible()
@@ -213,6 +236,11 @@ export class MainPage{
         return await text.textContent()
     }
     async acceptUserLogout(){
+        await this.page.getByRole('button', {name: 'Log out'}).click()
+    }
+    async logOutUserMobile(){
+        //await this.openMobileMenu('Menu')
+        await this.page.locator("//span[text()='Logout']").click()
         await this.page.getByRole('button', {name: 'Log out'}).click()
     }
 }
