@@ -17,7 +17,7 @@ test.describe('Autocopy', async()=>{
         let mainPageCapital = new MainPage(page)
         let mainPageMena = new MainPage(proxyPageUAE)
         let tradingInstrument = "Solana/USD";
-        let CapitalUser = 'testTrading2'
+        let CapitalUser = 'testTrading2' // markets user
         let MenaUser = 'testTradingMena'
         let autoCopyCapital = new AutoCopy(page)
         let userProfileCapital = new UserProfile(page)
@@ -27,7 +27,7 @@ test.describe('Autocopy', async()=>{
             await signInCapital.signInUserToPlatform(CapitalUser, process.env.USER_PASSWORD || "")
         })
         await test.step(`Close Autocopy tradings, if they exist`, async()=>{
-            await mainPageCapital.openBackMenuPoint('Copy Trading')
+            await mainPageCapital.openBackMenuSubcategory('Copy Trading', 'Copy Trading')
             await autoCopyCapital.chooseAutocopyTab('Active')
             await autoCopyCapital.closeAutoCopiesIfexist()
         })
@@ -52,7 +52,7 @@ test.describe('Autocopy', async()=>{
             await new MyTrades(proxyPageUAE).closePositionsIfExist()
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
-            await mainPageMena.openBackMenuPoint('markets')
+            await mainPageMena.openBackMenuPoint('trade')
             await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
             await new NewPosition(proxyPageUAE).installLotsSize(65, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
@@ -75,7 +75,7 @@ test.describe('Autocopy', async()=>{
             expect(await new MyTrades(page).emptyPageTextIsVisible()).toBeTruthy()
         })
         await test.step('Remove autocopy conection on NagaCapital', async()=>{
-            await mainPageCapital.openBackMenuPoint('Copy Trading')
+            await mainPageCapital.openBackMenuSubcategory('Copy Trading', 'Copy Trading')
             await autoCopyCapital.chooseAutocopyTab('Active')
             await autoCopyCapital.closeAutoCopiesIfexist()
         })
@@ -91,7 +91,6 @@ test.describe('Autocopy', async()=>{
         let CapitalUser = 'testTrading2'
         let MenaUser = 'testTradingMena'
         let autoCopyCapital = new AutoCopy(page)
-        let MenaOpenedPositionsDate;
         await signInCapital.goto(AppNAGA, 'login')
         await test.step(`Login by Capital user ${CapitalUser}`, async()=>{
             await signInCapital.switchPage(page)
@@ -102,7 +101,7 @@ test.describe('Autocopy', async()=>{
             await new MyTrades(page).closePositionsIfExist()
         })
         await test.step(`Check autocopied users. AutoCopy user - ${MenaUser}`, async()=>{
-            await mainPageCapital.openBackMenuPoint('Copy Trading')
+            await mainPageCapital.openBackMenuSubcategory('Copy Trading', 'Copy Trading')
             await autoCopyCapital.chooseAutocopyTab('Active')
             await autoCopyCapital.closeAutoCopiesIfexist()
             await autoCopyCapital.chooseAutocopyTab('Inactive')
@@ -119,7 +118,7 @@ test.describe('Autocopy', async()=>{
             await new MyTrades(proxyPageUAE).closePositionsIfExist()
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
-            await mainPageMena.openBackMenuPoint('markets')
+            await mainPageMena.openBackMenuPoint('trade')
             await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
             await new NewPosition(proxyPageUAE).installLotsSize(65, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
@@ -135,7 +134,7 @@ test.describe('Autocopy', async()=>{
             expect(await new MyTrades(page).getSourceOfOpenedPosition(tradingInstrument)).toEqual('AUTOCOPIED')
         })
         await test.step('Remove autocopy conection on NagaCapital', async()=>{
-            await mainPageCapital.openBackMenuPoint('Copy Trading')
+            await mainPageCapital.openBackMenuSubcategory('Copy Trading', 'Copy Trading')
             await autoCopyCapital.chooseAutocopyTab('Active')
             await autoCopyCapital.closeAutoCopiesIfexist()
         })

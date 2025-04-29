@@ -139,7 +139,6 @@ test.describe('Deposit', async()=>{
 
     const NMdepositTestParams: NMtestTypes[] = [
         {testRailId: '@23606', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-credit-debit-cards', requestURL: '**/payment/safecharge/url'},
-        //{testRailId: '@25151', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-ewallet', requestURL: '**/payment/safecharge/url'},
         {testRailId: '@25150', brand: '@Markets', user: 'depositTestMarkets', depositName: 'light-sepa', requestURL: '**/payments/truelayer/providers'}
     ]
     
