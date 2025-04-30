@@ -2,6 +2,7 @@ import { expect, BrowserContext, Locator} from "@playwright/test";
 import { NagaCom } from "../../pageObjects/Website/NagaCom";
 import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText";
+import { table } from "console";
 
 test.describe('Website redirect', async()=>{
     
@@ -273,7 +274,7 @@ test.describe('Website. Languages and translations', async()=>{
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'English (Europe)', btn1:'LoginBtn.eng', btn2:"GetStarted.eng", btn3:"Discover more.eng", btn4:"Start trading.eng"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Deutsch', btn1:'LoginBtn.de', btn2:"GetStarted.de", btn3:"Discover more.de", btn4:"Start trading.de"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Italiano', btn1:'LoginBtn.it', btn2:"GetStarted.it", btn3:"Discover more.it", btn4:"Start trading.it"},
-        {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Español', btn1:'LoginBtn.es', btn2:"GetStarted.es", btn3:"Discover more.es", btn4:"Start trading.es"},
+        //{testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Español', btn1:'LoginBtn.es', btn2:"GetStarted.es", btn3:"Discover more.es", btn4:"Start trading.es"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Polski', btn1:'LoginBtn.pl', btn2:"GetStarted.pl", btn3:"Discover more.pl", btn4:"Start trading.pl"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Čeština', btn1:'LoginBtn.cz', btn2:"GetStarted.cz", btn3:"Discover more.cz", btn4:"Start trading.cz"},
         {testRailId: "@25215", tradeType: 'trade', investType: 'invest', platform: "https://naga.com/eu", language:'Nederlands', btn1:'LoginBtn.ne', btn2:"GetStarted.ne", btn3:"Discover more.ne", btn4:"Start trading.ne"},
@@ -336,7 +337,7 @@ test.describe('Website. Languages and translations', async()=>{
             testInfo.setTimeout(testInfo.timeout + 30000);
             let website = new NagaCom(page)
             let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
-            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
+            await test.step(`Open ${platform} and switch to ${language}`, async()=>{
                 await website.open(platform)
                 await website.checkTradeInstrument(`${type}`)
                 await website.acceptAllCookies()
@@ -371,7 +372,7 @@ test.describe('Website. Languages and translations', async()=>{
             testInfo.setTimeout(testInfo.timeout + 30000);
             let website = new NagaCom(page)
             let localization = new getLocalization("/pageObjects/localization/Website_Naga.com_translations.json")
-            await test.step(`Open ${platform} ans switch to ${language}`, async()=>{
+            await test.step(`Open ${platform} and switch to ${language}`, async()=>{
                 await website.open(platform)
                 await website.checkTradeInstrument(`${type}`)
                 await website.acceptAllCookies()
@@ -381,6 +382,25 @@ test.describe('Website. Languages and translations', async()=>{
                 expect(await website.getBtnHeaderTextPay(await localization.getTranslation(btn1))).toBeVisible()
             })
         })}
+
+    test(`@25215 Localization of main buttons - https://naga.com/eu. Spanish language`,
+        {tag:['@naga.com','@web']}, async({page}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 80000);
+        let website = new NagaCom(page)
+        await test.step(`Open https://naga.com/eu  and switch to Español`, async()=>{
+            await website.open('https://naga.com/eu')
+            await website.acceptAllCookies()
+            await website.switchLanguageTo('Español');
+        })
+        await test.step(`Check trade page buttons`, async()=>{
+            await website.checkTradeInstrument(`trade`)
+            expect(await website.getBtnHeaderText('Iniciar sesión')).toBeVisible()
+        })
+        await test.step(`Check invest page buttons`, async()=>{
+            await website.checkTradeInstrument('invest')
+            await website.checkAndCloseBullonPopup()
+            expect(await website.getBtnHeaderText('Iniciar sesión')).toBeVisible()
+        })})
 })
 
 test.describe('Website. Footer and header elements', async()=>{
