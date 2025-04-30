@@ -294,11 +294,11 @@ export class NagaCom{
             await minicard.click()
             await this.page.waitForTimeout(250)
             let mainCardText = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//h1 | //div[contains(@id, 'panel-${landingPage}')]//h2`).textContent()
-            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//button`).textContent()
+            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//a//span`).first().textContent()
             return [mainCardText, btnRedirect]
         }else{
             let mainCardText = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//h1 | //div[contains(@id, 'panel-${landingPage}')]//h2`).textContent()
-            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//button`).textContent()
+            let btnRedirect = await this.page.locator(`//div[contains(@id, 'panel-${landingPage}')]//a//span`).textContent()
             return [mainCardText, btnRedirect]
         }
     }
