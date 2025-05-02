@@ -39,5 +39,18 @@ export class Messanger{
         let msg = await chatMsg.locator("//div[contains(@class, 'bubble bubble')]//div[1]")
         return await msg.textContent()
     }
-    
+    async openPopupChatWithUser(userName: string){
+        let popup = await this.page.locator("//div[@class='messages-container']").nth(1)
+        let userChat = await popup.locator("//div[@class='messages-container__user']", {has: await this.page.locator(`//div[text()='${userName}']`)})
+        await userChat.click()
+        await this.page.waitForSelector('.chat',{state:'visible'})
+    }
+
+    async openMobileChatWithUser(userName: string){
+        //let popup = await this.page.locator("//div[@class='messages-container']").nth(1)
+        await this.page.waitForSelector(".chat-conversation-list-item__title", {state:'visible'})
+        let userChat = await this.page.locator(".chat-conversation-list-item__title", {hasText:userName})
+        await userChat.tap()
+        await this.page.waitForSelector('.chat',{state:'visible'})
+    }
 }  

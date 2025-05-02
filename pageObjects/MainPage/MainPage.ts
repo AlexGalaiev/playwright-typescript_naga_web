@@ -252,4 +252,14 @@ export class MainPage{
         await this.page.locator("//span[text()='Logout']").click()
         await this.page.getByRole('button', {name: 'Log out'}).click()
     }
+    async openMessangerViaHeader(){
+        await this.page.waitForTimeout(1000)
+        await this.page.waitForSelector("//div[contains(@class, 'chat-notifications-button')]", {state:'visible'})
+        await this.page.locator("//div[contains(@class, 'chat-notifications-button')]").click()
+        await this.page.waitForTimeout(1500)
+    }
+    // async openMobileMessangerViaHeader(){
+    //     await this.page.locator("//div[contains(@class, 'chat-notifications-button')]").click()
+    //     await this.page.waitForTimeout(1500)
+    // }
 }
