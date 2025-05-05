@@ -14,11 +14,12 @@ test.describe('WEB Messanger', async()=>{
         receiver: string 
        } 
     const testMessangerParams: testMessangertypes[] = [
-        {testRailId: '@23615', brandSender: '@Markets', userSender: 'testTrading2Markets', receiver: 'testFeedUser', brandReceiver: '@Capital'},
-        {testRailId: '@25193', brandSender: '@Capital', userSender: 'testFeedUser', receiver:'testTrading2Markets', brandReceiver: '@Markets'},
+        {testRailId: '@23615', brandSender: '@Markets', userSender: 'testTrading2Markets', receiver: 'testFeedUser'},
+        {testRailId: '@25193', brandSender: '@Capital', userSender: 'testFeedUser', receiver:'testTrading2Markets'},
     ]
     for(const{testRailId, brandSender, userSender,receiver}of testMessangerParams){
-        test(`${testRailId} ${brandSender} Send text via messanger`,{tag: ['@web','@messanger','@UI']}, async({page, proxyPage, AppNAGA})=>{
+        test(`${testRailId} ${brandSender} Send text via messanger`,{tag: ['@web','@messanger','@UI']}, async({page, proxyPage, AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 30000)
             let signInCapital = new SignIn(page)
             let signInMarkets = new SignIn(proxyPage)
             let mainPageCapital = new MainPage(page)
@@ -57,11 +58,12 @@ test.describe('Mobile Messanger', async()=>{
         receiver: string 
        } 
     const testMessangerParams: testMessangertypes[] = [
-        {testRailId: '@23615', brandSender: '@Markets', userSender: 'testTrading2Markets', receiver: 'testFeedUser', brandReceiver: '@Capital'},
-        {testRailId: '@25193', brandSender: '@Capital', userSender: 'testFeedUser', receiver:'testTrading2Markets', brandReceiver: '@Markets'},
+        {testRailId: '@23615', brandSender: '@Markets', userSender: 'testTrading2Markets', receiver: 'testFeedUser'},
+        {testRailId: '@25193', brandSender: '@Capital', userSender: 'testFeedUser', receiver:'testTrading2Markets'},
     ]
     for(const{testRailId, brandSender, userSender,receiver}of testMessangerParams){
-        test(`${testRailId} ${brandSender} Mobile. Send text via messanger`,{tag: ['@web','@messanger','@UI']}, async({page, proxyPage, AppNAGA})=>{
+        test(`${testRailId} ${brandSender} Mobile. Send text via messanger`,{tag: ['@mobile','@messanger','@UI']}, async({page, proxyPage, AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 30000)
             let signInCapital = new SignIn(page)
             let signInMarkets = new SignIn(proxyPage)
             let mainPageCapital = new MainPage(page)

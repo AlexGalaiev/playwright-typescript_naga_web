@@ -20,7 +20,7 @@ export class MyTrades{
     readonly gotItBtn: Locator;
     readonly removeNOrders: Locator;
     readonly accptanceOfRemovingOrders: Locator;
-    //readonly orderUnits: Locator;
+//readonly orderUnits: Locator;
     readonly orderTakeProfit: Locator;
     readonly orderStopLoss: Locator;
     readonly openedMobilePosition: Locator;
@@ -205,6 +205,7 @@ export class MyTrades{
     async openCloseTradesTab(){
         await this.closeTradesTab.click()
         await this.openedPosition.first().waitFor({state:'visible'})
+        await this.page.waitForTimeout(1000)
     }
     async openLastTrade(instrumentName: string){
         await this.openedPosition.first().waitFor({state:'visible'})
@@ -223,5 +224,38 @@ export class MyTrades{
     async openMobileClosedPositionsTab(){
         await this.closeTradesTab.click()
         await this.openedMobilePosition.first().waitFor({state:'visible'})
+    }
+    async openClosedPositionTab(){
+        await this.page.locator("#my-closed-trades").click()
+        await this.page.waitForTimeout(500)
+    }
+    async setFilterDate(filerDate: string){
+        //open calendar
+        await this.page.locator("#startDate").click()
+        let datePicker = await this.page.locator("//div[contains(@class, 'DayPicker_transitionContainer')]")
+        await datePicker.waitFor({state:'visible'})
+        //choose filter
+        await this.page.locator(`//button[text()='${filerDate}']`).click()
+        await this.page.waitForTimeout(1000)
+    }
+    async getNumberOfClosedTrades(){
+        let tradeSummary = await this.page.locator(".trades-summary__value").first()
+        return await tradeSummary.textContent()
+    }
+    async openTypeFilter(){
+        await this.page.waitForTimeout(500)
+        await this.page.locator("//button[contains(@class, 'trades-filter__dropdown-link')]").click()
+        await this.page.waitForTimeout(500)
+    }
+    async setTypeOfClosedPosition(typeName: string){
+        let menu = await this.page.locator('//ul[@role="menu"]')
+        //await this.page.locator("//button[contains(@class, 'trades-filter__dropdown-link')]").click()
+        await menu.waitFor({state:'visible'})
+        await menu.locator(`//label[text()='${typeName}']`).click()
+        await this.page.waitForTimeout(1500)
+    }
+    async checkSourceOfTradeVisibility(nameOfTrade){
+        return await this.page.locator(`//div[text()='${nameOfTrade}']`).isVisible()
+        
     }
 }

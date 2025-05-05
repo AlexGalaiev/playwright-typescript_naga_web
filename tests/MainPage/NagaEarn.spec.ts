@@ -103,7 +103,7 @@ test.describe('Naga Earn.Mobile', async()=>{
         {accountName:'usdAccount'}
     ]
     for(const{accountName} of NagaEarnParams){
-        test(`Open Naga Earn from ${accountName} account`, {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
+        test(`Open Naga Earn from ${accountName} account`, {tag:['@UI', '@mobile']}, async({page, AppNAGA})=>{
             let signIn = new SignIn(page)
             let mainPage = new MainPage(page)
             let nagaEarn = new NagaEarn(page)
