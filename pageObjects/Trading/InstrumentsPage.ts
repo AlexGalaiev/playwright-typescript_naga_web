@@ -27,7 +27,7 @@ export class AllInstruments{
         this.foundInstrumentBuyBtn = page.locator("//div[@class='buy-sell-container']//div[@data-type='BUY']");
         this.foundInstrumentAddtoWatchlist = page.locator("//button[contains(@class, 'star-checkbox')]");
         this.watchlistTab = page.locator("#favorites_symbol_type")
-        this.watchlistedInstrument = page.locator("//div[@class='symbol-container__name']")
+        this.watchlistedInstrument = page.locator(".symbol-container__name")
         this.removeFromWatchlist = page.locator("//i[contains(@class, 'remove-favorites')]")
         this.emptyWatchlistHeader = page.locator("//div[@class='no-data__title']")
         this.emptyWatchlistText = page.locator("//div[@class='no-data__description']")
@@ -42,11 +42,11 @@ export class AllInstruments{
         await this.page.waitForTimeout(500);
     };
     async addToWatchlist(NameOfInstrument: string){
-        //await this.foundInstrumentName.textContent() === NameOfInstrument;
-        await this.foundInstrumentAddtoWatchlist.first().click();
-        await this.page.waitForTimeout(500)
-        await this.page.waitForSelector("//i[contains(@class, ' active-star')]", {state:'visible'})
-        await this.page.waitForTimeout(1000)
+        let firstInstrument = await this.page.locator('.symbol-row', {has: await this.page.locator(`//div[text()='${NameOfInstrument}']`)}).first()
+        await firstInstrument.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]//button").click()
+        await this.page.waitForTimeout(250)
+        await firstInstrument.locator("//li[@role='presentation']//a[text()='Add to favorites']").click()
+        await this.page.waitForTimeout(250)
     };
     async openWatclistTab(){
         await this.watchlistTab.click();
@@ -69,7 +69,9 @@ export class AllInstruments{
         return await this.emptyWatchlistText.textContent();
     };
     async addPriceAlertToInstrumnet(){
-        await this.addPriceAlert.first().click();
+        let existPosition = await this.page.locator(".symbol-row").first()
+        await existPosition.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]").click()
+        await existPosition.locator("//a[text()='Add Price Alert']").click()
         await this.page.waitForTimeout(500)
     };
     async openMobileInstrument(){
@@ -98,9 +100,10 @@ export class AllInstruments{
         await button.click()
     }
     async cleanWatchlist(){
-        let removeIcon = await this.page.locator("//i[contains(@class, ' active-star')]").first();
-        while(await removeIcon.isVisible()){
-            await removeIcon.click()
+        let existPosition = await this.page.locator(".symbol-container")
+        while(await existPosition.isVisible()){
+            await existPosition.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]").click()
+            await existPosition.locator("//a[text()='Remove from favorites']").click()
             await this.page.waitForTimeout(1500)
         }
     }
@@ -110,7 +113,7 @@ export class AllInstruments{
         await this.page.locator("//button[text()='Done']").click()
     }
     async clearSearchField(){
-        await this.page.locator('[alt="clear search"]').click()
+        await this.page.locator("//i[contains(@class, 'clear-text')]").click()
         await this.page.waitForTimeout(500) 
     }
     async openMobilePosition(nameOfInstrumnet: string, positionType: string){

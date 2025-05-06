@@ -26,7 +26,7 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
     test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@trading','@web']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
-        let tradeInstrument = "EUR/USD"
+        let tradeInstrument = "SOLUSD"
         let localizationPage = new getLocalization(localization)
         let watchlist = new AllInstruments(page);
         await test.step(`Login to ${brand} platform by ${user}`, async()=>{
@@ -44,9 +44,9 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
             await watchlist.clearSearchField()
         })
         await test.step("Check instrument in watchlist. Remove instrument and check empty page", async()=>{
-            await watchlist.openWatclistTab();
-            expect(await watchlist.getWatchlistedInstrumentName()).toEqual(tradeInstrument);
-            await watchlist.removeInstrumentFromWatclist();
+            await watchlist.openWatclistTab()
+            expect(await watchlist.getWatchlistedInstrumentName()).toContain(tradeInstrument);
+            await watchlist.cleanWatchlist()
             expect(await localizationPage.getLocalizationText("Empty_watchlist_header")).toEqual(await watchlist.getEmptyWatchlistHeader())
             expect(await localizationPage.getLocalizationText("Empty_watchlist_text")).toEqual(await watchlist.getEmptyWatchlistText())
         })
@@ -73,7 +73,6 @@ for(const{testRailId, brand, user, localization}of priceAlertParameters){
             await new MainPage(page).openBackMenuSubcategory('Trading Tools', 'Price Alerts');
         })     
         await test.step("Check price alert and clean if they exist", async()=>{
-            //await new AllInstruments(page).openPriceAlerts()
             await priceAlert.cleanPriceAlerts()
             await new MainPage(page).openBackMenuPoint('trade');
         })
