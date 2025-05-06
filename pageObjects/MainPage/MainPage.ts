@@ -208,18 +208,10 @@ export class MainPage{
             await this.page.waitForTimeout(300)
         }
     }
-    // async switchToAccountIfNeadedMobile(accountName: string){
-    //     await this.page.locator("//button[contains(@class, 'account-data-bar__tools__toggle')]").click()
-    //     await this.page.locator('.selected-trading-account__wrapper').waitFor({state:'visible'})
-    //     let loginedAc = await this.page.locator(".selected-trading-account__title").textContent()
-    //     if (loginedAc !== accountName){
-
-    //     }
-    // }
     async getLoginedAccountId(){
         return await this.page.locator(".selected-trading-account__info-item--login").textContent()
     }
-    asy
+
     async checkBackMenuElementIsVisible(nameOfElement: string){
         let element = await this.page.locator(`[data-testid="navigation-${nameOfElement}"]`)
         return await element.isVisible()
@@ -248,8 +240,13 @@ export class MainPage{
         await this.page.getByRole('button', {name: 'Log out'}).click()
     }
     async logOutUserMobile(){
-        //await this.openMobileMenu('Menu')
         await this.page.locator("//span[text()='Logout']").click()
         await this.page.getByRole('button', {name: 'Log out'}).click()
+    }
+    async openMessangerViaHeader(){
+        await this.page.waitForTimeout(1000)
+        await this.page.waitForSelector("//div[contains(@class, 'chat-notifications-button')]", {state:'visible'})
+        await this.page.locator("//div[contains(@class, 'chat-notifications-button')]").click()
+        await this.page.waitForTimeout(1500)
     }
 }

@@ -10,7 +10,7 @@ import { NewPosition } from '../../pageObjects/Trading/OpenNewPositionPage'
 import { TradeDetails } from '../../pageObjects/Trading/TradeDetails'
 
 test.describe('Autocopy', async()=>{
-    test('Autocopy of opened position (Mena user) by Capital user', {tag: ['@autocopy', '@web']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
+    test('Autocopy of opened position (Mena user) by Capital user', {tag: ['@autocopy', '@web', '@trading']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000)
         let signInCapital = new SignIn(page)
         let signIn2Mena = new SignIn(proxyPageUAE)
@@ -53,7 +53,7 @@ test.describe('Autocopy', async()=>{
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await mainPageMena.openBackMenuPoint('trade')
-            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
+            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Sell')
             await new NewPosition(proxyPageUAE).installLotsSize(65, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
@@ -81,7 +81,8 @@ test.describe('Autocopy', async()=>{
         })
     })
 
-    test(`Save AUTOCOPIED Mena closed positions for Capital user`, {tag: ['@autocopy', '@web']}, async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
+    test(`Save AUTOCOPIED Mena closed positions for Capital user`, {tag: ['@autocopy', '@web','@trading']}, 
+        async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000)
         let signInCapital = new SignIn(page)
         let signIn2Mena = new SignIn(proxyPageUAE)
@@ -119,7 +120,7 @@ test.describe('Autocopy', async()=>{
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await mainPageMena.openBackMenuPoint('trade')
-            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
+            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Sell')
             await new NewPosition(proxyPageUAE).installLotsSize(65, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })

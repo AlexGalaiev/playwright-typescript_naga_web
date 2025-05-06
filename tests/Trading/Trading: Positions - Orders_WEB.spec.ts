@@ -16,10 +16,12 @@ type tradingTypes = {
   user: string,
   investDirection: string,
   currency: string,
-  mobileDirection: string
+  mobileDirection: string,
+  ratePosition: string
 }
-const tradingInstrument = "Solana/USD";
+const tradingInstrument = "SOLUSD";
 const realStockInstrument = 'Agilent Technologies'
+const realStockInstrumentShort = 'A.N'
 let investmentValue;
 let units;
 let rate;
@@ -27,16 +29,16 @@ let rate;
 test.describe("Trading - Positions/Orders.", async () => {
 
   const tradingParamsPositions: tradingTypes[] = [
-    {testRailId: '@25159', brand: '@Capital', user:'testTrading2', investDirection:'Short',currency:'$', mobileDirection:'SELL'},
-    {testRailId: '@25163', brand: '@Capital', user:'testTrading2', investDirection:"Long", currency:'$', mobileDirection:'BUY'},
-    {testRailId: '@23675', brand: '@Markets', user:'testTrading2Markets', investDirection:'Short', currency:'$',mobileDirection:'SELL'},
-    {testRailId: '@25164', brand: '@Markets', user:'testTrading2Markets', investDirection:'Long', currency:'$',mobileDirection:'BUY'},
-    {testRailId: '@25369', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short',currency:'€', mobileDirection: 'SELL'},
-    {testRailId: '@25368', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long',currency:'€', mobileDirection: 'BUY'},
-    {testRailId: '@25410', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long',currency:'$', mobileDirection:'BUY'},
-    {testRailId: '@25409', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short',currency:'$', mobileDirection:'SELL'}
+    {testRailId: '@25159', brand: '@Capital', user:'testTrading2', investDirection:'Sell',currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
+    {testRailId: '@25163', brand: '@Capital', user:'testTrading2', investDirection:"Buy", currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {testRailId: '@23675', brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', currency:'$',mobileDirection:'SELL', ratePosition:'Short'},
+    {testRailId: '@25164', brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', currency:'$',mobileDirection:'BUY', ratePosition:'Long'},
+    {testRailId: '@25369', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell',currency:'€', mobileDirection: 'SELL', ratePosition:'Short'},
+    {testRailId: '@25368', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy',currency:'€', mobileDirection: 'BUY', ratePosition:'Long'},
+    {testRailId: '@25410', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell',currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {testRailId: '@25409', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy',currency:'$', mobileDirection:'SELL', ratePosition:'Short'}
   ]
-  for(const{testRailId, brand, user,investDirection, currency}of tradingParamsPositions){
+  for(const{testRailId, brand, user,investDirection, currency, mobileDirection, ratePosition}of tradingParamsPositions){
     test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,
         {tag:['@trading', '@prodSanity', '@web'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
@@ -61,8 +63,8 @@ test.describe("Trading - Positions/Orders.", async () => {
         await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
       await test.step(`Check status of ${investDirection} button. And click on Submit btn`, async () => {
-        expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(investDirection))).toContain('active')
-        expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${investDirection} at Current Price`))).toContain('active')
+        expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(mobileDirection))).toContain('active')
+        expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${ratePosition} at Current Price`))).toContain('active')
         await newPosition.installLotsSize(65, 2)
         await newPosition.submitPosition();
       });
@@ -84,16 +86,16 @@ test.describe("Trading - Positions/Orders.", async () => {
 test.describe('Trading - Pending orders', async()=>{
   
   const tradingParamsOrders: tradingTypes[] = [
-    {testRailId: '@25161', brand: '@Capital', user:'testTrading2', investDirection:'Short', currency:'$', mobileDirection:'SELL'},
-    {testRailId: '@25162', brand: '@Capital', user:'testTrading2', investDirection:"Long", currency:'$', mobileDirection:'BUY'},
-    {testRailId: '@25016', brand: '@Markets', user:'testTrading2Markets', investDirection:'Short', currency:'$', mobileDirection:'SELL'},
-    {testRailId: '@25015', brand: '@Markets', user:'testTrading2Markets', investDirection:'Long',currency:'$', mobileDirection:'BUY'},
-    {testRailId: '@25371', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Long',currency:'€', mobileDirection:'BUY'},
-    {testRailId: '@25372', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Short',currency:'€', mobileDirection:'SELL'},
-    {testRailId: '@25411', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Long',currency:'$', mobileDirection:'BUY'},
-    {testRailId: '@25412', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Short',currency:'$', mobileDirection:'SELL'}
+    {testRailId: '@25161', brand: '@Capital', user:'testTrading2', investDirection:'Sell', currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
+    {testRailId: '@25162', brand: '@Capital', user:'testTrading2', investDirection:"Buy", currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {testRailId: '@25016', brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
+    {testRailId: '@25015', brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy',currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {testRailId: '@25371', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy',currency:'€', mobileDirection:'BUY', ratePosition:'Long'},
+    {testRailId: '@25372', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell',currency:'€', mobileDirection:'SELL', ratePosition:'Short'},
+    {testRailId: '@25411', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy',currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {testRailId: '@25412', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell',currency:'$', mobileDirection:'SELL', ratePosition:'Short'}
   ]
-  for(const{testRailId, brand, user,investDirection, mobileDirection}of tradingParamsOrders){
+  for(const{testRailId, brand, user,investDirection, ratePosition}of tradingParamsOrders){
     test(`${testRailId} ${brand} Open/Close pending ${investDirection} order`,
           {tag:['@trading', '@web'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
@@ -119,7 +121,7 @@ test.describe('Trading - Pending orders', async()=>{
         await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
       await test.step('Open order with manual rate value', async()=>{
-        await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${investDirection} at Specific Rate`))
+        await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${ratePosition} at Specific Rate`))
         await newPosition.installLotsSize(65, 2)
         await newPosition.submitPosition()
       })
@@ -137,8 +139,8 @@ test.describe('Trading - Pending orders', async()=>{
   })}
   
   const tradingParameters: tradingTypes[] = [
-    {testRailId: '@25175', brand: '@Capital', user:'testTrading2', investDirection:'Short', mobileDirection:'SELL', currency:'$'},
-    {testRailId: '@25174', brand: '@Markets', user:'testTrading2Markets', investDirection:"Short", mobileDirection:'SELL', currency:'$'}
+    {testRailId: '@25175', brand: '@Capital', user:'testTrading2', investDirection:'Sell', mobileDirection:'SELL', currency:'$', ratePosition:'Short'},
+    {testRailId: '@25174', brand: '@Markets', user:'testTrading2Markets', investDirection:"Sell", mobileDirection:'SELL', currency:'$', ratePosition:'Short'}
   ]
   for(const{testRailId, brand, user, investDirection}of tradingParameters){
     test(`${testRailId} Open short position of real stock ${brand}`,

@@ -6,7 +6,8 @@ import { test } from "../../test-options";
 
 test.describe('Naga EARN, WEB', async()=>{
 
-    test('Open Naga EARN via live EUR account. WEB', {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
+    test('Open Naga EARN via live EUR account. WEB', {tag:['@UI', '@web']}, async({page, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 10000)
         let signIn = new SignIn(page)
         let mainPage = new MainPage(page)
         let nagaEarn = new NagaEarn(page)
@@ -40,7 +41,8 @@ test.describe('Naga EARN, WEB', async()=>{
         {accountName:'usdAccount'}
     ]
     for(const{accountName} of NagaEarnParams){
-        test(`Open Naga Earn from ${accountName} account`, {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
+        test(`Open Naga Earn from ${accountName} account`, {tag:['@UI', '@web']}, async({page, AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 10000)
             let signIn = new SignIn(page)
             let mainPage = new MainPage(page)
             let nagaEarn = new NagaEarn(page)
@@ -101,7 +103,7 @@ test.describe('Naga Earn.Mobile', async()=>{
         {accountName:'usdAccount'}
     ]
     for(const{accountName} of NagaEarnParams){
-        test(`Open Naga Earn from ${accountName} account`, {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
+        test(`Open Naga Earn from ${accountName} account`, {tag:['@UI', '@mobile']}, async({page, AppNAGA})=>{
             let signIn = new SignIn(page)
             let mainPage = new MainPage(page)
             let nagaEarn = new NagaEarn(page)

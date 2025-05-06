@@ -32,7 +32,7 @@ export class NewPosition{
     }
     async investmentDirectionBtn(investmentType: string){
         let buttonsTab = await this.page.locator('.buy-sell-toggle')
-        let button = await buttonsTab.locator("//label[contains(@class, 'btn-default')]", {hasText: investmentType})
+        let button = await buttonsTab.locator("//label[contains(@class, 'btn-default')]", {has: await this.page.locator(`//input[@value='${investmentType}']`)})
         return await button
     }
     async ratePositionBtn(positionDiewctionWithRate: string){
