@@ -34,7 +34,7 @@ for(const{testRailId, brand, user,tradingInstrument}of testNoFundsParaketers){
           });
         await test.step(`Choose ${tradingInstrument} and open position`, async () => {
             await mainPage.openBackMenuPoint("trade");
-            await instruments.openPositionOfInstrument(tradingInstrument, 'Short')
+            await instruments.openPositionOfInstrument(tradingInstrument, 'Sell')
         });
         await test.step('Check Not enough money messages', async()=>{
             expect(await newPosition.getNotEnoughFundsMsg()).toEqual('You have insufficient funds to trade at the moment')

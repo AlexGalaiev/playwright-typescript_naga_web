@@ -53,7 +53,7 @@ test.describe('Autocopy', async()=>{
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await mainPageMena.openBackMenuPoint('trade')
-            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
+            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Sell')
             await new NewPosition(proxyPageUAE).installLotsSize(65, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
@@ -120,7 +120,7 @@ test.describe('Autocopy', async()=>{
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await mainPageMena.openBackMenuPoint('trade')
-            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Short')
+            await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Sell')
             await new NewPosition(proxyPageUAE).installLotsSize(65, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })

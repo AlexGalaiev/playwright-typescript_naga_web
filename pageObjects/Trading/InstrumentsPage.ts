@@ -36,7 +36,9 @@ export class AllInstruments{
     }
 
     async searchInstrument(NameOfInstrument: string){
-        await this.searchInstrumentField.pressSequentially(NameOfInstrument)
+        //await this.searchInstrumentField.pressSequentially(NameOfInstrument)
+        await this.page.locator("//div[@id='symbol_types_dd']//button").click()
+        await this.page.locator(".markets-search").pressSequentially(NameOfInstrument)
         await this.page.waitForTimeout(500);
     };
     async addToWatchlist(NameOfInstrument: string){
@@ -79,7 +81,9 @@ export class AllInstruments{
 
 //new 
     async openPositionOfInstrument(instrumentName: string, positionType: string){
-        await this.searchInstrumentField.pressSequentially(instrumentName)
+        await this.page.locator("//div[@id='symbol_types_dd']//button").click()
+        await this.page.locator(".markets-search").pressSequentially(instrumentName)
+        //await this.searchInstrumentField.pressSequentially(instrumentName)
         await this.page.waitForTimeout(500);
         let instrumentContainer = await this.page.locator(".symbol-row", 
             {has: await this.page.locator(`//div[@class = 'symbol-name-container']//div[text()='${instrumentName}']`)})
