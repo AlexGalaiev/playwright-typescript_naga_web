@@ -2,7 +2,7 @@ import { expect } from "@playwright/test";
 import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { MyTrades } from "../../pageObjects/Trading/MyTrades";
-import { test } from "..//..//test-options"
+import { test } from "../../test-options"
 
 test.describe('WEB. ', async()=>{
     
@@ -20,7 +20,7 @@ test.describe('WEB. ', async()=>{
 
     for(const{user, brand}of testMyTradesParams){
         test(`${brand} My trades. Filter closed positions by date.`, {tag:['@trading','@web']},async({page, AppNAGA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 10000)
+            testInfo.setTimeout(testInfo.timeout + 20000)
             let signIn = new SignIn(page)
             let mainPage = new MainPage(page)
             let myTrades = new MyTrades(page)

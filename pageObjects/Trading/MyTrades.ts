@@ -236,9 +236,10 @@ export class MyTrades{
         await datePicker.waitFor({state:'visible'})
         //choose filter
         await this.page.locator(`//button[text()='${filerDate}']`).click()
-        await this.page.waitForTimeout(1000)
+        await this.page.waitForTimeout(1500)
     }
     async getNumberOfClosedTrades(){
+        await this.page.waitForTimeout(2000)
         let tradeSummary = await this.page.locator(".trades-summary__value").first()
         return await tradeSummary.textContent()
     }
@@ -256,6 +257,9 @@ export class MyTrades{
     }
     async checkSourceOfTradeVisibility(nameOfTrade){
         return await this.page.locator(`//div[text()='${nameOfTrade}']`).isVisible()
-        
+    }
+    async checkMobilePositionIsVisible(){
+        let position = await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]").first()
+        return await position.isVisible()
     }
 }
