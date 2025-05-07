@@ -562,7 +562,6 @@ test.describe('Website. Footer and header elements', async()=>{
         testRailId: string;
         regulation: string;
         networks: Map<string, string>;
-
     }
     const socialParamsZA: socialNetworksZA[] = [
         {testRailId:'@25237', regulation:'eu', networks: new Map<string, string>([['facebook','https://www.facebook.com/nagamarketsofficial'],['instagram','https://www.instagram.com/nagaeuofficial/'],['youtube','https://www.youtube.com/@NAGAEurope'],['linkedin','https://www.linkedin.com/company/nagainvesting/posts/?feedView=all']])},

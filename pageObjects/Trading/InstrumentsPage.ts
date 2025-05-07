@@ -117,9 +117,9 @@ export class AllInstruments{
         await this.page.waitForTimeout(500) 
     }
     async openMobilePosition(nameOfInstrumnet: string, positionType: string){
-        await this.mobileSearchBtn.click()
-        await this.page.waitForTimeout(250)
-        await this.page.locator("//input[@type='text']").pressSequentially(nameOfInstrumnet)
+        await this.page.locator("//div[@id='symbol_types_dd']//button").click()
+        await this.page.locator(".markets-search").pressSequentially(nameOfInstrumnet)
+        //await this.page.locator("//input[@type='text']").pressSequentially(nameOfInstrumnet)
         await this.page.waitForTimeout(1000)
         let position = await this.page.locator(`//div[@class='symbol-row-mobile']`).first()
         await position.locator(`//div[@data-type='${positionType}']`).click()

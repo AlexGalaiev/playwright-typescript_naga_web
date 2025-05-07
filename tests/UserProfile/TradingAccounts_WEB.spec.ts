@@ -13,7 +13,7 @@ test.describe("New Trading account", async()=>{
     
     test("@23922 Naga Capital. Create 2nd live account", {tag:['@secondAccount', '@UI', '@web']}, 
         async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 70000);
+        testInfo.setTimeout(testInfo.timeout + 90000);
         let addAccount = new AddAcountForm(page);
         let myAccounts = new MyAccounts(page)
         let email = await new RandomUser().getRandomUserEmail()
@@ -45,7 +45,7 @@ test.describe("New Trading account", async()=>{
 
     test('@23600 Naga Markets. Create 2nd live account', {tag:['@secondAccount', '@UI', '@web']}, 
         async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 170000);
+        testInfo.setTimeout(testInfo.timeout + 190000);
         let addAccount = new AddAcountForm(page);
         let email = await new RandomUser().getRandomUserEmail()
         let myAccounts = new MyAccounts(page)

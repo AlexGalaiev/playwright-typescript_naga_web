@@ -35,8 +35,8 @@ test.describe("Trading - Positions/Orders.", async () => {
     {testRailId: '@25164', brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', currency:'$',mobileDirection:'BUY', ratePosition:'Long'},
     {testRailId: '@25369', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell',currency:'€', mobileDirection: 'SELL', ratePosition:'Short'},
     {testRailId: '@25368', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy',currency:'€', mobileDirection: 'BUY', ratePosition:'Long'},
-    {testRailId: '@25410', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell',currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
-    {testRailId: '@25409', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy',currency:'$', mobileDirection:'SELL', ratePosition:'Short'}
+    {testRailId: '@25410', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell',currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
+    {testRailId: '@25409', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy',currency:'$', mobileDirection:'BUY', ratePosition:'Long'}
   ]
   for(const{testRailId, brand, user,investDirection, currency, mobileDirection, ratePosition}of tradingParamsPositions){
     test(`${testRailId} ${brand} Open/Close ${investDirection} trading position`,
@@ -65,7 +65,7 @@ test.describe("Trading - Positions/Orders.", async () => {
       await test.step(`Check status of ${investDirection} button. And click on Submit btn`, async () => {
         expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(mobileDirection))).toContain('active')
         expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${ratePosition} at Current Price`))).toContain('active')
-        await newPosition.installLotsSize(65, 2)
+        await newPosition.installLotsSize(80, 2)
         await newPosition.submitPosition();
       });
       await test.step("Switch to My-Trades page. Save trading parameters - Investments and values. Close position", async () => {
