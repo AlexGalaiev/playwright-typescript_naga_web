@@ -62,7 +62,8 @@ test.describe('Mobile Messanger', async()=>{
         {testRailId: '@25193', brandSender: '@Capital', userSender: 'testFeedUser', receiver:'testTrading2Markets'},
     ]
     for(const{testRailId, brandSender, userSender,receiver}of testMessangerParams){
-        test(`${testRailId} ${brandSender} Mobile. Send text via messanger`,{tag: ['@mobile','@messanger','@UI']}, async({page, proxyPage, AppNAGA}, testInfo)=>{
+        test(`${testRailId} ${brandSender} Mobile. Send text via messanger`,
+            {tag: ['@mobile','@messanger','@UI']}, async({page, proxyPage, AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 30000)
             let signInCapital = new SignIn(page)
             let signInMarkets = new SignIn(proxyPage)

@@ -207,6 +207,10 @@ export class MyTrades{
         await this.openedPosition.first().waitFor({state:'visible'})
         await this.page.waitForTimeout(1000)
     }
+    async openMobileCloseTradesTab(){
+        await this.closeTradesTab.click()
+        await this.page.waitForTimeout(1000)
+    }
     async openLastTrade(instrumentName: string){
         await this.openedPosition.first().waitFor({state:'visible'})
         let instrumentContainer = await this.page.locator("//div[contains(@class, 'my-trades-table__row')]", {has: 

@@ -188,7 +188,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField,mobile
             await newPosition.submitPosition(); 
           });
           await test.step("Check My-trades. Open trade details ", async () => {
-            await mainPage.openMobileMenuPoint('My Trades');
+            await mainPage.openMobileMenu('My Trades');
             expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
             deposit = (await myTrades.getMobileDepositValue(currency));
             units = await myTrades.getMobileUnits();

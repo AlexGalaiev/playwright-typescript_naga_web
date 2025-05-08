@@ -21,7 +21,7 @@ test.describe('Deposit Mobile', async()=>{
     
     for(const{testRaildId, numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`${testRaildId} Mobile ${brand} Check number of exist deposit methods`, 
-        {tag:['@deposit', '@mobile']}, async({page, AppNAGA})=>{
+        {tag:['@deposit', '@mobile', '@manageFunds']}, async({page, AppNAGA})=>{
         let signIn = new SignIn(page);
         let mainPage = new MainPage(page);
         let deposit = new Deposit(page);
@@ -60,7 +60,7 @@ test.describe('Deposit Mobile', async()=>{
     
     for(const{testRailId, brand, user, depositName,responseMethodKey} of testNStestParameters){
     test(`${testRailId} Mobile  ${brand} Deposit with ${depositName} deposit`, 
-        {tag:['@deposit', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        {tag:['@deposit', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
         async({page,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 45000);
         let signIn = new SignIn(page);
@@ -92,7 +92,7 @@ test.describe('Deposit Mobile. NS Other methods', async()=>{
     })
 
     test("@24068 Mobile Deposit via Crypto", 
-        {tag:['@deposit', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},async({page})=>{
+        {tag:['@deposit', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},async({page})=>{
         let deposit = new Deposit(page)
         let mainPage = new MainPage(page)
         await mainPage.openMobileBackMenuPoint('Deposit')
@@ -103,7 +103,8 @@ test.describe('Deposit Mobile. NS Other methods', async()=>{
         })
     })
 
-    test('@25352 Mobile Deposit via Wire Transfer',{tag:['@deposit', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, async({page})=>{
+    test('@25352 Mobile Deposit via Wire Transfer',
+        {tag:['@deposit', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, async({page})=>{
         let deposit = new Deposit(page)
         let mainPage = new MainPage(page)
         await mainPage.openMobileBackMenuPoint('Deposit')
@@ -119,7 +120,7 @@ test.describe('Deposit Mobile. NS Other methods', async()=>{
 test.describe('Deposit Mobile. NM. Other methods', async()=>{
 
     test(`@23995 Mobile Check Pay Pal deposit`, 
-        {tag:['@deposit', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        {tag:['@deposit', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
         let signIn = new SignIn(page);
@@ -153,7 +154,7 @@ test.describe('Deposit Mobile. NM. Other methods', async()=>{
     
     for(const{testRailId, brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`${testRailId} Mobile ${brand} Check ${depositName} deposit`, 
-        {tag:['@deposit', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        {tag:['@deposit', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
         async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let signIn = new SignIn(page);
