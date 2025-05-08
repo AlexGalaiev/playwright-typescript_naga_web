@@ -56,5 +56,15 @@ export class HelpPage{
         let value = await fieldInfo.locator('.call-us__global-info__row__value').textContent()
         return await value
     }
-       
+    async openDropdown(){
+        await this.page.locator('.call-us__country-dropdown__select').click()
+        await this.page.pause()
+        await this.page.waitForTimeout(500)
+
+    }
+    async chooseCountry(countryName :string){
+        let country = await this.page.locator("//div[contains(@id, 'react-select')]", {hasText: countryName})
+        await country.click()
+        await this.page.waitForTimeout(500) 
+    }
 }
