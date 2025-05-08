@@ -48,6 +48,13 @@ export class AllInstruments{
         await firstInstrument.locator("//li[@role='presentation']//a[text()='Add to favorites']").click()
         await this.page.waitForTimeout(250)
     };
+    async addToMobileWatchlist(NameOfInstrument: string){
+        let firstInstrument = await this.page.locator('.symbol-row-mobile', {has: await this.page.locator(`//div[text()='${NameOfInstrument}']`)}).first()
+        await firstInstrument.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]//button").click()
+        await this.page.waitForTimeout(250)
+        await firstInstrument.locator("//li[@role='presentation']//a[text()='Add to favorites']").click()
+        await this.page.waitForTimeout(250)
+    };
     async openWatclistTab(){
         await this.watchlistTab.click();
     };
@@ -55,12 +62,13 @@ export class AllInstruments{
         return await this.watchlistedInstrument.textContent()
     };
     async getMobileWatchlistedInstrumentName(){
-        return await this.page.locator("//div[@class='symbol-row-mobile__symbol-container__name']//div[1]").textContent()
+        return await this.page.locator(".symbol-container__tick").textContent()
     };
     async removeInstrumentFromWatclist(){
-        //await this.removeFromWatchlist.click();
-        await this.page.locator("//i[contains(@class, ' active-star')]").first().click()
-        await this.page.waitForTimeout(1000)
+        let existPosition = await this.page.locator(".symbol-row-mobile").first()
+        await existPosition.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]").click()
+        await existPosition.locator("//a[text()='Remove from favorites']").click()
+        await this.page.waitForTimeout(1500)
     };
     async getEmptyWatchlistHeader(){
         return await this.emptyWatchlistHeader.textContent();
@@ -70,6 +78,12 @@ export class AllInstruments{
     };
     async addPriceAlertToInstrumnet(){
         let existPosition = await this.page.locator(".symbol-row").first()
+        await existPosition.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]").click()
+        await existPosition.locator("//a[text()='Add Price Alert']").click()
+        await this.page.waitForTimeout(500)
+    };
+    async addMobilePriceAlertToInstrumnet(){
+        let existPosition = await this.page.locator(".symbol-row-mobile").first()
         await existPosition.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]").click()
         await existPosition.locator("//a[text()='Add Price Alert']").click()
         await this.page.waitForTimeout(500)
@@ -107,6 +121,14 @@ export class AllInstruments{
             await this.page.waitForTimeout(1500)
         }
     }
+    async cleanMobileWatchlist(){
+        let existPosition = await this.page.locator(".symbol-row-mobile").first()
+        while(await existPosition.isVisible()){
+            await existPosition.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]").click()
+            await existPosition.locator("//a[text()='Remove from favorites']").click()
+            await this.page.waitForTimeout(1500)
+        }
+    }
     async clearMobileSearchField(){
         await this.page.locator('[alt="clear search"]').click()
         await this.page.waitForTimeout(500)
@@ -122,6 +144,13 @@ export class AllInstruments{
         //await this.page.locator("//input[@type='text']").pressSequentially(nameOfInstrumnet)
         await this.page.waitForTimeout(1000)
         let position = await this.page.locator(`//div[@class='symbol-row-mobile']`).first()
+        await position.locator(`//div[@data-type='${positionType}']`).click()
+    }
+    async openMobileRealStockPosition(nameOfInstrumnet: string, positionType: string){
+        await this.page.locator("//div[@id='symbol_types_dd']//button").click()
+        await this.page.locator(".markets-search").pressSequentially(nameOfInstrumnet)
+        await this.page.waitForTimeout(1000)
+        let position = await this.page.locator(`//div[@class='symbol-row-mobile']`, {has: await this.page.locator("//span[text()='Real Stocks']")})
         await position.locator(`//div[@data-type='${positionType}']`).click()
     }
     async openMobileFavorites(){

@@ -39,8 +39,8 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
             await watchlist.cleanWatchlist()
         })
         await test.step(`Choose ${tradeInstrument} and add to watchlist`, async()=>{
-            await watchlist.searchInstrument(tradeInstrument);
-            await watchlist.addToWatchlist(tradeInstrument)
+            await watchlist.searchInstrument(tradeInstrument)
+            await watchlist.addToMobileWatchlist(tradeInstrument)
             await watchlist.clearSearchField()
         })
         await test.step("Check instrument in watchlist. Remove instrument and check empty page", async()=>{

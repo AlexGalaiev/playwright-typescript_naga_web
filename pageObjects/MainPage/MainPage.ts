@@ -152,6 +152,7 @@ export class MainPage{
         let header = await this.page.locator('.header__menu')
         let menu = await header.locator(`//span[text()='${nameOfMenuPoint}']`)
         await menu.click()
+        await this.page.waitForTimeout(500)
     }
 
     async searchUser(userName: string){
@@ -244,9 +245,9 @@ export class MainPage{
         await this.page.getByRole('button', {name: 'Log out'}).click()
     }
     async openMessangerViaHeader(){
-        await this.page.waitForTimeout(1000)
+        await this.page.waitForTimeout(1500)
         await this.page.waitForSelector("//div[contains(@class, 'chat-notifications-button')]", {state:'visible'})
-        await this.page.locator("//div[contains(@class, 'chat-notifications-button')]").click()
+        await this.page.locator("//div[contains(@class, 'chat-notifications-button')]").first().click()
         await this.page.waitForTimeout(1500)
     }
 }

@@ -36,13 +36,12 @@ test.describe('Trading features Mobile', async()=>{
             })        
             await test.step("Check watchlist and clean from opened positions if they exist", async()=>{
                 await watchlist.openMobileFavorites();
-                await watchlist.cleanWatchlist()
+                await watchlist.cleanMobileWatchlist()
             })
             await test.step(`Choose ${tradeInstrument} and add to watchlist`, async()=>{
-                await watchlist.openMobileSearchField()
-                await watchlist.searchInstrument(tradeInstrument);
-                await watchlist.addToWatchlist(tradeInstrument)
-                await watchlist.clearMobileSearchField()
+                await watchlist.searchInstrument(tradeInstrument)
+                await watchlist.addToMobileWatchlist(tradeInstrument)
+                await watchlist.clearSearchField()
             })
             await test.step("Check instrument in watchlist. Remove instrument and check empty page", async()=>{
                 await watchlist.openMobileFavorites()
@@ -72,18 +71,15 @@ test.describe('Trading features Mobile', async()=>{
             await test.step(`Login to platform ${brand} by ${user}`, async()=>{
                 await signIn.goto(AppNAGA, "login");
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-                await mainPage.openMobileMenu('Trade');
             })     
             await test.step("Check price alert and clean if they exist", async()=>{
-                await new AllInstruments(page).openPriceAlerts()
+                await mainPage.openMobileBackMenuPoint('Price Alerts')
                 await priceAlert.cleanMobilePriceAlerts()
-                await new MainPage(page).openMobileMenuPoint('markets')
             })
             await test.step(`Choose ${tradeInstrument} and add price alert`, async()=>{
-                await watchlist.openMobileSearchField()
-                await watchlist.searchInstrument(tradeInstrument);
-                await watchlist.openMobileInstrument()
-                await new NewPosition(page).addPriceAlert()
+                await mainPage.openMobileMenu('Trade')
+                await watchlist.searchInstrument(tradeInstrument)
+                await watchlist.addMobilePriceAlertToInstrumnet()
             })
             await test.step("Edit price alerts", async()=>{
                 expect(await priceAlert.getInstrumentName()).toContain(tradeInstrument)
@@ -92,8 +88,7 @@ test.describe('Trading features Mobile', async()=>{
                 await priceAlert.clickSetPriceAlert()
             })
             await test.step("Check price alert tab, remove price alerts and check empty screen", async()=>{
-                await mainPage.openMobileMenu('Trade')
-                await new AllInstruments(page).openPriceAlerts()
+                await mainPage.openMobileBackMenuPoint('Price Alerts')
                 expect(await priceAlert.getInstrumentNameFromTab()).toContain(tradeInstrument)
                 expect(await priceAlert.getAlertType()).toContain("It raises by 100%")
                 await priceAlert.cleanMobilePriceAlerts()
