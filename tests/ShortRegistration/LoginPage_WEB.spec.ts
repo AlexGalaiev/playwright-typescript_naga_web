@@ -36,7 +36,8 @@ test.describe("WEB", async()=>{
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await signIn.forgotPasswordClick()
-            await forgotPassword.sendEmailToAddress(testUser)
+            let response = await forgotPassword.sendEmailToAddress(testUser)
+            expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
             expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
             expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
         })
@@ -59,7 +60,8 @@ test.describe("WEB", async()=>{
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await signIn.forgotPasswordClick()
-            await forgotPassword.sendEmailToAddress(testUser)
+            let response = await forgotPassword.sendEmailToAddress(testUser)
+            expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
             expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
             expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
         })
@@ -83,7 +85,8 @@ test.describe("WEB", async()=>{
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await signIn.forgotPasswordClick()
-            await forgotPassword.sendEmailToAddress(testUser)
+            let response = await forgotPassword.sendEmailToAddress(testUser)
+            expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
             expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
             expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
         })
@@ -111,7 +114,8 @@ test.describe("WEB", async()=>{
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await signIn.forgotPasswordClick()
-            await forgotPassword.sendEmailToAddress(testUser)
+            let response = await forgotPassword.sendEmailToAddress(testUser)
+            expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
             expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
             expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
         })
