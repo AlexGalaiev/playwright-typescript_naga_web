@@ -7,7 +7,7 @@ import { PriceAlert } from "../../pageObjects/Trading/PriceAlertsPage";
 import {test} from "../../test-options"
 import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 
-test.describe("Trading features", async()=>{
+test.describe("WEB", async()=>{
 
 type testTypes = {
     testRailId: string,
@@ -40,7 +40,7 @@ for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
         })
         await test.step(`Choose ${tradeInstrument} and add to watchlist`, async()=>{
             await watchlist.searchInstrument(tradeInstrument)
-            await watchlist.addToMobileWatchlist(tradeInstrument)
+            await watchlist.addToWatchlist(tradeInstrument)
             await watchlist.clearSearchField()
         })
         await test.step("Check instrument in watchlist. Remove instrument and check empty page", async()=>{

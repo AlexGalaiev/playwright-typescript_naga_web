@@ -21,11 +21,12 @@ export class HelpPage{
         this.phone = page.locator("//a[contains(@class, 'phone__value')]")
         this.email = page.locator("//p[text()='Email']/following-sibling::*")
         this.openedChat = page.locator("//iframe[@name='Messaging window']")
-    };
+    }
+    
     async openFAQPage(nameOfPage: string){
         let faqPage = await this.page.locator(`//h2[text()=${nameOfPage}]//..`)
         await faqPage.click()
-    };
+    }
     async openCallUsPage(){
         await this.callUs.click()
     };
@@ -49,12 +50,21 @@ export class HelpPage{
         return await this.email.textContent()
     };
     async checkOpenedChat(){
-        return await this.openedChat
+        return await this.openedChat.isVisible()
     };
     async getNMContactInfo(contactName: string){
         let fieldInfo = await this.page.locator('.call-us__global-info__row', {hasText: contactName})
         let value = await fieldInfo.locator('.call-us__global-info__row__value').textContent()
         return await value
     }
-       
+    async openDropdown(){
+        await this.page.locator('.call-us__country-dropdown__select').click()
+        await this.page.pause()
+        await this.page.waitForTimeout(500)
+    }
+    async chooseCountry(countryName :string){
+        let country = await this.page.locator("//div[contains(@id, 'react-select')]", {hasText: countryName})
+        await country.click()
+        await this.page.waitForTimeout(500) 
+    }
 }

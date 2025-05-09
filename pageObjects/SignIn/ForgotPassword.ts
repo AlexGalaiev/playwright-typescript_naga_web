@@ -39,8 +39,15 @@ export class ForgotPassword{
         await this.page.waitForTimeout(1500)
         await this.forgotPasswordEmailField.pressSequentially(email);
         await this.page.waitForTimeout(2000)
-        //await this.forgotPasswordSendBtn.click()
-        await this.forgotPasswordSendBtn.press('Enter')
-        await this.page.waitForTimeout(1500)
+        const [response] = await Promise.all([
+            this.page.waitForRequest((request)=>
+                request.url().includes('/user/password/send_verification_code_no_captcha') &&
+                request.method() === 'POST'),
+            this.forgotPasswordSendBtn.click()
+        ])
+        return await response
+    }
+    async getRequestMethod(response:any){
+        return await response.method()
     }
 }
