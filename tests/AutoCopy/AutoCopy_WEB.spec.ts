@@ -54,7 +54,7 @@ test.describe('Autocopy', async()=>{
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await mainPageMena.openBackMenuPoint('trade')
             await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Sell')
-            await new NewPosition(proxyPageUAE).installLotsSize(65, 2)
+            await new NewPosition(proxyPageUAE).installLotsSize(90, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
         await test.step('Go to Mena My-trades and check source of opened position. Must be -OWN TRADE', async()=>{
@@ -121,7 +121,7 @@ test.describe('Autocopy', async()=>{
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await mainPageMena.openBackMenuPoint('trade')
             await new AllInstruments(proxyPageUAE).openPositionOfInstrument(tradingInstrument, 'Sell')
-            await new NewPosition(proxyPageUAE).installLotsSize(65, 2)
+            await new NewPosition(proxyPageUAE).installLotsSize(90, 2)
             await new NewPosition(proxyPageUAE).submitPosition()
         })
         await test.step('Close opened position (Mena user)', async()=>{
