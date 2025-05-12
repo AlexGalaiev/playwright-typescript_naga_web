@@ -3,11 +3,9 @@ import { getLocalization } from "../../pageObjects/localization/getText"
 import { MainPage } from "../../pageObjects/MainPage/MainPage"
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 import { SettingsPage } from "../../pageObjects/Settings/SettingsPage"
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "../../test-options"
 import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
-import { register } from "module"
 import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations"
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
 
@@ -112,7 +110,7 @@ test("@25429 NagaAfrica, Change password via settings",{tag:['@UI', '@web', '@se
     })
     await test.step('Login to platform with new password', async()=>{
         await signIn.signInUserToPlatform(email, "Test12345!");
-        expect(await new MainPage(page).checkWidgetStepVisibility('NAGA Start')).toBe(true);
+        expect(await new MainPage(page).checkVisisbilityOfBalanceBar()).toBe(true);
     })
 })
 
