@@ -2,11 +2,8 @@ import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import {MainPage} from "../../pageObjects/MainPage/MainPage"
 import {test} from "../../test-options"
 import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
-import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout"
 import { expect } from "@playwright/test"
-import { getLocalization } from "../../pageObjects/localization/getText"
 import { UserProfile } from "../../pageObjects/UserProfile/UserProfile"
-
 
 test.describe('Main Page elements', async()=>{
 
@@ -90,7 +87,7 @@ test.describe('Naga Markets', async()=>{
         testInfo.setTimeout(testInfo.timeout + 20000);  
         let spanishUser = 'spanishLeadUser@naga.com'
         let polishUser = 'polishUser@naga.com'
-        let signIn = new SignIn(page);
+        let signIn = new SignIn(page)
         let mainPage = new MainPage(page)
         await test.step(`Login to platform by spanish user - ${spanishUser}`, async()=>{
             await signIn.goto(AppNAGA, 'login')
@@ -115,5 +112,77 @@ test.describe('Naga Markets', async()=>{
             expect(await mainPage.checkMessangerIsVisible()).toBeTruthy()
         })
     })
+})
+
+test.describe('WEB+Mobile',async()=>{
+
+    type balance = {
+        brand: string,
+        user: string,
+    }
+
+    const balanceTestParams: balance[] = [
+        {brand:'@Capital', user:'testTrading2'},
+        {brand:'@Markets', user:'testTrading2Markets'},
+        {brand:'@Mena', user:'testTrading@naga.com'},
+        {brand:'@Africa', user:'testTradingAfrica2@naga.com'},
+    ]
+
+    for(const{brand, user} of balanceTestParams){
+        test(`${brand} Balance view on main page`, {tag: ['@web', '@UI', '@prodSanity']}, async({page, AppNAGA})=>{
+            let signIn = new SignIn(page)
+            let mainPage = new MainPage(page)
+            await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
+                await signIn.goto(AppNAGA, 'login')
+                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+            })
+            await test.step('Check visibility of Balance', async()=>{
+                let balance = await mainPage.getBalanceValue('Balance')
+                expect(Number(balance)).toBeGreaterThanOrEqual(0)
+                expect(balance).not.toBeNaN()
+                expect(balance).not.toBeUndefined()
+            })
+            await test.step('Check visibility of Equity', async()=>{
+                let balance = await mainPage.getBalanceValue('Equity')
+                expect(Number(balance)).toBeGreaterThanOrEqual(0)
+                expect(balance).not.toBeNaN()
+                expect(balance).not.toBeUndefined()
+            })
+            await test.step('Check visibility of Available', async()=>{
+                let balance = await mainPage.getBalanceValue('Available')
+                expect(Number(balance)).toBeGreaterThanOrEqual(0)
+                expect(balance).not.toBeNaN()
+                expect(balance).not.toBeUndefined()
+            })})
+    }
+
+    for(const{brand, user} of balanceTestParams){
+        test(`${brand} Mobile. Balance view on main page`, {tag: ['@mobile', '@UI', '@prodSanity']}, async({page, AppNAGA})=>{
+            let signIn = new SignIn(page)
+            let mainPage = new MainPage(page)
+            await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
+                await signIn.goto(AppNAGA, 'login')
+                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await mainPage.openMobileBalanceMenu()
+            })
+            await test.step('Check visibility of Balance', async()=>{
+                let balance = await mainPage.getBalanceValue('Balance')
+                expect(Number(balance)).toBeGreaterThanOrEqual(0)
+                expect(balance).not.toBeNaN()
+                expect(balance).not.toBeUndefined()
+            })
+            await test.step('Check visibility of Equity', async()=>{
+                let balance = await mainPage.getBalanceValue('Equity')
+                expect(Number(balance)).toBeGreaterThanOrEqual(0)
+                expect(balance).not.toBeNaN()
+                expect(balance).not.toBeUndefined()
+            })
+            await test.step('Check visibility of Available', async()=>{
+                let balance = await mainPage.getBalanceValue('Available')
+                expect(Number(balance)).toBeGreaterThanOrEqual(0)
+                expect(balance).not.toBeNaN()
+                expect(balance).not.toBeUndefined()
+            })})
+    }
 })
 

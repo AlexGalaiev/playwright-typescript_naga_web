@@ -250,4 +250,14 @@ export class MainPage{
         await this.page.locator("//div[contains(@class, 'chat-notifications-button')]").first().click()
         await this.page.waitForTimeout(1500)
     }
+    async checkVisisbilityOfBalanceBar(){
+        return await this.page.locator("//div[contains(@class, 'account-data-bar__stats')]").isVisible()
+    }
+    async getBalanceValue(nameOfBalenceCategory: string){
+        let balance = await this.page.locator(`//p[text()='${nameOfBalenceCategory}']/following-sibling::p`).textContent()
+        return balance?.replace(/[^\d.,-]/g, '')
+    }
+    async openMobileBalance(){
+        await this.page.locator("//button[contains(@class, 'account-data-bar__tools__toggle')]").click()
+    }
 }

@@ -62,7 +62,7 @@ for(const{testRailId, brand, user, investDirection, protection,tradeField} of tr
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
     await test.step(`Open ${investDirection} position + ${protection}`, async () => {
-      await newPosition.installLotsSize(65, 2)
+      await newPosition.installLotsSize(90, 2)
       await newPosition.enableProtection(protection)
       NagaProtectionValue = await newPosition.getProtectionValue(protection)
       await newPosition.submitPosition();
@@ -176,7 +176,7 @@ for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, 
       await mainPage.openBackMenuPoint("trade");
       await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       await newPosition.switchToSpecificRateForm()
-      await newPosition.installLotsSize(65, 2)
+      await newPosition.installLotsSize(90, 2)
       await newPosition.enableProtection(protectionSL)
       stopLossValue = await newPosition.getStopLossValue(protectionSL)
       await newPosition.submitPosition(); 
