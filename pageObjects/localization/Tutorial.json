@@ -1,0 +1,194 @@
+{
+    "Markets":{
+        "English":{
+            "btn1":"Guidance",
+            "btn2":"Support",
+            "title":"Welcome to NAGA!",
+            "signIn":"Sign In",
+            "signUp":"Sign Up"
+        },
+        "Español":{
+            "btn1":"Orientación",
+            "btn2":"Soporte",
+            "title":"¡Te damos la bienvenida a NAGA!",
+            "signIn":"Iniciar sesión",
+            "signUp":"Registrarse"
+        },
+        "Deutsch":{
+            "btn1":"Anleitung",
+            "btn2":"Unterstützung",
+            "title":"Willkommen bei NAGA!",
+            "signIn":"Einloggen",
+            "signUp":"Registrieren"
+        },
+        "Polski":{
+            "btn1":"Wytyczne",
+            "btn2":"Wsparcie",
+            "title":"Witaj w NAGA!",
+            "signIn":"Zaloguj się",
+            "signUp":"Zarejestruj Się"
+        },
+        
+        "Česky":{
+            "btn1":"Pokyny",
+            "btn2":"Podpora",
+            "title":"Vítejte u NAGA!",
+            "signIn":"Přihlásit se",
+            "signUp":"Zaregistruj se"
+        },
+        
+        "Italiano":{
+            "btn1":"Guida",
+            "btn2":"Supporto",
+            "title":"Benvenuto su NAGA!",
+            "signIn":"Accedi",
+            "signUp":"Registrati"
+        },
+        "Magyar":{
+            "btn1":"Útmutatás",
+            "btn2":"Támogatás",
+            "title":"Üdvözli a NAGA!",
+            "signIn":"Bejelentkezés",
+            "signUp":"Regisztráció"
+        },
+        "Português":{
+            "btn1":"Orientação",
+            "btn2":"Suporte",
+            "title":"Bem-vindo(a) a NAGA!",
+            "signIn":"Acesse sua conta",
+            "signUp":"Cadastre-se"
+        },
+        "Română":{
+            "btn1":"Ghidare",
+            "btn2":"Asistență",
+            "title":"Bine ai venit la NAGA!",
+            "signIn":"Autentificare",
+            "signUp":"Înregistrează-te"
+        },
+        "汉语":{
+            "btn1":"Guidance",
+            "btn2":"Support",
+            "title":"欢迎来到NAGA！",
+            "signIn":"注册",
+            "signUp":"注册"
+        },
+        "繁體中文":{
+            "btn1":"Guidance",
+            "btn2":"Support",
+            "title":"Welcome to NAGA!",
+            "signIn":"登入",
+            "signUp":"報名"
+        },
+        "العربية":{
+            "btn1":"الإرشاد",
+            "btn2":"الدعم",
+            "title":"مرحباً بك في NAGA!",
+            "signIn":"تسجيل الدخول",
+            "signUp":"تسجيل حساب"
+        }
+    },
+    "Capital":{
+        "English":{
+            "btn1":"Guidance",
+            "btn2":"Support",
+            "title":"Welcome to NAGA!",
+            "signIn":"Sign In",
+            "signUp":"Sign Up"
+        },
+        "Español":{
+            "btn1":"Orientación",
+            "btn2":"Soporte",
+            "title":"¡Te damos la bienvenida a NAGA!",
+            "signIn":"Iniciar sesión",
+            "signUp":"Registrarse"
+        },
+        "Deutsch":{
+            "btn1":"Anleitung",
+            "btn2":"Unterstützung",
+            "title":"Willkommen bei NAGA!",
+            "signIn":"Einloggen",
+            "signUp":"Registrieren"
+        },
+        "Polski":{
+            "btn1":"Wytyczne",
+            "btn2":"Wsparcie",
+            "title":"Witaj w NAGA!",
+            "signIn":"Zaloguj się",
+            "signUp":"Zarejestruj Się"
+        },
+        
+        "Česky":{
+            "btn1":"Pokyny",
+            "btn2":"Podpora",
+            "title":"Vítejte u NAGA!",
+            "signIn":"Přihlásit se",
+            "signUp":"Zaregistruj se"
+        },
+        
+        "Italiano":{
+            "btn1":"Guida",
+            "btn2":"Supporto",
+            "title":"Benvenuto su NAGA!",
+            "signIn":"Accedi",
+            "signUp":"Registrati"
+        },
+        "Magyar":{
+            "btn1":"Útmutatás",
+            "btn2":"Támogatás",
+            "title":"Üdvözli a NAGA!",
+            "signIn":"Bejelentkezés",
+            "signUp":"Regisztráció"
+        },
+        "Português":{
+            "btn1":"Orientação",
+            "btn2":"Suporte",
+            "title":"Bem-vindo(a) a NAGA!",
+            "signIn":"Acesse sua conta",
+            "signUp":"Cadastre-se"
+        },
+        "Română":{
+            "btn1":"Ghidare",
+            "btn2":"Asistență",
+            "title":"Bine ai venit la NAGA!",
+            "signIn":"Autentificare",
+            "signUp":"Înregistrează-te"
+        },
+        "汉语":{
+            "btn1":"Guidance",
+            "btn2":"Support",
+            "title":"欢迎来到NAGA！",
+            "signIn":"注册",
+            "signUp":"注册"
+        },
+        "繁體中文":{
+            "btn1":"Guidance",
+            "btn2":"Support",
+            "title":"Welcome to NAGA!",
+            "signIn":"登入",
+            "signUp":"報名"
+        },
+        "العربية":{
+            "btn1":"الإرشاد",
+            "btn2":"الدعم",
+            "title":"مرحباً بك في NAGA!",
+            "signIn":"تسجيل الدخول",
+            "signUp":"تسجيل حساب"
+        }
+    },
+    "Mena":{
+        "English":{
+            "btn1":"Guidance",
+            "btn2":"Support",
+            "title":"Welcome to NAGA!",
+            "signIn":"Sign In",
+            "signUp":"Sign Up"
+        },
+        "العربية":{
+            "btn1":"الإرشاد",
+            "btn2":"الدعم",
+            "title":"مرحباً بك في NAGA!",
+            "signIn":"تسجيل الدخول",
+            "signUp":"تسجيل حساب"
+        }
+    }
+}

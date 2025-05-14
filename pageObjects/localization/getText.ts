@@ -24,4 +24,7 @@ export class getLocalization{
     async getLandingPage(regulation:string, type:string, elementToGet: string, params:string){
         return await this.jsonObj[regulation][type][elementToGet][params]
     }
+    async getTutorialsBtn(brand:string, language:string, btn: string){
+        return await this.jsonObj[brand][language][btn]
+    }
 }
