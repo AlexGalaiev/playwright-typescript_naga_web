@@ -211,7 +211,7 @@ test.describe('Lead registration', async()=>{
     ] 
     for(const{testRailId, brand, country}of LoginParams){
     test(`${testRailId} ${brand} Lead short registration`, 
-        {tag:['@smoke', '@prodSanity','@mobile','@web']}, async({page,AppNAGA})=>{
+        {tag:['@smoke', '@prodSanity','@mobile','@web','@lead']}, async({page,AppNAGA})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step('Open register page, check number of buttons, remove captcha', async()=>{
