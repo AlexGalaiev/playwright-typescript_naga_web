@@ -200,7 +200,7 @@ test.describe('Lead registration', async()=>{
             await new Captcha(page).removeCaptcha()
             expect(await signUp.getNumberObBtns()).toEqual(4)
         })
-        await test.step(`Create lead user - ${email}. country - ${country}. And check visibiity of personal popup`, async()=>{
+        await test.step(`Create lead user - ${email}  country - ${country}. And check visibiity of personal popup`, async()=>{
             await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', country, "+387", "603039647")
             expect(await signUp.personalInfoPopup()).toBeVisible()
         })
@@ -219,7 +219,7 @@ test.describe('Lead registration', async()=>{
             await new Captcha(page).removeCaptcha()
             expect(await signUp.getNumberObBtns()).toEqual(4)
         })
-        await test.step(`Create lead user - ${email}. country - ${country}.`, async()=>{
+        await test.step(`Create lead user - ${email} country - ${country}.`, async()=>{
             await signUp.createCFDUser(email, process.env.USER_PASSWORD || '', country, '+387', '603039647')
             expect(new YouAreInNagaMarkets(page).checkExploreBtn()).toBeTruthy()
         })
@@ -237,7 +237,7 @@ test.describe('Lead registration', async()=>{
             await new Captcha(page).removeCaptcha()
             expect(await signUp.getNumberObBtns()).toEqual(4)
         })
-        await test.step(`Create lead user - ${email}. country - ${country}.`, async()=>{
+        await test.step(`Create lead user - ${email} country - ${country}.`, async()=>{
             await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', country, "+387", "603039647")
             expect(new YouAreInNagaMarkets(page).checkExploreBtn()).toBeTruthy()
         })
