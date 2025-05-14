@@ -34,8 +34,8 @@ export default defineConfig<TestOptions>({
       name: "qa",
       use: {
         ...devices['Desktop Chrome'],
-       // AppNAGA: "https://app.sxdev.io",
-        AppNAGA: "https://app.naga.com",
+        AppNAGA: "https://app.sxdev.io",
+        //AppNAGA: "https://app.naga.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
         NagaMenaCountry: "United Arab Emirates",
