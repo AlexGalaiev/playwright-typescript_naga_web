@@ -20,11 +20,11 @@ export class MainPage{
         await this.sideBar.waitFor({timeout: 10000});
     }
 
-    async proceedRegistration(){
-        await this.page.waitForTimeout(1500)
-        await this.page.locator("//span[text()='Complete now']").click();
-        await this.page.waitForTimeout(500)
-    };
+    // async proceedRegistration(){
+    //     await this.page.waitForTimeout(1500)
+    //     await this.page.locator("//span[text()='Complete now']").click();
+    //     await this.page.waitForTimeout(500)
+    // };
 
     //Naga Capital
     async openLoginFromGuestMode(){
@@ -129,12 +129,12 @@ export class MainPage{
     }
 
     //need to remove
-    async openMobileMenuPoint(nameOfStep:string){
-        await this.page.locator('.header__menu').waitFor({state:'visible'})
-        let menuPoint = await this.page.locator(".header__menu__nav-item", 
-            {has: await this.page.locator(`//a[@href='/${nameOfStep}']`)})
-        await menuPoint.click()
-    }
+    // async openMobileMenuPoint(nameOfStep:string){
+    //     await this.page.locator('.header__menu').waitFor({state:'visible'})
+    //     let menuPoint = await this.page.locator(".header__menu__nav-item", 
+    //         {has: await this.page.locator(`//a[@href='/${nameOfStep}']`)})
+    //     await menuPoint.click()
+    // }
     //new design 
     async openMobileBackMenuPoint(pointName: string){
         await this.page.locator("//span[text()='Menu']").click()
@@ -259,5 +259,9 @@ export class MainPage{
     }
     async openMobileBalance(){
         await this.page.locator("//button[contains(@class, 'account-data-bar__tools__toggle')]").click()
+    }
+    async checkMobileWidgetIsVisisble(stepName:string){
+        let banner = await this.page.locator('.complete-profile-widget--mobile__title', {hasText:stepName}).nth(0)
+        return await banner.isVisible()
     }
 }
