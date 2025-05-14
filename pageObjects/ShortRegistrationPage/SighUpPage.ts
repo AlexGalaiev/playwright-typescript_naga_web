@@ -98,7 +98,7 @@ export class SignUp{
             await this.phoneCode.click();
             //await this.phoneCode.clear()
             await this.phoneCodeInput.pressSequentially(code);
-            await this.phoneCodeSearchResult.press('Enter')
+            await this.phoneCodeSearchResult.first().press('Enter')
         } else {}
     }
 
