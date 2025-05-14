@@ -192,7 +192,7 @@ test.describe('Lead registration', async()=>{
     ]
     for(const{testRailId, brand, country}of loginParams){
     test(`${testRailId} ${brand} Lead short registration`, 
-        {tag:['@smoke','@prodSanity','@mobile','@web']}, async({page,AppNAGA})=>{
+        {tag:['@smoke','@prodSanity','@mobile','@web','@lead']}, async({page,AppNAGA})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step("Open register page, check number of buttons and remove captcha", async()=>{
@@ -228,7 +228,8 @@ test.describe('Lead registration', async()=>{
         {testRailId:'@25431', brand:'@Africa', country:'South Africa'}
     ] 
     for(const{testRailId, brand, country}of LoginParam){
-    test(`${testRailId} ${brand} Lead short registration`, {tag:['@smoke', '@prodSanity', '@mobile','@web']}, async({page,AppNAGA})=>{
+    test(`${testRailId} ${brand} Lead short registration`, 
+        {tag:['@smoke', '@prodSanity', '@mobile','@web','@lead']}, async({page,AppNAGA})=>{
         let signUp = new SignUp(page)
         let email = new RandomUser().getRandomUserEmail()
         await test.step('Open register page, check number of buttons, remove captcha', async()=>{

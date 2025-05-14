@@ -35,6 +35,7 @@ on:
           - "KYC_Africa"
           - "internalTransfer"
           - "autocopy"
+          - "lead"
       environment:
         description: 'Choose environment'
         default: "Prod"
