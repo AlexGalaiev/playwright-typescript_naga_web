@@ -266,4 +266,7 @@ export class MyTrades{
         let position = await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]").first()
         return await position.isVisible()
     }
+    async getInstrumentName(){
+        return await this.page.locator(".my-trades-table__symbol-name").textContent()
+    }
 }

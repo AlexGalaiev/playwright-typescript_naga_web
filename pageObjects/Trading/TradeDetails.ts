@@ -71,4 +71,7 @@ export class TradeDetails{
     async getTradeOwner(){
         return await this.page.locator('.trade-owner__text__username').textContent()
     }
+    async getTradingInstrumnetName(){
+        return await this.page.locator("//div[@class='trade-symbol__name']").textContent()
+    }
 }

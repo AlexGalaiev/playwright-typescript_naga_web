@@ -43,12 +43,12 @@ test.describe("Trading - Positions/Orders.", async () => {
         {tag:['@trading', '@prodSanity', '@web'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
         async ({ page, AppNAGA }, testInfo) => {
-      testInfo.setTimeout(testInfo.timeout + 170000);
-      let signIn = new SignIn(page);
-      let mainPage = new MainPage(page);
+      testInfo.setTimeout(testInfo.timeout + 170000)
+      let signIn = new SignIn(page)
+      let mainPage = new MainPage(page)
       let myTrades = new MyTrades(page)
-      let instruments = new AllInstruments(page);
-      let newPosition = new NewPosition(page);
+      let instruments = new AllInstruments(page)
+      let newPosition = new NewPosition(page)
       let successfullClosePopup = new ClosePositionSuccessPopup(page)
       await test.step(`Login to ${brand} by ${user}`, async () => {
         await signIn.goto(AppNAGA, "login");
@@ -66,7 +66,7 @@ test.describe("Trading - Positions/Orders.", async () => {
         expect(await newPosition.getStatusOfBtn(await newPosition.investmentDirectionBtn(mobileDirection))).toContain('active')
         expect(await newPosition.getStatusOfBtn(await newPosition.ratePositionBtn(`${ratePosition} at Current Price`))).toContain('active')
         await newPosition.installLotsSize(90, 2)
-        await newPosition.submitPosition();
+        await newPosition.submitPosition()
       });
       await test.step("Switch to My-Trades page. Save trading parameters - Investments and values. Close position", async () => {
         await mainPage.openBackMenuPoint("my-trades");
