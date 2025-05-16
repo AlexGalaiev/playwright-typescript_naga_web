@@ -42,7 +42,8 @@ export class ChangeLimitsPopup{
         await this.page.waitForTimeout(500);
     };
     async updatePosition(){
-        return await this.updateBtn.click();
+        await this.updateBtn.click()
+        await this.page.waitForTimeout(1000)
     };
     async getProtectionValue(protectionType: string){
         let mainElement = await this.page.locator(`//span[text()='${protectionType}']//..//..`)
@@ -66,4 +67,17 @@ export class ChangeLimitsPopup{
         await this.page.waitForTimeout(250)
     }
 
+    async updatePosition_EnableProtection(protectionName:string){
+        let nagaProtector = await this.page.locator(".naga-protector")
+        let protection = await nagaProtector.locator("//div[contains(@class, 'limit-value')]", {has: await this.page.locator(`//span[text()='${protectionName}']`)})
+        await this.page.waitForTimeout(1500)
+        await protection.locator(".limit-value__switch").click()
+        await this.page.waitForTimeout(1500)
+        let value = await protection.locator("//div[@class='limit-value__input']//input")
+        return await value.getAttribute('value')
+    }
+
+    async switchToSpecificRate(){
+        await this.page.locator('//input[@value="rate"]').click()
+    }
 }

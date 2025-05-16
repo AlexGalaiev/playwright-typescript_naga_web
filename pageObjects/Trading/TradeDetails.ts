@@ -71,4 +71,28 @@ export class TradeDetails{
     async getTradeOwner(){
         return await this.page.locator('.trade-owner__text__username').textContent()
     }
+    async getTradingInstrumnetName(){
+        return await this.page.locator("//div[@class='trade-symbol__name']").textContent()
+    }
+    async getTradeDetailsProtectionValue(protectionName: string){
+        let bar = await this.page.locator(".progress-indicator-values")
+        let value = await bar.locator(`//span[text()='${protectionName}']//preceding-sibling::span`)
+        return await value.textContent()
+    }
+    async sharePostInFeed(){
+        await this.page.locator("//span[text()=' Share']").click()
+        await this.page.waitForTimeout(300)
+        await this.page.locator("//a[text()='NAGA Feed']").click()
+        await this.page.waitForSelector("//div[contains(@class, 'share-post-mode')]", {state:'visible'})
+        let postText = await this.page.locator("#feed_comment_input_textarea").textContent()
+        await this.page.waitForTimeout(1500)
+        const [response] = await Promise.all([
+            this.page.waitForRequest((request)=>
+            request.url().includes('https://api-v2.naga.com/user/activity/order/share') && request.method() === 'POST'),
+            this.page.locator("//button[text()='Share']").click()
+        ])
+        //await this.page.locator("//button[text()='Share']").click()
+        await this.page.waitForTimeout(1500)
+        return postText
+    }
 }

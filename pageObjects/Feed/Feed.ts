@@ -172,4 +172,18 @@ export class Feed {
     let text = await post.locator('.user-message-header__description').textContent()
     return text
   }
+  async checkFirstPostText(){
+    await this.page.locator("//button[text()='Trades']").click()
+    await this.page.waitForTimeout(1000)
+    let post = await this.page.locator(".feed-item").first()
+    let text = await post.locator(".user-message-header__description").first()
+    return await text.textContent()
+  }
+  async checkOpenTradeBtnIsVisible(){
+    await this.page.locator("//button[text()='Trades']").click()
+    await this.page.waitForTimeout(500)
+    let btn = await this.page.locator("//button[text()='Open trade']").first()
+    return await btn.isVisible()
+  }
+
 }
