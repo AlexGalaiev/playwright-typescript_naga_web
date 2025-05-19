@@ -186,4 +186,10 @@ export class Feed {
     return await btn.isVisible()
   }
 
+  async checkMobileTradeBtnIsVisible(){
+    await this.page.waitForTimeout(500)
+    let btn = await this.page.locator("//button[text()='Open trade']").first()
+    return await btn.isVisible()
+  }
+
 }
