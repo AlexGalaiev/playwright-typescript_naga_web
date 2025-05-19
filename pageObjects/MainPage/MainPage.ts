@@ -20,12 +20,6 @@ export class MainPage{
         await this.sideBar.waitFor({timeout: 10000});
     }
 
-    // async proceedRegistration(){
-    //     await this.page.waitForTimeout(1500)
-    //     await this.page.locator("//span[text()='Complete now']").click();
-    //     await this.page.waitForTimeout(500)
-    // };
-
     //Naga Capital
     async openLoginFromGuestMode(){
         await this.GuestLogin.waitFor()

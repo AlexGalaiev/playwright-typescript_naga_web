@@ -120,7 +120,7 @@ test.describe('Mobile', async()=>{
                 await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
             await new MainPage(page).openMobileBackMenuPoint('Support Chat')
             })
-            await test.step('Checl visinility of chat', async()=>{
+            await test.step('Check visibility of chat', async()=>{
                 expect(await helpPage.checkOpenedChat()).toBeTruthy()
             })})
     }

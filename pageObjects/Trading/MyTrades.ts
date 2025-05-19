@@ -74,7 +74,7 @@ export class MyTrades{
         await this.openedPosition.waitFor({state:"visible"})
         let value = await this.openedPosition.locator("//div[contains(@class, 'deposit-active')]//span//span").first().textContent();
         return await value?.replace(currency, '')
-    };
+    }
     async getMobileDepositValue(currency: string){
         await this.openedMobilePosition.waitFor({state:"visible"})
         let value = await this.openedMobilePosition.locator("//div[@class='my-trades-table-mobile__deposit']//span[contains(@class, 'amount')]").textContent();
@@ -129,11 +129,15 @@ export class MyTrades{
     async openChangeLimitPopup(){
         await this.optionDropdown.click();
         await this.changeLimits.click();
-    };
+    }
     async openTradeDetails(){
         await this.optionDropdown.click();
         await this.tradeDetails.click();
-    };
+    }
+    async openMobileTradeDetails(){
+        await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]").waitFor({state:'visible'});
+        await this.page.locator("//div[contains(@class, 'my-trades-table-mobile__row')]").click()
+    }
     async getEmptyPageText(){
         return await this.emptyPage.textContent()
     }
@@ -268,5 +272,8 @@ export class MyTrades{
     }
     async getInstrumentName(){
         return await this.page.locator(".my-trades-table__symbol-name").textContent()
+    }
+    async getMobileInstrumentName(){
+        return await this.page.locator(".my-trades-table-mobile__symbol-name").textContent()
     }
 }

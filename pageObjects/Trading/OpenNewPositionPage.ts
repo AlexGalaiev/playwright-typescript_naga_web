@@ -111,4 +111,8 @@ export class NewPosition{
         await this.page.waitForTimeout(1000)
     
     }
+    async getBalloonText(){
+        let baloon = await this.page.locator('.naga-toast')
+        return await baloon.textContent()
+    }
 }
