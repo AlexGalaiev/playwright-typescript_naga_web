@@ -19,11 +19,13 @@ export type TestOptions = {
     browserProxyContextSA: BrowserContext;
     browserProxyContextUA: BrowserContext;
     browserProxyContextBahrein: BrowserContext;
+    browserProxyContextSpain: BrowserContext;
     proxyPage: any;
     proxyPageUAE: any;
     proxyPageSA: any;
     proxyPageUA: any;
     proxyPageBH: any;
+    proxyPageES: any;
     page2: Page;
 }
 
@@ -97,6 +99,16 @@ export const test = base.extend<TestOptions>({
         }});
         await use(context)
     },
+    browserProxyContextSpain: async({}, use)=>{
+        let browser = await baseChromium.launch();
+        let vpn = await new VPN().proxyOptions(process.env.NORDVPN_USERNAME || '', process.env.NORDVPN_PASSWORD || '', 'ES')
+        let context = await browser.newContext({proxy:{
+            server: vpn,
+            username: process.env.NORDVPN_USERNAME || '',
+            password: process.env.NORDVPN_PASSWORD || ''
+        }});
+        await use(context)
+    },
 
     page: async ({browserContext}, use)=>{
         let page = await browserContext.newPage()
@@ -150,6 +162,11 @@ export const test = base.extend<TestOptions>({
         let page = await browserProxyContextBahrein.newPage()
         await use(page)
         await browserProxyContextBahrein.close()
+    },
+    proxyPageES: async({browserProxyContextSpain}, use)=>{
+        let page = await browserProxyContextSpain.newPage()
+        await use(page)
+        await browserProxyContextSpain.close()
     }
 
 })

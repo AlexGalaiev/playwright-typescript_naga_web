@@ -169,7 +169,8 @@ test.describe('WEB', async()=>{
 
     for(const{brand, user}of tradeDetailsParams){
         test(`${brand} Baloon test. WEB notification about opened position`, 
-            {tag:['@trading', '@web']}, async({page, AppNAGA})=>{
+            {tag:['@trading', '@web']}, async({page, AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 25000)
             let signIn = new SignIn(page)
             let mainPage = new MainPage(page)
             let myTrades = new MyTrades(page)

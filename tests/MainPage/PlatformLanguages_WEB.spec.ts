@@ -87,4 +87,28 @@ test.describe('WEB', async()=>{
                 expect(await guestPage.getSignUpBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signUp'))
             }})
     })}
+
+    const languageSpain: language[] = [
+        {brand:'@Markets', languages:['Español']}
+    ]
+    for(const{brand, languages} of languageSpain){
+        test(`${brand} Spain user languages`, {tag:['@UI', '@web']}, async({proxyPageES, AppNAGA})=>{
+            let signUp = new SignUp(proxyPageES)
+        await test.step(`${brand} Open guest login page`, async()=>{
+            await signUp.goto(AppNAGA, "register")
+        })
+        await test.step('Check preselected country, country code and number of exist languages', async()=>{
+            expect(await signUp.getSelectedCountry()).toEqual('Spain')
+            expect(await signUp.getSelectedCountryCode()).toEqual('+34')
+            expect(await signUp.getNumberOfLanguages()).toEqual(1)
+        })
+        await test.step('Spanish user changes to UAE. Check countries, country code and number of languages', async()=>{
+            await signUp.changeCountryTo('Germany (Deutschland)')
+            expect('Germany (Deutschland)').toContain(await signUp.getSelectedCountry())
+            expect(await signUp.getSelectedCountryCode()).toEqual('+49')
+            expect(await signUp.getNumberOfLanguages()).toEqual(11)
+        })
+        })
+    }
 })
+

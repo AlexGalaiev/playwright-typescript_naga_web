@@ -10,9 +10,10 @@ export class VPN{
         //let countryId = 106 //Italy
         //let countryId = 226 //UAE
         // countryId = 17 //Bahrein
-        let countryId = 225  //Ukriane 
+        //let countryId = 225  //Ukriane 
         //let countryId = 200 //South Africa
-        const servers = await fetch(`https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={"country_id":17}`);
+        let country_id = 202 //Spain
+        const servers = await fetch(`https://nordvpn.com/wp-admin/admin-ajax.php?action=servers_recommendations&filters={202:17}`);
         let response = await servers.json();
         console.log(await response)// arrray of objects with servers
         // get one random server
@@ -38,6 +39,9 @@ export class VPN{
             break;
           case 'BH': //bahrein
             hostName = "bh1.nordvpn.com"
+            break;
+          case 'ES': //bahrein
+            hostName = "es234.nordvpn.com"
             break;
           default:
             throw new Error(`Unsupported country: ${country}`);
