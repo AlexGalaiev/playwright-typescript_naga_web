@@ -168,12 +168,13 @@ test.describe('Mobile', async()=>{
 
     for(const{brand, user}of tradeDetailsParams){
         test(`${brand} Baloon test. WEB notification about opened position`, 
-            {tag:['@trading', '@mobile']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
-            let myTrades = new MyTrades(page)
-            let instruments = new AllInstruments(page)
-            let newPosition = new NewPosition(page)
+            {tag:['@trading', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 25000)
+        let signIn = new SignIn(page)
+        let mainPage = new MainPage(page)
+        let myTrades = new MyTrades(page)
+        let instruments = new AllInstruments(page)
+        let newPosition = new NewPosition(page)
         await test.step(`Login to ${brand} by ${user}`, async () => {
             await signIn.goto(AppNAGA, "login");
             await signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "")

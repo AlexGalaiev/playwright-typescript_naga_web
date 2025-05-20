@@ -7,6 +7,8 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { Captcha } from "../../pageObjects/captcha";
 import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { NagaCom } from "../../pageObjects/Website/NagaCom";
+import { GusetLogin } from "../../pageObjects/MainPage/GuestLogin";
+import { VPN } from "../../pageObjects/Website/VPN";
 
 test.describe("Short regitration page elements", async()=>{
 
@@ -38,18 +40,16 @@ test.describe("Short regitration page elements", async()=>{
                     expect(await new SignUp(proxyPageUA).getDocumentHref(documentName)).toEqual(url)}}
             )}
         )
-        test.skip(`@25389 Redirect from Capital logo to website`,
-            {tag:['@UI','@web'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageUA})=>{
-            let website = new NagaCom(proxyPageUA)
+        test(`@25389 Redirect from Capital logo to website`,
+            {tag:['@UI','@web']}, async({proxyPageUA})=>{
             await new SignUp(proxyPageUA).clickLogo()
-            expect(await website.checkInstrumentBar()).toBeVisible()
+            await new GusetLogin(proxyPageUA).checkGuestPageIsVisible()
         })
 
-        test.skip(`@25389 Mobile. view. Redirect from Capital logo to website`,
-            {tag:['@UI','@mobile'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageUA})=>{
-            let website = new NagaCom(proxyPageUA)
+        test(`@25389 Mobile view. Redirect from Capital logo to website`,
+            {tag:['@UI','@mobile']}, async({proxyPageUA})=>{
             await new SignUp(proxyPageUA).clickLogo()
-            expect(await website.getMobileLandingPageContainer()).toBeVisible()
+            await new GusetLogin(proxyPageUA).checkMobileGuestPageIsVisible()
         })
     })
     
@@ -80,18 +80,17 @@ test.describe("Short regitration page elements", async()=>{
                     expect(await new SignUp(proxyPage).getDocumentHref(documentName)).toEqual(url)
                 }}
             )})
-        test.skip(`@25388 Redirect from Markets logo to website`,
-            {tag:['@UI','@web'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPage})=>{
-            let website = new NagaCom(proxyPage)
+
+        test(`@25388 Redirect from Markets logo to website`,
+            {tag:['@UI','@web']}, async({proxyPage})=>{
             await new SignUp(proxyPage).clickLogo()
-            expect(await website.checkInstrumentBar()).toBeVisible()
+            await new GusetLogin(proxyPage).checkGuestPageIsVisible()
         })
 
-        test.skip(`@25388 Mobile. view. Redirect from Markets logo to website`,
-            {tag:['@UI','@mobile'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPage})=>{
-            let website = new NagaCom(proxyPage)
+        test(`@25388 Mobile view. Redirect from Markets logo to website`,
+            {tag:['@UI','@mobile']}, async({proxyPage})=>{
             await new SignUp(proxyPage).clickLogo()
-            expect(await website.getMobileLandingPageContainer()).toBeVisible()
+            await new GusetLogin(proxyPage).checkMobileGuestPageIsVisible()
         })
 })
 
@@ -121,18 +120,17 @@ test.describe("Short regitration page elements", async()=>{
                     expect(await new SignUp(proxyPageSA).getDocumentHref(documentName)).toEqual(url)
                 }}
             )})
-        test.skip(`@25390 Redirect from Africa logo to website`,
+        test(`@25390 Redirect from Africa logo to website`,
             {tag:['@UI','@web'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageSA})=>{
-            let website = new NagaCom(proxyPageSA)
             await new SignUp(proxyPageSA).clickLogo()
-            expect(await website.checkInstrumentBar()).toBeVisible()
+            await new GusetLogin(proxyPageSA).checkGuestPageIsVisible()
         })
 
         test.skip(`@25390 Mobile. view. Redirect from Africa logo to website`,
             {tag:['@UI','@mobile'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageSA})=>{
             let website = new NagaCom(proxyPageSA)
             await new SignUp(proxyPageSA).clickLogo()
-            expect(await website.getMobileLandingPageContainer()).toBeVisible()
+            await new GusetLogin(proxyPageSA).checkMobileGuestPageIsVisible()
         })
     })
 
@@ -162,20 +160,27 @@ test.describe("Short regitration page elements", async()=>{
                     expect(await new SignUp(proxyPageUAE).getDocumentHref(documentName)).toEqual(url)
                 }}
             )})
-        test.skip(`@25391 Redirect from Mena logo to website`,
-            {tag:['@UI','@web'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageUAE})=>{
-            let website = new NagaCom(proxyPageUAE)
+        test(`@25391 Redirect from Mena logo to website`,
+            {tag:['@UI','@web']}, async({proxyPageUAE})=>{
             await new SignUp(proxyPageUAE).clickLogo()
-            expect(await website.checkInstrumentBar()).toBeVisible()
+            await new GusetLogin(proxyPageUAE).checkGuestPageIsVisible()
         })
 
-        test.skip(`@25391 Mobile. view. Redirect from Mena logo to website`,
-            {tag:['@UI','@mobile'], annotation:{type:'tiket', description:'https://keywaygroup.atlassian.net/browse/RG-8514'}}, async({proxyPageUAE})=>{
-            let website = new NagaCom(proxyPageUAE)
+        test(`@25391 Mobile view. Redirect from Mena logo to website`,
+            {tag:['@UI','@mobile']}, async({proxyPageUAE})=>{
             await new SignUp(proxyPageUAE).clickLogo()
-            expect(await website.getMobileLandingPageContainer()).toBeVisible()
+            await new GusetLogin(proxyPageUAE).checkMobileGuestPageIsVisible()
         })
-})
+    })
+
+    test.describe('Spain', async()=>{
+        test('Not clickable logo for spanish users',{tag:['@UI','@web','@mobile']}, async({proxyPageES, AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 10000)
+            let signUp = new SignUp(proxyPageES)
+            await signUp.goto(AppNAGA, "register")
+            await signUp.clickLogo()
+            expect(await signUp.checkUrl()).toEqual(`${AppNAGA}/register`)
+        })})
 })
 
 test.describe('Lead registration', async()=>{

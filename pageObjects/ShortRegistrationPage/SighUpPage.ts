@@ -170,7 +170,9 @@ export class SignUp{
         return await this.riskWarningMena.first().textContent()
     }
     async clickLogo(){
-        await this.page.locator(".naga-logo"). click()
+        let logo = await this.page.locator(".naga-logo ").first()
+        await logo.waitFor({state:'visible'})
+        await logo.click()
         await this.page.waitForTimeout(500)
     }
     async timeLaunchOfGoogleBtn(){
@@ -180,6 +182,27 @@ export class SignUp{
         let endDate = Date.now()
         let result = endDate-startTime
         return result
+    }
+    async getSelectedCountry(){
+        await this.page.waitForTimeout(500)
+        return await this.page.locator(".dropdown-select-field__option").first().textContent()
+    }
+    async getSelectedCountryCode(){
+        await this.page.waitForTimeout(500)
+        return await this.page.locator(".dropdown-select-field__option").nth(1).textContent()
+    }
+    async getNumberOfLanguages(){
+        await this.page.waitForTimeout(500)
+        let number = await this.page.locator("//div[contains(@class, 'registration-header__actions__language-picker')]")
+        return await number.count()
+    }
+    async changeCountryTo(country: string){
+        await this.page.locator("//div[contains(@class, 'registration-form__country')]").first().click()
+        await this.page.waitForTimeout(500)
+        await this.page.locator(".dropdown-select-field__search-wrapper__input").pressSequentially(country)
+        await this.page.waitForTimeout(500)
+        await this.page.locator("//div[contains(@class, 'select__menu-list')]//div[contains(@class, 'select__option')]").click()
+        await this.page.waitForTimeout(500)
     }
 }
 

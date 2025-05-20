@@ -45,4 +45,12 @@ export class GusetLogin{
         await this.page.waitForSelector(`//button[contains(@class, 'guest-mode-header-actions__buttons__register')]`, {state:'visible'})
         return await this.page.locator("//button[contains(@class, 'guest-mode-header-actions__buttons__register')]").textContent()
     }
+    async checkGuestPageIsVisible(){
+        await this.page.locator(".header__top-nav__guest-mode").waitFor({state:'visible'})
+        return await this.page.locator(".header__top-nav__guest-mode").isVisible()
+    }
+    async checkMobileGuestPageIsVisible(){
+        await this.page.locator(".guest-mode-header-actions__buttons").waitFor({state:'visible'})
+        return await this.page.locator(".guest-mode-header-actions__buttons").isVisible()
+    }
 }
