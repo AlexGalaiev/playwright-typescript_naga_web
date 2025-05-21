@@ -49,4 +49,22 @@ export class SettingsPage{
         await this.acceptPopup.click();
         await this.page.waitForTimeout(6000)
     }
+    async getPhoneValidationStatus(){
+        return await this.page.locator("//div[contains(@class, 'input-validation-box')]").textContent()
+    }
+    async openPhoneVerification(){
+        await this.page.locator("//button[contains(@class, 'verify-phone-button')]").click()
+    }
+    async checkPhoneVerificationPopupIsVisible(){
+        return await this.page.locator(".phone-verification-modal__text").isVisible()
+    }
+    async goBack(){
+        await this.page.locator("//span[text()='Back to Settings']").click()
+    }
+    async openEmailVerificationPopup(){
+        await this.page.locator("//button[contains(@class, 'verify-email-button')]").click()
+    }
+    async checkEmailVerifiedPopupIsDisplayed(){
+        return await this.page.locator('.verify-email-modal__title').isVisible()
+    }
 }

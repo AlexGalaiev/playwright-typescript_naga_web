@@ -30,7 +30,7 @@ test.describe('Funds transfer', async()=>{
             });
             await test.step("Make internal transfer", async()=>{
                 await mainPage.openBackMenuSubcategory('Manage Funds', 'Transfer');
-                await internalTransfer.chooseAccount('AccountSource');
+                await internalTransfer.chooseAccount('AccountSource', 'AccountDirection');
                 await internalTransfer.make1$InternalTransfer();
                 expect(await internalTransfer.checkSuccessPopupText()).toContain("You have successufuly transfered")
             })
