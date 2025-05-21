@@ -23,34 +23,31 @@ export class InternalTransfer{
         this.successPopupHeader = page.locator(".prompt__header__title")
         this.successPopupText = page.locator('.prompt__content__message')
     }
-    async chooseAccount(nameOfSourceAccount: string){
-        await this.page.waitForTimeout(2000)
-        await this.sourceAccount.click()
-        await this.page.waitForTimeout(1500)
-        await this.page.keyboard.press('ArrowDown')
-        await this.page.keyboard.press('Enter');
-        await this.checkAccount(nameOfSourceAccount)
-        await this.destinationAccount.click();
-        await this.page.keyboard.press('Enter')
-        await this.page.waitForTimeout(1000)
-    };
-
-    async checkAccount(nameOfSourceAccount: string){
-        let sourceAc = await this.page.locator("//div[@data-testid='transfer-from']//span[@class='internal-transfer__select-option-login']").textContent()
-        if(await sourceAc?.includes(nameOfSourceAccount)){}else{
-            await this.sourceAccount.click()
-            await this.page.keyboard.press('ArrowDown')
-            await this.page.keyboard.press('Enter'); 
-        }
+    async chooseAccount(acSource: string, acDirect: string){
+        await this.page.waitForTimeout(500)
+        await this.page.locator('[data-testid="transfer-from"]').click()
+        await this.clickAccount(acSource)
+        await this.page.locator('[data-testid="transfer-to"]').click()
+        await this.clickAccount(acDirect)
+        await this.page.waitForTimeout(500)
     }
+
+    async clickAccount(nameOfSourceAccount: string){
+        await this.page.waitForTimeout(500)
+        let account = await this.page.locator(`//div[@class='internal-transfer__select-option-wrapper']//span[contains(text(),'${nameOfSourceAccount}')]`)
+        await account.click()
+    }
+
     async openInternalTransferPage(){
         return this.InternalTransferMenuPoint.click();
-    };
+    }
+
     async make1$InternalTransfer(){
         await this.valueInternalTransfer.pressSequentially('1')
         await this.page.waitForTimeout(1000);
         await this.submitBtn.click()
     }
+
     async checkSuccessPopupText(){
         await this.successPopup.waitFor({timeout:3000})
         expect(await this.successPopupHeader.textContent()).toEqual("Internal transfer")

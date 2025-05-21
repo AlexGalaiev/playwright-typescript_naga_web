@@ -92,7 +92,7 @@ test.describe('WEB', async()=>{
         {brand:'@Markets', languages:['Español']}
     ]
     for(const{brand, languages} of languageSpain){
-        test(`${brand} Spain user languages`, {tag:['@UI', '@web']}, async({proxyPageES, AppNAGA})=>{
+        test(`${brand} Spain user languages`, {tag:['@UI', '@web', '@mobile']}, async({proxyPageES, AppNAGA})=>{
             let signUp = new SignUp(proxyPageES)
         await test.step(`${brand} Open guest login page`, async()=>{
             await signUp.goto(AppNAGA, "register")
