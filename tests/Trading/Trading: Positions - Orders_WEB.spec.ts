@@ -8,7 +8,6 @@ import { test } from "../../test-options";
 import { ClosePositionSuccessPopup } from "../../pageObjects/Trading/closePositionSuccessPopup";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { RealStockPopup } from "../../pageObjects/Trading/realStockShortPosition";
-import { TradeDetails } from "../../pageObjects/Trading/TradeDetails";
 
 type tradingTypes = {
   testRailId: string,
@@ -78,8 +77,7 @@ test.describe("Trading - Positions/Orders.", async () => {
       await test.step('Check successfull closing popup. Assert of trading parameters', async()=>{
         expect(Number(await successfullClosePopup.getDeposit(currency))).toBeCloseTo(Number(investmentValue), 0)
         expect(await successfullClosePopup.getLots()).toContain(units)
-      })
-    });
+      })})
   }
 })
 

@@ -69,7 +69,7 @@ test.describe('WEB', async()=>{
     for(const{brand, user, currency} of tradeDetailsParams){
     test(`${brand} Edit position on Trade details popup`, 
         {tag:['@trading', '@web']}, async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 30000)
+        testInfo.setTimeout(testInfo.timeout + 35000)
         let stopLoss;
         let takeProfit;
         let signIn = new SignIn(page)

@@ -122,8 +122,8 @@ test.describe('WEB', async()=>{
         user: string
     }
     const capitalSettings: settings[] = [
-        {brand:'@Capital', user:'leadCapital@naga.com'},
-        {brand:'@Africa', user: 'leadAfrica@naga.com'}
+        {brand:'@Capital', user:'leadCapital2@naga.com'},
+        {brand:'@Africa', user: 'leadAfrica2@naga.com'}
     ]
     for(const{brand, user} of capitalSettings){
         test(`${brand} Settings -> Profile. Check profile credentials`,
@@ -139,10 +139,10 @@ test.describe('WEB', async()=>{
         await test.step('Check settings of user profile. Check phone verification via settings', async()=>{
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('Settings')
-            // expect(await settings.getPhoneValidationStatus()).toEqual('Not Verified ')
-            // await settings.openPhoneVerification()
-            // expect(await settings.checkPhoneVerificationPopupIsVisible()).toBeTruthy()
-            // await settings.goBack()
+            expect(await settings.getPhoneValidationStatus()).toEqual('Not Verified ')
+            await settings.openPhoneVerification()
+            expect(await settings.checkPhoneVerificationPopupIsVisible()).toBeTruthy()
+            await settings.goBack()
         })
         await test.step('Check email verification popup', async()=>{
             await settings.openEmailVerificationPopup()
