@@ -70,7 +70,7 @@ export class ChangeLimitsPopup{
     async updatePosition_EnableProtection(protectionName:string){
         let nagaProtector = await this.page.locator(".naga-protector")
         let protection = await nagaProtector.locator("//div[contains(@class, 'limit-value')]", {has: await this.page.locator(`//span[text()='${protectionName}']`)})
-        await this.page.waitForTimeout(1500)
+        await this.page.waitForTimeout(3000)
         await protection.locator(".limit-value__switch").click()
         await this.page.waitForTimeout(1500)
         let value = await protection.locator("//div[@class='limit-value__input']//input")
