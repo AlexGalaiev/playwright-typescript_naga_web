@@ -87,7 +87,7 @@ test.describe("WEB", async()=>{
             await signIn.forgotPasswordClick()
             let response = await forgotPassword.sendEmailToAddress(testUser)
             expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
-            expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('ForgotPassword')
+            expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
             //expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
         })
     })

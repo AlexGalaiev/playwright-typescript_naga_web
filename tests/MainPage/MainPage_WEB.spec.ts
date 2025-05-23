@@ -186,3 +186,89 @@ test.describe('WEB+Mobile',async()=>{
     }
 })
 
+test.describe('WEB', async()=>{
+    type userDemoCapital = {
+        brand: string,
+        user: string,
+        step1Name: string,
+        step2Name: string,
+        step3Name: string,
+        step4Name: string
+    }
+    const userDemoParams: userDemoCapital[] = [
+        {brand:'@Capital', user:'leadCapital@naga.com', step1Name:'NAGA Start', step2Name:'Deposit', step3Name:'NAGA Progress', step4Name:'NAGA Ultimate'},
+        {brand:'@Africa', user: 'leadAfrica@naga.com', step1Name:'NAGA Start', step2Name:'Deposit', step3Name:'NAGA Progress', step4Name:'NAGA Ultimate'}
+    ]
+
+    for(const{brand, user, step1Name, step2Name, step3Name, step4Name} of userDemoParams){
+        test(`${brand} Visibility of kyc widget for lead user`, {tag:['@UI', '@web']}, async({AppNAGA, page})=>{
+            let signIn = new SignIn(page)
+            let mainPage = new MainPage(page)
+            let myAccounts = new MyAccounts(page)
+            await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
+                await signIn.goto(AppNAGA, 'login')
+                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+            })
+            await test.step('Check widget on main page', async()=>{
+                await mainPage.openBackMenuPoint('feed')
+                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step1Name, 'active')).toBeTruthy
+                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step2Name, 'next')).toBeTruthy
+                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step3Name, 'next')).toBeTruthy
+                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step4Name, 'next')).toBeTruthy
+            })
+            await test.step("Check widget after lead user tryes to open manage funds", async()=>{
+                await mainPage.clickBackMenuPoint('Manage Funds')
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step4Name, 'next')).toBeTruthy
+                await mainPage.closeModal()
+            })
+            await test.step('Check widget after user opens My Account->Profile status', async()=>{
+                await myAccounts.openUserMenu()
+                await myAccounts.openMyAccountMenuItem('Profile Status')
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step4Name, 'next')).toBeTruthy
+                await mainPage.closeModal()
+            })})
+    }
+
+    const userDemoParamsMarkets: userDemoCapital[] = [
+        {brand:'@Markets', user:'leadMarkets@naga.com', step1Name:'Upgrade to Live', step2Name:'Deposit', step3Name:'Verify Identity', step4Name:'none'},
+        {brand:'@Mena', user:'leadMena@naga.com', step1Name:'Upgrade to Live', step2Name:'Deposit', step3Name:'Verify Identity', step4Name:'none'}
+    ]
+    for(const{brand, user, step1Name, step2Name, step3Name, step4Name} of userDemoParamsMarkets){
+        test(`${brand} Visibility of kyc widget per lead user`, {tag:['@UI', '@web']}, async({AppNAGA, page})=>{
+            let signIn = new SignIn(page)
+            let mainPage = new MainPage(page)
+            let myAccounts = new MyAccounts(page)
+            await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
+                await signIn.goto(AppNAGA, 'login')
+                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+            })
+            await test.step('Check widget on main page', async()=>{
+                await mainPage.openBackMenuPoint('feed')
+                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step1Name, 'active')).toBeTruthy
+                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step2Name, 'next')).toBeTruthy
+                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step3Name, 'next')).toBeTruthy
+            })
+            await test.step("Check widget after lead user tryes to open manage funds", async()=>{
+                await mainPage.clickBackMenuPoint('Manage Funds')
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
+                await mainPage.closeModal()
+            })
+            await test.step('Check widget after user opens My Account->Profile status', async()=>{
+                await myAccounts.openUserMenu()
+                await myAccounts.openMyAccountMenuItem('Profile Status')
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
+                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
+                await mainPage.closeModal()
+            })})
+    }})
+
+

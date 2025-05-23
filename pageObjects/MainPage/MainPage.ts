@@ -108,9 +108,9 @@ export class MainPage{
         let banner = await menuPoint.locator(".complete-profile-widget--mobile__description")
         return await banner.textContent()
     }
-    async checkWidgetStepVisibility(nameOfTheStep: string){
-        await this.page.waitForTimeout(3000)
-        let step = await this.page.locator(`//div[text()='${nameOfTheStep}']`)
+    async checkWidgetStepNotFinishedVisibility(nameOfTheStep: string, stepStatus: string){
+        await this.page.waitForTimeout(1500)
+        let step = await this.page.locator(`//div[contains(@class, 'complete-profile-widget__title--${stepStatus}')]`, {hasText:nameOfTheStep})
         await step.waitFor({state:'visible'})
         return await step.isVisible()
     }
@@ -122,13 +122,6 @@ export class MainPage{
         await this.page.waitForTimeout(500)
     }
 
-    //need to remove
-    // async openMobileMenuPoint(nameOfStep:string){
-    //     await this.page.locator('.header__menu').waitFor({state:'visible'})
-    //     let menuPoint = await this.page.locator(".header__menu__nav-item", 
-    //         {has: await this.page.locator(`//a[@href='/${nameOfStep}']`)})
-    //     await menuPoint.click()
-    // }
     //new design 
     async openMobileBackMenuPoint(pointName: string){
         await this.page.locator("//span[text()='Menu']").click()
@@ -258,4 +251,21 @@ export class MainPage{
         let banner = await this.page.locator('.complete-profile-widget--mobile__title', {hasText:stepName}).nth(0)
         return await banner.isVisible()
     }
-}
+    async checkFinishedWidgetStepIsVisible(stepName: string){
+        let step = await this.page.locator("//div[contains(@class, 'complete-profile-widget__title--finished')]", {hasText:stepName})
+        return await step.isVisible()
+    }
+    async checkPopupWidgetStepTitleVisibility(nameOfTheStep:string, stepStatus:string){
+        let popup = await this.page.locator('.modal-body')
+        let step = await popup.locator(`//div[contains(@class, 'complete-profile-widget__title--${stepStatus}')]`, {hasText:nameOfTheStep})
+        await step.waitFor({state:'visible'})
+        return await step.isVisible()
+    }
+    async clickBackMenuPoint(pointName: string){
+        await this.page.locator(`//span[text()='${pointName}']`).click()
+    }
+    async closeModal(){
+        await this.page.locator("//div[@class='modal-content']//button[@class='close']").click()
+    }
+    
+}   
