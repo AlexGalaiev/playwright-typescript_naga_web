@@ -44,6 +44,5 @@ test.describe('NagaMarkets Mobile', async()=>{
             expect(await mainPage.checkBackMenuMobileIsVisible('eBooks')).toBeTruthy()
             expect(await mainPage.checkBackMenuMobileIsVisible('Glossary')).toBeTruthy()
             expect(await mainPage.checkBackMenuMobileIsVisible('Webinars')).toBeTruthy()
-        })
-    })
+        })})
 })

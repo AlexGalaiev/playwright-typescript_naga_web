@@ -118,7 +118,7 @@ test.describe('Mobile', async()=>{
     ]
     for(const{brand, user} of capitalSettings){
         test(`${brand} Settings -> Profile. Check profile credentials`,
-        {tag:['@UI', '@web', '@settings']},async({AppNAGA, page}, testInfo)=>{
+        {tag:['@UI', '@mobile', '@settings']},async({AppNAGA, page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
         let signIn = new SignIn(page)
         let mainPage = new MainPage(page)
@@ -146,7 +146,7 @@ test.describe('Mobile', async()=>{
     ]
     for(const{brand, user} of otherBrands){
     test(`${brand} Settings -> Profile. Check profile credentials`,
-        {tag:['@UI', '@web', '@settings']},async({AppNAGA, page}, testInfo)=>{
+        {tag:['@UI', '@mobile', '@settings']},async({AppNAGA, page}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000)
         let signIn = new SignIn(page)
         let mainPage = new MainPage(page)

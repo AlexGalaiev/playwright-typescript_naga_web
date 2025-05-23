@@ -34,7 +34,7 @@ test.describe('WEB', async()=>{
     })
     await test.step(`Check possibility of Login to platform with new password`, async()=>{
         await signIn.signInUserToPlatform(email, "Test12345!");
-        expect(await new MainPage(page).checkWidgetStepVisibility('NAGA Start')).toBe(true);
+        expect(await new MainPage(page).checkWidgetStepNotFinishedVisibility('NAGA Start', 'active')).toBe(true);
     })})
 
 test("@23598 NagaMarkets. Change password via settings",{tag:['@UI', '@web', '@settings']}, 
@@ -59,7 +59,7 @@ test("@23598 NagaMarkets. Change password via settings",{tag:['@UI', '@web', '@s
     })
     await test.step('Login to platform with new password', async()=>{
         await signIn.signInUserToPlatform(email, "Test12345!");
-        expect(await new MainPage(page).checkWidgetStepVisibility('Upgrade to Live')).toBe(true);
+        expect(await new MainPage(page).checkWidgetStepNotFinishedVisibility('Upgrade to Live', 'active')).toBe(true);
     })
 })
 
@@ -85,7 +85,7 @@ test("@25428 NagaMena, Change password via settings",{tag:['@UI', '@web', '@sett
     })
     await test.step('Login to platform with new password', async()=>{
         await signIn.signInUserToPlatform(email, "Test12345!");
-        expect(await new MainPage(page).checkWidgetStepVisibility('Upgrade to Live')).toBe(true);
+        expect(await new MainPage(page).checkWidgetStepNotFinishedVisibility('Upgrade to Live', 'active')).toBe(true);
     })
 })
 
