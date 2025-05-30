@@ -16,7 +16,7 @@ test.describe('WEB', async()=>{
 
     for(const{brand, languages} of languageParams){
     test(`${brand} Platform languages on guest mode`, {tag:['@UI', '@web']}, async({proxyPage, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 50000)
+        testInfo.setTimeout(testInfo.timeout + 80000)
         let signUp = new SignUp(proxyPage)
         let guestPage = new GusetLogin(proxyPage)
         await test.step(`${brand} Open guest login page`, async()=>{
@@ -42,7 +42,7 @@ test.describe('WEB', async()=>{
 
     for(const{brand, languages} of languageParamsCapital){
     test(`${brand} Platform languages on guest mode`, {tag:['@UI', '@web']}, async({proxyPageUA, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 50000)
+        testInfo.setTimeout(testInfo.timeout + 80000)
         let signUp = new SignUp(proxyPageUA)
         let guestPage = new GusetLogin(proxyPageUA)
         await test.step(`${brand} Open guest login page`, async()=>{

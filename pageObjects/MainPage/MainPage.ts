@@ -267,5 +267,25 @@ export class MainPage{
     async closeModal(){
         await this.page.locator("//div[@class='modal-content']//button[@class='close']").click()
     }
-    
+    async checkExternalService(serviceName: string, serviceUrl){
+        await this.page.locator("//span[text()='Trading Tools']").click()
+        const [response] = await Promise.all([
+            this.page.waitForResponse(serviceUrl, {timeout:10000}),
+            this.page.locator(`//span[text()='${serviceName}']`).click()
+        ])
+        return response
+    }
+    async getServiceStatusCode(response: any){
+        let responseBody = await response.json()
+        return responseBody.info.code
+    }
+    async checkTradingSymbolsIsVisible(){
+        return await this.page.locator(".trading-central-signals").isVisible()
+    }
+    async checkContestTabIsVisible(){
+        return await this.page.locator(".contests__container").isVisible()
+    }
+    async checkMarketsBuzzIsVisible(){
+        return await this.page.locator("#tradingcentral").isVisible()
+    }
 }   
