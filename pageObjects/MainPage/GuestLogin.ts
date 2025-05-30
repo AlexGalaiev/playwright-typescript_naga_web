@@ -22,14 +22,17 @@ export class GusetLogin{
     }
     async checkTutorPopupBtnIsVisible(btnName: string){
         await this.page.waitForSelector(`//button[text()='${btnName}']`, {state:'visible'})
+        await this.page.waitForTimeout(500)
         return await this.page.locator(`//button[text()='${btnName}']`).isVisible()
     }
     async openTutorPopup(btnName: string){
         await this.page.waitForSelector(`//button[text()='${btnName}']`, {state:'visible'})
+        await this.page.waitForTimeout(500)
         await this.page.locator(`//button[text()='${btnName}']`).click()
     }
     async checkTutorPopupTitleIsVisible(popupTitle: string){
         await this.page.waitForSelector(`//div[text()='${popupTitle}']`, {state:'visible'})
+        await this.page.waitForTimeout(500)
         return await this.page.locator(`//div[text()='${popupTitle}']`).isVisible()
     }
     async openGuestLoginPage(){
@@ -39,18 +42,22 @@ export class GusetLogin{
     }
     async getSignInBtnText(){
         await this.page.waitForSelector(`//button[contains(@class, 'guest-mode-header-actions__buttons__login')]`, {state:'visible'})
+        await this.page.waitForTimeout(500)
         return await this.page.locator("//button[contains(@class, 'guest-mode-header-actions__buttons__login')]").textContent()
     }
     async getSignUpBtnText(){
         await this.page.waitForSelector(`//button[contains(@class, 'guest-mode-header-actions__buttons__register')]`, {state:'visible'})
+        await this.page.waitForTimeout(500)
         return await this.page.locator("//button[contains(@class, 'guest-mode-header-actions__buttons__register')]").textContent()
     }
     async checkGuestPageIsVisible(){
         await this.page.locator(".header__top-nav__guest-mode").waitFor({state:'visible'})
+        await this.page.waitForTimeout(500)
         return await this.page.locator(".header__top-nav__guest-mode").isVisible()
     }
     async checkMobileGuestPageIsVisible(){
         await this.page.locator(".guest-mode-header-actions__buttons").waitFor({state:'visible'})
+        await this.page.waitForTimeout(500)
         return await this.page.locator(".guest-mode-header-actions__buttons").isVisible()
     }
 }
