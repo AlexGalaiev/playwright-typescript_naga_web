@@ -31,7 +31,17 @@ test.describe('WEB', async()=>{
             })
         })}
 
-    for(const{brand, user} of tradingToolsParams){
+    type contestTab = {
+        brand: string,
+        user: string
+    }
+
+    const contestParams: contestTab[] = [
+        {brand:'@Capital', user:'leadCapital@naga.com'},
+        {brand:'@Africa', user:'leadAfrica@naga.com'}
+    ]
+
+    for(const{brand, user} of contestParams){
         test(`${brand} Trading tools. Contest tab`, {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
             let signIn = new SignIn(page)
             let mainPage = new MainPage(page)
