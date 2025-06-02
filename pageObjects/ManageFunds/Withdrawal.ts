@@ -149,11 +149,15 @@ export class Withdrawal{
     async getApiStatusCode(response: any){
         return await response.status()
     }
-    async withdrawalCalculation(currency: string){
+    async withdrawalCalculation(currency: string, defaultValue: number){
         let value = await this.page.locator("//div[@id='balance_status']//p[contains(@class, 'item__value')]").first().textContent()
         let amount = value?.replace(currency, '').trim().replace(/,/g, '')
-        let number = Number(amount) * Number(0.15)
-        return number
+        let calculatedNumber = Number(amount) * Number(0.15)
+        if (calculatedNumber <= defaultValue){
+            return defaultValue
+        }else{
+            return calculatedNumber
+        }
     }
     async chooseMobileWithdrawalMethod(withdrawalMethod:string){
         let menu = await this.page.locator("//button[@id='withdrawal-navigation']")

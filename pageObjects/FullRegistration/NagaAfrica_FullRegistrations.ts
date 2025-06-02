@@ -120,7 +120,7 @@ export class KYC_Africa{
             await this.submit.click()
         }
     async fillStartInformation(){
-        await this.submit.click()
+        //await this.submit.click()
         //fill personal information
         await this.fillPersonalInformation()
         await this.inputAdress()
