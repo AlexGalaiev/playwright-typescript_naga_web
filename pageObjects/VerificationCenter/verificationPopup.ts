@@ -15,7 +15,7 @@ export class VerificationPopup{
         this.statusOfDocuments = page.locator('.status-blue')
     };
     async verificationPoupIsDisplyed(){
-        await this.verificationPopup.waitFor({timeout:1500});
+        await this.verificationPopup.waitFor({state:'visible'});
         return await this.verificationPopup
     };
     async skipVerificationStep(){
