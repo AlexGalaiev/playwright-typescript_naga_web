@@ -60,10 +60,12 @@ on:
       trigger:
         description: Shows what trigger was for launching tests
         required: false
+        default: "deploy"
         type: string
       component:
         description: Shows what component was released
         required: false
+        default: "production"
         type: string
   schedule:
     - cron: '30 4 * * 0-6'
