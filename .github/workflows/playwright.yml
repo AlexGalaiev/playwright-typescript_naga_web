@@ -57,6 +57,14 @@ on:
       ticket_id:
         description: 'Jira ticket ID (e.g. RG-1234)'
         type: string
+      trigger:
+        description: Shows what trigger was for launching tests
+        required: false
+        type: string
+      component:
+        description: Shows what component was released
+        required: false
+        type: string
   schedule:
     - cron: '30 4 * * 0-6'
     - cron: '20 3 * * 0-6'

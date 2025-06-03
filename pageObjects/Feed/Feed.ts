@@ -181,7 +181,7 @@ export class Feed {
   }
   async checkOpenTradeBtnIsVisible(){
     await this.page.locator("//button[text()='Trades']").click()
-    await this.page.waitForTimeout(500)
+    await this.page.waitForTimeout(2000)
     let btn = await this.page.locator("//button[text()='Open trade']").first()
     return await btn.isVisible()
   }
