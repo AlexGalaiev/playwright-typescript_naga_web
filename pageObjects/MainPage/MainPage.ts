@@ -197,7 +197,9 @@ export class MainPage{
         }
     }
     async getLoginedAccountId(){
-        return await this.page.locator(".selected-trading-account__info-item--login").textContent()
+        await this.page.waitForTimeout(1000)
+        let accountId = await this.page.locator(".selected-trading-account__info-item--login").textContent()
+        return accountId
     }
 
     async checkBackMenuElementIsVisible(nameOfElement: string){

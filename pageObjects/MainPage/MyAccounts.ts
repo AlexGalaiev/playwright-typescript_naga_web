@@ -10,7 +10,7 @@ export class MyAccounts{
     }
     
     async openUserMenu(){
-        await this.myAccountsHeaderBtn.click();
+        await this.myAccountsHeaderBtn.click()
     }
     async openMyAccountMenuItem(nameOfItem: string){
         let menu = await this.page.locator('.popover-content')

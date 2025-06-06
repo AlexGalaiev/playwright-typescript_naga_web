@@ -118,7 +118,8 @@ export class AddAcountForm{
         await account.click()
     }
     async clickAddAccountBtn(){
-        await this.addNewAccountBtn.waitFor({timeout:3000})
+        await this.addNewAccountBtn.waitFor({state:'visible'})
+        await this.page.waitForTimeout(1500)
         await this.addNewAccountBtn.click()
     }
     async acceptSuccessPopupWeb(){
