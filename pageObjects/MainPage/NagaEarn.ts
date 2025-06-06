@@ -32,4 +32,13 @@ export class NagaEarn{
     async switchToMyaccount(){
         await this.page.locator("//button[text()='Go to Accounts']").click()
     }
+    async disableNagaEarnIfExist(){
+        let disableBtn = await this.page.locator("//button[text()='Disable NAGA Earn']")
+        if(await disableBtn.isVisible()){
+            await disableBtn.click()
+            await this.page.waitForSelector("//span[text()='Disable NAGA Earn']",{state:'visible'})
+            await this.page.locator("//button[text()='Continue']").click()
+            await this.page.waitForSelector(".naga-earn__content", {state:'visible'})
+        }
+    }
 }

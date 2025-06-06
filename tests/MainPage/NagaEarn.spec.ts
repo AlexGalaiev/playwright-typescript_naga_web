@@ -23,6 +23,7 @@ test.describe('Naga EARN, WEB', async()=>{
             await mainPage.openBackMenuSubcategory('Earnings and Referrals', 'NAGA Earn')
         })
         await test.step('Open Naga EARN. Check AccountId, AccountStatus', async()=>{
+            await nagaEarn.disableNagaEarnIfExist()
             expect(await nagaEarn.getEarnHeaderTittle()).toEqual('Earn daily interest on the instantly available cash balance in your trading account.')
             await nagaEarn.enableEarn()
             expect(await nagaEarn.getAccountId()).toEqual(accountId)
