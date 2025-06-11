@@ -183,6 +183,7 @@ export class Feed {
     await this.page.locator("//button[text()='Trades']").click()
     await this.page.waitForTimeout(2000)
     let btn = await this.page.locator("//button[text()='Open trade']").first()
+    await btn.scrollIntoViewIfNeeded()
     return await btn.isVisible()
   }
 

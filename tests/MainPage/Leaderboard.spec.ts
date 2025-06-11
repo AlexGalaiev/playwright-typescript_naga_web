@@ -12,7 +12,10 @@ test.describe('WEB', async()=>{
     }
 
     const LeaderbordParams: leaderBoard[] = [
-        {brand:'@Markets', user: 'testTrading2Markets'}
+        {brand:'@Markets', user: 'testTrading2Markets'},
+        {brand:'@Capital', user: 'testTrading2'},
+        {brand:'@Mena', user: 'testTrading@naga.com'},
+        {brand:'@Africa', user: 'testTradingAfrica2@naga.com'}
     ]
 
     for(const{brand, user} of LeaderbordParams){
