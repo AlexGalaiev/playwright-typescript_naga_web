@@ -27,7 +27,9 @@ test.describe('WEB', async()=>{
         })
         await test.step('Open LeaderBoard and check top traders page', async()=>{
             await mainPage.openBackMenuCategory('Top Traders')
-            expect(await leaderBoard.goldTrader).not.toBeVisible()
+            expect(await leaderBoard.goldTrader).toBeVisible()
+            expect(await leaderBoard.silverTrader).toBeVisible()
+            expect(await leaderBoard.bronzeTrader).toBeVisible()
             
         })
         })
