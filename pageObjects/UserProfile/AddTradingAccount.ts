@@ -50,6 +50,7 @@ export class AddAcountForm{
         await this.page.locator("//h4[text()='Add New Account']").waitFor({state:'visible'})
     }
     async createMobileAccount(typeOfAccount: string, nameOfAccount: string, currency:string){
+        await this.page.waitForTimeout(500)
         let popup = await this.page.locator("//h4[text()='Add New Account']//..//..")
         let accountCheckbox = await this.page.locator(`//span[text()='${typeOfAccount}']//preceding-sibling::input`)
         await accountCheckbox.click()
@@ -57,6 +58,7 @@ export class AddAcountForm{
         await this.page.waitForTimeout(1000)
         await popup.locator(`//div[@data-currency="${currency}"]`).click()
         await popup.locator("//button[text()='Create Account']").click()
+        await this.page.waitForTimeout(1000)
     }
 
     async getMobileStatusMSG(){
@@ -139,5 +141,10 @@ export class AddAcountForm{
         await this.page.waitForTimeout(300)
         let name = await this.page.locator(`//span[text()='${accountNameText}']`)
         return await name.isVisible()
+    }
+    async waitForLiveAccount(){
+        let liveAccount = await this.page.locator("//div[text()='Currently logged in']//../following-sibling::div[@class='trading-account-item']")
+        await liveAccount.waitFor({state:'visible'})
+        await this.page.waitForTimeout(3000)
     }
 }

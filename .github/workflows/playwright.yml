@@ -144,7 +144,6 @@ jobs:
         RELEASE=${{inputs.release}}
         COMPONENT=${{inputs.component}}
         TRIGGER=${{inputs.trigger}}
-        echo "$RELEASE $COMPONENT $TRIGGER"
 
         CANARY="false"
         PROJECT=""

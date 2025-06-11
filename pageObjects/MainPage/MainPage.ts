@@ -290,4 +290,7 @@ export class MainPage{
     async checkMarketsBuzzIsVisible(){
         return await this.page.locator("#tradingcentral").isVisible()
     }
+    async waitForLiveAccount(){
+        await this.page.waitForSelector(".selected-trading-account__info-item--r", {state:'visible'})
+    }
 }   

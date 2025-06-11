@@ -28,6 +28,7 @@ test.describe("New Trading account", async()=>{
                 AppNAGA)
         })
         await test.step('Add second live account in My Accounts', async()=>{
+            await new MainPage(page).waitForLiveAccount()
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccount.clickAddAccountBtn()
@@ -59,6 +60,7 @@ test.describe("New Trading account", async()=>{
                 AppNAGA)
         })
         await test.step('Add second live account in My Accounts', async()=>{
+            await new MainPage(page).waitForLiveAccount()
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccount.clickAddAccountBtn()
@@ -86,6 +88,7 @@ test.describe("New Trading account", async()=>{
                 AppNAGA)
         })
         await test.step('Add second live account in My Accounts', async()=>{
+            await new MainPage(page).waitForLiveAccount()
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccount.clickAddAccountBtn()
@@ -118,6 +121,7 @@ test.describe("New Trading account", async()=>{
             )
         })
         await test.step('Add second live account in My Accounts', async()=>{
+            await new MainPage(page).waitForLiveAccount()
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('Trading Accounts')
             await addAccount.clickAddAccountBtn()
