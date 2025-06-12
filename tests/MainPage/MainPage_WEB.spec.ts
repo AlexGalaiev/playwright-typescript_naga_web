@@ -157,7 +157,8 @@ test.describe('WEB+Mobile',async()=>{
     }
 
     for(const{brand, user} of balanceTestParams){
-        test(`${brand} Mobile. Balance view on main page`, {tag: ['@mobile', '@UI', '@prodSanity']}, async({page, AppNAGA})=>{
+        test(`${brand} Mobile. Balance view on main page`, 
+            {tag: ['@mobile', '@UI', '@prodSanity']}, async({page, AppNAGA})=>{
             let signIn = new SignIn(page)
             let mainPage = new MainPage(page)
             await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
