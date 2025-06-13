@@ -72,6 +72,11 @@ on:
         required: false
         default: "11.04.2025"
         type: string
+      job_url:
+        description: Job url
+        required: false
+        default: ""
+        type: string
   schedule:
     - cron: '30 4 * * 0-6'
     - cron: '20 3 * * 0-6'
