@@ -124,7 +124,7 @@ test.describe('WEB', async()=>{
 }
     for(const{brand, user, currency} of tradeDetailsParams){
     test(`${brand} Share opened position in feed. User shares posiiton from Trade details`, 
-        {tag:['@trading', '@web', '@feed']}, async({page, AppNAGA}, testInfo)=>{
+        {tag:['@web', '@feed']}, async({page, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 45000)
         let postText
         let signIn = new SignIn(page)
@@ -159,7 +159,9 @@ test.describe('WEB', async()=>{
         await test.step('Open My accounts(header)-> social profile. Check post in user cabinet', async()=>{
             await myAccounts.openUserMenu()
             await myAccounts.openMyAccountMenuItem('My Social Profile')
-            expect(await feed.checkOpenTradeBtnIsVisible()).toBeTruthy()
+            await mainPage.refreshPage()
+            expect(await feed.getLastPublishedTime()).toContain('sec')
+            expect(await feed.getFirstPostInstrumentName()).toEqual(tradingInstrument)
         })
          await test.step('Close opened position', async()=>{
             await mainPage.openBackMenuPoint("my-trades")

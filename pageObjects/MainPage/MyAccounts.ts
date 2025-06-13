@@ -15,6 +15,7 @@ export class MyAccounts{
     async openMyAccountMenuItem(nameOfItem: string){
         let menu = await this.page.locator('.popover-content')
         await menu.locator(`//span[text()='${nameOfItem}']//..`).first().click()
+        await this.page.waitForTimeout(500)
     }
     async userLogOut(){
         await this.openMyAccountMenuItem('Logout')

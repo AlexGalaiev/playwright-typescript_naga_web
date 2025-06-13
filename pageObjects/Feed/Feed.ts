@@ -193,4 +193,19 @@ export class Feed {
     return await btn.isVisible()
   }
 
+  async getLastPublishedTime(){
+    await this.page.locator("//button[text()='Trades']").click()
+    await this.page.waitForTimeout(2000)
+    let post = await this.page.locator(".feed-item").first()
+    await post.scrollIntoViewIfNeeded()
+    let time = await post.locator('.user-message-header__user-info__publish-time').textContent()
+    return await time
+  }
+
+  async getFirstPostInstrumentName(){
+    let post = await this.page.locator(".feed-item").first()
+    let name = await post.locator(".feed-trade-body__symbol-name").textContent()
+    return await name
+  }
+
 }
