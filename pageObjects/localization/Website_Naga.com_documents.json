@@ -29,8 +29,8 @@
     "EN_Trade":{
         "Client Agreement":{
             "name":"CLIENT AGREEMENT",
-            "updated":"April ",
-            "year":"2025"
+            "updated":"                             Last Update: June 2025 ",
+            "year":"                             Last Update: June 2025 "
         },
         "Privacy Policy":{
             "name":"Privacy Policy",
@@ -39,8 +39,8 @@
         },
         "Cost and Charges Policy":{
             "name":"COST AND CHARGES POLICY",
-            "updated":"Version: May 2025 ",
-            "year":"Version: May 2025 "
+            "updated":"Version: June 2025 ",
+            "year":"Version: June 2025 "
         },
         "FATCA":{
             "name":"FOREIGN ACCOUNT TAX COMPLIANCE ACT ",
@@ -68,7 +68,7 @@
     "AE_Trade":{
         "Terms & Conditions":{
             "name":"CLIENT AGREEMENT",
-            "updated":"April ",
+            "updated":"June ",
             "year":"2025"
         },
         "Disclaimer":{

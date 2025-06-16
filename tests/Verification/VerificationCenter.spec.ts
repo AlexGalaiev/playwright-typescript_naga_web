@@ -18,7 +18,8 @@ test.describe("Verification center", async() => {
   ]
 
   for(const{testRailId, user, brand}of testVerificatrionParams){
-    test(`${testRailId} ${brand} Check My documents(My accounts) page`, {tag:"@verification"},async({page, AppNAGA})=>{
+    test(`${testRailId} ${brand} Check My documents(My accounts) page`, 
+      {tag:"@verification", annotation:{description:"https://keywaygroup.atlassian.net/browse/RG-9752", type:'ticket'}},async({page, AppNAGA})=>{
       let signIn = new SignIn(page);
       let myAccounts = new MyAccounts(page);
       let verificationPopup = new VerificationPopup(page);

@@ -197,6 +197,7 @@ export class Feed {
     await this.page.locator("//button[text()='Trades']").click()
     await this.page.waitForTimeout(2000)
     let post = await this.page.locator(".feed-item").first()
+    await post.waitFor({state:'visible'})
     await post.scrollIntoViewIfNeeded()
     let time = await post.locator('.user-message-header__user-info__publish-time').textContent()
     return await time

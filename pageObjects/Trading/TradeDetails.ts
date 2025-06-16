@@ -91,8 +91,7 @@ export class TradeDetails{
             request.url().includes('https://api-v2.naga.com/user/activity/order/share') && request.method() === 'POST'),
             this.page.locator("//button[text()='Share']").click()
         ])
-        //await this.page.locator("//button[text()='Share']").click()
-        await this.page.waitForTimeout(1500)
+        await this.page.waitForTimeout(3000)
         return postText
     }
 }
