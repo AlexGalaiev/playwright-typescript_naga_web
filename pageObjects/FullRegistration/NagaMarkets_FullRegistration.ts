@@ -144,5 +144,27 @@ export class FullRegistration{
         await this.clickSubmitBtn();
         await this.clickSubmitBtn();
     }
+
+    //new designe
+    async singeSelectNew(QuestionName: string, level: string){
+        await this.page.waitForTimeout(700)
+        let question = await this.page.locator(`//p[text()='${QuestionName}']`)
+        let quiz = new KYC_answerFunctions(KYC_SCORE[level])
+        await question.textContent() === await quiz.getQuizText(QuestionName)
+        //get answer from json 
+        let answer = await quiz.getQuizAnswer(QuestionName)
+        //get answer on ui
+        await this.page.locator(``)
+
+    }
+
+    // async chooseCountryNew(country:string){
+    //     await this.page.locator("//label[text()='Country']//..").click()
+    //     let searchField = await this.page.locator("#country_expected_source_of_funds")
+    //     await searchField.waitFor({state:'visible'})
+    //     await searchField.pressSequentially(country)
+    //     await this.page.waitForTimeout(500)
+
+    // }
     
 }

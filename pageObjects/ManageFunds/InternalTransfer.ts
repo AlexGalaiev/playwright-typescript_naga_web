@@ -43,9 +43,10 @@ export class InternalTransfer{
     }
 
     async make1$InternalTransfer(){
-        await this.valueInternalTransfer.pressSequentially('1')
-        await this.page.waitForTimeout(1000);
-        await this.submitBtn.click()
+        await this.page.waitForTimeout(2000)
+        await this.valueInternalTransfer.pressSequentially('5')
+        await this.page.waitForTimeout(1000)
+        await this.submitBtn.press('Enter')
     }
 
     async checkSuccessPopupText(){
