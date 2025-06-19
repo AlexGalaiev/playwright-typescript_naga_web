@@ -1,7 +1,8 @@
 import {test as base, BrowserContext, chromium as baseChromium, webkit as webBrowser, TestInfo, Page} from "@playwright/test";
 import { TestRailIntegration } from "./testrail_setup";
 import { TestError } from "playwright/types/testReporter";
-import { VPN } from "./pageObjects/Website/VPN";
+import { createVpnApp, VPN } from "./pageObjects/Website/VPN";
+import { BaseTest } from "./pageObjects/baseTest";
 
 export type TestOptions = {
     AppNAGA: string;
@@ -27,6 +28,12 @@ export type TestOptions = {
     proxyPageBH: any;
     proxyPageES: any;
     page2: Page;
+    app: BaseTest;
+    appSpain: BaseTest;
+    appUAE: BaseTest;
+    appUA: BaseTest;
+    appIT: BaseTest;
+    appSA: BaseTest
 }
 
 export const test = base.extend<TestOptions>({
@@ -167,6 +174,39 @@ export const test = base.extend<TestOptions>({
         let page = await browserProxyContextSpain.newPage()
         await use(page)
         await browserProxyContextSpain.close()
-    }
-
+    }, 
+    app: async({ page }, use) =>{
+        const context = new BaseTest(page)
+        await use(context)
+    },
+    appSpain: async({}, use) =>{
+        const {app, context, browser} = await createVpnApp('ES')
+        await use(app)
+        await context.close()
+        await browser.close()
+    },
+    appUAE: async({}, use) =>{
+        const {app, context, browser} = await createVpnApp('UAE')
+        await use(app)
+        await context.close()
+        await browser.close()
+    },
+    appUA: async({}, use) =>{
+        const {app, context, browser} = await createVpnApp('UA')
+        await use(app)
+        await context.close()
+        await browser.close()
+    },
+    appIT: async({}, use) =>{
+        const {app, context, browser} = await createVpnApp('IT')
+        await use(app)
+        await context.close()
+        await browser.close()
+    },
+    appSA: async({}, use) =>{
+        const {app, context, browser} = await createVpnApp('SA')
+        await use(app)
+        await context.close()
+        await browser.close()
+    },
 })

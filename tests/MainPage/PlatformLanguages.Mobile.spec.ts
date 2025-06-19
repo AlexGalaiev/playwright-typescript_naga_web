@@ -1,7 +1,4 @@
 import { expect } from "@playwright/test"
-import { GusetLogin } from "../../pageObjects/MainPage/GuestLogin"
-import { MainPage } from "../../pageObjects/MainPage/MainPage"
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText"
 
@@ -15,23 +12,21 @@ test.describe('Mobile', async()=>{
     ]
 
     for(const{brand, languages} of languageParams){
-    test(`${brand} Platform languages on guest mode`, {tag:['@UI', '@mobile']}, async({proxyPage, AppNAGA}, testInfo)=>{
+    test(`${brand} Platform languages on guest mode`, {tag:['@UI', '@mobile']}, async({appIT, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
-        let signUp = new SignUp(proxyPage)
-        let guestPage = new GusetLogin(proxyPage)
         await test.step(`${brand} Open guest login page`, async()=>{
-            await signUp.goto(AppNAGA, "feed")
+            await appIT.signUp.goto(AppNAGA, "feed")
         })
         await test.step('Choose language. And check btns localization. Also test checks popup title, and signIn, signUp btn', async()=>{
             let localBtn = await new getLocalization("/pageObjects/localization/Tutorial.json")
             for(let index in languages){
-                await guestPage.changeLaguageTo(languages[index])
-                expect(await guestPage.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))).toBeTruthy()
-                expect(await guestPage.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn2'))).toBeTruthy()
-                await guestPage.openTutorPopup(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))
-                await guestPage.openGuestLoginPage()
-                expect(await guestPage.getSignInBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signIn'))
-                expect(await guestPage.getSignUpBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signUp'))
+                await appIT.guestLogin.changeLaguageTo(languages[index])
+                expect(await appIT.guestLogin.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))).toBeTruthy()
+                expect(await appIT.guestLogin.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn2'))).toBeTruthy()
+                await appIT.guestLogin.openTutorPopup(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))
+                await appIT.guestLogin.openGuestLoginPage()
+                expect(await appIT.guestLogin.getSignInBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signIn'))
+                expect(await appIT.guestLogin.getSignUpBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signUp'))
             }})
     })}
 
@@ -40,23 +35,21 @@ test.describe('Mobile', async()=>{
     ]
 
     for(const{brand, languages} of languageParamsCapital){
-    test(`${brand} Platform languages on guest mode`, {tag:['@UI', '@mobile']}, async({proxyPageUA, AppNAGA}, testInfo)=>{
+    test(`${brand} Platform languages on guest mode`, {tag:['@UI', '@mobile']}, async({appUA, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
-        let signUp = new SignUp(proxyPageUA)
-        let guestPage = new GusetLogin(proxyPageUA)
         await test.step(`${brand} Open guest login page`, async()=>{
-            await signUp.goto(AppNAGA, "feed")
+            await appUA.signUp.goto(AppNAGA, "feed")
         })
         await test.step('Choose language. And check btns localization. Also test checks popup title, and signIn, signUp btn', async()=>{
             let localBtn = await new getLocalization("/pageObjects/localization/Tutorial.json")
             for(let index in languages){
-                await guestPage.changeLaguageTo(languages[index])
-                expect(await guestPage.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))).toBeTruthy()
-                expect(await guestPage.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn2'))).toBeTruthy()
-                await guestPage.openTutorPopup(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))
-                await guestPage.openGuestLoginPage()
-                expect(await guestPage.getSignInBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signIn'))
-                expect(await guestPage.getSignUpBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signUp'))
+                await appUA.guestLogin.changeLaguageTo(languages[index])
+                expect(await appUA.guestLogin.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))).toBeTruthy()
+                expect(await appUA.guestLogin.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn2'))).toBeTruthy()
+                await appUA.guestLogin.openTutorPopup(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))
+                await appUA.guestLogin.openGuestLoginPage()
+                expect(await appUA.guestLogin.getSignInBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signIn'))
+                expect(await appUA.guestLogin.getSignUpBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signUp'))
             }})
     })}
 
@@ -65,23 +58,21 @@ test.describe('Mobile', async()=>{
     ]
 
     for(const{brand, languages} of languageParamsMena){
-    test(`${brand} Platform languages on guest mode`, {tag:['@UI', '@mobile']}, async({proxyPageUAE, AppNAGA}, testInfo)=>{
+    test(`${brand} Platform languages on guest mode`, {tag:['@UI', '@mobile']}, async({appUAE, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 25000)
-        let signUp = new SignUp(proxyPageUAE)
-        let guestPage = new GusetLogin(proxyPageUAE)
         await test.step(`${brand} Open guest login page`, async()=>{
-            await signUp.goto(AppNAGA, "feed")
+            await appUAE.signUp.goto(AppNAGA, "feed")
         })
         await test.step('Choose language. And check btns localization. Also test checks popup title, and signIn, signUp btn', async()=>{
             let localBtn = await new getLocalization("/pageObjects/localization/Tutorial.json")
             for(let index in languages){
-                await guestPage.changeLaguageTo(languages[index])
-                expect(await guestPage.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))).toBeTruthy()
-                expect(await guestPage.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn2'))).toBeTruthy()
-                await guestPage.openTutorPopup(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))
-                await guestPage.openGuestLoginPage()
-                expect(await guestPage.getSignInBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signIn'))
-                expect(await guestPage.getSignUpBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signUp'))
+                await appUAE.guestLogin.changeLaguageTo(languages[index])
+                expect(await appUAE.guestLogin.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))).toBeTruthy()
+                expect(await appUAE.guestLogin.checkTutorPopupBtnIsVisible(await localBtn.getTutorialsBtn(brand, languages[index], 'btn2'))).toBeTruthy()
+                await appUAE.guestLogin.openTutorPopup(await localBtn.getTutorialsBtn(brand, languages[index], 'btn1'))
+                await appUAE.guestLogin.openGuestLoginPage()
+                expect(await appUAE.guestLogin.getSignInBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signIn'))
+                expect(await appUAE.guestLogin.getSignUpBtnText()).toEqual(await localBtn.getTutorialsBtn(brand, languages[index], 'signUp'))
             }})
     })}
 })

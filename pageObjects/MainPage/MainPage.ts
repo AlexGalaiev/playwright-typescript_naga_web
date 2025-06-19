@@ -293,4 +293,8 @@ export class MainPage{
     async waitForLiveAccount(){
         await this.page.waitForSelector(".selected-trading-account__info-item--r", {state:'visible'})
     }
+    async waitForAccountTobeDisplayed(acname:string){
+        await this.page.waitForSelector(`//h2[@title='${acname}']`, {state:"visible"})
+        await this.page.waitForTimeout(500)
+    }
 }   

@@ -1,7 +1,4 @@
 import { expect } from "@playwright/test";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { MyTrades } from "../../pageObjects/Trading/MyTrades";
 import { test } from "../../test-options"
 
 test.describe('WEB. ', async()=>{
@@ -19,39 +16,36 @@ test.describe('WEB. ', async()=>{
     ]
 
     for(const{user, brand}of testMyTradesParams){
-        test(`${brand} My trades. Filter closed positions by date.`, {tag:['@trading','@web']},async({page, AppNAGA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 20000)
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
-            let myTrades = new MyTrades(page)
-            let NumberOfTrades_Today
-            let NumberOfTrades_7Days
-            let NumberOfTrades_30Days
-            await test.step(`Login to platform ny user - ${user}, brand - ${brand}`, async()=>{
-                await signIn.goto(AppNAGA, "login");
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
-            })
-            await test.step(`Open My-trades and switch to Close tra`, async()=>{
-                await mainPage.openBackMenuPoint('my-trades')
-                await myTrades.openCloseTradesTab()
-            })
-            await test.step(`Install filter - Today, and check number of closed trades in UI`, async()=>{
-                await myTrades.setFilterDate('Today')
-                NumberOfTrades_Today = await myTrades.getNumberOfClosedTrades()
-            })
-            await test.step(`Install filter - Today, and check number of closed trades in UI`, async()=>{
-                await myTrades.setFilterDate('Last 7 Days')
-                NumberOfTrades_7Days = await myTrades.getNumberOfClosedTrades()
-            })
-            await test.step(`Install filter - Today, and check number of closed trades in UI`, async()=>{
-                await myTrades.setFilterDate('Last 30 Days')
-                NumberOfTrades_30Days = await myTrades.getNumberOfClosedTrades()
-            })
-            await test.step('Check that number of trades are changing with changing filter',async()=>{
-                expect(Number(NumberOfTrades_30Days)).toBeGreaterThan(Number(NumberOfTrades_7Days))
-                expect(Number(NumberOfTrades_7Days)).toBeGreaterThan(Number(NumberOfTrades_Today))
-            })
+        test(`${brand} My trades. Filter closed positions by date.`, {tag:['@trading','@web']},async({app, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 20000)
+        let NumberOfTrades_Today
+        let NumberOfTrades_7Days
+        let NumberOfTrades_30Days
+        await test.step(`Login to platform ny user - ${user}, brand - ${brand}`, async()=>{
+            await app.signIn.goto(AppNAGA, "login");
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
         })
+        await test.step(`Open My-trades and switch to Close tra`, async()=>{
+            await app.mainPage.openBackMenuPoint('my-trades')
+            await app.myTrades.openCloseTradesTab()
+        })
+        await test.step(`Install filter - Today, and check number of closed trades in UI`, async()=>{
+            await app.myTrades.setFilterDate('Today')
+            NumberOfTrades_Today = await app.myTrades.getNumberOfClosedTrades()
+        })
+        await test.step(`Install filter - Today, and check number of closed trades in UI`, async()=>{
+            await app.myTrades.setFilterDate('Last 7 Days')
+            NumberOfTrades_7Days = await app.myTrades.getNumberOfClosedTrades()
+        })
+        await test.step(`Install filter - Today, and check number of closed trades in UI`, async()=>{
+            await app.myTrades.setFilterDate('Last 30 Days')
+            NumberOfTrades_30Days = await app.myTrades.getNumberOfClosedTrades()
+        })
+        await test.step('Check that number of trades are changing with changing filter',async()=>{
+            expect(Number(NumberOfTrades_30Days)).toBeGreaterThan(Number(NumberOfTrades_7Days))
+            expect(Number(NumberOfTrades_7Days)).toBeGreaterThan(Number(NumberOfTrades_Today))
+        })
+    })
     }
 
     const tradeParams: myTrades[] = [
@@ -60,32 +54,29 @@ test.describe('WEB. ', async()=>{
     ]
     for(const{user, brand} of tradeParams){
         test(`${brand} My trades. Filter close positions by type`, 
-            {tag:['@trading','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9396',type:'ticket'}},async({page, AppNAGA}, testInfo)=>{
+            {tag:['@trading','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9396',type:'ticket'}},async({app, AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 10000)
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
-            let myTrades = new MyTrades(page)
             let allTrades;
             let autocopiedTrades;
             let myAllTrades;
             await test.step(`Login to platform ny user - ${user}, brand - ${brand}`, async()=>{
-                await signIn.goto(AppNAGA, "login");
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
+                await app.signIn.goto(AppNAGA, "login");
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
             })
             await test.step(`Open My-trades and switch to Close tra`, async()=>{
-                await mainPage.openBackMenuPoint('my-trades')
-                await myTrades.openCloseTradesTab()
-                allTrades = await myTrades.getNumberOfClosedTrades()
-                await myTrades.openTypeFilter()
+                await app.mainPage.openBackMenuPoint('my-trades')
+                await app.myTrades.openCloseTradesTab()
+                allTrades = await app.myTrades.getNumberOfClosedTrades()
+                await app.myTrades.openTypeFilter()
             })
             await test.step(`Check autocopied closed positions`, async()=>{
-                await myTrades.setTypeOfClosedPosition('Autocopied Trades')
-                autocopiedTrades = await myTrades.getNumberOfClosedTrades()
-                expect(await myTrades.checkSourceOfTradeVisibility('OWN TRADE')).not.toBeTruthy()
+                await app.myTrades.setTypeOfClosedPosition('Autocopied Trades')
+                autocopiedTrades = await app.myTrades.getNumberOfClosedTrades()
+                expect(await app.myTrades.checkSourceOfTradeVisibility('OWN TRADE')).not.toBeTruthy()
             })
             await test.step(`Check autocopied closed positions`, async()=>{
-                await myTrades.setTypeOfClosedPosition('My Trades')
-                myAllTrades = await myTrades.getNumberOfClosedTrades()
+                await app.myTrades.setTypeOfClosedPosition('My Trades')
+                myAllTrades = await app.myTrades.getNumberOfClosedTrades()
             })
             await test.step('Check filtering of trades via different type', async()=>{
                 expect(Number(allTrades)).toBeGreaterThan(Number(myAllTrades))

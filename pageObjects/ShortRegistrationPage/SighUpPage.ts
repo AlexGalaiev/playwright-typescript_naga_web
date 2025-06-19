@@ -61,6 +61,7 @@ export class SignUp{
         await this.submitBtn.scrollIntoViewIfNeeded()
         await this.submitBtn.click()
         await new SignIn(this.page).closeLearnMoreIfExist()
+        await this.page.waitForTimeout(1000)
     };
     async createCfdUser_All(email: string, password: string,  country: string, countryCode: string, phoneNumber: string){
         await this.page.waitForLoadState()

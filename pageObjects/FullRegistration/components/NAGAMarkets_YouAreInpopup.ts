@@ -19,13 +19,16 @@ export class YouAreInNagaMarkets{
         return await this.description.textContent();
     }
     async clickOpenRealMoneyAccount(){
+        await this.page.waitForSelector(".register-success-modal__element",{state:'visible'})
         return await this.openRealAccount.click();
     }
     async clickExplorePlatform(){
+        await this.page.waitForSelector(".register-success-modal__element",{state:'visible'})
         await this.explorePlatform.click();
         await this.page.waitForTimeout(500)
     }
     async openNagaPlatform(){
+        await this.page.waitForSelector(".register-success-modal__element",{state:'visible'})
         await this.explorePlatform.click()
     }
     async openNagaKyc(){
@@ -34,9 +37,11 @@ export class YouAreInNagaMarkets{
         await openKycBtn.click()
     }
     async checkExploreBtn(){
+        await this.page.waitForSelector(".register-success-modal__element",{state:'visible'})
         return await this.explorePlatform.isVisible()
     }
     async clickDepositNow(){
+        await this.page.waitForSelector(".register-success-modal__element",{state:'visible'})
         await this.depositNow.click()
     }
 }

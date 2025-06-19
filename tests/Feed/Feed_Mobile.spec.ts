@@ -1,10 +1,5 @@
 import { expect } from "playwright/test";
-import { Feed } from "../../pageObjects/Feed/Feed";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
-import { UserProfile } from "../../pageObjects/UserProfile/UserProfile";
-import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
 test.describe("Feed", async()=>{
     
@@ -21,29 +16,26 @@ const testFeedParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedParams){
     test(`${testRailId} Main actions for post: create, edit, delete ${brand}`,
-        {tag:['@feed', '@prodSanity','@mobile']}, async({page, AppNAGA}, testInfo)=>{
+        {tag:['@feed', '@prodSanity','@mobile']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
-        let signIn = new SignIn(page);
-        let feed = new Feed(page)
-        let mainPage = new MainPage(page)
         await test.step(`Login by ${user}. ${brand} brand`, async()=>{
-            await signIn.goto(AppNAGA,'login');
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await app.signIn.goto(AppNAGA,'login');
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Test opens user profile and delete previously created posts (if they exist)", async()=>{
-            await mainPage.openMobileBackMenuPoint('My Social Profile')
-            await feed.closeOpenedPost(user);
-            await  mainPage.openMobileBackMenuPoint('Feed')
+            await app.mainPage.openMobileBackMenuPoint('My Social Profile')
+            await app.feed.closeOpenedPost(user);
+            await app.mainPage.openMobileBackMenuPoint('Feed')
         })
-        await feed.openCreatePostForm()
+        await app.feed.openCreatePostForm()
         await test.step("Test create post with text(Hello World) and edit text to Bye Bye text", async()=>{
-            let previousText = await feed.addTextToPost('Hello World')
-            await feed.editExistedPost(user);
-            let modifiedTex = await feed.addTextToPost('Bye Bye')
+            let previousText = await app.feed.addTextToPost('Hello World')
+            await app.feed.editExistedPost(user);
+            let modifiedTex = await app.feed.addTextToPost('Bye Bye')
             expect(await previousText).not.toEqual(modifiedTex)
         })
         await test.step("Test delete post", async()=>{
-            await feed.deleteExistedPost(user)
+            await app.feed.deleteExistedPost(user)
         })
     })} 
 
@@ -55,33 +47,29 @@ const testFeedParamsActions: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedParamsActions){
     test(`${testRailId} ${brand} Main actions for post: Action - Like`,
-        {tag:['@feed', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
+        {tag:['@feed', '@mobile']}, async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 50000);
-    let signIn = new SignIn(page);
-    let feed = new Feed(page)
-    let userProfile = new UserProfile(page)
-    let mainPage = new MainPage(page)
     await test.step(`login by user ${user} to ${brand} platform`, async()=>{
-        await signIn.goto(AppNAGA,'login');
-        await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+        await app.signIn.goto(AppNAGA,'login');
+        await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
     })
     await test.step("Closed opened posts is they exist (Test goes to User profile and delete posts)", async()=>{
-        await mainPage.openMobileBackMenuPoint('My Social Profile')
-        await feed.closeOpenedPost(user);
-        await mainPage.openMobileBackMenuPoint('Feed')
+        await app.mainPage.openMobileBackMenuPoint('My Social Profile')
+        await app.feed.closeOpenedPost(user);
+        await app.mainPage.openMobileBackMenuPoint('Feed')
     })
     await test.step("Add new post to feed with text Hello world", async()=>{
-        await feed.openCreatePostForm()
-        await feed.addTextToPost('Hello World')
+        await app.feed.openCreatePostForm()
+        await app.feed.addTextToPost('Hello World')
     })
     await test.step('User likes a post', async()=>{
-        await feed.likePost(user);
-        expect(await feed.checkLike(user)).toEqual(user)
+        await app.feed.likePost(user);
+        expect(await app.feed.checkLike(user)).toEqual(user)
     })
     await test.step('Check user profile. Check who liked post. And delete post', async()=>{
-        await feed.checkUserPage(user);
-        expect(await userProfile.getUserNameText()).toEqual(user)
-        await feed.closeOpenedPost(user);
+        await app.feed.checkUserPage(user);
+        expect(await app.userProfile.getUserNameText()).toEqual(user)
+        await app.feed.closeOpenedPost(user);
     })
 })
 }
@@ -94,34 +82,31 @@ const testFeedCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testFeedCommentParams){
     test(`${testRailId} ${brand} Main actions for post: Comment a post ${brand}`, 
-        {tag:['@feed', '@mobile']},async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 50000);
-        let feed = new Feed(page);
-        let signIn = new SignIn(page);
-        let mainPage = new MainPage(page)
+        {tag:['@feed', '@mobile']},async({app, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 50000)
         await test.step(`login by user ${user} to ${brand} platform`, async()=>{
-            await signIn.goto(AppNAGA,'login');
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await app.signIn.goto(AppNAGA,'login');
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("In user profile, closed opened posts is they exist", async()=>{
-            await mainPage.openMobileBackMenuPoint('My Social Profile')
-            await feed.closeOpenedPost(user);
-            await mainPage.openMobileBackMenuPoint('Feed')
+            await app.mainPage.openMobileBackMenuPoint('My Social Profile')
+            await app.feed.closeOpenedPost(user);
+            await app.mainPage.openMobileBackMenuPoint('Feed')
         })
         await test.step("Add new post to feed with text Hello world", async()=>{
-            await feed.openCreatePostForm()
-            await feed.addTextToPost('Hello World')
+            await app.feed.openCreatePostForm()
+            await app.feed.addTextToPost('Hello World')
         })
         await test.step("Comment previously created post", async()=>{
-            await feed.addCommentToPost(user, 'test commnet')
+            await app.feed.addCommentToPost(user, 'test commnet')
         })
         await test.step('In user profile, check text of comment', async()=>{
-            await mainPage.openMobileBackMenuPoint('My Social Profile')
-            expect(await feed.checkTextOfPost(user)).toContain('test commnet')
-            await feed.closeTab()
+            await app.mainPage.openMobileBackMenuPoint('My Social Profile')
+            expect(await app.feed.checkTextOfPost(user)).toContain('test commnet')
+            await app.feed.closeTab()
         })
         await test.step("Close post ", async()=>{
-            await feed.closeOpenedPost(user);
+            await app.feed.closeOpenedPost(user);
         })
     })
 }
@@ -134,32 +119,28 @@ const testShareCommentParams: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testShareCommentParams){
     test(`${testRailId} ${brand} Main action for post: Share a post ${brand}`, 
-        {tag:['@feed', '@mobile']},async({page, AppNAGA}, testInfo)=>{
+        {tag:['@feed', '@mobile']},async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
-        let feed = new Feed(page);
-        let signIn = new SignIn(page);
-        let mainPage = new MainPage(page)
         await test.step(`login by user ${user} to ${brand} platform`, async()=>{
-            await signIn.goto(AppNAGA,'login');
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await app.signIn.goto(AppNAGA,'login');
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("In user profile, close posts if they exist", async()=>{
-            //await myAccounts.openUserMenu()
-            await mainPage.openMobileBackMenuPoint('My Social Profile')
-            await feed.closeOpenedPost(user);
-            await mainPage.openMobileBackMenuPoint('Feed')
+            await app.mainPage.openMobileBackMenuPoint('My Social Profile')
+            await app.feed.closeOpenedPost(user);
+            await app.mainPage.openMobileBackMenuPoint('Feed')
         })
         await test.step("Add new post to feed with text Hello world", async()=>{
-            await feed.openCreatePostForm()
-            await feed.addTextToPost('Hello World')
+            await app.feed.openCreatePostForm()
+            await app.feed.addTextToPost('Hello World')
         })
         await test.step("Share a post + adding text", async()=>{
-            await feed.sharedToNagaFeed(user)
-            await feed.addSharedTextToPost("test text")
+            await app.feed.sharedToNagaFeed(user)
+            await app.feed.addSharedTextToPost("test text")
         })
         await test.step("Delete posts", async()=>{
-            await feed.deleteSharedPost('test text')
-            await feed.deleteExistedPost(user)
+            await app.feed.deleteSharedPost('test text')
+            await app.feed.deleteExistedPost(user)
         })
     })
 }
@@ -172,27 +153,23 @@ const testParamsUserCabinet: testFeedtypes[] = [
 ]
 for(const{testRailId, brand, user}of testParamsUserCabinet){
     test(`${testRailId} ${brand} Check post in user profile ${brand}`, 
-        {tag:['@feed', '@mobile']}, async({page,AppNAGA}, testInfo)=>{
+        {tag:['@feed', '@mobile']}, async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
-        let mainPage = new MainPage(page);
-        let userProfile = new UserProfile(page)
-        let signIn = new SignIn(page);
-        let feed = new Feed(page);
         let textForPost = 'Hello World'
         await test.step(`login by user ${user} to ${brand} platform`, async()=>{
-            await signIn.goto(AppNAGA,'login');
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await app.signIn.goto(AppNAGA,'login');
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Open user profile cabinet and close previously created posts", async()=>{
-            await mainPage.openMobileBackMenuPoint('My Social Profile')
-            await feed.closeOpenedPost(user);
+            await app.mainPage.openMobileBackMenuPoint('My Social Profile')
+            await app.feed.closeOpenedPost(user);
         })
         await test.step('Add new post from user profile', async()=>{
-            await userProfile.addTextToPost(textForPost);
-            expect(await userProfile.getPostTextMessage()).toEqual(textForPost);
+            await app.userProfile.addTextToPost(textForPost);
+            expect(await app.userProfile.getPostTextMessage()).toEqual(textForPost);
         })
         await test.step('Delete post', async()=>{
-            await userProfile.deletePost()
+            await app.userProfile.deletePost()
         })
     })
 }
@@ -211,31 +188,28 @@ const testNotVerifieduser: testFeedNotVeried[] = [
 ]
 for(const{testRailId, brand, user, localization}of testNotVerifieduser){
     test(`${testRailId} Not verified user tries to create new post${brand}`, 
-        {tag:['@feed', '@mobile']},async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 30000);
-        let signIn = new SignIn(page);
-        let feed = new Feed(page)
-        let mainPage = new MainPage(page)
+        {tag:['@feed', '@mobile']},async({app, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 30000)
         await test.step(`Login to ${brand} platform with not verified ${user} user`, async()=>{
-            await signIn.goto(AppNAGA, 'login');
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await app.signIn.goto(AppNAGA, 'login');
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step("Delete previously created posts, if exist(in user profile)", async()=>{
-            await mainPage.openMobileBackMenuPoint('My Social Profile')
-            await feed.closeOpenedPost(user);
-            await mainPage.openMobileBackMenuPoint('Feed')
+            await app.mainPage.openMobileBackMenuPoint('My Social Profile')
+            await app.feed.closeOpenedPost(user);
+            await app.mainPage.openMobileBackMenuPoint('Feed')
         })
         await test.step('User tryes to make post without approval', async()=>{
-            await feed.openCreatePostForm()
+            await app.feed.openCreatePostForm()
         })
         await test.step("Create and edit post", async()=>{
-            let previousText = await feed.addTextToPost('Hello World')
-            await feed.editExistedPost(user);
-            let modifiedTex = await feed.addTextToPost('Bye Bye')
+            let previousText = await app.feed.addTextToPost('Hello World')
+            await app.feed.editExistedPost(user);
+            let modifiedTex = await app.feed.addTextToPost('Bye Bye')
             expect(await previousText).not.toEqual(modifiedTex)
         })
         await test.step("Delete post", async()=>{
-            await feed.deleteExistedPost(user)
+            await app.feed.deleteExistedPost(user)
         })
     })
     }})

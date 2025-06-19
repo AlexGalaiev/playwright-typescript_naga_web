@@ -1,162 +1,135 @@
 import { expect } from "@playwright/test"
-import { AutoCopy } from "../../pageObjects/AutoCopy/autocopy"
-import { MainPage } from "../../pageObjects/MainPage/MainPage"
-import { SignIn } from "../../pageObjects/SignIn/SignInPage"
-import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage"
-import { MyTrades } from "../../pageObjects/Trading/MyTrades"
-import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage"
-import { UserProfile } from "../../pageObjects/UserProfile/UserProfile"
 import { test } from "../../test-options"
 
 test.describe('Autocopy Mobile', async()=>{
 
     test('Mobile. Autocopy of opened position (Mena user) by Capital user', 
-        {tag: ['@autocopy', '@mobile']}, 
-        async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
+        {tag: ['@autocopy', '@mobile']}, async({app, appUAE, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000)
-        let signInCapital = new SignIn(page)
-        let signIn2Mena = new SignIn(proxyPageUAE)
-        let mainPageCapital = new MainPage(page)
-        let mainPageMena = new MainPage(proxyPageUAE)
         let tradingInstrument = "Solana/USD";
         let CapitalUser = 'testTrading2'
         let MenaUser = 'testTradingMena'
-        let myTradesСapital = new MyTrades(page)
-        let myTradesMena = new MyTrades(proxyPageUAE)
-        let autoCopyCapital = new AutoCopy(page)
-        let instrumentsMena = new AllInstruments(proxyPageUAE)
-        let newPositionMena = new NewPosition(proxyPageUAE)
-        await signInCapital.goto(AppNAGA, 'login')
+        await app.signIn.goto(AppNAGA, 'login')
         await test.step(`Login by Capital user ${CapitalUser}`, async()=>{
-            await signInCapital.switchPage(page)
-            await signInCapital.signInUserToPlatform(CapitalUser, process.env.USER_PASSWORD || "")
+            await app.signIn.switchPage()
+            await app.signIn.signInUserToPlatform(CapitalUser, process.env.USER_PASSWORD || "")
         })
         await test.step(`Check Copy Trading tab and close trade connections if they exist`, async()=>{
-            await mainPageCapital.openMobileBackMenuPoint('Copy Trading')
-            await autoCopyCapital.chooseAutocopyTab('Active')
-            await autoCopyCapital.closeMobileAutoCopiesIfExist()
+            await app.mainPage.openMobileBackMenuPoint('Copy Trading')
+            await app.autoCopy.chooseAutocopyTab('Active')
+            await app.autoCopy.closeMobileAutoCopiesIfExist()
         })
         await test.step(`Autocopy ${MenaUser} user via search`, async()=>{
-            await mainPageCapital.searchMobileUser(MenaUser)
-            await new UserProfile(page).StartAutoCopy()
-            await autoCopyCapital.StartAutoCopyPopup('2')
+            await app.mainPage.searchMobileUser(MenaUser)
+            await app.userProfile.StartAutoCopy()
+            await app.autoCopy.StartAutoCopyPopup('2')
         })
         await test.step('Close opened positions for Capital user if they exist',async()=>{
-            await mainPageCapital.openMobileMenu('My Trades')
-            await myTradesСapital.closeMobilePositionsIfExist()
+            await app.mainPage.openMobileMenu('My Trades')
+            await app.myTrades.closeMobilePositionsIfExist()
         })
         await test.step(`Switch to Naga mena user-${MenaUser}`,async()=>{
-            await signIn2Mena.switchPage(proxyPageUAE)
-            await signIn2Mena.goto(AppNAGA, 'login')
-            await signIn2Mena.signInUserToPlatform(MenaUser, process.env.USER_PASSWORD || "")
+            await appUAE.signIn.switchPage()
+            await appUAE.signIn.goto(AppNAGA, 'login')
+            await appUAE.signIn.signInUserToPlatform(MenaUser, process.env.USER_PASSWORD || "")
         })
         await test.step('Check previously opened positions and close if they exist', async()=>{
-            await mainPageMena.openMobileMenu('My Trades')
-            await myTradesMena.closeMobilePositionsIfExist()
+            await appUAE.mainPage.openMobileMenu('My Trades')
+            await appUAE.myTrades.closeMobilePositionsIfExist()
         })
         await test.step(`Open position of ${tradingInstrument}`, async()=>{
-            await mainPageMena.openMobileMenu('Trade')
-            await instrumentsMena.openMobilePosition(tradingInstrument, 'SELL')
-            await newPositionMena.installMobileLotsSize(55, 2)
-            await newPositionMena.submitPosition()
+            await appUAE.mainPage.openMobileMenu('Trade')
+            await appUAE.instruments.openMobilePosition(tradingInstrument, 'SELL')
+            await appUAE.newPosition.installMobileLotsSize(55, 2)
+            await appUAE.newPosition.submitPosition()
         })
         await test.step('Check source of trade for Mena user', async()=>{
-            await mainPageMena.openMobileMenu('My Trades')
-            expect(await myTradesMena.getMobileSourceOftrade()).toEqual('OWN TRADE')
+            await appUAE.mainPage.openMobileMenu('My Trades')
+            expect(await appUAE.myTrades.getMobileSourceOftrade()).toEqual('OWN TRADE')
         })
         await test.step('Switch to Capital and check My trades -> source of trade', async()=>{
-            await signInCapital.switchPage(page)
-            await myTradesСapital.refreshPage()
-            expect(await myTradesСapital.getMobileSourceOfOpenedPosition(tradingInstrument)).toEqual('COPIED')
+            await app.signIn.switchPage()
+            await app.myTrades.refreshPage()
+            expect(await app.myTrades.getMobileSourceOfOpenedPosition(tradingInstrument)).toEqual('COPIED')
         })
         await test.step('Switch to Mena and close opened position', async()=>{
-            await signIn2Mena.switchPage(proxyPageUAE)
-            await myTradesMena.closeMobilePositionsIfExist()
+            await appUAE.signIn.switchPage()
+            await appUAE.myTrades.closeMobilePositionsIfExist()
         })
         await test.step(`Switch to Capital, and check that position is closed`, async()=>{
-            await signInCapital.switchPage(page)
-            expect(await myTradesСapital.emptyPageTextIsVisible()).toBeTruthy()
+            await app.signIn.switchPage()
+            expect(await app.myTrades.emptyPageTextIsVisible()).toBeTruthy()
         })
         await test.step('Remove autocopy conection on NagaCapital', async()=>{
-            await mainPageCapital.openMobileBackMenuPoint('Copy Trading')
-            await autoCopyCapital.chooseAutocopyTab('Active')
-            await autoCopyCapital.closeMobileAutoCopiesIfExist()
+            await app.mainPage.openMobileBackMenuPoint('Copy Trading')
+            await app.autoCopy.chooseAutocopyTab('Active')
+            await app.autoCopy.closeMobileAutoCopiesIfExist()
         })
     })
 
     test('Mobile, Save AUTOCOPIED Mena closed positions for Capital user', 
         {tag: ['@autocopy', '@mobile'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9330', type:'ticket'}}, 
-        async({page, proxyPageUAE, AppNAGA}, testInfo)=>{
+        async({app, appUAE, AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 60000)
-            let signInCapital = new SignIn(page)
-            let signIn2Mena = new SignIn(proxyPageUAE)
-            let mainPageCapital = new MainPage(page)
-            let mainPageMena = new MainPage(proxyPageUAE)
             let tradingInstrument = "Solana/USD";
             let CapitalUser = 'testTrading2'
             let MenaUser = 'testTradingMena'
-            let myTradesСapital = new MyTrades(page)
-            let myTradesMena = new MyTrades(proxyPageUAE)
-            let autoCopyCapital = new AutoCopy(page)
-            let instrumentsMena = new AllInstruments(proxyPageUAE)
-            let newPositionMena = new NewPosition(proxyPageUAE)
             await test.step(`Login by Capital user ${CapitalUser}`, async()=>{
-                await signInCapital.goto(AppNAGA, 'login')
-                await signInCapital.switchPage(page)
-                await signInCapital.signInUserToPlatform(CapitalUser, process.env.USER_PASSWORD || "")
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.switchPage()
+                await app.signIn.signInUserToPlatform(CapitalUser, process.env.USER_PASSWORD || "")
             })
             await test.step(`Check Copy Trading tab and close trade connections if they exist`, async()=>{
-                await mainPageCapital.openMobileBackMenuPoint('Copy Trading')
-                await autoCopyCapital.chooseAutocopyTab('Active')
-                await autoCopyCapital.closeMobileAutoCopiesIfExist()
+                await app.mainPage.openMobileBackMenuPoint('Copy Trading')
+                await app.autoCopy.chooseAutocopyTab('Active')
+                await app.autoCopy.closeMobileAutoCopiesIfExist()
             })
             await test.step(`Autocopy ${MenaUser} user via search`, async()=>{
-                await mainPageCapital.searchMobileUser(MenaUser)
-                await new UserProfile(page).StartAutoCopy()
-                await autoCopyCapital.StartAutoCopyPopup('2')
+                await app.mainPage.searchMobileUser(MenaUser)
+                await app.userProfile.StartAutoCopy()
+                await app.autoCopy.StartAutoCopyPopup('2')
             })
             await test.step('Close opened positions for Capital user if they exist',async()=>{
-                await mainPageCapital.openMobileMenu('My Trades')
-                await myTradesСapital.closeMobilePositionsIfExist()
+                await app.mainPage.openMobileMenu('My Trades')
+                await app.myTrades.closeMobilePositionsIfExist()
             })
             await test.step(`Switch to Naga mena user-${MenaUser}`,async()=>{
-                await signIn2Mena.switchPage(proxyPageUAE)
-                await signIn2Mena.goto(AppNAGA, 'login')
-                await signIn2Mena.signInUserToPlatform(MenaUser, process.env.USER_PASSWORD || "")
+                await appUAE.signIn.switchPage()
+                await appUAE.signIn.goto(AppNAGA, 'login')
+                await appUAE.signIn.signInUserToPlatform(MenaUser, process.env.USER_PASSWORD || "")
             })
             await test.step('Check previously opened positions and close if they exist', async()=>{
-                await mainPageMena.openMobileMenu('My Trades')
-                await myTradesMena.closeMobilePositionsIfExist()
+                await appUAE.mainPage.openMobileMenu('My Trades')
+                await appUAE.myTrades.closeMobilePositionsIfExist()
             })
             await test.step(`Open position of ${tradingInstrument}`, async()=>{
-                await mainPageMena.openMobileMenu("Trade");
-                await instrumentsMena.openMobilePosition(tradingInstrument, 'SELL')
-                await newPositionMena.installMobileLotsSize(65, 2)
-                await newPositionMena.submitPosition()
+                await appUAE.mainPage.openMobileMenu("Trade");
+                await appUAE.instruments.openMobilePosition(tradingInstrument, 'SELL')
+                await appUAE.newPosition.installMobileLotsSize(65, 2)
+                await appUAE.newPosition.submitPosition()
             })
             await test.step('Save date of opened position (Mena user). And Close positon', async()=>{
-                await mainPageMena.openMobileMenu('My Trades')
-                await myTradesMena.closeMobilePositionsIfExist()
+                await appUAE.mainPage.openMobileMenu('My Trades')
+                await appUAE.myTrades.closeMobilePositionsIfExist()
             })
             await test.step(`Switch to ${CapitalUser} and check close postions`, async()=>{
-                await signInCapital.switchPage(page)
-                await mainPageCapital.openMobileMenu('My Trades')
-                await myTradesСapital.openMobileClosedPositionsTab()
-                expect(await myTradesСapital.getMobileSourceOfOpenedPosition(tradingInstrument)).toEqual('AUTOCOPIED') 
+                await app.signIn.switchPage()
+                await app.mainPage.openMobileMenu('My Trades')
+                await app.myTrades.openMobileClosedPositionsTab()
+                expect(await app.myTrades.getMobileSourceOfOpenedPosition(tradingInstrument)).toEqual('AUTOCOPIED') 
             })
             await test.step('Switch to Mena and close opened position', async()=>{
-                await signIn2Mena.switchPage(proxyPageUAE)
-                await myTradesMena.closeMobilePositionsIfExist()
+                await appUAE.signIn.switchPage()
+                await appUAE.myTrades.closeMobilePositionsIfExist()
             })
             await test.step(`Switch to Capital, and check that position is closed`, async()=>{
-                await signInCapital.switchPage(page)
-                await myTradesСapital.refreshPage()
-                //expect(await myTradesСapital.emptyPageTextIsVisible()).toBeTruthy()
+                await app.signIn.switchPage()
+                await app.myTrades.refreshPage()
             })
             await test.step('Remove autocopy conection on NagaCapital', async()=>{
-                await mainPageCapital.openMobileBackMenuPoint('Copy Trading')
-                await autoCopyCapital.chooseAutocopyTab('Active')
-                await autoCopyCapital.closeMobileAutoCopiesIfExist()
+                await app.mainPage.openMobileBackMenuPoint('Copy Trading')
+                await app.autoCopy.chooseAutocopyTab('Active')
+                await app.autoCopy.closeMobileAutoCopiesIfExist()
             })
         })
 })

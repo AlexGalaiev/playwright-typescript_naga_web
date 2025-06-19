@@ -1,6 +1,4 @@
 import { expect } from "playwright/test"
-import { MainPage } from "../../pageObjects/MainPage/MainPage"
-import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import {test} from "..//..//test-options"
 
 test.describe('WEB', async()=>{
@@ -17,17 +15,15 @@ test.describe('WEB', async()=>{
         {brand:'@Africa', user:'leadAfrica@naga.com'},
     ]
     for(const{brand, user} of tradingToolsParams){
-        test(`${brand} Trading tools. Trading sygnals`, {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
+        test(`${brand} Trading tools. Trading sygnals`, {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
             })
             await test.step('Check trading signals response', async()=>{
-                let serviceStatus = await mainPage.checkExternalService('Trading Signals', '**/user/activity/trading_indicators/symbols')
-                expect(await mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
-                expect(await mainPage.checkTradingSymbolsIsVisible()).toBeTruthy()
+                let serviceStatus = await app.mainPage.checkExternalService('Trading Signals', '**/user/activity/trading_indicators/symbols')
+                expect(await app.mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
+                expect(await app.mainPage.checkTradingSymbolsIsVisible()).toBeTruthy()
             })
         })}
 
@@ -42,44 +38,39 @@ test.describe('WEB', async()=>{
     ]
 
     for(const{brand, user} of contestParams){
-        test(`${brand} Trading tools. Contest tab`, {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
+        test(`${brand} Trading tools. Contest tab`, {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
             })
             await test.step('Check trading signals response', async()=>{
-                let serviceStatus = await mainPage.checkExternalService('Contests', '**/contest/public?all=true')
-                expect(await mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
-                expect(await mainPage.checkContestTabIsVisible()).toBeTruthy()
+                let serviceStatus = await app.mainPage.checkExternalService('Contests', '**/contest/public?all=true')
+                expect(await app.mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
+                expect(await app.mainPage.checkContestTabIsVisible()).toBeTruthy()
+            })
+        })}
+
+    for(const{brand, user} of tradingToolsParams){
+        test(`${brand} Trading tools. Market Buzz tab`, {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
+            await test.step(`Login to platform by ${user}`, async()=>{
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+            })
+            await test.step('Check trading signals response', async()=>{
+                let serviceStatus = await app.mainPage.checkExternalService('Market Buzz', '**/trading_central/generate_page_url**')
+                expect(await app.mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
+                expect(await app.mainPage.checkMarketsBuzzIsVisible()).toBeTruthy()
             })
         })}
     for(const{brand, user} of tradingToolsParams){
-        test(`${brand} Trading tools. Market Buzz tab`, {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
+        test(`${brand} Trading tools. Economic Calendar tab`, {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
             })
             await test.step('Check trading signals response', async()=>{
-                let serviceStatus = await mainPage.checkExternalService('Market Buzz', '**/trading_central/generate_page_url**')
-                expect(await mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
-                expect(await mainPage.checkMarketsBuzzIsVisible()).toBeTruthy()
-            })
-        })}
-    for(const{brand, user} of tradingToolsParams){
-        test(`${brand} Trading tools. Economic Calendar tab`, {tag:['@UI', '@web']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
-            await test.step(`Login to platform by ${user}`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
-            })
-            await test.step('Check trading signals response', async()=>{
-                let serviceStatus = await mainPage.checkExternalService('Economic Calendar', '**/trading_central/generate_page_url?page=economic_calendar**')
-                expect(await mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
+                let serviceStatus = await app.mainPage.checkExternalService('Economic Calendar', '**/trading_central/generate_page_url?page=economic_calendar**')
+                expect(await app.mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
             })
         })}
         

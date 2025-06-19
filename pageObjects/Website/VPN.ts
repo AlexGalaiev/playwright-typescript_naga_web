@@ -1,4 +1,5 @@
-import { chromium, Page } from "@playwright/test";
+import { Browser, BrowserContext, chromium, Page } from "@playwright/test";
+import { BaseTest } from "../baseTest";
 
 export class VPN{
 
@@ -49,5 +50,30 @@ export class VPN{
         let server = `https://${username}:${password}@${hostName}:89`
         return server
       }
+}
 
+export async function createVpnApp(countryCode: string): Promise<{
+    app: BaseTest;
+    context: BrowserContext;
+    browser: Browser;
+  }> {
+    const vpn = await new VPN().proxyOptions(
+      process.env.NORDVPN_USERNAME || '',
+      process.env.NORDVPN_PASSWORD || '',
+      countryCode
+    );
+
+    const browser = await chromium.launch();
+    const context = await browser.newContext({
+      proxy: {
+        server: vpn,
+        username: process.env.NORDVPN_USERNAME || '',
+        password: process.env.NORDVPN_PASSWORD || '',
+      },
+    });
+
+    const page = await context.newPage();
+    const app = new BaseTest(page);
+
+    return { app, context, browser };
 }

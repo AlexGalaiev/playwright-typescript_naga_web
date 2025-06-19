@@ -16,79 +16,64 @@ import { Captcha } from "../../pageObjects/captcha";
 test.describe("WEB", async()=>{
 
     test("@Capital Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPageUA, AppNAGA, NSCountry}, testInfo)=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({appUA, AppNAGA, NSCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
-        let signUp = new SignUp(proxyPageUA)
-        let signIn = new SignIn(proxyPageUA)
-        let myAccount = new MyAccounts(proxyPageUA)
-        let forgotPassword = new ForgotPassword(proxyPageUA)
         let testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
-            await signUp.goto(AppNAGA, 'register')
-            await new Captcha(proxyPageUA).removeCaptcha()
-            await signUp.createCFDUser(testUser, process.env.USER_PASSWORD || "", NSCountry,'+387', '603039647')
-            await new YouAreInNagaMarkets(proxyPageUA).clickExplorePlatform()
+            await appUA.signUp.goto(AppNAGA, 'register')
+            await new Captcha(appUA.page).removeCaptcha()
+            await appUA.signUp.createCFDUser(testUser, process.env.USER_PASSWORD || "", NSCountry,'+387', '603039647')
+            await appUA.youAreIn.clickExplorePlatform()
         })
         test.step('Log out from paltform and open forgot password link', async()=>{
-            await myAccount.openUserMenu()
-            await myAccount.userLogOut()
-            await new PageAfterLogout(proxyPageUA).redirectToSighIn()
+            await appUA.myAccounts.openUserMenu()
+            await appUA.myAccounts.userLogOut()
+            await appUA.pageAfterLogin.redirectToSighIn()
         })
         await test.step('Check forgot password messages on UI', async()=>{
-            await signIn.forgotPasswordClick()
-            let response = await forgotPassword.sendEmailToAddress(testUser)
-            expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
-            // expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
-            // expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
+            await appUA.signIn.forgotPasswordClick()
+            let response = await appUA.forgotPassword.sendEmailToAddress(testUser)
+            expect(await appUA.forgotPassword.getRequestMethod(response)).toBe('POST')
         })
     })
+
     test("@Markets Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({proxyPage, AppNAGA, NMCountry}, testInfo)=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({appIT, AppNAGA, NMCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
-        let signUp = new SignUp(proxyPage)
-        let signIn = new SignIn(proxyPage)
-        let forgotPassword = new ForgotPassword(proxyPage)
         let testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
-            await signUp.goto(AppNAGA, 'register')
-            await new Captcha(proxyPage).removeCaptcha()
-            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NMCountry, "+387", "603039647")
+            await appIT.signUp.goto(AppNAGA, 'register')
+            await new Captcha(appIT.page).removeCaptcha()
+            await appIT.signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NMCountry, "+387", "603039647")
         })
         test.step('Log out from paltform and open forgot password link', async()=>{
-            await new PersonalInformation(proxyPage).clickLogOut()
-            await new PageAfterLogout(proxyPage).redirectToSighIn()
+            await appIT.personalInformation.clickLogOut()
+            await appIT.pageAfterLogin.redirectToSighIn()
         })
         await test.step('Check forgot password messages on UI', async()=>{
-            await signIn.forgotPasswordClick()
-            let response = await forgotPassword.sendEmailToAddress(testUser)
-            expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
-            // expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
-            // expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
+            await appIT.signIn.forgotPasswordClick()
+            let response = await appIT.forgotPassword.sendEmailToAddress(testUser)
+            expect(await appIT.forgotPassword.getRequestMethod(response)).toBe('POST')
         })
     })
     test("@Mena Forgot password link test",
             {tag:['@forgotPassword', '@web', '@prodSanity', '@UI'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
-            async({proxyPageUAE, AppNAGA, NagaMenaCountry}, testInfo)=>{
+            async({appUAE, AppNAGA, NagaMenaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
-        let signUp = new SignUp(proxyPageUAE)
-        let signIn = new SignIn(proxyPageUAE)
-        let forgotPassword = new ForgotPassword(proxyPageUAE)
         let testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
-            await signUp.goto(AppNAGA, 'register')
-            await new Captcha(proxyPageUAE).removeCaptcha()
-            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NagaMenaCountry, "+387", "603039647")
+            await appUAE.signUp.goto(AppNAGA, 'register')
+            await new Captcha(appUAE.page).removeCaptcha()
+            await appUAE.signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NagaMenaCountry, "+387", "603039647")
         })
         test.step('Log out from paltform and open forgot password link', async()=>{
-            await new PersonalInformation(proxyPageUAE).clickLogOut()
-            await new PageAfterLogout(proxyPageUAE).redirectToSighIn()
+            await appUAE.personalInformation.clickLogOut()
+            await appUAE.pageAfterLogin.redirectToSighIn()
         })
         await test.step('Check forgot password messages on UI', async()=>{
-            await signIn.forgotPasswordClick()
-            let response = await forgotPassword.sendEmailToAddress(testUser)
-            expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
-            //expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('Check yourInbox')
-            //expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
+            await appUAE.signIn.forgotPasswordClick()
+            let response = await appUAE.forgotPassword.sendEmailToAddress(testUser)
+            expect(await appUAE.forgotPassword.getRequestMethod(response)).toBe('POST')
         })
     })
     test("@Africa Forgot password link test",
@@ -170,18 +155,15 @@ test.describe('Login/LogOut',async()=>{
     ]
     for(const {testrailId, brand, email} of testParams){
         test(`${testrailId} Login/logout to platform ${brand} by ${email}`, 
-            {tag:['@login', '@prodSanity','@smoke','@web']}, async({page,AppNAGA})=>{
-            let signIn = new SignIn(page);
-            let pageAfterLogOut = new PageAfterLogout(page)
-            let myAccountsMenu = new MyAccounts(page)
+            {tag:['@login', '@prodSanity','@smoke','@web']}, async({app,AppNAGA})=>{
             await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
             await test.step('Log out from platform', async()=>{
-                await myAccountsMenu.openUserMenu();
-                await myAccountsMenu.userLogOut()
-                expect(await pageAfterLogOut.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
+                await app.myAccounts.openUserMenu();
+                await app.myAccounts.userLogOut()
+                expect(await app.pageAfterLogin.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
             })})
     }
 })

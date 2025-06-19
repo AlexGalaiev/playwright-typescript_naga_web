@@ -1,7 +1,4 @@
 import { expect } from "@playwright/test";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { MyTrades } from "../../pageObjects/Trading/MyTrades";
 import { test } from "../../test-options"
 
 test.describe('Mobile ', async()=>{
@@ -19,22 +16,19 @@ const testMyTradesParams: myTrades[] = [
 ]
 
 for(const{user, brand}of testMyTradesParams){
-    test(`${brand} My trades. Filter closed positions by date.`, {tag:['@trading','@mobile']},async({page, AppNAGA}, testInfo)=>{
+    test(`${brand} My trades. Filter closed positions by date.`, {tag:['@trading','@mobile']},async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000)
-        let signIn = new SignIn(page)
-        let mainPage = new MainPage(page)
-        let myTrades = new MyTrades(page)
         await test.step(`Login to platform ny user - ${user}, brand - ${brand}`, async()=>{
-            await signIn.goto(AppNAGA, "login");
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
+            await app.signIn.goto(AppNAGA, "login");
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
         })
         await test.step(`Open My-trades and switch to Close trade`, async()=>{
-            await mainPage.openMobileMenu('My Trades')
-            await myTrades.openMobileCloseTradesTab()
+            await app.mainPage.openMobileMenu('My Trades')
+            await app.myTrades.openMobileCloseTradesTab()
         })
         await test.step(`Check that first closed position is visible, and number of positions is displayed`, async()=>{
-            expect(await myTrades.checkMobilePositionIsVisible()).toBeTruthy()
-            expect(Number(await myTrades.getNumberOfClosedTrades())).toBeGreaterThan(1)
+            expect(await app.myTrades.checkMobilePositionIsVisible()).toBeTruthy()
+            expect(Number(await app.myTrades.getNumberOfClosedTrades())).toBeGreaterThan(1)
         })
     })
 }

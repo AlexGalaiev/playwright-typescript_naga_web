@@ -79,7 +79,7 @@ export class SignIn{
         await this.page.waitForSelector(".login-form__wrapper", {state:'visible'})
         return await this.page.locator(".login-form__headline").textContent()
     }
-    async switchPage(page: Page){
+    async switchPage(){
         await this.page.bringToFront()
         await this.page.waitForTimeout(300)
     }

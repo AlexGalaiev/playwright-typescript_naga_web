@@ -1,36 +1,28 @@
-import { SignIn } from "../../pageObjects/SignIn/SignInPage"
-import {MainPage} from "../../pageObjects/MainPage/MainPage"
 import {test} from "../../test-options"
-import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 import { expect } from "@playwright/test"
-import { UserProfile } from "../../pageObjects/UserProfile/UserProfile"
 
 test.describe('Main Page elements', async()=>{
 
     type searchTypes = {
-        testRailId: string;
         brand: string;
         loginUser: string;
         searchUser: string;
         flag: string
     }
     const searchParams: searchTypes[] = [
-        {testRailId: '@23593', brand: '@Markets', loginUser:'testTrading2Markets', searchUser: 'testTrading2', flag:'ba.png'},
-        {testRailId: '@25192', brand: '@Capital', loginUser:'testTrading2', searchUser: 'testTrading2Markets', flag:'de.png'}
+        {brand: '@Markets', loginUser:'testTrading2Markets', searchUser: 'testTrading2', flag:'ba.png'},
+        {brand: '@Capital', loginUser:'testTrading2', searchUser: 'testTrading2Markets', flag:'de.png'}
     ]
-    for(const{testRailId, brand, loginUser, searchUser, flag} of searchParams){
-        test(`${testRailId} Search functionality`, {tag: '@UI'},async({page, AppNAGA})=>{
-            let signIn = new SignIn(page);
-            let mainPage = new MainPage(page)
-            let userProfile = new UserProfile(page)
+    for(const{brand, loginUser, searchUser, flag} of searchParams){
+        test(`${brand} Search functionality`, {tag: '@UI'}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${loginUser}, ${brand} brand`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(loginUser, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(loginUser, process.env.USER_PASSWORD || '')
             })
             await test.step(`Search ${searchUser} from other platform. Open user. Check flag`, async()=>{
-                await mainPage.search(searchUser)
-                await mainPage.getFoundResults(searchUser)
-                expect(await userProfile.getCountryFlag()).toContain(flag)
+                await app.mainPage.search(searchUser)
+                await app.mainPage.getFoundResults(searchUser)
+                expect(await app.userProfile.getCountryFlag()).toContain(flag)
             })})
     }
 
@@ -47,15 +39,13 @@ test.describe('Naga Capital', async()=>{
         {email: "testUserUpgraded@i.ua", stepName:"NAGA Start", text: 'Provide basic info to open a Real-Money account with a $2,000 deposit limit.'}
     ]
     for(const {email, stepName, text} of testBannerParams){
-    test(`@23926 Status on widget step ${email}`,{tag: '@UI'}, async({page, AppNAGA})=>{
-        let signIn = new SignIn(page);
-        let mainPage = new MainPage(page)
+    test(`Status on widget step ${email}`,{tag: '@UI'}, async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${email}`, async()=>{
-            await signIn.goto(AppNAGA, 'login')
-            await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
+            await app.signIn.goto(AppNAGA, 'login')
+            await app.signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
         })
         await test.step('Check statuses of steps', async()=>{
-            expect(await mainPage.getTextOfWidgetStep(stepName)).toEqual(text)
+            expect(await app.mainPage.getTextOfWidgetStep(stepName)).toEqual(text)
         })})}
 })
 
@@ -71,47 +61,42 @@ test.describe('Naga Markets', async()=>{
         {email: "user460", stepName:"Verify Identity", textOfStep: 'Submit proof of identity and address to verify your profile and activate trading.'},
     ]
     for(const{email, stepName, textOfStep} of testBannerParams){
-        test(`@25190 Naga start login banner ${stepName}`,{tag: '@UI'}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page);
-            let mainPage = new MainPage(page);
+        test(`Naga start login banner ${stepName}`,{tag: '@UI'}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by user ${email}`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
             })
             await test.step('Check banners with different scorrings', async()=>{
-                expect(await mainPage.getTextOfWidgetStep(stepName)).toEqual(textOfStep)
+                expect(await app.mainPage.getTextOfWidgetStep(stepName)).toEqual(textOfStep)
             })
     })}
 
-    test('Spanish user. UI limitation for user', {tag: ['@UI', '@web']}, async({page, AppNAGA}, testInfo)=>{
+    test('Spanish user. UI limitation for user', {tag: ['@UI', '@web']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);  
         let spanishUser = 'spanishLeadUser@naga.com'
         let polishUser = 'polishUser@naga.com'
-        let signIn = new SignIn(page)
-        let mainPage = new MainPage(page)
         await test.step(`Login to platform by spanish user - ${spanishUser}`, async()=>{
-            await signIn.goto(AppNAGA, 'login')
-            await signIn.signInUserToPlatform(spanishUser, process.env.USER_PASSWORD || '')
+            await app.signIn.goto(AppNAGA, 'login')
+            await app.signIn.signInUserToPlatform(spanishUser, process.env.USER_PASSWORD || '')
         })
         await test.step('Check visibility of UI elements: Discovery, FAQ, Academy.. These elments must be hidden', async()=>{
-            await mainPage.mainPageIsDownLoaded()
-            expect(await mainPage.checkBackMenuElementIsVisible('mm_discovery')).toBeFalsy()
-            expect(await mainPage.checkBackMenuMainCategoryIsVisible('Academy')).toBeFalsy()
-            expect(await mainPage.checkMessangerIsVisible()).toBeFalsy()
-            await new MyAccounts(page).openUserMenu()
-            await new MyAccounts(page).userLogOut()
+            await app.mainPage.mainPageIsDownLoaded()
+            expect(await app.mainPage.checkBackMenuElementIsVisible('mm_discovery')).toBeFalsy()
+            expect(await app.mainPage.checkBackMenuMainCategoryIsVisible('Academy')).toBeFalsy()
+            expect(await app.mainPage.checkMessangerIsVisible()).toBeFalsy()
+            await app.myAccounts.openUserMenu()
+            await app.myAccounts.userLogOut()
         })
         await test.step(`Log out and login by ${polishUser}`, async()=>{
-            await signIn.goto(AppNAGA, 'login')
-            await signIn.signInUserToPlatform(polishUser, process.env.USER_PASSWORD || '')
+            await app.signIn.goto(AppNAGA, 'login')
+            await app.signIn.signInUserToPlatform(polishUser, process.env.USER_PASSWORD || '')
         })
         await test.step('Check visibility of UI elements: Discovery, FAQ, Academy.. These elments must be visible', async()=>{
-            await mainPage.mainPageIsDownLoaded()
-            expect(await mainPage.checkBackMenuElementIsVisible('mm_discovery')).toBeTruthy()
-            expect(await mainPage.checkBackMenuMainCategoryIsVisible('Academy')).toBeTruthy()
-            expect(await mainPage.checkMessangerIsVisible()).toBeTruthy()
-        })
-    })
+            await app.mainPage.mainPageIsDownLoaded()
+            expect(await app.mainPage.checkBackMenuElementIsVisible('mm_discovery')).toBeTruthy()
+            expect(await app.mainPage.checkBackMenuMainCategoryIsVisible('Academy')).toBeTruthy()
+            expect(await app.mainPage.checkMessangerIsVisible()).toBeTruthy()
+        })})
 })
 
 test.describe('WEB+Mobile',async()=>{
@@ -129,27 +114,25 @@ test.describe('WEB+Mobile',async()=>{
     ]
 
     for(const{brand, user} of balanceTestParams){
-        test(`${brand} Balance view on main page`, {tag: ['@web', '@UI', '@prodSanity']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
+        test(`${brand} Balance view on main page`, {tag: ['@web', '@UI', '@prodSanity']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
             })
             await test.step('Check visibility of Balance', async()=>{
-                let balance = await mainPage.getBalanceValue('Balance')
+                let balance = await app.mainPage.getBalanceValue('Balance')
                 expect(Number(balance)).toBeGreaterThanOrEqual(0)
                 expect(balance).not.toBeNaN()
                 expect(balance).not.toBeUndefined()
             })
             await test.step('Check visibility of Equity', async()=>{
-                let balance = await mainPage.getBalanceValue('Equity')
+                let balance = await app.mainPage.getBalanceValue('Equity')
                 expect(Number(balance)).toBeGreaterThanOrEqual(0)
                 expect(balance).not.toBeNaN()
                 expect(balance).not.toBeUndefined()
             })
             await test.step('Check visibility of Available', async()=>{
-                let balance = await mainPage.getBalanceValue('Available')
+                let balance = await app.mainPage.getBalanceValue('Available')
                 expect(Number(balance)).toBeGreaterThanOrEqual(0)
                 expect(balance).not.toBeNaN()
                 expect(balance).not.toBeUndefined()
@@ -158,28 +141,26 @@ test.describe('WEB+Mobile',async()=>{
 
     for(const{brand, user} of balanceTestParams){
         test(`${brand} Mobile. Balance view on main page`, 
-            {tag: ['@mobile', '@UI', '@prodSanity']}, async({page, AppNAGA})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
+            {tag: ['@mobile', '@UI', '@prodSanity']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
-                await mainPage.openMobileBalanceMenu()
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.mainPage.openMobileBalanceMenu()
             })
             await test.step('Check visibility of Balance', async()=>{
-                let balance = await mainPage.getBalanceValue('Balance')
+                let balance = await app.mainPage.getBalanceValue('Balance')
                 expect(Number(balance)).toBeGreaterThanOrEqual(0)
                 expect(balance).not.toBeNaN()
                 expect(balance).not.toBeUndefined()
             })
             await test.step('Check visibility of Equity', async()=>{
-                let balance = await mainPage.getBalanceValue('Equity')
+                let balance = await app.mainPage.getBalanceValue('Equity')
                 expect(Number(balance)).toBeGreaterThanOrEqual(0)
                 expect(balance).not.toBeNaN()
                 expect(balance).not.toBeUndefined()
             })
             await test.step('Check visibility of Available', async()=>{
-                let balance = await mainPage.getBalanceValue('Available')
+                let balance = await app.mainPage.getBalanceValue('Available')
                 expect(Number(balance)).toBeGreaterThanOrEqual(0)
                 expect(balance).not.toBeNaN()
                 expect(balance).not.toBeUndefined()
@@ -202,37 +183,34 @@ test.describe('WEB', async()=>{
     ]
 
     for(const{brand, user, step1Name, step2Name, step3Name, step4Name} of userDemoParams){
-        test(`${brand} Visibility of kyc widget for lead user`, {tag:['@UI', '@web']}, async({AppNAGA, page})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
-            let myAccounts = new MyAccounts(page)
+        test(`${brand} Visibility of kyc widget for lead user`, {tag:['@UI', '@web']}, async({AppNAGA, app})=>{
             await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
             })
             await test.step('Check widget on main page', async()=>{
-                await mainPage.openBackMenuPoint('feed')
-                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step1Name, 'active')).toBeTruthy
-                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step2Name, 'next')).toBeTruthy
-                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step3Name, 'next')).toBeTruthy
-                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step4Name, 'next')).toBeTruthy
+                await app.mainPage.openBackMenuPoint('feed')
+                expect(await app.mainPage.checkWidgetStepNotFinishedVisibility(step1Name, 'active')).toBeTruthy
+                expect(await app.mainPage.checkWidgetStepNotFinishedVisibility(step2Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkWidgetStepNotFinishedVisibility(step3Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkWidgetStepNotFinishedVisibility(step4Name, 'next')).toBeTruthy
             })
             await test.step("Check widget after lead user tryes to open manage funds", async()=>{
-                await mainPage.clickBackMenuPoint('Manage Funds')
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step4Name, 'next')).toBeTruthy
-                await mainPage.closeModal()
+                await app.mainPage.clickBackMenuPoint('Manage Funds')
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step4Name, 'next')).toBeTruthy
+                await app.mainPage.closeModal()
             })
             await test.step('Check widget after user opens My Account->Profile status', async()=>{
-                await myAccounts.openUserMenu()
-                await myAccounts.openMyAccountMenuItem('Profile Status')
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step4Name, 'next')).toBeTruthy
-                await mainPage.closeModal()
+                await app.myAccounts.openUserMenu()
+                await app.myAccounts.openMyAccountMenuItem('Profile Status')
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step4Name, 'next')).toBeTruthy
+                await app.mainPage.closeModal()
             })})
     }
 
@@ -241,34 +219,31 @@ test.describe('WEB', async()=>{
         {brand:'@Mena', user:'leadMena@naga.com', step1Name:'Upgrade to Live', step2Name:'Deposit', step3Name:'Verify Identity', step4Name:'none'}
     ]
     for(const{brand, user, step1Name, step2Name, step3Name, step4Name} of userDemoParamsMarkets){
-        test(`${brand} Visibility of kyc widget per lead user`, {tag:['@UI', '@web']}, async({AppNAGA, page})=>{
-            let signIn = new SignIn(page)
-            let mainPage = new MainPage(page)
-            let myAccounts = new MyAccounts(page)
+        test(`${brand} Visibility of kyc widget per lead user`, {tag:['@UI', '@web']}, async({AppNAGA, app})=>{
             await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
-                await signIn.goto(AppNAGA, 'login')
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.signIn.goto(AppNAGA, 'login')
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
             })
             await test.step('Check widget on main page', async()=>{
-                await mainPage.openBackMenuPoint('feed')
-                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step1Name, 'active')).toBeTruthy
-                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step2Name, 'next')).toBeTruthy
-                expect(await mainPage.checkWidgetStepNotFinishedVisibility(step3Name, 'next')).toBeTruthy
+                await app.mainPage.openBackMenuPoint('feed')
+                expect(await app.mainPage.checkWidgetStepNotFinishedVisibility(step1Name, 'active')).toBeTruthy
+                expect(await app.mainPage.checkWidgetStepNotFinishedVisibility(step2Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkWidgetStepNotFinishedVisibility(step3Name, 'next')).toBeTruthy
             })
             await test.step("Check widget after lead user tryes to open manage funds", async()=>{
-                await mainPage.clickBackMenuPoint('Manage Funds')
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
-                await mainPage.closeModal()
+                await app.mainPage.clickBackMenuPoint('Manage Funds')
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
+                await app.mainPage.closeModal()
             })
             await test.step('Check widget after user opens My Account->Profile status', async()=>{
-                await myAccounts.openUserMenu()
-                await myAccounts.openMyAccountMenuItem('Profile Status')
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
-                expect(await mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
-                await mainPage.closeModal()
+                await app.myAccounts.openUserMenu()
+                await app.myAccounts.openMyAccountMenuItem('Profile Status')
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step1Name, 'active')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step2Name, 'next')).toBeTruthy
+                expect(await app.mainPage.checkPopupWidgetStepTitleVisibility(step3Name, 'next')).toBeTruthy
+                await app.mainPage.closeModal()
             })})
     }})
 
