@@ -1,13 +1,7 @@
 
 import { expect } from "@playwright/test";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { AddAcountForm } from "../../pageObjects/UserProfile/AddTradingAccount";
-import { HeaderMenuUserProfile } from "../../pageObjects/UserProfile/HeaderUserProfile";
 import {test} from "../../test-options";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
-import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations";
-import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
 test.describe("New Trading account", async()=>{
     

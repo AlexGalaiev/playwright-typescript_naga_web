@@ -1,18 +1,8 @@
 import { expect } from "@playwright/test";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
-import { ChangeLimitSuccessPopup } from "../../pageObjects/Trading/ChangeLimitResultPopup";
-import { ChangeLimitsPopup } from "../../pageObjects/Trading/ChangeLimitsPopup";
-import { ClosePositionSuccessPopup } from "../../pageObjects/Trading/closePositionSuccessPopup";
-import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
-import { MyTrades } from "../../pageObjects/Trading/MyTrades";
-import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
-import { TradeDetails } from "../../pageObjects/Trading/TradeDetails";
 import { test } from "../../test-options";
 
 test.describe("Trading. Positions/Orders + protection", async () => {
 type tradingTypesWithProtection = {
-  testRailId: string,
   brand: string,
   user: string,
   investDirection: string,
@@ -28,112 +18,98 @@ let deposit;
 let units;
 
 const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
-  {testRailId: '@25165', brand: '@Capital', user:'testTrading2', investDirection:'Sell', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL', ratePosition:'Short'},
-  {testRailId: '@25160', brand: '@Capital', user:'testTrading2', investDirection:"Buy", protection: 'Take Profit',tradeField: 'tp', mobileDirection:'BUY', ratePosition:'Long'},
-  {testRailId: '@25166', brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short'},
-  {testRailId: '@25017', brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
-  {testRailId: '@25374', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
-  {testRailId: '@25375', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl',mobileDirection:'SELL', ratePosition:'Short'},
-  {testRailId: '@25413', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
-  {testRailId: '@25414', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl',mobileDirection:'SELL', ratePosition:'Short'},
+  {brand: '@Capital', user:'testTrading2', investDirection:'Sell', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL', ratePosition:'Short'},
+  {brand: '@Capital', user:'testTrading2', investDirection:"Buy", protection: 'Take Profit',tradeField: 'tp', mobileDirection:'BUY', ratePosition:'Long'},
+  {brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short'},
+  {brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
+  {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
+  {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl',mobileDirection:'SELL', ratePosition:'Short'},
+  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
+  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl',mobileDirection:'SELL', ratePosition:'Short'},
 ]
 
-
-for(const{testRailId, brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
-  test(`${testRailId} ${brand} Open/Close ${investDirection} position + ${protection}`, 
-    {tag:['@trading','@web']}, async ({ page, AppNAGA }, testInfo) => {
+for(const{brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
+  test(`${brand} Open/Close ${investDirection} position + ${protection}`, 
+    {tag:['@trading','@web']}, async ({ app, AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 170000);
-    let signIn = new SignIn(page);
-    let mainPage = new MainPage(page);
-    let myTrades = new MyTrades(page);
-    let instruments = new AllInstruments(page);
-    let newPosition = new NewPosition(page);
-    let successPopup = new ClosePositionSuccessPopup(page);
     await test.step(`Login to platfotm ${brand} by ${user}`, async () => {
-      await signIn.goto(AppNAGA, "login");
-      await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
+      await app.signIn.goto(AppNAGA, "login");
+      await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions and close if they exist", async () => {
-      await mainPage.openBackMenuPoint("my-trades");
-      await myTrades.closePositionsIfExist();
+      await app.mainPage.openBackMenuPoint("my-trades");
+      await app.myTrades.closePositionsIfExist();
     });
     await test.step(`Choose ${tradingInstrument} and open position`, async () => {
-      await mainPage.openBackMenuPoint("trade");
-      await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
+      await app.mainPage.openBackMenuPoint("trade");
+      await app.instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
     await test.step(`Open ${investDirection} position + ${protection}`, async () => {
-      await newPosition.installLotsSize(90, 2)
-      await newPosition.enableProtection(protection)
-      NagaProtectionValue = await newPosition.getProtectionValue(protection)
-      await newPosition.submitPosition();
+      await app.newPosition.installLotsSize(90, 2)
+      await app.newPosition.enableProtection(protection)
+      NagaProtectionValue = await app.newPosition.getProtectionValue(protection)
+      await app.newPosition.submitPosition();
     });
     await test.step("Check My-trades popup", async () => {
-      await mainPage.openBackMenuPoint("my-trades");
-      expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
+      await app.mainPage.openBackMenuPoint("my-trades");
+      expect(await app.myTrades.checkStatusOfElement(await app.myTrades.activeTradesTab)).toContain("active");
+      expect(Number(await app.myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
     });
     await test.step('Close position and check sucses popup', async()=>{
-      await myTrades.closePosition()
-      await successPopup.acceptPopup()
+      await app.myTrades.closePosition()
+      await app.successfullClosePopup.acceptPopup()
     })
   })}
 
   const tradingParametersOrders: tradingTypesWithProtection[] = [
-    {testRailId: '@25167', brand: '@Capital', user:'testTrading2', investDirection:'Sell', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL', ratePosition:'Short'},
-    {testRailId: '@25169', brand: '@Capital', user:'testTrading2', investDirection:"Buy", protection: 'Take profit',tradeField: 'tp', mobileDirection:'BUY', ratePosition:'Long'},
-    {testRailId: '@25171', brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short'},
-    {testRailId: '@25170', brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
-    {testRailId: '@25376', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
-    {testRailId: '@25377', brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short'},
-    {testRailId: '@25415', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
-    {testRailId: '@25416', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short'}
+    {brand: '@Capital', user:'testTrading2', investDirection:'Sell', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Capital', user:'testTrading2', investDirection:"Buy", protection: 'Take profit',tradeField: 'tp', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short'}
   ]
-  for(const{testRailId, brand, user, investDirection, protection, tradeField,ratePosition}of tradingParametersOrders){
-    test(`${testRailId} ${brand} Open/Close pending ${investDirection} position + ${protection}`, 
-      {tag:['@trading', '@web']}, async({page, AppNAGA}, testInfo)=>{
+  for(const{brand, user, investDirection, protection, tradeField,ratePosition}of tradingParametersOrders){
+    test(`${brand} Open/Close pending ${investDirection} position + ${protection}`, 
+      {tag:['@trading', '@web']}, async({app, AppNAGA}, testInfo)=>{
       testInfo.setTimeout(testInfo.timeout + 170000);
-      let signIn = new SignIn(page);
-      let mainPage = new MainPage(page);
-      let myTrades = new MyTrades(page);
-      let instruments = new AllInstruments(page);
-      let newPosition = new NewPosition(page);
-      let successPopup = new ClosePositionSuccessPopup(page);
       await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
-        await signIn.goto(AppNAGA, "login");
-        await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
+        await app.signIn.goto(AppNAGA, "login");
+        await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
       });
       await test.step("Check previously opened orders and close if they exist", async () => {
-        await mainPage.openBackMenuPoint("my-trades");
-        await myTrades.openActivePendingOrdersTab();
-        await myTrades.removeOrdersIfExist();
+        await app.mainPage.openBackMenuPoint("my-trades");
+        await app.myTrades.openActivePendingOrdersTab();
+        await app.myTrades.removeOrdersIfExist();
       });
       await test.step(`Choose ${tradingInstrument} and open position`, async () => {
-        await mainPage.openBackMenuPoint("trade");
-        await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
+        await app.mainPage.openBackMenuPoint("trade");
+        await app.instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
       await test.step(`Open ${investDirection} position + ${protection}`, async () => {
-        await newPosition.chooseBtn(await newPosition.ratePositionBtn(`${ratePosition} at Specific Rate`))
-        await newPosition.installLotsSize(90, 2)
-        await newPosition.enableProtection(protection)
-        NagaProtectionValue = await newPosition.getProtectionValue(protection)
-        await newPosition.submitPosition();
+        await app.newPosition.chooseBtn(await app.newPosition.ratePositionBtn(`${ratePosition} at Specific Rate`))
+        await app.newPosition.installLotsSize(90, 2)
+        await app.newPosition.enableProtection(protection)
+        NagaProtectionValue = await app.newPosition.getProtectionValue(protection)
+        await app.newPosition.submitPosition();
       });
       await test.step("Check My-trades popup", async () => {
-        await mainPage.openBackMenuPoint("my-trades");
-        await myTrades.openActivePendingOrdersTab();
-        expect(await myTrades.checkStatusOfElement(await myTrades.activePendingOrdersTab)).toContain("active");
-        expect(Number(await myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
+        await app.mainPage.openBackMenuPoint("my-trades");
+        await app.myTrades.openActivePendingOrdersTab();
+        expect(await app.myTrades.checkStatusOfElement(await app.myTrades.activePendingOrdersTab)).toContain("active");
+        expect(Number(await app.myTrades.getProtectionValue(tradeField))).toBeCloseTo(Number(NagaProtectionValue), 0)
       });
       await test.step('Close position and check sucses popup', async()=>{
-        await myTrades.closePosition()
-        await successPopup.acceptPopup()
+        await app.myTrades.closePosition()
+        await app.successfullClosePopup.acceptPopup()
       })
       })
   }
 
  
 type changeLimittypes = {
-  testRailId: string,
   brand: string, 
   user: string,
   investDirection: string,
@@ -146,69 +122,56 @@ type changeLimittypes = {
 }
 
 const tradingParametersSLTP: changeLimittypes[] = [
-  {testRailId: '@25173', brand: '@Capital', user:'testTrading2', investDirection:'Sell', protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'},
-  {testRailId: '@25172', brand: '@Markets', user:'testTrading2Markets', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'},
-  {testRailId: '@25378', brand: '@Mena', user:'testTrading@naga.com', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'€', mobileDirection:'SELL'},
-  {testRailId: '@25417', brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'}
+  {brand: '@Capital', user:'testTrading2', investDirection:'Sell', protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'},
+  {brand: '@Markets', user:'testTrading2Markets', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'},
+  {brand: '@Mena', user:'testTrading@naga.com', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'€', mobileDirection:'SELL'},
+  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'}
 ]
-for(const{testRailId, brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
-  test(`${testRailId} ${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
-    {tag:['@trading','@web']}, async({page, AppNAGA}, testInfo)=>{
+for(const{brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
+  test(`${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
+    {tag:['@trading','@web']}, async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 170000);
-    let signIn = new SignIn(page);
-    let mainPage = new MainPage(page);
-    let myTrades = new MyTrades(page)
-    let instruments = new AllInstruments(page);
-    let newPosition = new NewPosition(page);
-    let changeLimits = new ChangeLimitsPopup(page);
-    let changeLimitsSuccessPopup = new ChangeLimitSuccessPopup(page)
-    let successfullClosePopup = new ClosePositionSuccessPopup(page)
     let stopLossValue;
     await test.step(`Login to ${brand} platfotm by ${user}`, async () => {
-      await signIn.goto(AppNAGA, "login");
-      await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
+      await app.signIn.goto(AppNAGA, "login");
+      await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
     });
     await test.step("Check previously opened positions. Close it if exist", async () => {
-      await mainPage.openBackMenuPoint("my-trades");
-      await myTrades.closePositionsIfExist();
+      await app.mainPage.openBackMenuPoint("my-trades");
+      await app.myTrades.closePositionsIfExist();
     });
     await test.step(`Choose ${tradingInstrument} for trading. Open new position page. Enable ${protectionSL} `, async () => {
-      await mainPage.openBackMenuPoint("trade");
-      await instruments.openPositionOfInstrument(tradingInstrument, investDirection)
-      await newPosition.switchToSpecificRateForm()
-      await newPosition.installLotsSize(90, 2)
-      await newPosition.enableProtection(protectionSL)
-      stopLossValue = await newPosition.getStopLossValue(protectionSL)
-      await newPosition.submitPosition(); 
+      await app.mainPage.openBackMenuPoint("trade");
+      await app.instruments.openPositionOfInstrument(tradingInstrument, investDirection)
+      await app.newPosition.switchToSpecificRateForm()
+      await app.newPosition.installLotsSize(90, 2)
+      await app.newPosition.enableProtection(protectionSL)
+      stopLossValue = await app.newPosition.getStopLossValue(protectionSL)
+      await app.newPosition.submitPosition(); 
     });
     await test.step("Check My-trades", async () => {
-      await mainPage.openBackMenuPoint("my-trades");
-      expect(await myTrades.checkStatusOfElement(await myTrades.activeTradesTab)).toContain("active");
-      deposit = (await myTrades.getDepositValue(currency));
-      units = await myTrades.getUnits();
-      //SL = await myTrades.getStopLossValue()
-      expect(await myTrades.getStopLossValue()).toContain(stopLossValue)
-      await myTrades.openChangeLimitPopup()
+      await app.mainPage.openBackMenuPoint("my-trades");
+      expect(await app.myTrades.checkStatusOfElement(await app.myTrades.activeTradesTab)).toContain("active");
+      deposit = (await app.myTrades.getDepositValue(currency));
+      units = await app.myTrades.getUnits();
+      expect(await app.myTrades.getStopLossValue()).toContain(stopLossValue)
+      await app.myTrades.openChangeLimitPopup()
     })
     await test.step(`Enable ${protectionTP} and check result`, async()=>{
-      //await myTrades.openChangeLimitPopup();
-      await changeLimits.switchToSpecificRateForm()
-      await changeLimits.enableStopLoss();
-      await changeLimits.enableTakeProgit();
-      TP = await changeLimits.getProtectionValue(protectionTP)
-      await changeLimits.updatePosition()
+      await app.changeLimitPopup.switchToSpecificRateForm()
+      await app.changeLimitPopup.enableStopLoss();
+      await app.changeLimitPopup.enableTakeProgit();
+      TP = await app.changeLimitPopup.getProtectionValue(protectionTP)
+      await app.changeLimitPopup.updatePosition()
     })
     await test.step('Check change limit succesfull popup', async()=>{
-      expect(await changeLimitsSuccessPopup.getProtectionValue(protectionTP)).toContain(TP)
-      await changeLimitsSuccessPopup.acceptPopup()
+      expect(await app.changeLimitSuccessPopup.getProtectionValue(protectionTP)).toContain(TP)
+      await app.changeLimitSuccessPopup.acceptPopup()
     })
     await test.step('Check my traders Stop Loss and Take profit', async()=>{
-      expect(await myTrades.getProtectionValue(tradeFieldsTP)).toContain(TP)
-      await myTrades.closePosition()
-      await successfullClosePopup.acceptPopup()
+      expect(await app.myTrades.getProtectionValue(tradeFieldsTP)).toContain(TP)
+      await app.myTrades.closePosition()
+      await app.successfullClosePopup.acceptPopup()
     })
   })}
-
-
-
 })

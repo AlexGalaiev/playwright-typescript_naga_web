@@ -9,15 +9,12 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 
 test.describe('Mobile. Create second account', async()=>{
 
-    test("@23922 Naga Capital. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
-        async({page, AppNAGA}, testInfo)=>{
+    test("Naga Capital. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
+        async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
-        let addAccount = new AddAcountForm(page);
-        let myAccountsMenu = new MyAccounts(page);
         let email = await new RandomUser().getRandomUserEmail()
-        let mainPage = new MainPage(page)
         await test.step(`Create lead user ${email} and finish KYC`, async()=>{
-            await new KYC_General(page).NagaCapital_KYC_Mobile(
+            await app.KYC_Registration.NagaCapital_KYC_Mobile(
                 email, 
                 process.env.USER_PASSWORD || '', 
                 'Bosnia and Herzegovina',
@@ -26,28 +23,25 @@ test.describe('Mobile. Create second account', async()=>{
                 AppNAGA)
             })
         await test.step('Create 2nd live account', async()=>{
-            await mainPage.openMobileBackMenuPoint('Trading Accounts')
-            await addAccount.openMobileAccountCreateForm()
-            await addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
-            expect(await addAccount.getMobileStatusMSG()).toEqual('Success')
-            await addAccount.acceptPopup()
+            await app.mainPage.openMobileBackMenuPoint('Trading Accounts')
+            await app.addAccount.openMobileAccountCreateForm()
+            await app.addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
+            expect(await app.addAccount.getMobileStatusMSG()).toEqual('Success')
+            await app.addAccount.acceptPopup()
         })
         await test.step('Create 2nd demo account', async()=>{
-            await addAccount.openMobileAccountCreateForm()
-            await addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
-            expect(await addAccount.getMobileStatusMSG()).toEqual('Success')
-            await addAccount.acceptPopup()
+            await app.addAccount.openMobileAccountCreateForm()
+            await app.addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
+            expect(await app.addAccount.getMobileStatusMSG()).toEqual('Success')
+            await app.addAccount.acceptPopup()
         })
     })
-    test("@23600 Naga Markets. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
-        async({page, AppNAGA}, testInfo)=>{
+    test(" Naga Markets. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
+        async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
-        let addAccount = new AddAcountForm(page);
-        let mainPage = new MainPage(page);
         let email = await new RandomUser().getRandomUserEmail()
-        
         await test.step(`Create lead user ${email} and finish KYC`, async()=>{
-            await new KYC_General(page).NagaMarkets_KYC_Advance(
+            await app.KYC_Registration.NagaMarkets_KYC_Advance(
                 email, 
                 process.env.USER_PASSWORD || '', 
                 'France',
@@ -56,27 +50,25 @@ test.describe('Mobile. Create second account', async()=>{
                 AppNAGA)
             })
         await test.step('Create 2nd live account', async()=>{
-            await mainPage.openMobileBackMenuPoint('Trading Accounts')
-            await addAccount.openMobileAccountCreateForm()
-            await addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
-            expect(await addAccount.getMobileStatusMSG()).toEqual('Success')
-            await addAccount.acceptPopup()
+            await app.mainPage.openMobileBackMenuPoint('Trading Accounts')
+            await app.addAccount.openMobileAccountCreateForm()
+            await app.addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
+            expect(await app.addAccount.getMobileStatusMSG()).toEqual('Success')
+            await app.addAccount.acceptPopup()
         })
         await test.step('Create 2nd demo account', async()=>{
-            await addAccount.openMobileAccountCreateForm()
-            await addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
-            expect(await addAccount.getMobileStatusMSG()).toEqual('Success')
-            await addAccount.acceptPopup()
+            await app.addAccount.openMobileAccountCreateForm()
+            await app.addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
+            expect(await app.addAccount.getMobileStatusMSG()).toEqual('Success')
+            await app.addAccount.acceptPopup()
         })
     })
-    test("@25400 Naga Mena. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
-        async({page, AppNAGA}, testInfo)=>{
+    test("Naga Mena. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
+        async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
-        let addAccount = new AddAcountForm(page);
-        let mainPage = new MainPage(page);
         let email = await new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${email} and finish KYC`, async()=>{
-            await new KYC_General(page).NagaMena_KYC_Mobile(
+            await app.KYC_Registration.NagaMena_KYC_Mobile(
                 email, 
                 process.env.USER_PASSWORD || '',
                 'United Arab Emirates',
@@ -85,28 +77,25 @@ test.describe('Mobile. Create second account', async()=>{
                 AppNAGA)
             })
         await test.step('Create 2nd live account', async()=>{
-            await mainPage.openMobileBackMenuPoint('Trading Accounts')
-            await addAccount.openMobileAccountCreateForm()
-            await addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
-            expect(await addAccount.getMobileStatusMSG()).toEqual('Success')
-            await addAccount.acceptPopup()
+            await app.mainPage.openMobileBackMenuPoint('Trading Accounts')
+            await app.addAccount.openMobileAccountCreateForm()
+            await app.addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
+            expect(await app.addAccount.getMobileStatusMSG()).toEqual('Success')
+            await app.addAccount.acceptPopup()
         })
         await test.step('Create 2nd demo account', async()=>{
-            await addAccount.openMobileAccountCreateForm()
-            await addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
-            expect(await addAccount.getMobileStatusMSG()).toEqual('Success')
-            await addAccount.acceptPopup()
+            await app.addAccount.openMobileAccountCreateForm()
+            await app.addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
+            expect(await app.addAccount.getMobileStatusMSG()).toEqual('Success')
+            await app.addAccount.acceptPopup()
         })
     })
-    test("@25400 Naga Africa. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
-        async({page, AppNAGA}, testInfo)=>{
+    test("Naga Africa. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
+        async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
-        let addAccount = new AddAcountForm(page);
-        let mainPage = new MainPage(page);
         let email = await new RandomUser().getRandomUserEmail()
-        
         await test.step(`Create lead user ${email} and finish KYC`, async()=>{
-            await new KYC_General(page).NagaAfrica_KYC_Mobile(
+            await app.KYC_Registration.NagaAfrica_KYC_Mobile(
                 email, 
                 process.env.USER_PASSWORD || '',
                 'South Africa',
@@ -115,17 +104,17 @@ test.describe('Mobile. Create second account', async()=>{
                 AppNAGA)
             })
         await test.step('Create 2nd live account', async()=>{
-            await mainPage.openMobileBackMenuPoint('Trading Accounts')
-            await addAccount.openMobileAccountCreateForm()
-            await addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
-            expect(await addAccount.getMobileStatusMSG()).toEqual('Success')
-            await addAccount.acceptPopup()
+            await app.mainPage.openMobileBackMenuPoint('Trading Accounts')
+            await app.addAccount.openMobileAccountCreateForm()
+            await app.addAccount.createMobileAccount('Live Account','Live_USD', 'USD');
+            expect(await app.addAccount.getMobileStatusMSG()).toEqual('Success')
+            await app.addAccount.acceptPopup()
         })
         await test.step('Create 2nd demo account', async()=>{
-            await addAccount.openMobileAccountCreateForm()
-            await addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
-            expect(await addAccount.getMobileStatusMSG()).toEqual('Success')
-            await addAccount.acceptPopup()
+            await app.addAccount.openMobileAccountCreateForm()
+            await app.addAccount.createMobileAccount('Demo Account','Demo_USD', 'USD');
+            expect(await app.addAccount.getMobileStatusMSG()).toEqual('Success')
+            await app.addAccount.acceptPopup()
         })})
 })
 
@@ -143,21 +132,19 @@ test.describe('Mobile. Actions with accounts', async()=>{
     ]
     for(const{brand, user}of switchingParams){
         test(`Switching between exist accounts on brand ${brand}`,{tag:['@secondAccount', '@UI', '@mobile']}, 
-            async({page, AppNAGA}, testInfo)=>{
-        let signIn = new SignIn(page)
-        let mainPage = new MainPage(page)
+            async({app, AppNAGA})=>{
         await test.step(`Login to ${brand} plarform by ${user} user`, async()=>{
-            await signIn.goto(AppNAGA, 'login')
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+            await app.signIn.goto(AppNAGA, 'login')
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
         })
         await test.step('Open trading accounts menu on main page.Check correct logined account', async()=>{
-            await mainPage.openMobileBalanceMenu()
-            await mainPage.chooseMobileTradingAccount('secondAccount')
-            expect(await mainPage.getloginnedUserAccount()).toEqual('secondAccount')
+            await app.mainPage.openMobileBalanceMenu()
+            await app.mainPage.chooseMobileTradingAccount('secondAccount')
+            expect(await app.mainPage.getloginnedUserAccount()).toEqual('secondAccount')
         })
         await test.step('Switch to main account', async()=>{
-            await mainPage.chooseMobileTradingAccount('mainAccount')
-            expect(await mainPage.getloginnedUserAccount()).toEqual('mainAccount')
+            await app.mainPage.chooseMobileTradingAccount('mainAccount')
+            expect(await app.mainPage.getloginnedUserAccount()).toEqual('mainAccount')
         })
     })}
 
@@ -169,27 +156,21 @@ test.describe('Mobile. Actions with accounts', async()=>{
     ]
     for (const{brand, user}of editParams){
         test(`${brand} Edit trading account information `, 
-            {tag:['@secondAccount','@UI', '@mobile']}, async({page, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 90000);
-        let signIn = new SignIn(page);
-        let myAccountsMenu = new MyAccounts(page)
-        let addAccountForm = new AddAcountForm(page)
-        let mainPage = new MainPage(page)
+            {tag:['@secondAccount','@UI', '@mobile']}, async({app, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 90000)
         await test.step(`Login to platform by ${user} to ${brand}`, async()=>{
-            await signIn.goto(AppNAGA,'login');
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await app.signIn.goto(AppNAGA,'login');
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
         })
         await test.step('Change name of exist trading acoount', async()=>{
-            await mainPage.openMobileBackMenuPoint('Trading Accounts')
-            await addAccountForm.openEditForm('NAGA - USD')
-            await addAccountForm.changeMobileNameOfAccount('TestName')
-            expect(await addAccountForm.getChangedName('TestName')).toBeTruthy()
+            await app.mainPage.openMobileBackMenuPoint('Trading Accounts')
+            await app.addAccount.openEditForm('NAGA - USD')
+            await app.addAccount.changeMobileNameOfAccount('TestName')
+            expect(await app.addAccount.getChangedName('TestName')).toBeTruthy()
         })
         await test.step('Move back name NAGA - USD', async()=>{
-            await addAccountForm.openEditForm('TestName')
-            await addAccountForm.changeMobileNameOfAccount('NAGA - USD')
-        })
-    })
+            await app.addAccount.openEditForm('TestName')
+            await app.addAccount.changeMobileNameOfAccount('NAGA - USD')
+        })})
     }
-
 })

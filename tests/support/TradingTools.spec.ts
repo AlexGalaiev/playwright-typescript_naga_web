@@ -73,5 +73,4 @@ test.describe('WEB', async()=>{
                 expect(await app.mainPage.getServiceStatusCode(serviceStatus)).toEqual(200)
             })
         })}
-        
 })

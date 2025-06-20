@@ -1,7 +1,4 @@
 import { expect } from "@playwright/test";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage"
-import { HelpPage } from "../../pageObjects/Support/HelpPage";
 import {test} from "../../test-options"
 
 test.describe('WEB', async()=>{
@@ -21,20 +18,18 @@ test.describe('WEB', async()=>{
 
     for(const {brand, user, phones} of supportPhonesParams){
         test(`${brand} Support. Call us phones per country`,
-            {tag:['@support','@web','@UI']}, async({page, AppNAGA})=>{
-        let signIn = new SignIn(page);
-        let helpPage = new HelpPage(page)
+            {tag:['@support','@web','@UI']}, async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${user}. Open Help sections`, async()=>{
-            await signIn.goto(AppNAGA, 'login');
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
-            await new MainPage(page).openBackMenuSubcategory('Help', 'Contact Information')
+            await app.signIn.goto(AppNAGA, 'login');
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+            await app.mainPage.openBackMenuSubcategory('Help', 'Contact Information')
         })
         await test.step('Check different phone numbers per country', async()=>{
-            await helpPage.openCallUsPage()
+            await app.helpPage.openCallUsPage()
             for(const[countryName, phoneNumber] of phones){
-                await helpPage.openDropdown()
-                await helpPage.chooseCountry(countryName)
-                expect(await helpPage.getPhoneValue()).toEqual(phoneNumber)
+                await app.helpPage.openDropdown()
+                await app.helpPage.chooseCountry(countryName)
+                expect(await app.helpPage.getPhoneValue()).toEqual(phoneNumber)
             }})
     })}
 
@@ -51,17 +46,15 @@ test.describe('WEB', async()=>{
     ]
 
     for(const {brand, user} of supportLinksParams){
-        test(`${brand} Support links - support chat`, {tag:['@support', '@UI', '@web']}, async({page, AppNAGA})=>{
-            let helpPage = new HelpPage(page)
-            let signIn = new SignIn(page)
+        test(`${brand} Support links - support chat`, {tag:['@support', '@UI', '@web']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform-${brand} by user - ${user}`, async()=>{
-                await signIn.goto(AppNAGA, 'login');
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
-                await new MainPage(page).openBackMenuSubcategory('Help', 'Contact Information')
+                await app.signIn.goto(AppNAGA, 'login');
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.mainPage.openBackMenuSubcategory('Help', 'Contact Information')
             })
             await test.step('Check visibility of chat', async()=>{
-                await helpPage.openChat()
-                expect(await helpPage.checkOpenedChat()).toBeTruthy()
+                await app.helpPage.openChat()
+                expect(await app.helpPage.checkOpenedChat()).toBeTruthy()
             })})
     }
 })
@@ -83,19 +76,17 @@ test.describe('Mobile', async()=>{
 
     for(const {brand, user, phones} of supportPhonesParams){
         test(`${brand} Mobile support. Call us phones per country`,
-            {tag:['@support','@mobile','@UI']}, async({page, AppNAGA})=>{
-        let signIn = new SignIn(page);
-        let helpPage = new HelpPage(page)
+            {tag:['@support','@mobile','@UI']}, async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${user}. Open Help sections`, async()=>{
-            await signIn.goto(AppNAGA, 'login');
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
-            await new MainPage(page).openMobileBackMenuPoint('Contact Information')
+            await app.signIn.goto(AppNAGA, 'login');
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+            await app.mainPage.openMobileBackMenuPoint('Contact Information')
         })
         await test.step('Check different phone numbers per country', async()=>{
             for(const[countryName, phoneNumber] of phones){
-                await helpPage.openDropdown()
-                await helpPage.chooseCountry(countryName)
-                expect(await helpPage.getPhoneValue()).toEqual(phoneNumber)
+                await app.helpPage.openDropdown()
+                await app.helpPage.chooseCountry(countryName)
+                expect(await app.helpPage.getPhoneValue()).toEqual(phoneNumber)
             }})
     })}
 
@@ -112,16 +103,14 @@ test.describe('Mobile', async()=>{
     ]
 
     for(const {brand, user} of supportLinksParams){
-        test(`${brand} Support links - support chat`, {tag:['@support', '@UI', '@mobile']}, async({page, AppNAGA})=>{
-            let helpPage = new HelpPage(page)
-            let signIn = new SignIn(page)
+        test(`${brand} Support links - support chat`, {tag:['@support', '@UI', '@mobile']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform-${brand} by user - ${user}`, async()=>{
-                await signIn.goto(AppNAGA, 'login');
-                await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
-            await new MainPage(page).openMobileBackMenuPoint('Support Chat')
+                await app.signIn.goto(AppNAGA, 'login');
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+                await app.mainPage.openMobileBackMenuPoint('Support Chat')
             })
             await test.step('Check visibility of chat', async()=>{
-                expect(await helpPage.checkOpenedChat()).toBeTruthy()
+                expect(await app.helpPage.checkOpenedChat()).toBeTruthy()
             })})
     }
 })

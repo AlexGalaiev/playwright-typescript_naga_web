@@ -22,6 +22,15 @@ import { NagaEarn } from "./MainPage/NagaEarn";
 import { Deposit } from "./ManageFunds/Deposit";
 import { InternalTransfer } from "./ManageFunds/InternalTransfer";
 import { Withdrawal } from "./ManageFunds/Withdrawal";
+import { TradeDetails } from "./Trading/TradeDetails";
+import { ChangeLimitsPopup } from "./Trading/ChangeLimitsPopup";
+import { ChangeLimitSuccessPopup } from "./Trading/ChangeLimitResultPopup";
+import { ClosePositionSuccessPopup } from "./Trading/closePositionSuccessPopup";
+import { RealStockPopup } from "./Trading/realStockShortPosition";
+import { PriceAlert } from "./Trading/PriceAlertsPage";
+import { HelpPage } from "./Support/HelpPage";
+import { SettingsPage } from "./Settings/SettingsPage";
+import { VerificationPopup } from "./VerificationCenter/verificationPopup";
 
 export class BaseTest{
     page: Page
@@ -48,6 +57,15 @@ export class BaseTest{
     deposit: Deposit
     internalTransfer: InternalTransfer
     withdrawal: Withdrawal
+    tradeDetails: TradeDetails
+    changeLimitPopup: ChangeLimitsPopup
+    changeLimitSuccessPopup: ChangeLimitSuccessPopup
+    successfullClosePopup: ClosePositionSuccessPopup
+    realStockPopup: RealStockPopup
+    priceAlert: PriceAlert
+    helpPage: HelpPage
+    settings: SettingsPage
+    verificationPopup: VerificationPopup
 
     constructor(page: Page){
         this.page = page
@@ -74,5 +92,14 @@ export class BaseTest{
         this.deposit = new Deposit(page)
         this.internalTransfer = new InternalTransfer(page)
         this.withdrawal = new Withdrawal(page)
+        this.tradeDetails = new TradeDetails(page)
+        this.changeLimitPopup = new ChangeLimitsPopup(page)
+        this.changeLimitSuccessPopup = new ChangeLimitSuccessPopup(page)
+        this.successfullClosePopup = new ClosePositionSuccessPopup(page)
+        this.realStockPopup = new RealStockPopup(page)
+        this.priceAlert = new PriceAlert(page)
+        this.helpPage = new HelpPage(page)
+        this.settings = new SettingsPage(page)
+        this.verificationPopup = new VerificationPopup(page)
     }
 }

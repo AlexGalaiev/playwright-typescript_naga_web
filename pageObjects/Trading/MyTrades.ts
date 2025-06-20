@@ -244,7 +244,7 @@ export class MyTrades{
         await datePicker.waitFor({state:'visible'})
         //choose filter
         await this.page.locator(`//button[text()='${filerDate}']`).click()
-        await this.page.waitForTimeout(1500)
+        await this.page.waitForTimeout(3000)
     }
     async getNumberOfClosedTrades(){
         await this.page.waitForTimeout(2000)

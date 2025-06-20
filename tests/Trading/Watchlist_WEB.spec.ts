@@ -1,97 +1,86 @@
 import { expect } from "@playwright/test";
 import { getLocalization } from "../../pageObjects/localization/getText";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
-import { AllInstruments } from "../../pageObjects/Trading/InstrumentsPage";
-import { PriceAlert } from "../../pageObjects/Trading/PriceAlertsPage";
 import {test} from "../../test-options"
-import { NewPosition } from "../../pageObjects/Trading/OpenNewPositionPage";
 
 test.describe("WEB", async()=>{
 
 type testTypes = {
-    testRailId: string,
     brand: string,
     user: string,
     localization: string
 }
 
 const AddWatchlistPatameters: testTypes[] = [
-    {testRailId: '@23951', brand: '@Capital', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
-    {testRailId: '@23674', brand: '@Markets', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
-    {testRailId: '@25379', brand: '@Mena', user: 'testTrading@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
-    {testRailId: '@25418', brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
+    { brand: '@Capital', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
+    { brand: '@Markets', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
+    { brand: '@Mena', user: 'testTrading@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
+    { brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
-for(const{testRailId, brand, user, localization}of AddWatchlistPatameters){
-    test(`${testRailId} Add/Remove from Favorites ${brand}`,{tag:['@trading','@web']}, async({page, AppNAGA}, testInfo)=>{
+for(const{ brand, user, localization}of AddWatchlistPatameters){
+    test(` Add/Remove from Favorites ${brand}`,{tag:['@trading','@web']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
-        let signIn = new SignIn(page);
         let tradeInstrument = "SOLUSD"
         let localizationPage = new getLocalization(localization)
-        let watchlist = new AllInstruments(page);
         await test.step(`Login to ${brand} platform by ${user}`, async()=>{
-            await signIn.goto(AppNAGA, "login");
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await new MainPage(page).openBackMenuPoint('trade');
+            await app.signIn.goto(AppNAGA, "login");
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await app.mainPage.openBackMenuPoint('trade');
         })        
         await test.step("Check watchlist and clean from opened positions if they exist", async()=>{
-            await watchlist.openWatclistTab();
-            await watchlist.cleanWatchlist()
+            await app.instruments.openWatclistTab();
+            await app.instruments.cleanWatchlist()
         })
         await test.step(`Choose ${tradeInstrument} and add to watchlist`, async()=>{
-            await watchlist.searchInstrument(tradeInstrument)
-            await watchlist.addToWatchlist(tradeInstrument)
-            await watchlist.clearSearchField()
+            await app.instruments.searchInstrument(tradeInstrument)
+            await app.instruments.addToWatchlist(tradeInstrument)
+            await app.instruments.clearSearchField()
         })
         await test.step("Check instrument in watchlist. Remove instrument and check empty page", async()=>{
-            await watchlist.openWatclistTab()
-            expect(await watchlist.getWatchlistedInstrumentName()).toContain(tradeInstrument);
-            await watchlist.cleanWatchlist()
-            expect(await localizationPage.getLocalizationText("Empty_watchlist_header")).toEqual(await watchlist.getEmptyWatchlistHeader())
-            expect(await localizationPage.getLocalizationText("Empty_watchlist_text")).toEqual(await watchlist.getEmptyWatchlistText())
+            await app.instruments.openWatclistTab()
+            expect(await app.instruments.getWatchlistedInstrumentName()).toContain(tradeInstrument);
+            await app.instruments.cleanWatchlist()
+            expect(await localizationPage.getLocalizationText("Empty_watchlist_header")).toEqual(await app.instruments.getEmptyWatchlistHeader())
+            expect(await localizationPage.getLocalizationText("Empty_watchlist_text")).toEqual(await app.instruments.getEmptyWatchlistText())
         })
     })
 }
 
 const priceAlertParameters: testTypes[] = [
-    {testRailId: '@23952', brand: '@Capital', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
-    {testRailId: '@23678', brand: '@Markets', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
-    {testRailId: '@25380', brand: '@Mena', user: 'testTrading@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
-    {testRailId: '@25419', brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
+    { brand: '@Capital', user: 'testTrading3', localization: '/pageObjects/localization/NagaCapital_Trading.json'},
+    { brand: '@Markets', user: 'testTrading2Markets', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
+    { brand: '@Mena', user: 'testTrading@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'},
+    { brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
-for(const{testRailId, brand, user, localization}of priceAlertParameters){
-    test(`${testRailId} Price alerts ${brand} ${user}`,{tag:['@trading','@web']}, async({page,AppNAGA}, testInfo)=>{
+for(const{ brand, user, localization}of priceAlertParameters){
+    test(`Price alerts ${brand} ${user}`,{tag:['@trading','@web']}, async({app,AppNAGA}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let tradeInstrument = "EUR/USD"
         let localizationPage = new getLocalization(localization)
-        let watchlist = new AllInstruments(page);
-        let priceAlert = new PriceAlert(page)
-        let signIn = new SignIn(page)
         await test.step(`Login to platform ${brand} by ${user}`, async()=>{
-            await signIn.goto(AppNAGA, "login");
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
-            await new MainPage(page).openBackMenuSubcategory('Trading Tools', 'Price Alerts');
+            await app.signIn.goto(AppNAGA, "login");
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            await app.mainPage.openBackMenuSubcategory('Trading Tools', 'Price Alerts');
         })     
         await test.step("Check price alert and clean if they exist", async()=>{
-            await priceAlert.cleanPriceAlerts()
-            await new MainPage(page).openBackMenuPoint('trade');
+            await app.priceAlert.cleanPriceAlerts()
+            await app.mainPage.openBackMenuPoint('trade');
         })
         await test.step(`Choose ${tradeInstrument} and add price alert`, async()=>{
-            await watchlist.searchInstrument(tradeInstrument);
-            await watchlist.addPriceAlertToInstrumnet();
+            await app.instruments.searchInstrument(tradeInstrument);
+            await app.instruments.addPriceAlertToInstrumnet();
         })
         await test.step("Edit price alerts", async()=>{
-            expect(await priceAlert.getInstrumentName()).toContain(tradeInstrument)
-            await priceAlert.installPriceAlertParameters();
-            await priceAlert.installRisesBy();
-            await priceAlert.clickSetPriceAlert()
+            expect(await app.priceAlert.getInstrumentName()).toContain(tradeInstrument)
+            await app.priceAlert.installPriceAlertParameters();
+            await app.priceAlert.installRisesBy();
+            await app.priceAlert.clickSetPriceAlert()
         })
         await test.step("Check price alert tab, remove price alerts and check empty screen", async()=>{
-            expect(await priceAlert.getInstrumentNameFromTab()).toContain(tradeInstrument)
-            expect(await priceAlert.getAlertType()).toContain("It raises by 100%")
-            await priceAlert.removePriceAlert()
-            expect(await priceAlert.getEmptyPriceAlertTabHeader()).toEqual(await localizationPage.getLocalizationText("EmptyPriceAlertTab_Header"))
-            expect(await priceAlert.getEmptyPriceAlertTabDescription()).toEqual(await localizationPage.getLocalizationText("EmptyPriceAlertTab_Description"))
+            expect(await app.priceAlert.getInstrumentNameFromTab()).toContain(tradeInstrument)
+            expect(await app.priceAlert.getAlertType()).toContain("It raises by 100%")
+            await app.priceAlert.removePriceAlert()
+            expect(await app.priceAlert.getEmptyPriceAlertTabHeader()).toEqual(await localizationPage.getLocalizationText("EmptyPriceAlertTab_Header"))
+            expect(await app.priceAlert.getEmptyPriceAlertTabDescription()).toEqual(await localizationPage.getLocalizationText("EmptyPriceAlertTab_Description"))
         })
     })
 }  
