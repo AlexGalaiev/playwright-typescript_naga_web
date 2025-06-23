@@ -119,7 +119,7 @@ test.describe('WEB', async()=>{
             await app.myAccounts.openMyAccountMenuItem('My Social Profile')
             await app.mainPage.refreshPage()
             expect(await app.feed.getLastPublishedTime()).toContain('sec')
-            expect(await app.feed.getFirstPostInstrumentName()).toEqual(tradingInstrument)
+            expect(await app.feed.getFirstPostInstrumentName()).toEqual('Solana/USD')
         })
          await test.step('Close opened position', async()=>{
             await app.mainPage.openBackMenuPoint("my-trades")

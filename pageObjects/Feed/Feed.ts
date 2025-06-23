@@ -194,8 +194,9 @@ export class Feed {
   }
 
   async getLastPublishedTime(){
+    await this.page.waitForTimeout(4000)
     await this.page.locator("//button[text()='Trades']").click()
-    await this.page.waitForTimeout(2000)
+    await this.page.waitForTimeout(1000)
     let post = await this.page.locator(".feed-item").first()
     await post.waitFor({state:'visible'})
     await post.scrollIntoViewIfNeeded()
@@ -205,7 +206,7 @@ export class Feed {
 
   async getFirstPostInstrumentName(){
     let post = await this.page.locator(".feed-item").first()
-    let name = await post.locator(".feed-trade-body__symbol-name").textContent()
+    let name = await post.locator(".stock-badge-wrapper__symbol").textContent()
     return await name
   }
 

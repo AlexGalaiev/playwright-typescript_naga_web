@@ -44,9 +44,6 @@ test.describe('Deposit', async()=>{
         {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
         {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-cc-applepay', responseMethodKey:'altcreditcard'},
         {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-neteller', responseMethodKey:'Credit Card'},
-        {brand: '@Africa', user: 'depositNagaAfrica', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'},
-        {brand: '@Africa', user: 'depositNagaAfrica', depositName: 'light-ozow', responseMethodKey:'ozow'},
-        {brand: '@Africa', user: 'depositNagaAfrica', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
         //{testRailId: '@24077', brand: '@Capital', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
     ]
     for(const{ brand, user, depositName,responseMethodKey} of testNStestParameters){
@@ -58,13 +55,38 @@ test.describe('Deposit', async()=>{
                 await app.signIn.goto(AppNAGA,'login');
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
                 await app.mainPage.openBackMenuSubcategory('Manage Funds', 'Deposit');
-            });
+            })
             await test.step(`Check ${depositName} deposit`, async()=>{
                 let response = await app.deposit.performDepositWithAmount(depositName, '100', '**/api/cashier/get-payment-method-list-without-details')
                 expect(await app.deposit.getApiPaymentMethodKey(response)).toEqual(responseMethodKey)
                 expect(await app.deposit.getApiStatusCode(response)).toEqual(200)
             })
         })}
+    
+    type AfricaPraxisTypes = {
+        brand: string,
+        user: string,
+        deposit: string[]
+    }
+    
+    const AfricaTestParams: AfricaPraxisTypes[] = [
+        {brand: '@Africa', user: 'depositNagaAfrica', deposit: [ 'Credit Card', 'ozow', 'skrill', 'altbankwire' ]},
+    ]
+    for(const{brand, user, deposit,} of AfricaTestParams){
+        test(`${brand} Check praxis popup deposit methods`, {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+            async({app,AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 45000)
+            await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{
+                await app.signIn.goto(AppNAGA,'login');
+                await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
+            })
+            await test.step('Open Manage Funds subcategory, and check praxis popup deposit url', async()=>{
+                let depositResponse = await app.mainPage.openPraxisDepositPopupFromManageFunds('Manage Funds','Deposit','**/api/cashier/get-payment-method-list-without-details')
+                let payments = await app.deposit.praxisPopupPayments(depositResponse)
+                expect(payments.sort()).toEqual(deposit.sort())
+                expect(await app.deposit.getPraxisPopupStatusCode(depositResponse)).toEqual(200)
+            })})
+    }
 }) 
 test.describe('Deposit', async()=>{
 
@@ -76,14 +98,14 @@ test.describe('Deposit', async()=>{
         });
     })
 
-    test("@24068 Deposit via Crypto", {tag:['@deposit', '@manageFunds','@web']}, async({app})=>{
+    test("Deposit via Crypto", {tag:['@deposit', '@manageFunds','@web']}, async({app})=>{
         await app.mainPage.openBackMenuSubcategory('Manage Funds', 'Deposit');
         await test.step("Check crypto deposit", async()=>{
             let response = await app.deposit.performDepositWithAmount('crypto', '100', 'https://payapi.newagecrypto.com/assets/paynow');
             expect(await app.deposit.getApiStatusCode(response)).toEqual(200)
         })
     })
-    test('@25352 Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds','@web'], 
+    test('Deposit via Wire Transfer',{tag:['@deposit', '@manageFunds','@web'], 
         annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, async({app})=>{
         await app.mainPage.openBackMenuSubcategory('Manage Funds', 'Deposit');
         await test.step('Check wire trannsfer deposit', async()=>{

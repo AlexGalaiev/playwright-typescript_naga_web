@@ -61,6 +61,7 @@ export class Deposit{
         ]) 
         return response
     }
+
     async performMobileDepositWithAmount(depositName:string, value:string, depositUrl:string){
         await this.page.waitForTimeout(1500)
         //choose deposit method 
@@ -133,5 +134,13 @@ export class Deposit{
         await depositMethod.click()
         await this.page.waitForTimeout(500)
         await this.page.locator("//button[text()='Continue']").click()
+    }
+    async praxisPopupPayments(response: any){
+        let body = await response.json()
+        let paymentMethodKeys: string[] = await body.gateways.map(g => g.payment_method_key)
+        return paymentMethodKeys
+    }
+    async getPraxisPopupStatusCode(response: any){
+        return await response.status()
     }
 }

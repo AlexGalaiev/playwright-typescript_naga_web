@@ -297,4 +297,15 @@ export class MainPage{
         await this.page.waitForSelector(`//h2[@title='${acname}']`, {state:"visible"})
         await this.page.waitForTimeout(500)
     }
+    async openPraxisDepositPopupFromManageFunds(mainCategory: string, subcategoryName:string, depositUrl:string){
+        await this.page.waitForTimeout(500)
+        let categoryName = await this.page.locator(`//span[text()='${mainCategory}']`)
+        await categoryName.click()
+        const [response] = await Promise.all([
+            this.page.waitForResponse(depositUrl, {timeout:15000}),
+            this.page.locator(`//div[@class='popover-content']//span[text()='${subcategoryName}']`).click()
+        ]) 
+        return response
+        
+    }
 }   
