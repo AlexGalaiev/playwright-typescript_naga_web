@@ -35,6 +35,16 @@ export class FullRegistration{
         await this.submitBtn.click();
         await this.page.waitForTimeout(250)
     }
+
+    async clickFinishAndGetAML(){
+        const [response] = await Promise.all([
+            this.page.waitForResponse('**/kyc/scores', {timeout:15000}),
+            this.submitBtn.click()
+        ])
+        let body = await response.json()
+        let amlScor = await body.data.aml_score
+        return amlScor
+    }
     async inputDateOfBirth(){
         await this.dateObBirth.pressSequentially("12.12.1980")
         await this.page.locator("//button[@type='submit']").click()
@@ -142,7 +152,17 @@ export class FullRegistration{
         await this.singleSelectOther('currency', level);
         await this.inputId()
         await this.clickSubmitBtn();
-        await this.clickSubmitBtn();
+    }
+
+    async finishKycAndGetAML(){
+        const [response] = await Promise.all([
+            this.page.waitForResponse('**/kyc/scores', {timeout:15000}),
+            this.submitBtn.click()
+        ])
+        let body = await response.json()
+        let amlScor = await body.data.aml_score
+        let score = await body.data.suitability_score
+        return [amlScor, score]
     }
 
     //new designe

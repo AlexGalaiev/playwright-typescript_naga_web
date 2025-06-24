@@ -15,6 +15,8 @@ import { Captcha } from "../../pageObjects/captcha";
 
 test.describe('KYC', async()=>{
   let email=''
+  let AML
+  let Scoring
 
   test.beforeEach("Naga Markets. KYC", async ({ page, AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 120000);
@@ -36,7 +38,7 @@ test.describe('KYC', async()=>{
     })
   }
 );
-
+//suitability_score
 test("@24921 Naga Markets. KYC - Advance level.",
   {tag:['@kyc', '@prodSanity','@smoke','@KYC_Markets','@mobile','@web']}, async ({page}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 120000);
@@ -46,9 +48,14 @@ test("@24921 Naga Markets. KYC - Advance level.",
   let KYC_Advance = "Advance";
   let KYC_FinalStep = new FinalStep(page);
   let mainPage = new MainPage(page)
+  let AML
+  let Scoring
   await test.step(`User email - ${email}. Test manually fill KYC -  ${KYC_Advance} level`, async () => {
     await quiz.fill_KYC(KYC_Advance);
-  });
+    [AML, Scoring] = await quiz.finishKycAndGetAML()
+    expect(AML).toEqual(Number('0.54'))
+    expect(Scoring).toEqual(Number('70.3'))
+  })
   await test.step(`Check final KYC Popup. ${KYC_Advance} scorring must be in the header`, async () => {
     expect(await KYC_FinalStep.getUserScorringText()).toContain("Advanced");
     expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
