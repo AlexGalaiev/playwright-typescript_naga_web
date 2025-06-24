@@ -15,130 +15,114 @@ import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/componen
 
 test.describe('KYC WEB', async()=>{
   let email =''
+  let AML
+  let Scoring
 
-  test.beforeEach("Naga Mena. KYC", async ({ page, AppNAGA }, testInfo) => {
+  test.beforeEach("Naga Mena. KYC", async ({ app, AppNAGA }, testInfo) => {
     testInfo.setTimeout(testInfo.timeout + 200000);
-    let signUp = new SignUp(page);
-    let kycStart = new KYC_Start(page);
     email = new RandomUser().getRandomUserEmail()
-    let mainPage = new MainPage(page)
     await test.step(`Create lead user with ${email} via Short registration form`, async () => {
-      await signUp.goto(AppNAGA, "register");
-      await new Captcha(page).removeCaptcha()
-      await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates','+387', '603039647');
+      await app.signUp.goto(AppNAGA, "register");
+      await new Captcha(app.page).removeCaptcha()
+      await app.signUp.createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates','+387', '603039647');
     });
     await test.step("Fill Personal information popup. Verify phone number with sms", async () => {
-      await new PersonalInformation(page).fillPersonalInformation('Verify with SMS')
+      await app.personalInformation.fillPersonalInformation('Verify with SMS')
     })
     await test.step("Insert verification code. Wait for popup", async()=>{
-      await new PhoneVerification(page).insertVerificationCode()
-      await new YouAreInNagaMarkets(page).clickExplorePlatform()
+      await app.phoneVerification.insertVerificationCode()
+      await app.youAreIn.clickExplorePlatform()
     })
     await test.step('Click first step on main page', async()=>{
-      await mainPage.clickOnWidgepPoint('Upgrade to Live')
-      await kycStart.clickStartVerificationBtn()
+      await app.mainPage.clickOnWidgepPoint('Upgrade to Live')
+      await app.kycStart.clickStartVerificationBtn()
     })
   })
 
-  test('@25253 KYC Mena - Advance Score', {tag:['@kyc', '@prodSanity','@smoke','@KYC_Mena','@web']}, async({page})=>{
-    let kyc = new MenaFullRegistration(page)
+  test('KYC Mena - Advance Score', {tag:['@kyc', '@prodSanity','@smoke','@KYC_Mena','@web']}, async({app})=>{
     let KYC_scorring = 'Advance'
-    let KYC_FinalStep = new FinalStep(page);
+    let scoring_AML = 1.485
+    let scoring_General = 0.825
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-    let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
-    let mainPage = new MainPage(page)
     await test.step(`User email - ${email}. Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
-      await kyc.fillKYC(KYC_scorring)
+      await app.kycMena.fillKYC(KYC_scorring);
+      [AML, Scoring] = await app.kycAfrica.finishKycAndGetAML()
+      expect(AML).toEqual(scoring_AML)
+      expect(Scoring).toEqual(scoring_General)
     })
-    await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
-      expect(await KYC_FinalStep.getUserScorringText()).toContain("Advanced");
-      expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await KYC_FinalStep.clickBtn('Deposit');  
-    })
-    await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openBackMenuPoint("feed");
-      expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
+    await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
+      expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Advanced");
+      expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+      await app.KYC_FinalStep.clickBtn('Deposit');  
     })
   })
-  test('@25361 KYC Mena - PreAdvance Score', {tag:['@kyc', '@KYC_Mena','@web']}, async({page})=>{
-    let kyc = new MenaFullRegistration(page)
+  test('KYC Mena - PreAdvance Score', {tag:['@kyc', '@KYC_Mena','@web']}, async({app})=>{
     let KYC_scorring = 'PreAdvance'
-    let KYC_FinalStep = new FinalStep(page);
+    let scoring_AML = 1.62
+    let scoring_General = 0.67
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-    let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
-    let mainPage = new MainPage(page)
     await test.step(`User email - ${email}. Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
-      await kyc.fillKYC(KYC_scorring)
+      await app.kycMena.fillKYC(KYC_scorring);
+      [AML, Scoring] = await app.kycMena.finishKycAndGetAML()
+      expect(AML).toEqual(scoring_AML)
+      expect(Scoring).toEqual(scoring_General)
     })
-    await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
-      expect(await KYC_FinalStep.getUserScorringText()).toContain("Pre-Advanced");
-      expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await KYC_FinalStep.clickBtn('Deposit');  
-    })
-    await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openBackMenuPoint("feed");
-      expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
+    await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
+      expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Pre-Advanced");
+      expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+      await app.KYC_FinalStep.clickBtn('Deposit');  
     })
   })
-  test('@25362 KYC Mena - Intermediate Score', {tag:['@kyc', '@KYC_Mena','@web']}, async({page})=>{
-    let kyc = new MenaFullRegistration(page)
+  test('KYC Mena - Intermediate Score', {tag:['@kyc', '@KYC_Mena','@web']}, async({app})=>{
     let KYC_scorring = 'Intermediate'
-    let KYC_FinalStep = new FinalStep(page);
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-    let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
-    let mainPage = new MainPage(page)
+    let scoring_AML = 1.6425
+    let scoring_General = 0.2625
     await test.step(`User email - ${email}. Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
-      await kyc.fillKYC(KYC_scorring)
+      await app.kycMena.fillKYC(KYC_scorring);
+      [AML, Scoring] = await app.kycMena.finishKycAndGetAML()
+      expect(AML).toEqual(scoring_AML)
+      expect(Scoring).toEqual(scoring_General)
     })
-    await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
-      expect(await KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
-      expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await KYC_FinalStep.clickBtn('Deposit');  
-    })
-    await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openBackMenuPoint("feed");
-      expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
+    await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
+      expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
+      expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+      await app.KYC_FinalStep.clickBtn('Deposit');  
     })
   })
 
-  test('@25363 KYC Mena - Elementary Score', {tag:['@kyc','@KYC_Mena','@web']}, async({page})=>{
-    let kyc = new MenaFullRegistration(page)
+  test('KYC Mena - Elementary Score', {tag:['@kyc','@KYC_Mena','@web']}, async({app})=>{
     let KYC_scorring = 'Elementary'
-    let KYC_FinalStep = new FinalStep(page);
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-    let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
-    let mainPage = new MainPage(page)
+    let scoring_AML = 1.3275
+    let scoring_General = 0.15  
     await test.step(`User email - ${email}. Fill KYC - ${KYC_scorring} scorring. Test manually click's answers in KYC`, async()=>{
-      await kyc.fillKYC(KYC_scorring)
+      await app.kycMena.fillKYC(KYC_scorring);
+      [AML, Scoring] = await app.kycMena.finishKycAndGetAML()
+      expect(AML).toEqual(scoring_AML)
+      expect(Scoring).toEqual(scoring_General)
     })
-    await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
-      expect(await KYC_FinalStep.getUserScorringText()).toContain("Elementary");
-      expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await KYC_FinalStep.clickBtn('Deposit');  
-    })
-    await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openBackMenuPoint("feed");
-      expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
+    await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
+      expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Elementary");
+      expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+      await app.KYC_FinalStep.clickBtn('Deposit');  
     })
   })
-  test('@25364 KYC Mena - Beginner Score', {tag:['@kyc','@KYC_Mena','@web']}, async({page})=>{
-    let kyc = new MenaFullRegistration(page)
+  test('KYC Mena - Beginner Score', {tag:['@kyc','@KYC_Mena','@web']}, async({app})=>{
     let KYC_scorring = 'Beginner'
-    let KYC_FinalStep = new FinalStep(page);
     let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
-    let mainPageLocalization = new getLocalization('/pageObjects/localization/NagaMarkets_MainPage.json')
-    let mainPage = new MainPage(page)
+    let scoring_AML = 1.1475
+    let scoring_General = 0.075  
     await test.step(`User email - ${email}. Fill KYC- Beginner scorring`, async()=>{
-      await kyc.fillKYC(KYC_scorring)
+      await app.kycMena.fillKYC(KYC_scorring);
+      [AML, Scoring] = await app.kycMena.finishKycAndGetAML()
+      expect(AML).toEqual(scoring_AML)
+      expect(Scoring).toEqual(scoring_General)
     })
-    await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
-      expect(await KYC_FinalStep.getUserScorringText()).toContain("Beginner");
-      expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await KYC_FinalStep.clickBtn('Deposit');  
-    })
-    await test.step('Switch to main page and assert that widget step has correct text in description', async()=>{
-      await mainPage.openBackMenuPoint("feed");
-      expect(await mainPage.getKYCbannerText()).toEqual(await mainPageLocalization.getLocalizationText('KYC_AdvanceBanner'))
+    await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
+      expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Beginner");
+      expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+      await app.KYC_FinalStep.clickBtn('Deposit');  
     })
   })
 })

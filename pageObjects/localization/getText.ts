@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { text } from 'stream/consumers';
 
 export class getLocalization{
     private jsonObj: any;
@@ -27,4 +28,5 @@ export class getLocalization{
     async getTutorialsBtn(brand:string, language:string, btn: string){
         return await this.jsonObj[brand][language][btn]
     }
+
 }

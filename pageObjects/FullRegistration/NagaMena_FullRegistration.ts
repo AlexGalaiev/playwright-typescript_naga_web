@@ -131,6 +131,17 @@ export class MenaFullRegistration{
         await this.singleSelect('level_of_risk_to_tolerate_in_exchange', level)
         await this.singleSelect('time_to_hold_open_positions', level)
         await this.singleSelectOther('currency', level)
-        await this.submit.click()
+        //await this.submit.click()
+    }
+
+    async finishKycAndGetAML(){
+        const [response] = await Promise.all([
+            this.page.waitForResponse('**/kyc/scores', {timeout:15000}),
+            this.submit.click()
+        ])
+        let body = await response.json()
+        let amlScor = await body.data.aml_score
+        let score = await body.data.knowledge_experience_score
+        return [amlScor, score]
     }
 }

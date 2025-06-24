@@ -12,73 +12,82 @@ import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 
 test.describe('KYC WEB. Naga Africa', async()=>{
     let email = ''
+    let AML
+    let Scoring     
 
-    test.beforeEach('Create lead user', async({page, AppNAGA, NagaAfricaCountry}, testInfo)=>{
+    test.beforeEach('Create lead user', async({app, AppNAGA, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 220000);
-        let signUp = new SignUp(page)
         email = await new RandomUser().getRandomUserEmail()
-        let KYC = new KYC_Africa(page)
-        let mainPage = new MainPage(page)
         await test.step(`Create lead user with ${email}`, async()=>{
-            await signUp.goto(AppNAGA, 'register')
-            await new Captcha(page).removeCaptcha()
-            await signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', NagaAfricaCountry, '+387', '603039647')
-            await new YouAreInNagaMarkets(page).clickOpenRealMoneyAccount()
+            await app.signUp.goto(AppNAGA, 'register')
+            await new Captcha(app.page).removeCaptcha()
+            await app.signUp.createCfdUser_All(email, process.env.USER_PASSWORD || '', NagaAfricaCountry, '+387', '603039647')
+            await app.youAreIn.clickOpenRealMoneyAccount()
         })
         await test.step(`Test fill NAGA Start information. User email ${email}`, async()=>{
-            await KYC.fillStartInformation()
+            await app.kycAfrica.fillStartInformation()
         })
         await test.step('Switch to main page and open kyc', async()=>{
-            await mainPage.openBackMenuPoint('feed')
-            await mainPage.clickOnWidgepPoint('NAGA Progress')
-            await KYC.waitNagaProgress()
+            await app.mainPage.closeManageFundsPopup()
+            await app.mainPage.openBackMenuPoint('feed')
+            await app.mainPage.clickOnWidgepPoint('NAGA Progress')
+            await app.kycAfrica.waitNagaProgress()
         })
     })
 
-    test(`@25366 KYC - Advance score. User email-${email}`,
-        {tag:['@kyc', '@prodSanity','@smoke','@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}},async({page})=>{
-        let KYC = new KYC_Africa(page)
+    test(`NagaAfrica -  Advance score. User email-${email}`,
+        {tag:['@kyc', '@prodSanity','@smoke','@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}},async({app})=>{
         let KYC_scorring = 'Advance'
-        let KYC_FinalStep = new FinalStep(page);
-        let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
+        let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json')
+        let scoring_AML = 1.53
+        let scoring_General = 0.96
         await test.step(`Test manually fill KYC - ${KYC_scorring} scorring, user-${email}`, async()=>{
-            await KYC.fillKYC(KYC_scorring)
+            await app.kycAfrica.fillKYC(KYC_scorring);
+            [AML, Scoring] = await app.kycMena.finishKycAndGetAML()
+            expect(AML).toEqual(scoring_AML)
+            expect(Scoring).toEqual(scoring_General)
         })
-        await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
-            expect(await KYC_FinalStep.getUserScorringText()).toContain("Advanced");
-            expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-            await KYC_FinalStep.clickBtn('Deposit');  
+        await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
+            expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Advanced");
+            expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+            await app.KYC_FinalStep.clickBtn('Deposit');  
         })
     })
 
-    test(`@25401 KYC - PreAdvance score. User email-${email}`,
-        {tag:['@kyc', '@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}}, async({page})=>{
-        let KYC = new KYC_Africa(page)
+    test(`NagaAfrica - PreAdvance score. User email-${email}`,
+        {tag:['@kyc', '@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}}, async({app})=>{
         let KYC_scorring = 'PreAdvance'
-        let KYC_FinalStep = new FinalStep(page);
+        let scoring_AML = 1.35
+        let scoring_General = 0.2
         let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
         await test.step(`Test manually fill KYC - ${KYC_scorring} scorring, user-${email}`, async()=>{
-            await KYC.fillKYC(KYC_scorring)
+            await app.kycAfrica.fillKYC(KYC_scorring);
+            [AML, Scoring] = await app.kycAfrica.finishKycAndGetAML()
+            expect(AML).toEqual(scoring_AML)
+            expect(Scoring).toEqual(scoring_General)
         })
-        await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
-            expect(await KYC_FinalStep.getUserScorringText()).toContain("Pre-Advanced");
-            expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-            await KYC_FinalStep.clickBtn('Deposit');  
+        await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
+            expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Pre-Advanced");
+            expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+            await app.KYC_FinalStep.clickBtn('Deposit');  
         })
     })
-    test(`@25402 KYC - Intermediate score. User email-${email}`,
-        {tag:['@kyc', '@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}},async({page})=>{
-        let KYC = new KYC_Africa(page)
+    test(`Naga Africa - Intermediate score. User email-${email}`,
+        {tag:['@kyc', '@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}},async({app})=>{
         let KYC_scorring = 'Intermediate'
-        let KYC_FinalStep = new FinalStep(page);
+        let scoring_AML = 0.99
+        let scoring_General = 0
         let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
         await test.step(`Test manually fill KYC - ${KYC_scorring} scorring, user-${email}`, async()=>{
-            await KYC.fillKYC(KYC_scorring)
+            await app.kycAfrica.fillKYC(KYC_scorring);
+            [AML, Scoring] = await app.kycAfrica.finishKycAndGetAML()
+            expect(AML).toEqual(scoring_AML)
+            expect(Scoring).toEqual(scoring_General)
         })
-        await test.step(`Assert scorring banner on final popup. Text must have - ${KYC_scorring} in header`, async()=>{
-            expect(await KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
-            expect(await KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-            await KYC_FinalStep.clickBtn('Deposit');  
+        await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
+            expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
+            expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
+            await app.KYC_FinalStep.clickBtn('Deposit');  
         })
     })
 })

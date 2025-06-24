@@ -165,6 +165,17 @@ export class KYC_Africa{
         await this.singleSelect('position_describing', level)
         await this.singleSelect('trading_with_leverage', level)
         await this.singleSelect('level_of_risk_to_tolerate_in_exchange', level)
-        await this.submit.click()
+        //await this.submit.click()
+    }
+
+      async finishKycAndGetAML(){
+        const [response] = await Promise.all([
+            this.page.waitForResponse('**/kyc/scores', {timeout:15000}),
+            this.submit.click()
+        ])
+        let body = await response.json()
+        let amlScor = await body.data.aml_score
+        let score = await body.data.knowledge_experience_score
+        return [amlScor, score]
     }
 }

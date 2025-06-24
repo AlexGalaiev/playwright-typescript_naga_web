@@ -306,6 +306,8 @@ export class MainPage{
             this.page.locator(`//div[@class='popover-content']//span[text()='${subcategoryName}']`).click()
         ]) 
         return response
-        
+    }
+    async closeManageFundsPopup(){
+        await this.page.locator("//button[@class='close']").click()
     }
 }   

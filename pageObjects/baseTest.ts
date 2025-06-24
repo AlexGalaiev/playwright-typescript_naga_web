@@ -31,6 +31,14 @@ import { PriceAlert } from "./Trading/PriceAlertsPage";
 import { HelpPage } from "./Support/HelpPage";
 import { SettingsPage } from "./Settings/SettingsPage";
 import { VerificationPopup } from "./VerificationCenter/verificationPopup";
+import { PhoneVerification } from "./FullRegistration/NAGACapital-PhoneVerification";
+import { KYC_Start } from "./FullRegistration/NAGAMarkets-KYCStart";
+import { FullRegistration } from "./FullRegistration/NagaMarkets_FullRegistration";
+import { FinalStep } from "./FullRegistration/NAGAMarkets_KYCFinalStep";
+import { MenaFullRegistration } from "./FullRegistration/NagaMena_FullRegistration";
+import { KYC_Africa } from "./FullRegistration/NagaAfrica_FullRegistrations";
+import { StartKYCPopup } from "./common/startKYC_Popup/startKYCPage";
+import { UdpateAccount } from "./FullRegistration/NAGACapital-UpdateAccount";
 
 export class BaseTest{
     page: Page
@@ -66,6 +74,14 @@ export class BaseTest{
     helpPage: HelpPage
     settings: SettingsPage
     verificationPopup: VerificationPopup
+    phoneVerification: PhoneVerification
+    kycStart: KYC_Start
+    quiz: FullRegistration
+    KYC_FinalStep: FinalStep
+    kycMena: MenaFullRegistration
+    kycAfrica: KYC_Africa
+    kycStartPopup: StartKYCPopup
+    kycUpdatePopup: UdpateAccount
 
     constructor(page: Page){
         this.page = page
@@ -101,5 +117,14 @@ export class BaseTest{
         this.helpPage = new HelpPage(page)
         this.settings = new SettingsPage(page)
         this.verificationPopup = new VerificationPopup(page)
+        this.phoneVerification = new PhoneVerification(page)
+        this.kycStart = new KYC_Start(page)
+        this.quiz = new FullRegistration(page)
+        this.KYC_FinalStep = new FinalStep(page)
+        this.kycMena = new MenaFullRegistration(page)
+        this.kycAfrica = new KYC_Africa(page)
+        this.kycStartPopup = new StartKYCPopup(page)
+        this.kycUpdatePopup = new UdpateAccount(page)
+
     }
 }

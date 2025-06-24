@@ -177,14 +177,5 @@ export class FullRegistration{
         await this.page.locator(``)
 
     }
-
-    // async chooseCountryNew(country:string){
-    //     await this.page.locator("//label[text()='Country']//..").click()
-    //     let searchField = await this.page.locator("#country_expected_source_of_funds")
-    //     await searchField.waitFor({state:'visible'})
-    //     await searchField.pressSequentially(country)
-    //     await this.page.waitForTimeout(500)
-
-    // }
     
 }

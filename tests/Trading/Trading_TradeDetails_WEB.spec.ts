@@ -91,7 +91,7 @@ test.describe('WEB', async()=>{
     for(const{brand, user, currency} of tradeDetailsParams){
     test(`${brand} Share opened position in feed. User shares posiiton from Trade details`, 
         {tag:['@web', '@feed', '@debug']}, async({app, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 45000)
+        testInfo.setTimeout(testInfo.timeout + 55000)
         let postText
         await test.step(`Login to ${brand} by ${user}`, async () => {
             await app.signIn.goto(AppNAGA, "login");

@@ -14,6 +14,13 @@ export class UdpateAccount{
     async clickFinishBtn(){
         await this.kycForm.waitFor({state:'visible'})
         await this.finishBtn.scrollIntoViewIfNeeded()
-        await this.finishBtn.click()
+        const [response] = await Promise.all([
+            this.page.waitForResponse("**/kyc/scores", {timeout:15000}),
+            this.finishBtn.click()
+        ])
+        let body = await response.json()
+        let amlScor = await body.data.aml_score
+        let score = await body.data.knowledge_experience_score
+        return await [amlScor, score]
     }
 }
