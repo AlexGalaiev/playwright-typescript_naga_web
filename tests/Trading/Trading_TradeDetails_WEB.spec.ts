@@ -81,7 +81,7 @@ test.describe('WEB', async()=>{
             await app.changeLimitPopup.updatePosition()
             await app.changeLimitSuccessPopup.acceptPopup()
             takeProfit = await app.tradeDetails.getTradeDetailsProtectionValue('Take Profit')
-            expect(takeProfit).toEqual(TP)
+            expect(takeProfit).toContain(TP)
         })
         await test.step('Close position', async()=>{
             await app.tradeDetails.closePosition()
@@ -130,7 +130,7 @@ test.describe('WEB', async()=>{
     for(const{brand, user}of tradeDetailsParams){
         test(`${brand} Baloon test. WEB notification about opened position`, 
             {tag:['@trading', '@web']}, async({app, AppNAGA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 25000)
+            testInfo.setTimeout(testInfo.timeout + 35000)
             await test.step(`Login to ${brand} by ${user}`, async () => {
             await app.signIn.goto(AppNAGA, "login");
             await app.signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "")

@@ -4,7 +4,7 @@ import {test} from "../../test-options"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
 
 
-test("Mobile. NagaCapital. Change password via settings", {tag:['@UI', '@mobile', '@settings']}, 
+test("Mobile. NagaCapital. Change password via settings", {tag:['@mobile', '@settings']}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -25,7 +25,7 @@ test("Mobile. NagaCapital. Change password via settings", {tag:['@UI', '@mobile'
         expect(await app.mainPage.checkMobileWidgetIsVisisble('Step 1/4: NAGA Start')).toBe(true)
     })})
 
-test("Mobile NagaMarkets. Change password via settings",{tag:['@UI', '@mobile', '@settings']}, 
+test("Mobile NagaMarkets. Change password via settings",{tag:['@mobile', '@settings']}, 
         async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -45,7 +45,7 @@ test("Mobile NagaMarkets. Change password via settings",{tag:['@UI', '@mobile', 
     })
 })
 
-test("Mobile. NagaMena, Change password via settings",{tag:['@UI', '@mobile', '@settings']}, 
+test("Mobile. NagaMena, Change password via settings",{tag:['@mobile', '@settings']}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -65,7 +65,7 @@ test("Mobile. NagaMena, Change password via settings",{tag:['@UI', '@mobile', '@
     })
 })
 
-test("Mobile. NagaAfrica, Change password via settings",{tag:['@UI', '@mobile', '@settings']}, 
+test("Mobile. NagaAfrica, Change password via settings",{tag:['@mobile', '@settings']}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -97,7 +97,7 @@ test.describe('Mobile', async()=>{
     ]
     for(const{brand, user} of capitalSettings){
         test(`${brand} Settings -> Profile. Check profile credentials`,
-        {tag:['@UI', '@mobile', '@settings']},async({AppNAGA, app}, testInfo)=>{
+        {tag:['@mobile', '@settings']},async({AppNAGA, app}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
         await test.step(`Login by ${user} to platform`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
@@ -122,7 +122,7 @@ test.describe('Mobile', async()=>{
     ]
     for(const{brand, user} of otherBrands){
     test(`${brand} Settings -> Profile. Check profile credentials`,
-        {tag:['@UI', '@mobile', '@settings']},async({AppNAGA, app}, testInfo)=>{
+        {tag:['@mobile', '@settings']},async({AppNAGA, app}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000)
     await test.step(`Login to platform by ${user}`, async()=>{
         await app.signIn.goto(AppNAGA, 'login')

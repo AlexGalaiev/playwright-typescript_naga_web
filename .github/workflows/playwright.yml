@@ -70,7 +70,7 @@ on:
       release:
         description: Number of released version
         required: false
-        default: "11.04.2025"
+        default: ""
         type: string
       job_url:
         description: Job url
@@ -86,6 +86,7 @@ on:
     - cron: '30 6 * * 0-6'
     - cron: '45 0 * * 0-6'
     - cron: '05 0 * * 0-6'
+    - cron: '00 1 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -142,6 +143,7 @@ jobs:
                 "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
                 "45 0 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
                 "05 0 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
+                "00 1 * * 0-6") echo "TAGS=@settings" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
@@ -250,16 +252,25 @@ jobs:
       if: always()
       uses: neonidian/teams-notify-build-status@v3
       with:
-        webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}   
+        webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL }}   
         status: ${{ steps.set_outcome_title.outcome }}  
-        title: Status- ${{ steps.set_outcome_title.outcome }}; Branch- ${{ github.head_ref || github.ref_name }}; Tags- ${{ inputs.tag || env.TAGS }}; Environment- ${{ env.TitleProject}}; View- ${{env.TitleView}}; Trigger- ${{inputs.trigger}}; Component- ${{inputs.component}}; Release- ${{inputs.release}}
-        message: >-
-            View report [${{ env.report_url }}](${{ env.report_url }})
+        title: Playwright Tests – ${{ steps.set_outcome_title.outputs.title }}
+        message: |
+          ** Test Summary**
+          ─────────────────────────────
+          • **Tags**:         `${{ inputs.tag || env.TAGS }}`
+          • **Environment**:  `${{ env.TitleProject }}`
+          • **View**:         `${{ env.TitleView }}`
+          • **Trigger**:      `${{ inputs.trigger }}`
+          • **Component**:    `${{ inputs.component }}`
+          • **Release**:      `${{ inputs.release }}`
+          • **Result**:       `${{ steps.playwright_tests.outcome }}`
+          
+          **[View Test Report](${{ env.report_url }})**
       env:
         SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
         SHOULD_DISPLAY_VIEW_COMMIT_BUTTON: true
         SHOULD_DISPLAY_ACTOR_LABEL: true
-     # when trigger_type equal "jira", send a webhook request to an API and send to it the ticket_id, env.deployment_url, steps.playwright_tests.outcome, steps.set_outcome_title.outputs.title, inputs.tag
     - name: Notify test result for Jira
       if: always()
       run: |

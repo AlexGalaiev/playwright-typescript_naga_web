@@ -39,6 +39,7 @@ import { MenaFullRegistration } from "./FullRegistration/NagaMena_FullRegistrati
 import { KYC_Africa } from "./FullRegistration/NagaAfrica_FullRegistrations";
 import { StartKYCPopup } from "./common/startKYC_Popup/startKYCPage";
 import { UdpateAccount } from "./FullRegistration/NAGACapital-UpdateAccount";
+import { Messanger } from "./MainPage/Messanger";
 
 export class BaseTest{
     page: Page
@@ -82,6 +83,7 @@ export class BaseTest{
     kycAfrica: KYC_Africa
     kycStartPopup: StartKYCPopup
     kycUpdatePopup: UdpateAccount
+    messanger: Messanger
 
     constructor(page: Page){
         this.page = page
@@ -125,6 +127,6 @@ export class BaseTest{
         this.kycAfrica = new KYC_Africa(page)
         this.kycStartPopup = new StartKYCPopup(page)
         this.kycUpdatePopup = new UdpateAccount(page)
-
+        this.messanger = new Messanger(page)
     }
 }

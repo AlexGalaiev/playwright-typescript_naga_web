@@ -11,7 +11,7 @@ import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/componen
 
 test.describe('WEB', async()=>{
 
-    test("NagaCapital. Change password via settings", {tag:['@UI', '@web', '@settings']}, 
+    test("NagaCapital. Change password via settings", {tag:['@web', '@settings']}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000);
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -34,7 +34,7 @@ test.describe('WEB', async()=>{
         expect(await app.mainPage.checkWidgetStepNotFinishedVisibility('NAGA Start', 'active')).toBe(true);
     })})
 
-test("NagaMarkets. Change password via settings",{tag:['@UI', '@web', '@settings']}, 
+test("NagaMarkets. Change password via settings",{tag:['@web', '@settings']}, 
         async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -56,7 +56,7 @@ test("NagaMarkets. Change password via settings",{tag:['@UI', '@web', '@settings
     })
 })
 
-test("@25428 NagaMena, Change password via settings",{tag:['@UI', '@web', '@settings']}, 
+test("NagaMena, Change password via settings",{tag:['@web', '@settings']}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -78,7 +78,7 @@ test("@25428 NagaMena, Change password via settings",{tag:['@UI', '@web', '@sett
     })
 })
 
-test("@25429 NagaAfrica, Change password via settings",{tag:['@UI', '@web', '@settings']}, 
+test("NagaAfrica, Change password via settings",{tag:['@web', '@settings']}, 
     async({page, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let newLead = new KYC_General(page)
@@ -116,7 +116,7 @@ test.describe('WEB', async()=>{
     ]
     for(const{brand, user} of capitalSettings){
         test(`${brand} Settings -> Profile. Check profile credentials`,
-        {tag:['@UI', '@web', '@settings']},async({AppNAGA, page}, testInfo)=>{
+        {tag:['@web', '@settings']},async({AppNAGA, page}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000);
         let signIn = new SignIn(page)
         let myAccounts = new MyAccounts(page)
@@ -145,7 +145,7 @@ test.describe('WEB', async()=>{
     ]
     for(const{brand, user} of otherBrands){
     test(`${brand} Settings -> Profile. Check profile credentials`,
-        {tag:['@UI', '@web', '@settings']},async({AppNAGA, page}, testInfo)=>{
+        {tag:['@web', '@settings']},async({AppNAGA, page}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000);
         let signIn = new SignIn(page)
         let myAccounts = new MyAccounts(page)

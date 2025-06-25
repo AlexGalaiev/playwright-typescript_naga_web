@@ -16,7 +16,7 @@ import { Captcha } from "../../pageObjects/captcha";
 test.describe("WEB", async()=>{
 
     test("@Capital Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({appUA, AppNAGA, NSCountry}, testInfo)=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity','@settings']}, async({appUA, AppNAGA, NSCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
         let testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
@@ -38,7 +38,7 @@ test.describe("WEB", async()=>{
     })
 
     test("@Markets Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI']}, async({appIT, AppNAGA, NMCountry}, testInfo)=>{
+            {tag:['@forgotPassword', '@web', '@prodSanity','@settings']}, async({appIT, AppNAGA, NMCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
         let testUser = new RandomUser().getRandomUserEmail()
         await test.step(`Create lead user ${testUser}`, async()=>{
@@ -57,7 +57,7 @@ test.describe("WEB", async()=>{
         })
     })
     test("@Mena Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
+            {tag:['@forgotPassword', '@web', '@prodSanity','@settings'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
             async({appUAE, AppNAGA, NagaMenaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
         let testUser = new RandomUser().getRandomUserEmail()
@@ -77,7 +77,7 @@ test.describe("WEB", async()=>{
         })
     })
     test("@Africa Forgot password link test",
-            {tag:['@forgotPassword', '@web', '@prodSanity', '@UI'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
+            {tag:['@forgotPassword', '@web', '@prodSanity','@settings'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
             async({proxyPageSA, AppNAGA, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
         let signUp = new SignUp(proxyPageSA)

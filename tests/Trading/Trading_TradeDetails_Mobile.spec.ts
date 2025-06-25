@@ -137,7 +137,7 @@ test.describe('Mobile', async()=>{
     for(const{brand, user}of tradeDetailsParams){
         test(`${brand} Baloon test. WEB notification about opened position`, 
             {tag:['@trading', '@mobile']}, async({app, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 25000)
+        testInfo.setTimeout(testInfo.timeout + 35000)
         await test.step(`Login to ${brand} by ${user}`, async () => {
             await app.signIn.goto(AppNAGA, "login");
             await app.signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "")

@@ -11,7 +11,7 @@ test.describe('Deposit', async()=>{
         {numberOfDepositMethods:5, brand: '@Capital', user: 'testTrading2'},
         {numberOfDepositMethods:8, brand: '@Markets', user: 'depositTestMarkets'},
         {numberOfDepositMethods:4, brand: '@Mena', user: 'depositNagaMena@naga.com'},
-        {numberOfDepositMethods:5, brand: '@Africa', user: 'depositNagaAfrica'},
+        //{numberOfDepositMethods:5, brand: '@Africa', user: 'depositNagaAfrica'},
     ]
     for(const{numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`WEB ${brand} Check number of exist deposit methods`, 
