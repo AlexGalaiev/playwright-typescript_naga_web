@@ -3,7 +3,7 @@ import { test } from "../../test-options";
 
 test.describe('Naga EARN, WEB', async()=>{
 
-    test('Open Naga EARN via live EUR account. WEB', {tag:['@UI', '@web']}, async({app, AppNAGA}, testInfo)=>{
+    test('Open Naga EARN via live EUR account. WEB', {tag:['@trading', '@web']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000)
         let user = 'nagaEarnTest@naga.com'
         let accountId;
@@ -36,7 +36,7 @@ test.describe('Naga EARN, WEB', async()=>{
         {accountName:'usdAccount'}
     ]
     for(const{accountName} of NagaEarnParams){
-        test(`Open Naga Earn from ${accountName} account`, {tag:['@UI', '@web']}, async({app, AppNAGA}, testInfo)=>{
+        test(`Open Naga Earn from ${accountName} account`, {tag:['@trading', '@web']}, async({app, AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 10000)
             let user = 'nagaEarnTest@naga.com'
             await test.step(`Login to platform by ${user}, @Markets brand`, async()=>{
@@ -61,7 +61,7 @@ test.describe('Naga EARN, WEB', async()=>{
 })
 
 test.describe('Naga Earn.Mobile', async()=>{
-    test('Mobile. Open Naga EARN via live EUR account. WEB', {tag:['@UI', '@mobile']}, async({app, AppNAGA})=>{
+    test('Mobile. Open Naga EARN via live EUR account. WEB', {tag:['@trading', '@mobile']}, async({app, AppNAGA})=>{
         let user = 'nagaEarnTest@naga.com'
         let accountId;
         await test.step(`Login to platform by ${user}, @Markets brand`, async()=>{
@@ -93,7 +93,7 @@ test.describe('Naga Earn.Mobile', async()=>{
         {accountName:'usdAccount'}
     ]
     for(const{accountName} of NagaEarnParams){
-        test(`Open Naga Earn from ${accountName} account`, {tag:['@UI', '@mobile']}, async({app, AppNAGA})=>{
+        test(`Open Naga Earn from ${accountName} account`, {tag:['@trading', '@mobile']}, async({app, AppNAGA})=>{
             let user = 'nagaEarnTest@naga.com'
             await test.step(`Login to platform by ${user}, @Markets brand`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')

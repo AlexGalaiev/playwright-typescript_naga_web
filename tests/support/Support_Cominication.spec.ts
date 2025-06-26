@@ -18,7 +18,7 @@ test.describe('WEB', async()=>{
 
     for(const {brand, user, phones} of supportPhonesParams){
         test(`${brand} Support. Call us phones per country`,
-            {tag:['@support','@web','@UI']}, async({app, AppNAGA})=>{
+            {tag:['@support','@web']}, async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${user}. Open Help sections`, async()=>{
             await app.signIn.goto(AppNAGA, 'login');
             await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -46,7 +46,7 @@ test.describe('WEB', async()=>{
     ]
 
     for(const {brand, user} of supportLinksParams){
-        test(`${brand} Support links - support chat`, {tag:['@support', '@UI', '@web']}, async({app, AppNAGA})=>{
+        test(`${brand} Support links - support chat`, {tag:['@support', '@web']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform-${brand} by user - ${user}`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login');
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -76,7 +76,7 @@ test.describe('Mobile', async()=>{
 
     for(const {brand, user, phones} of supportPhonesParams){
         test(`${brand} Mobile support. Call us phones per country`,
-            {tag:['@support','@mobile','@UI']}, async({app, AppNAGA})=>{
+            {tag:['@support','@mobile']}, async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${user}. Open Help sections`, async()=>{
             await app.signIn.goto(AppNAGA, 'login');
             await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -103,7 +103,7 @@ test.describe('Mobile', async()=>{
     ]
 
     for(const {brand, user} of supportLinksParams){
-        test(`${brand} Support links - support chat`, {tag:['@support', '@UI', '@mobile']}, async({app, AppNAGA})=>{
+        test(`${brand} Support links - support chat`, {tag:['@support', '@mobile']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform-${brand} by user - ${user}`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login');
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')

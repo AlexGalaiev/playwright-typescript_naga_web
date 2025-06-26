@@ -89,6 +89,19 @@ export class NewPosition{
         //click 120 times(60 double clicks) on minus btn(2nd button on the page)
         await this.installMobileValueViaMinusBtn(numberOfClicks, positionOfEleemnt)
     }
+    //test function just for debugging
+    async installLotsManually(valueToInstall: string){
+        await this.page.locator("//label[text()='Lotsize']").click()
+        let inputField = await this.page.locator("//div[@class='investment-section ']//div[@class='enter-value']//input").nth(1)
+        await inputField.clear()
+        await this.page.waitForTimeout(250)
+        await inputField.pressSequentially(valueToInstall)
+        await this.page.waitForTimeout(1000)
+        let submit = await this.page.locator("//button[contains(@class, 'buy-sell-button')]")
+        await submit.scrollIntoViewIfNeeded()
+        await submit.click()
+        await this.page.waitForTimeout(1000)
+    }
 
     async installValueViaMinusBtn(iterations: number, elementOnthePage: number){
         let minusBtn = await this.page.locator("//div[contains(@class, 'minus-btn')]").nth(elementOnthePage)

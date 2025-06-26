@@ -9,7 +9,7 @@ import { MainPage } from "../../pageObjects/MainPage/MainPage";
 
 test.describe('Mobile. Create second account', async()=>{
 
-    test("Naga Capital. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
+    test("Naga Capital. Create 2nd live account", {tag:['@secondAccount', '@mobile']}, 
         async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let email = await new RandomUser().getRandomUserEmail()
@@ -36,7 +36,7 @@ test.describe('Mobile. Create second account', async()=>{
             await app.addAccount.acceptPopup()
         })
     })
-    test(" Naga Markets. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
+    test("Naga Markets. Create 2nd live account", {tag:['@secondAccount', '@mobile']}, 
         async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let email = await new RandomUser().getRandomUserEmail()
@@ -63,7 +63,7 @@ test.describe('Mobile. Create second account', async()=>{
             await app.addAccount.acceptPopup()
         })
     })
-    test("Naga Mena. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
+    test("Naga Mena. Create 2nd live account", {tag:['@secondAccount', '@mobile']}, 
         async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let email = await new RandomUser().getRandomUserEmail()
@@ -90,7 +90,7 @@ test.describe('Mobile. Create second account', async()=>{
             await app.addAccount.acceptPopup()
         })
     })
-    test("Naga Africa. Create 2nd live account", {tag:['@secondAccount', '@UI', '@mobile']}, 
+    test("Naga Africa. Create 2nd live account", {tag:['@secondAccount', '@mobile']}, 
         async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000);
         let email = await new RandomUser().getRandomUserEmail()
@@ -131,7 +131,7 @@ test.describe('Mobile. Actions with accounts', async()=>{
         {brand:'@Africa', user:'userWithAccounts4@i.ua'}
     ]
     for(const{brand, user}of switchingParams){
-        test(`Switching between exist accounts on brand ${brand}`,{tag:['@secondAccount', '@UI', '@mobile']}, 
+        test(`Switching between exist accounts on brand ${brand}`,{tag:['@secondAccount', '@mobile']}, 
             async({app, AppNAGA})=>{
         await test.step(`Login to ${brand} plarform by ${user} user`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
@@ -156,7 +156,7 @@ test.describe('Mobile. Actions with accounts', async()=>{
     ]
     for (const{brand, user}of editParams){
         test(`${brand} Edit trading account information `, 
-            {tag:['@secondAccount','@UI', '@mobile']}, async({app, AppNAGA}, testInfo)=>{
+            {tag:['@secondAccount','@mobile']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 90000)
         await test.step(`Login to platform by ${user} to ${brand}`, async()=>{
             await app.signIn.goto(AppNAGA,'login');

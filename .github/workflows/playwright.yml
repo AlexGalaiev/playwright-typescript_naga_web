@@ -77,6 +77,11 @@ on:
         required: false
         default: ""
         type: string
+      actor:
+        description: actor who started deploy
+        required: false
+        default: ""
+        type: string
   schedule:
     - cron: '30 4 * * 0-6'
     - cron: '20 3 * * 0-6'
@@ -151,6 +156,7 @@ jobs:
         RELEASE=${{inputs.release}}
         COMPONENT=${{inputs.component}}
         TRIGGER=${{inputs.trigger}}
+        ACTOR=${{inputs.actor}}
 
         CANARY="false"
         PROJECT=""
@@ -254,7 +260,7 @@ jobs:
       with:
         webhookUrl: ${{ secrets.TEAMS_WEBHOOK_URL  }}  
         status: ${{ steps.set_outcome_title.outcome }} 
-        title: Tags- ${{ inputs.tag || env.TAGS }}; Environment- ${{ env.TitleProject}}; View- ${{env.TitleView}}; Trigger- ${{inputs.trigger}}; Component- ${{inputs.component}}; Release- ${{inputs.release}}
+        title: Tags- ${{ inputs.tag || env.TAGS }}; ENV- ${{ env.TitleProject}}; DeviceView- ${{env.TitleView}}; Trigger- ${{inputs.trigger}}; Actor- ${{inputs.actor}}; Component- ${{inputs.component}}; Release- ${{inputs.release}}
         message: >-
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:

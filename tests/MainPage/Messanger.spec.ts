@@ -15,7 +15,7 @@ test.describe('WEB Messanger', async()=>{
         {testRailId: '@25193', brandSender: '@Capital', userSender: 'testFeedUser', receiver:'testTrading2Markets'},
     ]
     for(const{testRailId, brandSender, userSender,receiver}of testMessangerParams){
-        test(`${testRailId} ${brandSender} Send text via messanger`,{tag: ['@web','@messanger','@UI']}, async({app,appIT, proxyPage, AppNAGA}, testInfo)=>{
+        test(`${testRailId} ${brandSender} Send text via messanger`,{tag: ['@web','@messanger']}, async({app,appIT, proxyPage, AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 30000)
             let randomText = await new RandomUser().randomUserName()
             await test.step(`Login by user ${userSender}`, async()=>{
@@ -54,7 +54,7 @@ test.describe('Mobile Messanger', async()=>{
     ]
     for(const{testRailId, brandSender, userSender,receiver}of testMessangerParams){
         test(`${testRailId} ${brandSender} Mobile. Send text via messanger`,
-            {tag: ['@mobile','@messanger','@UI']}, async({app, appIT,AppNAGA}, testInfo)=>{
+            {tag: ['@mobile','@messanger']}, async({app, appIT,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 30000)
             let randomText = await new RandomUser().randomUserName()
             await test.step(`Login by user ${userSender}`, async()=>{

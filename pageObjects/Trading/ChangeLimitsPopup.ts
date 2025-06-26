@@ -76,6 +76,34 @@ export class ChangeLimitsPopup{
         let value = await protection.locator("//div[@class='limit-value__input']//input")
         return await value.getAttribute('value')
     }
+    //debug function for test
+    async updatePositionWithManuallInput(protectionName:string){
+        let bouthgtAt = await this.page.locator("//span[text()='Bought at:']//..//span").nth(2).textContent()
+        let nagaProtector = await this.page.locator(".naga-protector")
+        let protection = await nagaProtector.locator("//div[contains(@class, 'limit-value')]", {has: await this.page.locator(`//span[text()='${protectionName}']`)})
+        await this.page.waitForTimeout(3000)
+        await protection.locator(".limit-value__switch").click()
+        await this.page.waitForTimeout(1500)
+        let value = await protection.locator("//div[@class='limit-value__input']//input")
+        await value.clear()
+        // let price = Number(bouthgtAt)+(Number(bouthgtAt) * Number(0.15))
+        // let newPrice = Math.floor(price * 10) / 10
+        let newPrice = String(await this.calculationProtection(bouthgtAt || '', protectionName))
+        await value.pressSequentially(String(newPrice))
+        await this.page.waitForTimeout(1000)
+        return newPrice
+    }
+
+    async calculationProtection(itemPrice: string, protectionName: string){
+        let price
+        if(protectionName == "Take Profit"){
+            price = (Number(itemPrice)) * 1.10
+        }else if(protectionName == 'Stop Loss'){
+            price = Number(itemPrice) / 1.10
+        }
+        let newPrice = Math.floor(price * 10) / 10
+        return newPrice
+    }
 
     async switchToSpecificRate(){
         await this.page.locator('//input[@value="rate"]').click()
