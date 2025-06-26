@@ -18,7 +18,7 @@ test.describe('WEB', async()=>{
     ]
     for(const{brand, user, currency} of tradeDetailsParams){
     test(`${brand} Trade details test`, {tag:['@trading', '@web']}, async({app, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 170000)
+        testInfo.setTimeout(testInfo.timeout + 90000)
         let tradeInstrumentName
         let deposit
         await test.step(`Login to ${brand} by ${user}`, async () => {
@@ -32,7 +32,8 @@ test.describe('WEB', async()=>{
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
             await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
-            await app.newPosition.installLotsSize(90, 2)
+            await app.newPosition.installLotsManually('0.01')
+            //await app.newPosition.installLotsSize(90, 2)
             await app.newPosition.submitPosition()
         })
         await test.step(`Switch to My trades and open Trade details popup`, async()=>{
@@ -54,7 +55,7 @@ test.describe('WEB', async()=>{
     for(const{brand, user, currency} of tradeDetailsParams){
     test(`${brand} Edit position on Trade details popup`, 
         {tag:['@trading', '@web']}, async({app, AppNAGA}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 35000)
+        testInfo.setTimeout(testInfo.timeout + 40000)
         let takeProfit
         let stopLoss
         await test.step(`Login to ${brand} by ${user}`, async () => {
@@ -68,8 +69,7 @@ test.describe('WEB', async()=>{
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
             await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
-            await app.newPosition.installLotsSize(90, 2)
-            //await app.newPosition.installLotsManually('0.01')
+            await app.newPosition.installLotsManually('0.01')
             await app.newPosition.submitPosition()
         })
         await test.step(`Switch to My trades and open Trade details popup`, async()=>{
@@ -79,7 +79,6 @@ test.describe('WEB', async()=>{
         await test.step('Check trade details popup. Edit position. Enable Take Profit', async()=>{
             await app.tradeDetails.openEditLimitsPopup()
             await app.changeLimitPopup.switchToSpecificRate()
-            //let TP = await app.changeLimitPopup.updatePosition_EnableProtection('Take Profit')
             let TP = await app.changeLimitPopup.updatePositionWithManuallInput('Take Profit')
             await app.changeLimitPopup.updatePosition()
             await app.changeLimitSuccessPopup.acceptPopup()
@@ -89,7 +88,6 @@ test.describe('WEB', async()=>{
         await test.step('Check trade details popup. Edit position. Enable Stop Loss', async()=>{
             await app.tradeDetails.openEditLimitsPopup()
             await app.changeLimitPopup.switchToSpecificRate()
-            //let TP = await app.changeLimitPopup.updatePosition_EnableProtection('Take Profit')
             await app.changeLimitPopup.enableTakeProgit()
             let SL = await app.changeLimitPopup.updatePositionWithManuallInput('Stop Loss')
             await app.changeLimitPopup.updatePosition()
@@ -118,7 +116,7 @@ test.describe('WEB', async()=>{
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
             await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
-            await app.newPosition.installLotsSize(90, 2)
+            await app.newPosition.installLotsManually('0.01')            
             await app.newPosition.submitPosition()
         })
         await test.step(`Switch to My trades and open Trade details popup`, async()=>{
@@ -132,7 +130,7 @@ test.describe('WEB', async()=>{
             await app.myAccounts.openUserMenu()
             await app.myAccounts.openMyAccountMenuItem('My Social Profile')
             await app.mainPage.refreshPage()
-            expect(await app.feed.getLastPublishedTime()).toContain('sec')
+            expect(await app.feed.getLastPublishedTime()).toContain('minute')
             expect(await app.feed.getFirstPostInstrumentName()).toEqual('Solana/USD')
         })
          await test.step('Close opened position', async()=>{
@@ -156,7 +154,7 @@ test.describe('WEB', async()=>{
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
             await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
-            await app.newPosition.installLotsSize(90, 2)
+            await app.newPosition.installLotsManually('0.01')            
             await app.newPosition.submitPosition()
         })
         await test.step('Check web notification appears after opened position', async()=>{

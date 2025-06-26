@@ -97,6 +97,8 @@ export class NewPosition{
         await this.page.waitForTimeout(250)
         await inputField.pressSequentially(valueToInstall)
         await this.page.waitForTimeout(1000)
+        await this.page.locator("//div[@class='investment-section ']//div[contains(@class, 'minus-btn')]").nth(1).click()
+        await this.page.waitForTimeout(250)
         let submit = await this.page.locator("//button[contains(@class, 'buy-sell-button')]")
         await submit.scrollIntoViewIfNeeded()
         await submit.click()

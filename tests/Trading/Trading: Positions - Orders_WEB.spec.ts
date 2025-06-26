@@ -34,7 +34,7 @@ test.describe("Trading - Positions/Orders.", async () => {
         {tag:['@trading', '@prodSanity', '@web'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
         async ({ app, AppNAGA }, testInfo) => {
-      testInfo.setTimeout(testInfo.timeout + 170000)
+      testInfo.setTimeout(testInfo.timeout + 90000)
       await test.step(`Login to ${brand} by ${user}`, async () => {
         await app.signIn.goto(AppNAGA, "login");
         await app.signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
@@ -50,7 +50,7 @@ test.describe("Trading - Positions/Orders.", async () => {
       await test.step(`Check status of ${investDirection} button. And click on Submit btn`, async () => {
         expect(await app.newPosition.getStatusOfBtn(await app.newPosition.investmentDirectionBtn(mobileDirection))).toContain('active')
         expect(await app.newPosition.getStatusOfBtn(await app.newPosition.ratePositionBtn(`${ratePosition} at Current Price`))).toContain('active')
-        await app.newPosition.installLotsSize(90, 2)
+        await app.newPosition.installLotsManually('0.01')
         await app.newPosition.submitPosition()
       });
       await test.step("Switch to My-Trades page. Save trading parameters - Investments and values. Close position", async () => {
@@ -84,7 +84,7 @@ test.describe('Trading - Pending orders', async()=>{
           {tag:['@trading', '@web'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}},
           async ({ app,AppNAGA }, testInfo) => {
-      testInfo.setTimeout(testInfo.timeout + 170000);
+      testInfo.setTimeout(testInfo.timeout + 90000);
       await test.step(`Login to ${brand} by ${user}`, async () => {
         await app.signIn.goto(AppNAGA, "login");
         await app.signIn.signInUserToPlatform(user,process.env.USER_PASSWORD || "");
@@ -100,7 +100,7 @@ test.describe('Trading - Pending orders', async()=>{
       });
       await test.step('Open order with manual rate value', async()=>{
         await app.newPosition.chooseBtn(await app.newPosition.ratePositionBtn(`${ratePosition} at Specific Rate`))
-        await app.newPosition.installLotsSize(90, 2)
+        await app.newPosition.installLotsManually('0.01')
         await app.newPosition.submitPosition()
       })
       await test.step('Check my-trades', async()=>{
@@ -123,7 +123,7 @@ test.describe('Trading - Pending orders', async()=>{
   for(const{ brand, user, investDirection}of tradingParameters){
     test(`Open short position of real stock ${brand}`,
       {tag:['@trading', '@web']}, async({app, AppNAGA}, testInfo)=>{
-      testInfo.setTimeout(testInfo.timeout + 140000);
+      testInfo.setTimeout(testInfo.timeout + 90000);
       let localization = new getLocalization('/pageObjects/localization/NagaCapital_Trading.json')
       await test.step(`Login to ${brand} by ${user}`, async () => {
         await app.signIn.goto(AppNAGA, "login");

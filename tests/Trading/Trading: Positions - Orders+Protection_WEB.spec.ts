@@ -31,7 +31,7 @@ const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
 for(const{brand, user, investDirection, protection,tradeField} of tradingParametersPositionsSL){
   test(`${brand} Open/Close ${investDirection} position + ${protection}`, 
     {tag:['@trading','@web']}, async ({ app, AppNAGA }, testInfo) => {
-    testInfo.setTimeout(testInfo.timeout + 170000);
+    testInfo.setTimeout(testInfo.timeout + 90000);
     await test.step(`Login to platfotm ${brand} by ${user}`, async () => {
       await app.signIn.goto(AppNAGA, "login");
       await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
@@ -45,7 +45,7 @@ for(const{brand, user, investDirection, protection,tradeField} of tradingParamet
       await app.instruments.openPositionOfInstrument(tradingInstrument, investDirection)
     });
     await test.step(`Open ${investDirection} position + ${protection}`, async () => {
-      await app.newPosition.installLotsSize(90, 2)
+      await app.newPosition.installLotsManually('0.01')
       await app.newPosition.enableProtection(protection)
       NagaProtectionValue = await app.newPosition.getProtectionValue(protection)
       await app.newPosition.submitPosition();
@@ -90,7 +90,8 @@ for(const{brand, user, investDirection, protection,tradeField} of tradingParamet
       });
       await test.step(`Open ${investDirection} position + ${protection}`, async () => {
         await app.newPosition.chooseBtn(await app.newPosition.ratePositionBtn(`${ratePosition} at Specific Rate`))
-        await app.newPosition.installLotsSize(90, 2)
+        //await app.newPosition.installLotsSize(90, 2)
+        await app.newPosition.installLotsManually('0.01')
         await app.newPosition.enableProtection(protection)
         NagaProtectionValue = await app.newPosition.getProtectionValue(protection)
         await app.newPosition.submitPosition();
@@ -144,7 +145,8 @@ for(const{brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL
       await app.mainPage.openBackMenuPoint("trade");
       await app.instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       await app.newPosition.switchToSpecificRateForm()
-      await app.newPosition.installLotsSize(90, 2)
+      //await app.newPosition.installLotsSize(90, 2)
+      await app.newPosition.installLotsManually('0.01')
       await app.newPosition.enableProtection(protectionSL)
       stopLossValue = await app.newPosition.getStopLossValue(protectionSL)
       await app.newPosition.submitPosition(); 
