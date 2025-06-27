@@ -263,17 +263,13 @@ jobs:
         title: Tags- ${{ inputs.tag || env.TAGS }}; ENV- ${{ env.TitleProject}}; DeviceView- ${{env.TitleView}}; Trigger- ${{inputs.trigger}}; Actor- ${{inputs.actor}}; Component- ${{inputs.component}}; Release- ${{inputs.release}}
         message: >-
           
-          ```
-          TAGS -----> (${{ inputs.tag || env.TAGS }})
-          ```
-          ```
-          ENV  -----> (${{ env.TitleProject}})
-          ```
-           DeviceView ------ (${{env.TitleView}})
-           Trigger --------- (${{inputs.trigger}})                                             
-           Actor ----------- (${{inputs.actor}})
-           Component ------- (${{inputs.component}})
-           Release --------- (${{inputs.release}})
+          * **TAGS:** ${{ inputs.tag || env.TAGS }}
+          * **ENV:** ${{ env.TitleProject}}
+          * **DeviceView:** ${{env.TitleView}}
+          * **Trigger:** ${{inputs.trigger}}
+          * **Actor:** ${{inputs.actor}}
+          * **Component:** ${{inputs.component}}
+          * **Release:** ${{inputs.release}}
 
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
