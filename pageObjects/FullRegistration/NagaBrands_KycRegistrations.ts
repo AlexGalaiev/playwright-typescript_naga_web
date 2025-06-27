@@ -77,6 +77,7 @@ export class KYC_General{
         await kycStart.clickStartVerificationBtn()
         //fill kyc 
         await quiz.fill_KYC('Advance');
+        await this.page.locator("//button[text()='Agree']").click()
         await this.page.waitForTimeout(500)
         await KYC_FinalStep.clickBtn('Deposit');
         await this.page.waitForTimeout(1500)
@@ -126,6 +127,7 @@ export class KYC_General{
         await new MainPage(this.page).clickOnWidgepPoint('Upgrade to Live')
         await new KYC_Start(this.page).clickStartVerificationBtn()
         await new MenaFullRegistration(this.page).fillKYC('Advance')
+        await this.page.locator("//button[text()='Agree']").click()
         await new FinalStep(this.page).clickBtn('Deposit');
     }
 
