@@ -264,9 +264,11 @@ jobs:
         message: >-
           
           ```
-          ______________________________________________
-           TAGS ------------ (${{ inputs.tag || env.TAGS }})     
-           ENV  ------------ (${{ env.TitleProject}})
+           TAGS -----> (${{ inputs.tag || env.TAGS }})
+          ```
+          ```
+           ENV  -----> (${{ env.TitleProject}})
+          ```
            DeviceView ------ (${{env.TitleView}})
            Trigger --------- (${{inputs.trigger}})                                             
            Actor ----------- (${{inputs.actor}})
