@@ -60,12 +60,12 @@ on:
       trigger:
         description: Shows what trigger was for launching tests
         required: false
-        default: "deploy"
+        default: ""
         type: string
       component:
         description: Shows what component was released
         required: false
-        default: "production"
+        default: ""
         type: string
       release:
         description: Number of released version
