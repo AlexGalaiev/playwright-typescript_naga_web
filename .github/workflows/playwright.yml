@@ -262,6 +262,7 @@ jobs:
         status: ${{ steps.set_outcome_title.outcome }} 
         title: Tags- ${{ inputs.tag || env.TAGS }}; ENV- ${{ env.TitleProject}}; DeviceView- ${{env.TitleView}}; Trigger- ${{inputs.trigger}}; Actor- ${{inputs.actor}}; Component- ${{inputs.component}}; Release- ${{inputs.release}}
         message: >-
+          
           ```
           ______________________________________________
            TAGS ------------ (${{ inputs.tag || env.TAGS }})     
