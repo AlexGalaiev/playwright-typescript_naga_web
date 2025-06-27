@@ -264,20 +264,17 @@ jobs:
         message: >-
           
           ```
-           TAGS -----> (${{ inputs.tag || env.TAGS }})
+          TAGS -----> (${{ inputs.tag || env.TAGS }})
           ```
           ```
-           ENV  -----> (${{ env.TitleProject}})
+          ENV  -----> (${{ env.TitleProject}})
           ```
            DeviceView ------ (${{env.TitleView}})
            Trigger --------- (${{inputs.trigger}})                                             
            Actor ----------- (${{inputs.actor}})
            Component ------- (${{inputs.component}})
            Release --------- (${{inputs.release}})
-          ________________________________________________
 
-          ```
-          
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
         SHOULD_DISPLAY_VIEW_RUN_BUTTON: true
