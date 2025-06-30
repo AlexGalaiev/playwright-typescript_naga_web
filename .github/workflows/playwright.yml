@@ -91,7 +91,7 @@ on:
     - cron: '30 6 * * 0-6'
     - cron: '45 0 * * 0-6'
     - cron: '05 0 * * 0-6'
-    - cron: '25 10 * * 0-6'
+    - cron: '25 1 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -148,7 +148,7 @@ jobs:
                 "30 6 * * 0-6") echo "TAGS=@trading" >> $GITHUB_ENV ;;
                 "45 0 * * 0-6") echo "TAGS=@UI" >> $GITHUB_ENV ;;
                 "05 0 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
-                "25 10 * * 0-6") echo "TAGS=@settings" >> $GITHUB_ENV ;;
+                "25 1 * * 0-6") echo "TAGS=@settings" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
