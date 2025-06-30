@@ -175,7 +175,7 @@ jobs:
 
         if [ -z "$TRIGGER" ]; then
            TRIGGER=@${{ inputs.trigger || github.event_name }}
-           echo "tags from input $TAGS"
+           echo "Trigger from input $TRIGGER"
         fi
 
         if [[ "$ENV" == *"Canary"* ]]; then
@@ -202,6 +202,7 @@ jobs:
         echo "View: $VIEW"
         echo "TitleProject=$PROJECT" >> $GITHUB_ENV
         echo "TitleView=$VIEW" >> $GITHUB_ENV
+        echo "Trigger=$TRIGGER" >> $GITHUB_ENV
               
         if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             echo "Running schedule production tests with tag $TAGS"
@@ -271,7 +272,7 @@ jobs:
           * **TAGS:** ${{ inputs.tag || env.TAGS }}
           * **ENV:** ${{ env.TitleProject}}
           * **DeviceView:** ${{env.TitleView}}
-          * **Trigger:** ${{inputs.trigger}}
+          * **Trigger:** ${{env.Trigger}}
           * **Actor:** ${{inputs.actor}}
           * **Component:** ${{inputs.component}}
           * **Release:** ${{inputs.release}}
