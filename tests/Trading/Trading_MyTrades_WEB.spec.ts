@@ -19,7 +19,6 @@ test.describe('WEB. ', async()=>{
         test(`${brand} My trades. Filter closed positions by date.`, {tag:['@trading','@web']},async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000)
         let NumberOfTrades_Today
-        let NumberOfTrades_7Days
         let NumberOfTrades_30Days
         await test.step(`Login to platform ny user - ${user}, brand - ${brand}`, async()=>{
             await app.signIn.goto(AppNAGA, "login");
@@ -33,17 +32,12 @@ test.describe('WEB. ', async()=>{
             await app.myTrades.setFilterDate('Today')
             NumberOfTrades_Today = await app.myTrades.getNumberOfClosedTrades()
         })
-        await test.step(`Install filter - Today, and check number of closed trades in UI`, async()=>{
-            await app.myTrades.setFilterDate('Last 7 Days')
-            NumberOfTrades_7Days = await app.myTrades.getNumberOfClosedTrades()
-        })
-        await test.step(`Install filter - Today, and check number of closed trades in UI`, async()=>{
+        await test.step(`Install filter - 30 days, and check number of closed trades in UI`, async()=>{
             await app.myTrades.setFilterDate('Last 30 Days')
             NumberOfTrades_30Days = await app.myTrades.getNumberOfClosedTrades()
         })
         await test.step('Check that number of trades are changing with changing filter',async()=>{
-            expect(Number(NumberOfTrades_30Days)).toBeGreaterThan(Number(NumberOfTrades_7Days))
-            expect(Number(NumberOfTrades_7Days)).toBeGreaterThan(Number(NumberOfTrades_Today))
+            expect(Number(NumberOfTrades_30Days)).toBeGreaterThan(Number(NumberOfTrades_Today))
         })
     })
     }

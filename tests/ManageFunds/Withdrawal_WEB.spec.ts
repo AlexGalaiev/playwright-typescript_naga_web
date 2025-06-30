@@ -175,7 +175,8 @@ for(const{ brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_With
         {brand:'@Markets', user:'depositTestMarkets', numberOfEwalletWithdrawal:3},
         {brand:'@Capital', user:'testTrading2', numberOfEwalletWithdrawal:2},
         {brand:'@Mena', user:'testTrading@naga.com', numberOfEwalletWithdrawal:1},
-        {brand:'@Africa', user:'testTradingAfrica@naga.com', numberOfEwalletWithdrawal:2}
+        {brand:'@Africa', user:'testTradingAfrica2@naga.com', numberOfEwalletWithdrawal:2}
+        //{brand:'@Africa', user:'testTradingAfrica@naga.com', numberOfEwalletWithdrawal:2}
     ]
     for(const{ brand, user, numberOfEwalletWithdrawal} of testNumberOfWithdrawals){
         test(`${brand} Check number of available withdrawals`, 
@@ -202,7 +203,7 @@ for(const{ brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_With
     }
     const withdrawalEcompayParams: withdrawalEcompayType[] = [
         { brand: '@Mena', user: 'testTrading@naga.com', currency:'€'},
-        { brand: '@Africa', user: 'testTradingAfrica@naga.com', currency:'$'}
+        { brand: '@Africa', user: 'testTradingAfrica2@naga.com', currency:'$'}
     ]
     
     for(const{ brand, user, currency}of withdrawalEcompayParams){
@@ -224,5 +225,3 @@ for(const{ brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_With
             expect(await app.withdrawal.getApiStatusCode(response)).toEqual(200)
         })
     })}
-    
- 

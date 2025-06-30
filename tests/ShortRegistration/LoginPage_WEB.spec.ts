@@ -1,15 +1,7 @@
 import { expect } from "@playwright/test";
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
-import { ForgotPassword } from "../../pageObjects/SignIn/ForgotPassword";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import {test} from "../../test-options"
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
-import { PageAfterLogout } from "../../pageObjects/common/logOutPopup/PageAfterLogout";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { Captcha } from "../../pageObjects/captcha";
 
 
@@ -78,31 +70,29 @@ test.describe("WEB", async()=>{
     })
     test("@Africa Forgot password link test",
             {tag:['@forgotPassword', '@web', '@prodSanity','@settings'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
-            async({proxyPageSA, AppNAGA, NagaAfricaCountry}, testInfo)=>{
+            async({appSA, AppNAGA, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
-        let signUp = new SignUp(proxyPageSA)
-        let signIn = new SignIn(proxyPageSA)
-        let forgotPassword = new ForgotPassword(proxyPageSA)
+        // let signUp = new SignUp(proxyPageSA)
+        // let signIn = new SignIn(proxyPageSA)
+        // let forgotPassword = new ForgotPassword(proxyPageSA)
         let testUser = new RandomUser().getRandomUserEmail()
-        let myAccount = new MyAccounts(proxyPageSA)
+        // let myAccount = new MyAccounts(proxyPageSA)
         await test.step(`Create lead user ${testUser}`, async()=>{
-            await signUp.goto(AppNAGA, 'register')
-            await new Captcha(proxyPageSA).removeCaptcha()
-            await signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NagaAfricaCountry, "+387", "603039647")
-            await new YouAreInNagaMarkets(proxyPageSA).clickExplorePlatform()
+            await appSA.signUp.goto(AppNAGA, 'register')
+            await new Captcha(appSA.page).removeCaptcha()
+            await appSA.signUp.createCfdUser_All(testUser, process.env.USER_PASSWORD || '', NagaAfricaCountry, "+387", "603039647")
+            await appSA.youAreIn.clickExplorePlatform()
         })
         test.step('Log out from paltform and open forgot password link', async()=>{
-            await myAccount.openUserMenu()
-            await myAccount.userLogOut()
-            await new PageAfterLogout(proxyPageSA).redirectToSighIn()
+            await appSA.myAccounts.openUserMenu()
+            await appSA.myAccounts.userLogOut()
+            await appSA.pageAfterLogin.redirectToSighIn()
             //await signUp.goto(AppNAGA, 'password/forgot')
         })
         await test.step('Check forgot password messages on UI', async()=>{
-            await signIn.forgotPasswordClick()
-            let response = await forgotPassword.sendEmailToAddress(testUser)
-            expect(await forgotPassword.getRequestMethod(response)).toBe('POST')
-            //expect(await forgotPassword.getForgotPasswordHeadText()).toEqual('ForgotPassword')
-            //expect(await forgotPassword.getForgotPasswordDescription()).toEqual('We’ve sent your password reset instructions to:')
+            await appSA.signIn.forgotPasswordClick()
+            let response = await appSA.forgotPassword.sendEmailToAddress(testUser)
+            expect(await appSA.forgotPassword.getRequestMethod(response)).toBe('POST')
         })
     })
 })              
@@ -122,21 +112,18 @@ test.describe('Guest mode', async()=>{
         {testRailId: '@25435', brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
     ] 
     for(const{testRailId, brand, localization} of testParamsGuestMode){
-        test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI','@mobile','@web']}, async({page,AppNAGA}, testInfo)=>{
+        test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI','@mobile','@web']}, async({app,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 50000);
             let localizationPage = new getLocalization(localization);
-            let signUp = new SignUp(page);
-            let signIn = new SignIn(page);
-            let mainPage = new MainPage(page);
             await test.step("Redirect from platform (in Guest mode) to sigh in page", async()=>{
-                await signUp.goto(AppNAGA,"feed");
-                await mainPage.openLoginFromGuestMode();
-                expect(await signIn.getSignInHeaderText()).toEqual(await localizationPage.getLocalizationText("SighInHeaderMainText"));
+                await app.signUp.goto(AppNAGA,"feed");
+                await app.mainPage.openLoginFromGuestMode();
+                expect(await app.signIn.getSignInHeaderText()).toEqual(await localizationPage.getLocalizationText("SighInHeaderMainText"));
             });
             await test.step("Redirect from platform(in Guest mode) to sigh Up page", async()=>{
-                await signUp.goto(AppNAGA, "feed");
-                await mainPage.openRegistrationFromGuestMode();
-                expect(await signUp.getSighUpTittleText()).toContain("Sign up");
+                await app.signUp.goto(AppNAGA, "feed");
+                await app.mainPage.openRegistrationFromGuestMode();
+                expect(await app.signUp.getSighUpTittleText()).toContain("Sign up");
             })
         })}
 })

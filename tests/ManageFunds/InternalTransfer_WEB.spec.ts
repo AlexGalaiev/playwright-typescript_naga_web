@@ -11,7 +11,7 @@ test.describe('Funds transfer', async()=>{
         {brand: '@Capital', user: 'testTrading3'},
         {brand: '@Markets', user: 'testTrading3Markets'},
         {brand: '@Mena', user: 'testTrading2Mena@naga.com'},
-        {brand: '@Africa', user: 'testTradingAfrica@naga.com'}
+        {brand: '@Africa', user: 'testTradingAfrica2@naga.com'}
     ]
     for(const{ brand, user} of testTransferParams){
         test(`Internal transfer funds ${brand}`, 

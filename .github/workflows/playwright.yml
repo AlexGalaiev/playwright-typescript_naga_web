@@ -173,6 +173,11 @@ jobs:
            echo "tags from input $TAGS"
         fi
 
+        if [ -z "$TRIGGER" ]; then
+           TRIGGER=@${{ inputs.trigger || github.event_name }}
+           echo "tags from input $TAGS"
+        fi
+
         if [[ "$ENV" == *"Canary"* ]]; then
           CANARY="true"
         fi

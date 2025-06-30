@@ -242,6 +242,7 @@ export class MyTrades{
         await this.page.locator("#startDate").click()
         let datePicker = await this.page.locator("//div[contains(@class, 'DayPicker_transitionContainer')]")
         await datePicker.waitFor({state:'visible'})
+        await this.page.waitForTimeout(2000)
         //choose filter
         await this.page.locator(`//button[text()='${filerDate}']`).click()
         await this.page.waitForTimeout(3000)
