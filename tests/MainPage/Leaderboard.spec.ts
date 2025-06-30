@@ -1,7 +1,4 @@
 import { expect } from "playwright/test"
-import { Leaderboard } from "../../pageObjects/MainPage/Leaderboard"
-import { MainPage } from "../../pageObjects/MainPage/MainPage"
-import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import { test } from "..//..//test-options"
 
 test.describe('WEB', async()=>{

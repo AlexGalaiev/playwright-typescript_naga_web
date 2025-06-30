@@ -1,11 +1,6 @@
 import { expect } from "@playwright/test";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
-import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations";
-import { AddAcountForm } from "../../pageObjects/UserProfile/AddTradingAccount";
 import { test } from "../../test-options"
-import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
 
 test.describe('Mobile. Create second account', async()=>{
 

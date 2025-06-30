@@ -1,13 +1,7 @@
 import { expect } from "@playwright/test"
 import { getLocalization } from "../../pageObjects/localization/getText"
-import { MainPage } from "../../pageObjects/MainPage/MainPage"
-import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
-import { SettingsPage } from "../../pageObjects/Settings/SettingsPage"
 import {test} from "../../test-options"
-import { SignIn } from "../../pageObjects/SignIn/SignInPage"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
-import { KYC_General } from "../../pageObjects/FullRegistration/NagaBrands_KycRegistrations"
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
 
 test.describe('WEB', async()=>{
 
@@ -79,28 +73,24 @@ test("NagaMena, Change password via settings",{tag:['@web', '@settings']},
 })
 
 test("NagaAfrica, Change password via settings",{tag:['@web', '@settings']}, 
-    async({page, AppNAGA}, testInfo)=>{
+    async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
-    let newLead = new KYC_General(page)
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
     let email = new RandomUser().getRandomUserEmail()
-    let myAccounts = new MyAccounts(page)
-    let settings = new SettingsPage(page)
-    let signIn = new SignIn(page)
     await test.step(`Create lead user with ${email}`, async()=>{
-        await newLead.NagaAfrica_UserLead(email, AppNAGA)
+        await app.KYC_Registration.NagaAfrica_UserLead(email, AppNAGA)
     })
     await test.step(`Change password. Open header menu, change password  to new -Test12345!`, async()=>{
-        await myAccounts.openUserMenu();
-        await myAccounts.openMyAccountMenuItem('Settings')
-        await settings.openSettingsMenuItem('Password & Security')
-        await settings.changePasswordToNew("Test12345!")
-        expect(await settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
-        await settings.acceptSuccessPopup()
+        await app.myAccounts.openUserMenu();
+        await app.myAccounts.openMyAccountMenuItem('Settings')
+        await app.settings.openSettingsMenuItem('Password & Security')
+        await app.settings.changePasswordToNew("Test12345!")
+        expect(await app.settings.getSuccessPopuptext()).toContain(await localization.getLocalizationText("ChangePasswordSuccessPopup"))
+        await app.settings.acceptSuccessPopup()
     })
     await test.step('Login to platform with new password', async()=>{
-        await signIn.signInUserToPlatform(email, "Test12345!");
-        expect(await new MainPage(page).checkVisisbilityOfBalanceBar()).toBe(true);
+        await app.signIn.signInUserToPlatform(email, "Test12345!");
+        expect(await app.mainPage.checkVisisbilityOfBalanceBar()).toBe(true);
     })})
 })
 
@@ -116,26 +106,23 @@ test.describe('WEB', async()=>{
     ]
     for(const{brand, user} of capitalSettings){
         test(`${brand} Settings -> Profile. Check profile credentials`,
-        {tag:['@web', '@settings']},async({AppNAGA, page}, testInfo)=>{
+        {tag:['@web', '@settings']},async({AppNAGA, app}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000);
-        let signIn = new SignIn(page)
-        let myAccounts = new MyAccounts(page)
-        let settings = new SettingsPage(page)
         await test.step(`Login by ${user} to platform`, async()=>{
-            await signIn.goto(AppNAGA, 'login')
-            await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+            await app.signIn.goto(AppNAGA, 'login')
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
         })
         await test.step('Check settings of user profile. Check phone verification via settings', async()=>{
-            await myAccounts.openUserMenu()
-            await myAccounts.openMyAccountMenuItem('Settings')
-            expect(await settings.getPhoneValidationStatus()).toEqual('Not Verified ')
-            await settings.openPhoneVerification()
-            expect(await settings.checkPhoneVerificationPopupIsVisible()).toBeTruthy()
-            await settings.goBack()
+            await app.myAccounts.openUserMenu()
+            await app.myAccounts.openMyAccountMenuItem('Settings')
+            expect(await app.settings.getPhoneValidationStatus()).toEqual('Not Verified ')
+            await app.settings.openPhoneVerification()
+            expect(await app.settings.checkPhoneVerificationPopupIsVisible()).toBeTruthy()
+            await app.settings.goBack()
         })
         await test.step('Check email verification popup', async()=>{
-            await settings.openEmailVerificationPopup()
-            expect(await settings.checkEmailVerifiedPopupIsDisplayed()).toBeTruthy()
+            await app.settings.openEmailVerificationPopup()
+            expect(await app.settings.checkEmailVerifiedPopupIsDisplayed()).toBeTruthy()
         })})
     }
 
@@ -145,22 +132,19 @@ test.describe('WEB', async()=>{
     ]
     for(const{brand, user} of otherBrands){
     test(`${brand} Settings -> Profile. Check profile credentials`,
-        {tag:['@web', '@settings']},async({AppNAGA, page}, testInfo)=>{
+        {tag:['@web', '@settings']},async({AppNAGA, app}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000);
-        let signIn = new SignIn(page)
-        let myAccounts = new MyAccounts(page)
-        let settings = new SettingsPage(page)
     await test.step(`Login to platform by ${user}`, async()=>{
-        await signIn.goto(AppNAGA, 'login')
-        await signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+        await app.signIn.goto(AppNAGA, 'login')
+        await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
     })
     await test.step('Check settings of user profile. Check phone verification via settings', async()=>{
-        await myAccounts.openUserMenu()
-        await myAccounts.openMyAccountMenuItem('Settings')
+        await app.myAccounts.openUserMenu()
+        await app.myAccounts.openMyAccountMenuItem('Settings')
     })
     await test.step('Check email verification popup', async()=>{
-        await settings.openEmailVerificationPopup()
-        expect(await settings.checkEmailVerifiedPopupIsDisplayed()).toBeTruthy()
+        await app.settings.openEmailVerificationPopup()
+        expect(await app.settings.checkEmailVerifiedPopupIsDisplayed()).toBeTruthy()
     })
 })} 
 

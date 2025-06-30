@@ -1,10 +1,6 @@
 import { expect } from "@playwright/test";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { Withdrawal } from "../../pageObjects/ManageFunds/Withdrawal"
-import { SignIn } from "../../pageObjects/SignIn/SignInPage";
 import {test} from "../../test-options"
 import { getLocalization } from "../../pageObjects/localization/getText";
-import { Deposit } from "../../pageObjects/ManageFunds/Deposit";
 
 test.describe("Withdrawal Capital", async()=>{
     const ManageFunds_Withdrawal = "/pageObjects/localization/ManageFunds_Withdrawal.json";
