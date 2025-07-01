@@ -28,9 +28,18 @@ export class FullRegistration{
     }
     async countryStep(){
         await this.page.waitForSelector("//label[@for='country_expected_source_of_funds']", {'state':'visible'});
+        //await this.page.waitForSelector("//div[contains(@class, 'testid-country_expected_source_of_funds')]", {'state':'visible'});
         await this.countrySumbit.click()
         await this.page.waitForTimeout(250)
     }
+
+    //kyc new design
+    async countryStepNew(){
+        await this.page.waitForSelector("//div[contains(@class, 'testid-country_expected_source_of_funds')]", {'state':'visible'});
+        await this.page.locator('//button[@type="submit"]').click()
+        await this.page.waitForTimeout(250)
+    }
+
     async clickSubmitBtn(){
         await this.submitBtn.click();
         await this.page.waitForTimeout(250)
@@ -61,7 +70,22 @@ export class FullRegistration{
         let answerQuiz = await this.page.locator(`//label[@for='${QuestionName}']//..//..//button[contains(text(), '${answer}')]`)
         await this.page.waitForTimeout(500);
         await answerQuiz.click(); 
-    };
+    }
+
+    //new KYC design
+    async checkboxNew(QuestionName: string, level: string){
+        //Get quiestion text from json and compare it from text on the page
+        let question = await this.page.locator(`//p[@for='${QuestionName}']`)
+        let quiz = new KYC_answerFunctions(KYC_SCORE[level])
+        await question.textContent() === await quiz.getQuizText(QuestionName)
+        //get answer from json 
+        let answer = await quiz.getQuizAnswer(QuestionName)
+        //get answer on ui 
+        let answerQuiz = await this.page.locator(`//p[@for='${QuestionName}']//..//div[text()='${answer}']`)
+        await this.page.waitForTimeout(500);
+        await answerQuiz.click(); 
+    }
+
     async checkbox_Tin(QuestionName: string, level: string){
         let question = await this.page.locator(`//p[@for='${QuestionName}']`)
         let quiz = new KYC_answerFunctions(KYC_SCORE[level])
@@ -82,6 +106,20 @@ export class FullRegistration{
         await this.page.waitForTimeout(4000);
         await answerQuiz.click();
     }
+
+    //new design KYC
+    async singleSelectNEW(QuestionName: string, level: string){
+        await this.page.waitForTimeout(700)
+        let question = await this.page.locator(`//div[contains(@class, '${QuestionName}')]`)
+        let quiz = new KYC_answerFunctions(KYC_SCORE[level])
+        await question.textContent() === await quiz.getQuizText(QuestionName)
+        let answer = await quiz.getQuizAnswer(QuestionName)
+        let answerQuiz = await this.page.locator(`//button[text()='${answer}']`)
+        await this.page.waitForTimeout(4000);
+        await answerQuiz.click();
+    }
+
+
     async singleSelectOther(QuestionName: string, level: string){
         await this.page.waitForTimeout(700)
         let question = await this.page.locator(`//label[@for='${QuestionName}']`)

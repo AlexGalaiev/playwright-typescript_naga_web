@@ -10,7 +10,7 @@ test.describe('Deposit', async()=>{
     const testDepositNumber: depositNumber[] = [
         {numberOfDepositMethods:5, brand: '@Capital', user: 'testTrading2'},
         {numberOfDepositMethods:8, brand: '@Markets', user: 'depositTestMarkets'},
-        {numberOfDepositMethods:4, brand: '@Mena', user: 'depositNagaMena@naga.com'},
+        //{numberOfDepositMethods:4, brand: '@Mena', user: 'depositNagaMena@naga.com'},
         //{numberOfDepositMethods:5, brand: '@Africa', user: 'depositNagaAfrica'},
     ]
     for(const{numberOfDepositMethods, brand, user}of testDepositNumber){
@@ -40,10 +40,10 @@ test.describe('Deposit', async()=>{
         //{testRailId: '@24067', brand: '@Markets', user: 'testTrading2', depositName: 'perfectmoney', responseMethodKey:'Fund via Perfect Money'},
         {brand: '@Capital', user: 'testTrading2', depositName: 'light-neteller', responseMethodKey:'altneteller'},
         {brand: '@Capital', user: 'testTrading2', depositName: 'light-skrill', responseMethodKey:'skrill'},
-        {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'},
-        {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
-        {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-cc-applepay', responseMethodKey:'altcreditcard'},
-        {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-neteller', responseMethodKey:'Credit Card'},
+        // {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-credit-debit-cards', responseMethodKey:'Credit Card'},
+        // {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-ecommpay', responseMethodKey:'Credit Card'},
+        // {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-cc-applepay', responseMethodKey:'altcreditcard'},
+        // {brand: '@Mena', user: 'depositNagaMena@naga.com', depositName: 'light-neteller', responseMethodKey:'Credit Card'},
         //{testRailId: '@24077', brand: '@Capital', user: 'testTrading2', depositName: 'match2pay', responseMethodKey:'altcrypto'},
     ]
     for(const{ brand, user, depositName,responseMethodKey} of testNStestParameters){
@@ -71,6 +71,7 @@ test.describe('Deposit', async()=>{
     
     const AfricaTestParams: AfricaPraxisTypes[] = [
         {brand: '@Africa', user: 'depositNagaAfrica', deposit: [ 'Credit Card', 'ozow', 'skrill', 'altbankwire' ]},
+        {brand: '@Mena', user: 'depositNagaMena@naga.com', deposit: [ 'Credit Card', 'monetix', 'altcreditcard', 'altbankwire', 'applepay', 'google pay' ]},
     ]
     for(const{brand, user, deposit,} of AfricaTestParams){
         test(`${brand} Check praxis popup deposit methods`, {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
