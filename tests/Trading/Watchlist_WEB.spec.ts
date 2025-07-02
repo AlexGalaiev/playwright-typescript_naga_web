@@ -52,7 +52,7 @@ const priceAlertParameters: testTypes[] = [
     { brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{ brand, user, localization}of priceAlertParameters){
-    test(`Price alerts ${brand} ${user}`,{tag:['@trading','@web']}, async({app,AppNAGA}, testInfo)=>{
+    test(`Price alerts ${brand} ${user}`,{tag:['@trading', '@web']}, async({app,AppNAGA}, testInfo)=>{
         await testInfo.setTimeout(testInfo.timeout + 20000);
         let tradeInstrument = "EUR/USD"
         let localizationPage = new getLocalization(localization)

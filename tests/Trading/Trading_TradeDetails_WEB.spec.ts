@@ -87,8 +87,8 @@ test.describe('WEB', async()=>{
         })
         await test.step('Check trade details popup. Edit position. Enable Stop Loss', async()=>{
             await app.tradeDetails.openEditLimitsPopup()
-            await app.changeLimitPopup.switchToSpecificRate()
             await app.changeLimitPopup.enableTakeProgit()
+            await app.changeLimitPopup.switchToSpecificRate()
             let SL = await app.changeLimitPopup.updatePositionWithManuallInput('Stop Loss')
             await app.changeLimitPopup.updatePosition()
             await app.changeLimitSuccessPopup.acceptPopup()
