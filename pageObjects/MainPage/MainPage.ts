@@ -312,4 +312,11 @@ export class MainPage{
     async closeManageFundsPopup(){
         await this.page.locator("//button[@class='close']").click()
     }
+    async getResponseAfterOpenWidgetPoint(stepName: string){
+        const [response] = await Promise.all([
+            this.page.waitForResponse('**/verification/sdk-token'),
+            this.page.locator(`//div[text()='${stepName}']//..//..`).first().click()
+        ])
+        return await response
+    }
 }   

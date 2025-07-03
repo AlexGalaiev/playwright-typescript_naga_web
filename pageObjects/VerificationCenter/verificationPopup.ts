@@ -37,4 +37,16 @@ export class VerificationPopup{
     async getUrl(){
         return await this.page.url();
     }
+    async getResponseOfExternalService(){
+        await this.page.waitForSelector("//p[text()='NAGA Progress']", {state:"visible"})
+        const [response] = await Promise.all([
+            this.page.waitForResponse('**/user/document_requests?request_statuses=Requested', {timeout:15000}),
+            this.page.locator("//button[text()='Continue']").click()
+        ])
+        return response
+    }
+    async getStatusCode(response: any){
+        let body = await response.json()
+        return await body.info.code
+    }
 }

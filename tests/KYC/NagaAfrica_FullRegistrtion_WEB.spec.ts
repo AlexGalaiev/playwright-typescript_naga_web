@@ -1,14 +1,8 @@
 import { Captcha } from "../../pageObjects/captcha"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
-import { KYC_Africa } from "../../pageObjects/FullRegistration/NagaAfrica_FullRegistrations"
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "../../test-options"
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
 import { expect } from "@playwright/test"
-import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep"
 import { getLocalization } from "../../pageObjects/localization/getText"
-import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts"
 
 test.describe('KYC WEB. Naga Africa', async()=>{
     let email = ''
