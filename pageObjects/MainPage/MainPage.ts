@@ -133,7 +133,7 @@ export class MainPage{
         await this.page.waitForTimeout(500)
     }
     async refreshPage(){
-        await this.page.waitForTimeout(3000)
+        await this.page.waitForTimeout(3500)
         await this.page.reload()
         await this.page.waitForTimeout(1000)
     }

@@ -129,9 +129,8 @@ test.describe('WEB', async()=>{
         await test.step('Open My accounts(header)-> social profile. Check post in user cabinet', async()=>{
             await app.myAccounts.openUserMenu()
             await app.myAccounts.openMyAccountMenuItem('My Social Profile')
-            await app.mainPage.refreshPage()
-            expect(await app.feed.getLastPublishedTime()).toContain('minute')
-            expect(await app.feed.getFirstPostInstrumentName()).toEqual('Solana/USD')
+            await app.feed.switchToTradesTab()
+            expect(await app.feed.getPostTitle(user, 'Solana/USD')).toEqual('Solana/USD')
         })
          await test.step('Close opened position', async()=>{
             await app.mainPage.openBackMenuPoint("my-trades")

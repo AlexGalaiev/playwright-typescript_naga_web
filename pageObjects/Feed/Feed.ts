@@ -193,21 +193,27 @@ export class Feed {
     return await btn.isVisible()
   }
 
-  async getLastPublishedTime(){
-    await this.page.waitForTimeout(4000)
+  // async getLastPublishedTime(){
+  //   await this.page.waitForTimeout(4000)
+  //   await this.page.locator("//button[text()='Trades']").click()
+  //   await this.page.waitForTimeout(1000)
+  //   let post = await this.page.locator(".feed-item").first()
+  //   await post.waitFor({state:'visible'})
+  //   await post.scrollIntoViewIfNeeded()
+  //   let time = await post.locator('.user-message-header__user-info__publish-time').textContent()
+  //   return await time
+  // }
+
+  async switchToTradesTab(){
+    await this.page.waitForTimeout(5000)
     await this.page.locator("//button[text()='Trades']").click()
     await this.page.waitForTimeout(1000)
-    let post = await this.page.locator(".feed-item").first()
-    await post.waitFor({state:'visible'})
-    await post.scrollIntoViewIfNeeded()
-    let time = await post.locator('.user-message-header__user-info__publish-time').textContent()
-    return await time
   }
 
-  async getFirstPostInstrumentName(){
-    let post = await this.page.locator(".feed-item").first()
-    let name = await post.locator(".stock-badge-wrapper__symbol").textContent()
-    return await name
+  async getPostTitle(userName: string, instrument:string){
+    let post = await this.page.locator(".feed-item", {has:await this.page.locator(`//div[contains(text(), '${userName} opened a ${instrument}')]`)}).first()
+    let instrumentName = await post.locator('.stock-badge-wrapper__symbol')
+    return await instrumentName.textContent()
   }
 
 }
