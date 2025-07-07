@@ -32,7 +32,7 @@ export class SignUp{
         this.phoneCode = page.locator("//div[@class='dropdown-select__option__image']/following-sibling::span")
         this.phoneCodeInput = page.locator("//textarea[contains(@class, 'dropdown-select-field__search')]")
         this.phone = page.locator('//input[@name="phone"]')
-        this.countryCrypto = page.locator("//div[contains(@class, 'dropdown-select__custom__control')]")
+        this.countryCrypto = page.locator("//label[text()='Country']//..//div[@class='dropdown-select__option']")
         this.submitBtn = page.locator("//button[@type='submit']");
         this.riskWarning = page.locator(".registration-form__risk-warning");
         this.riskWarningMena = page.locator(".registration-form__info-wrapper")
@@ -93,7 +93,8 @@ export class SignUp{
             await this.countryInput.pressSequentially(Country);
             await this.countrySearchResult.press('Enter')
         } else {}
-    };
+    }
+    
     async checkPhoneCode(code: string){
         if(await this.phoneCode.textContent() !== code){
             await this.phoneCode.click();
@@ -104,11 +105,16 @@ export class SignUp{
     }
 
     async checkCountry_Crypto(country: string){
-        await this.countryCrypto.click();
-        await this.countryCrypto.pressSequentially(country);
+        await this.countryCrypto.click()
+        //await this.page.pause()
+        //let countryName = await this.page.locator(`//div[contains(@class, 'dropdown-select__custom__option')]`, {has:''})
+        let countryName = await this.page.locator(`//span[contains(text(),'${country}')]`)
+        await this.page.waitForTimeout(500) 
+        await countryName.scrollIntoViewIfNeeded()
         await this.page.waitForTimeout(500)
-        await this.countryCrypto.press('Enter')
+        await countryName.click()
     }
+
     async getRiskWarningText(){
         return await this.riskWarning.textContent();
     }

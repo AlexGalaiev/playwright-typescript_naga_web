@@ -4,7 +4,6 @@ import {test} from "../../test-options"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
 import { Captcha } from "../../pageObjects/captcha";
 
-
 test.describe("WEB", async()=>{
 
     test("@Capital Forgot password link test",
@@ -72,11 +71,7 @@ test.describe("WEB", async()=>{
             {tag:['@forgotPassword', '@web', '@prodSanity','@settings'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
             async({appSA, AppNAGA, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
-        // let signUp = new SignUp(proxyPageSA)
-        // let signIn = new SignIn(proxyPageSA)
-        // let forgotPassword = new ForgotPassword(proxyPageSA)
         let testUser = new RandomUser().getRandomUserEmail()
-        // let myAccount = new MyAccounts(proxyPageSA)
         await test.step(`Create lead user ${testUser}`, async()=>{
             await appSA.signUp.goto(AppNAGA, 'register')
             await new Captcha(appSA.page).removeCaptcha()
@@ -95,6 +90,28 @@ test.describe("WEB", async()=>{
             expect(await appSA.forgotPassword.getRequestMethod(response)).toBe('POST')
         })
     })
+    test.skip("@Crypto Forgot password link test",
+        {tag:['@forgotPassword', '@web', '@prodSanity','@settings','@crypto'], annotation:{description:'remove captcha from forgot password', type:'issue'}}, 
+        async({AppNAGAX, NSCountry, app}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 40000)
+        let testUser = new RandomUser().getRandomUserEmail()
+        await test.step(`Create lead user ${testUser}`, async()=>{
+            await app.signUp.goto(AppNAGAX, 'register')
+            await new Captcha(app.page).removeCaptcha()
+            await app.signUp.createCryptoUser(testUser, process.env.USER_PASSWORD || '', NSCountry)
+        })
+        await test.step('Check user profile popup. Refresh page and log out', async()=>{
+            expect(await app.nagaX_KYC.getPersonalInformationTitle()).toEqual('Welcome to NAGAX')
+            await app.mainPage.refreshPage()
+            await app.signIn.skip2AF()
+            await app.myAccounts.openUserMenuCrypto()
+            await app.myAccounts.userLogOutCrypto()
+        })
+        await test.step('Check forgot password messages on UI', async()=>{
+            await app.signIn.forgotPasswordClick()
+            let response = await app.forgotPassword.sendEmailToAddress(testUser)
+            expect(await app.forgotPassword.getRequestMethod(response)).toBe('POST')
+        })})
 })              
     
 test.describe('Guest mode', async()=>{
@@ -130,18 +147,17 @@ test.describe('Guest mode', async()=>{
 
 test.describe('Login/LogOut',async()=>{
     type testTypes = {
-        testrailId: string;
         brand: string;
         email: string;
     }
     const testParams: testTypes[] = [
-        { testrailId: "@23568", brand: '@Markets', email: "testLeadUser@i.ua"},
-        { testrailId: "@23914", brand: '@Capital', email: "testLeadUser"},
-        { testrailId: "@25359", brand: '@Mena', email: "testLeadUserMena"},
-        { testrailId: "@25360", brand: '@Africa', email: "testLeadAfrica"}
+        { brand: '@Markets', email: "testLeadUser@i.ua"},
+        { brand: '@Capital', email: "testLeadUser"},
+        { brand: '@Mena', email: "testLeadUserMena"},
+        { brand: '@Africa', email: "testLeadAfrica"}
     ]
-    for(const {testrailId, brand, email} of testParams){
-        test(`${testrailId} Login/logout to platform ${brand} by ${email}`, 
+    for(const { brand, email } of testParams){
+        test(`Login/logout to platform ${brand} by ${email}`, 
             {tag:['@login', '@prodSanity','@smoke','@web']}, async({app,AppNAGA})=>{
             await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')
@@ -152,5 +168,23 @@ test.describe('Login/LogOut',async()=>{
                 await app.myAccounts.userLogOut()
                 expect(await app.pageAfterLogin.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
             })})
+    }
+
+    const testCryptoParams: testTypes[] = [
+        { brand: '@Crypto', email: "testLeadCrypto@naga.com"}
+    ]
+    for(const { brand, email } of testCryptoParams){
+    test(`Login/logout to platform ${brand} by ${email}`, 
+        {tag:['@login', '@prodSanity','@smoke','@web','@crypto']}, async({app,AppNAGAX})=>{
+        await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
+            await app.signIn.goto(AppNAGAX, 'login')
+            await app.signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')
+            await app.signIn.skip2AF()
+        })
+        await test.step('Log out from platform', async()=>{
+            await app.myAccounts.openUserMenuCrypto();
+            await app.myAccounts.userLogOutCrypto()
+            expect(await app.signIn.getPageTitleCrypto()).toEqual('Sign in to your account')
+        })})
     }
 })

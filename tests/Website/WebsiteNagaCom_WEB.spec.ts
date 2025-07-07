@@ -20,7 +20,6 @@ test.describe('Website redirect', async()=>{
         test(` Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
             {tag: ['@prodSanity','@naga.com','@web']}, async({appIT},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 25000)
-            //let website = new NagaCom(proxyPage)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await appIT.website.open(`${baseUrl}`)
             })

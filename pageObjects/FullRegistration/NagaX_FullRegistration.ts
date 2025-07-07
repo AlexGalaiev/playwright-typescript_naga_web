@@ -1,10 +1,24 @@
-import { Page } from "@playwright/test";
+import { Locator, Page } from "@playwright/test";
+import { RandomUser } from "../common/testUserCredentials/randomUser";
 
 export class NagaX_KYC{
-    page: Page;
+    page: Page
+    firstName: Locator
+    lastName: Locator
+    userName: Locator
+    phone: Locator
+    submitBtn: Locator
+    continueBtn: Locator
 
     constructor(page: Page){
         this.page = page
+        this.firstName = page.locator("[name='first_name']")
+        this.lastName = page.locator("[name='last_name']")
+        this.userName = page.locator("[name='user_name']")
+        this.phone = page.locator("[name='phone']")
+        this.submitBtn = page.locator("//button[text()='Proceed']")
+        this.continueBtn = page.locator("//button[contains(@class, 'register-success-modal__button')]")
+
     }
 
     async inputData(elementToSearch: string, dataToInput: string){
@@ -66,4 +80,43 @@ export class NagaX_KYC{
     async finishRegistration(){
         await this.page.locator("//button[@type='submit']").click()
     }
+
+    async getPersonalInformationTitle(){
+        await this.page.waitForSelector(".complete-your-profile-modal__headline__title", {state:'visible'})
+        return await this.page.locator(".complete-your-profile-modal__headline__title").textContent()
+    }
+
+    async fillCryptoPersonalInfo(){
+        let randomUser = new RandomUser();
+        await this.page.waitForTimeout(1000)
+        await this.firstName.pressSequentially('TestN')
+        await this.page.waitForTimeout(100)
+        await this.lastName.pressSequentially('TestSN')
+        await this.page.waitForTimeout(500)
+        await this.userName.pressSequentially(await randomUser.randomUserName())
+        await this.page.waitForTimeout(500)
+        await this.phone.pressSequentially('603039647')
+        await this.page.waitForTimeout(500)
+        await this.submitBtn.click();
+    }
+    async acceptPopup(){
+        await this.page.waitForSelector('.register-success-modal__title',{timeout:30000})
+        await this.continueBtn.click();
+    }
+
+    async acceptAccountCreationPopup(){
+        await this.page.waitForTimeout(500)
+        await this.page.locator("//button[contains(@class, 'register-success-modal__button')]").click();
+        await this.page.waitForTimeout(500)
+    }
+    async getSuccessfulMsg(){
+        let text = await this.page.locator("//p[contains(@class, 'kyc-live-account_description')]").first()
+        return await text.textContent()
+    }
+
+    async getVerificationMsg(){
+        let text = await this.page.locator("//p[contains(@class, 'kyc-live-account_description')]").nth(1)
+        return await text.textContent()
+    }
+    
 }

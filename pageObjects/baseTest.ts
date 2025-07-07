@@ -40,6 +40,10 @@ import { KYC_Africa } from "./FullRegistration/NagaAfrica_FullRegistrations";
 import { StartKYCPopup } from "./common/startKYC_Popup/startKYCPage";
 import { UdpateAccount } from "./FullRegistration/NAGACapital-UpdateAccount";
 import { Messanger } from "./MainPage/Messanger";
+import { MultiLicense } from "./FullRegistration/Multilicence";
+import { KYCWidgetModalPopup } from "./FullRegistration/components/Naga_KYCModalPopup";
+import { NagaX_KYC } from "./FullRegistration/NagaX_FullRegistration";
+import { TwoAuthenfication } from "./FullRegistration/components/NagaX_2Auth";
 
 export class BaseTest{
     page: Page
@@ -84,6 +88,10 @@ export class BaseTest{
     kycStartPopup: StartKYCPopup
     kycUpdatePopup: UdpateAccount
     messanger: Messanger
+    multiLicense: MultiLicense
+    kycWidgetPopup: KYCWidgetModalPopup
+    nagaX_KYC: NagaX_KYC
+    twoAuth: TwoAuthenfication
 
     constructor(page: Page){
         this.page = page
@@ -128,5 +136,9 @@ export class BaseTest{
         this.kycStartPopup = new StartKYCPopup(page)
         this.kycUpdatePopup = new UdpateAccount(page)
         this.messanger = new Messanger(page)
+        this.multiLicense = new MultiLicense(page)
+        this.kycWidgetPopup = new KYCWidgetModalPopup(page)
+        this.nagaX_KYC = new NagaX_KYC(page)
+        this.twoAuth = new TwoAuthenfication(page)
     }
 }

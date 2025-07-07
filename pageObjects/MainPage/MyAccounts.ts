@@ -12,6 +12,13 @@ export class MyAccounts{
     async openUserMenu(){
         await this.myAccountsHeaderBtn.click()
     }
+    async openUserMenuCrypto(){
+        await this.page.locator("#account-menu").click()
+    }
+    async chooseMenuPointCrypto(nameOfPoint:string){
+        let menuPoint = await this.page.locator(`//span[text()='${nameOfPoint}']`)
+        await menuPoint.click()
+    }
     async openMyAccountMenuItem(nameOfItem: string){
         let menu = await this.page.locator('.popover-content')
         await menu.locator(`//span[text()='${nameOfItem}']//..`).first().click()
@@ -19,6 +26,10 @@ export class MyAccounts{
     }
     async userLogOut(){
         await this.openMyAccountMenuItem('Logout')
+        await this.page.getByRole('button', {name: 'Log out'}).click()
+    }
+    async userLogOutCrypto(){
+        await this.chooseMenuPointCrypto('Logout')
         await this.page.getByRole('button', {name: 'Log out'}).click()
     }
 

@@ -1,80 +1,59 @@
 import { expect } from "playwright/test"
 import { Captcha } from "../../pageObjects/captcha"
-import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage"
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser"
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup"
-import { MainPage } from "../../pageObjects/MainPage/MainPage"
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage"
 import {test} from "../../test-options"
-import { MultiLicense } from "../../pageObjects/FullRegistration/Multilicence"
-import { Deposit } from "../../pageObjects/ManageFunds/Deposit"
-import { Withdrawal } from "../../pageObjects/ManageFunds/Withdrawal"
-import { KYCWidgetModalPopup } from "../../pageObjects/FullRegistration/components/Naga_KYCModalPopup"
 
 test.describe("Multi licence web", async()=>{
     let email =''
 
-    test.beforeEach('Create lead user',async({proxyPageBH, AppNAGA}, testInfo)=>{
+    test.beforeEach('Create lead user',async({appBH, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         email = new RandomUser().getRandomUserEmail()
-        let signUp = new SignUp(proxyPageBH)
         await test.step(`Create lead user with email-${email}`, async()=>{
-            await signUp.goto(AppNAGA, "register");
-            await new Captcha(proxyPageBH).removeCaptcha()
-            await signUp.createCFDUser(email, process.env.USER_PASSWORD || "", 'Bahrain','+387', '603039647');
+            await appBH.signUp.goto(AppNAGA, "register");
+            await new Captcha(appBH.page).removeCaptcha()
+            await appBH.signUp.createCFDUser(email, process.env.USER_PASSWORD || "", 'Bahrain','+387', '603039647');
         })
     })
 
-    test(`@25444 Mulilicence. KYC Capital`, {tag: ['@kyc', '@KYC_Capital', '@web']}, async({proxyPageBH})=>{
-        let multiLicense = new MultiLicense(proxyPageBH)
+    test(`Mulilicence. KYC Capital`, {tag: ['@kyc', '@KYC_Capital', '@web']}, async({appBH})=>{
         await test.step(`Open KYC registration`, async()=>{
-            await new YouAreInNagaMarkets(proxyPageBH).clickExplorePlatform()
-            await new MainPage(proxyPageBH).clickOnWidgepPoint('NAGA Start')
-            await new StartKYCPopup(proxyPageBH).startKYC()
+            await appBH.youAreIn.clickExplorePlatform()
+            await appBH.mainPage.clickOnWidgepPoint('NAGA Start')
+            await appBH.kycStartPopup.startKYC()
         })
         await test.step(`Check MultiLicence popup for user-${email}. Switch to KYC-Capital`, async()=>{
-            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License')
-            await multiLicense.chooseRegulation('NAGA CAPITAL')
-            expect(await multiLicense.CapitalKYC()).toBeVisible()
+            expect(await appBH.multiLicense.getPopupName()).toEqual('Select Your Preferred License')
+            await appBH.multiLicense.chooseRegulation('NAGA CAPITAL')
+            expect(await appBH.multiLicense.CapitalKYC()).toBeVisible()
         })
     })
-    test(`@25444 Mulilicence. KYC ADGM`, {tag: ['@kyc', '@KYC_Mena', '@web']}, async({proxyPageBH})=>{
-        let multiLicense = new MultiLicense(proxyPageBH)
+
+    test(`Mulilicence. KYC ADGM`, {tag: ['@kyc', '@KYC_Mena', '@web']}, async({appBH})=>{
         await test.step(`Open KYC registration`, async()=>{
-            await new YouAreInNagaMarkets(proxyPageBH).clickExplorePlatform()
-            await new MainPage(proxyPageBH).clickOnWidgepPoint('NAGA Start')
-            await new StartKYCPopup(proxyPageBH).startKYC()
+            await appBH.youAreIn.clickExplorePlatform()
+            await appBH.mainPage.clickOnWidgepPoint('NAGA Start')
+            await appBH.kycStartPopup.startKYC()
         })
         await test.step(`Check MultiLicence popup for user-${email}. Switch to KYC-ADGM`, async()=>{
-            expect(await multiLicense.getPopupName()).toEqual('Select Your Preferred License')
-            await multiLicense.chooseRegulation('NAGA FSRA')
-            expect(await multiLicense.ADGMKYC()).toBeVisible()
+            expect(await appBH.multiLicense.getPopupName()).toEqual('Select Your Preferred License')
+            await appBH.multiLicense.chooseRegulation('NAGA FSRA')
+            expect(await appBH.multiLicense.ADGMKYC()).toBeVisible()
         })
     })
-    test(`@25445 Open multilycence from different platfrorm places`, {tag:['@kyc', '@web']}, async({proxyPageBH}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 15000);
-        let multiLicense = new MultiLicense(proxyPageBH)
-        let mainPage = new MainPage(proxyPageBH)
+
+    test(`Open multilycence from different platfrorm places`, {tag:['@kyc', '@web']}, async({appBH}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 15000)
         await test.step('Open multilicence after click "Deposit now" btn', async()=>{
-            await new YouAreInNagaMarkets(proxyPageBH).clickDepositNow()
-            expect(await multiLicense.multiLycensePopup()).toBeTruthy()
+            await appBH.youAreIn.clickDepositNow()
+            expect(await appBH.multiLicense.multiLycensePopup()).toBeTruthy()
         })
         await test.step('Click on manage funds -> deposit', async()=>{
-            await mainPage.refreshPage()
-            await mainPage.openBackMenuCategory('Manage Funds')
-            await new KYCWidgetModalPopup(proxyPageBH).clickOnWidgetMenu('NAGA Start')
-            await new StartKYCPopup(proxyPageBH).startKYC()
-            // await new Deposit(proxyPageBH).checkActiveDepositTab('deposit')
-            // await new Deposit(proxyPageBH).clickDepositMethod('Credit/Debit Cards')
-            // await new StartKYCPopup(proxyPageBH).startKYC()
-            expect(await multiLicense.multiLycensePopup()).toBeTruthy()
+            await appBH.mainPage.refreshPage()
+            await appBH.mainPage.openBackMenuCategory('Manage Funds')
+            await appBH.kycWidgetPopup.clickOnWidgetMenu('NAGA Start')
+            await appBH.kycStartPopup.startKYC()
+            expect(await appBH.multiLicense.multiLycensePopup()).toBeTruthy()
         })
-        // await test.step('Click on manage funds -> Withdrawal', async()=>{
-        //     await mainPage.refreshPage()
-        //     await mainPage.openBackMenuCategory('Manage Funds')
-        //     await new KYCWidgetModalPopup(proxyPageBH).clickOnWidgetMenu('NAGA Start')
-        //     await new StartKYCPopup(proxyPageBH).startKYC()
-        //     expect(await multiLicense.multiLycensePopup()).toBeTruthy()
-        // })
     })
 })

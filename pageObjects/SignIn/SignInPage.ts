@@ -90,4 +90,11 @@ export class SignIn{
             await this.page.locator('//img[@alt="Close modal"]').click()
         }
     }
+    async skip2AF(){
+        await this.page.waitForSelector(".mfa-warning-modal__title", {state:'visible'})
+        await this.page.locator("//button[text()='Skip for now']").click()
+    }
+    async getPageTitleCrypto(){
+        return await this.page.locator("//h2[contains(@class, 'login-form__headline')]").textContent()
+    }
 }

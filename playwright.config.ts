@@ -36,6 +36,7 @@ export default defineConfig<TestOptions>({
         ...devices['Desktop Chrome'],
         AppNAGA: "https://app.sxdev.io",
         //AppNAGA: "https://app.naga.com",
+        AppNAGAX: "https://app.nagax.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
         NagaMenaCountry: "United Arab Emirates",
@@ -49,6 +50,7 @@ export default defineConfig<TestOptions>({
       use: {
         ...devices["Desktop Chrome"],
         AppNAGA: "https://app.naga.com",
+        AppNAGAX: "https://app.nagax.com/eu",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
         NagaMenaCountry: "United Arab Emirates",
@@ -62,6 +64,7 @@ export default defineConfig<TestOptions>({
       use: {
         ...devices["Desktop Chrome"],
         AppNAGA: "https://app.naga.com",
+        AppNAGAX: "https://app.nagax.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
         NagaMenaCountry: "United Arab Emirates",
@@ -75,6 +78,7 @@ export default defineConfig<TestOptions>({
       use: {
         ...devices["Desktop Chrome"],
         AppNAGA: "https://app.naga.com",
+        AppNAGAX: "https://app.nagax.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
         NagaMenaCountry: "United Arab Emirates",
@@ -88,6 +92,7 @@ export default defineConfig<TestOptions>({
       use: {
         ...devices["iPhone 15 Pro Max"],
         AppNAGA: "https://app.sxdev.io",
+        AppNAGAX: "https://app.nagax.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
         NagaMenaCountry: "United Arab Emirates",
@@ -101,6 +106,7 @@ export default defineConfig<TestOptions>({
       use: {
         ...devices["iPhone 15 Pro Max"],
         AppNAGA: "https://app.naga.com",
+        AppNAGAX: "https://app.nagax.com",
         NSCountry: "Bosnia and Herzegovina",
         NMCountry: "France",
         NagaMenaCountry: "United Arab Emirates",

@@ -183,5 +183,4 @@ export class KYC_General{
         await KYC.fillStartInformation()
         await this.page.waitForTimeout(4000)
     }
-
 }
