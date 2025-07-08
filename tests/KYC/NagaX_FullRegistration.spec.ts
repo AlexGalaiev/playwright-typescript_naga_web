@@ -6,7 +6,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { Captcha } from "../../pageObjects/captcha"
 
 test.describe('KYC', async()=>{
-    test('NAGA X - High score', {tag:['@prodSanity', '@kyc', '@crypto']}, async({app, AppNAGAX, NagaXCountry}, testInfo)=>{
+    test('NAGA X - High score', {tag:['@prodSanity', '@kyc', '@crypto','@web']}, async({app, AppNAGAX, NagaXCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000);
         let localization = new getLocalization('/pageObjects/localization/NagaX_KYC.json')
         let email = await new RandomUser().getRandomUserEmail()

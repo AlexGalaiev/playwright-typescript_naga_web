@@ -49,4 +49,7 @@ export class VerificationPopup{
         let body = await response.json()
         return await body.info.code
     }
+    async getPageTittle(){
+        return await this.page.locator(".not-found__title").textContent()
+    }
 }

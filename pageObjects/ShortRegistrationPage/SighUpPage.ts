@@ -119,6 +119,7 @@ export class SignUp{
         return await this.riskWarning.textContent();
     }
     async getRiskWarningNM(){
+        await this.page.waitForTimeout(1500)
         return await this.page.locator('.registration-form__risk-warning_nm').textContent()
     }
     async getRiskWarningText_NX(){
@@ -210,6 +211,16 @@ export class SignUp{
         await this.page.waitForTimeout(500)
         await this.page.locator("//div[contains(@class, 'select__menu-list')]//div[contains(@class, 'select__option')]").click()
         await this.page.waitForTimeout(500)
+    }
+    async getCryptoRiskDisclaimer(){
+        return await this.page.locator(".registration-form__terms-and-conditions").textContent()
+    }
+    async openCryptoLanguageMenu(){
+        await this.page.locator("#registration-language").click()
+    }
+    async checkCryptoLanguageVisibility(language: string){
+        let lan = await this.page.locator(`//a[text()='${language}']`)
+        return await lan.isVisible()
     }
 }
 

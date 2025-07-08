@@ -161,7 +161,28 @@ test.describe("Short regitration page elements", async()=>{
             await appSpain.signUp.goto(AppNAGA, "register")
             await appSpain.signUp.clickLogo()
             expect(await appSpain.signUp.checkUrl()).toEqual(`${AppNAGA}/register`)
-        })})
+        })
+    })
+    test.describe('Crypto', async()=>{
+        
+        test.beforeEach('Login to platform', async({app, AppNAGAX}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 10000)
+            await app.signIn.goto(AppNAGAX, 'register')
+        })
+
+        test(`Risk disclaimer test. Crypto`,{tag:['@UI','@web', '@crypto']}, async({app})=>{
+            let localizationText = await new getLocalization('/pageObjects/localization/NagaCrypto.json').getLocalizationText('RiskDisclaimer')
+            expect(await app.signUp.getCryptoRiskDisclaimer()).toEqual(localizationText)
+        })
+
+        test('Check platform languages. Crypto', {tag:['@UI', '@web', '@crypto']}, async({app})=>{
+            let languages = ['English','Español','Deutsch','Polski','Italiano']
+            await app.signUp.openCryptoLanguageMenu()
+            for(let language of languages){
+                expect(await app.signUp.checkCryptoLanguageVisibility(language)).toBeTruthy()
+            }
+        })
+    })
 })
 
 test.describe('Lead registration', async()=>{
@@ -224,8 +245,4 @@ test.describe('Lead registration', async()=>{
         })
     })}
 })
-
-
-    
-
 

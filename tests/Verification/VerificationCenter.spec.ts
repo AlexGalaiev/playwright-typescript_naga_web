@@ -63,4 +63,24 @@ test.describe("Verification center", async() => {
         expect(await app.verificationPopup.getStatusCode(response)).toEqual(200)
       })
     })}
+
+    const userLeadVerification: VerificationTypes[] = [
+      { brand: '@Markets', user: "testLeadUser@i.ua"},
+      { brand: '@Capital', user: "testLeadUser"},
+      { brand: '@Mena', user: "testLeadUserMena"},
+      { brand: '@Africa', user: "testLeadAfrica"}
+    ]
+    for(const {brand, user} of userLeadVerification){
+      test(`${brand} Documents page for lead user`, 
+        {tag:['@verification', '@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9752', type:'ticket'}}, async({app, AppNAGA})=>{
+        await test.step(`Login by ${user} user, to ${brand}`, async()=>{
+          await app.signIn.goto(AppNAGA, "login")
+          await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+        })
+        await test.step('Open verification center and check screen', async()=>{
+          await app.myAccounts.openUserMenu()
+          await app.myAccounts.openMyAccountMenuItem('My Documents')
+          expect(await app.verificationPopup.getPageTittle()).not.toEqual(' Oops, Something went wrong... ')
+        })})
+    }
 })

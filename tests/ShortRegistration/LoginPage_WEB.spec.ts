@@ -82,7 +82,6 @@ test.describe("WEB", async()=>{
             await appSA.myAccounts.openUserMenu()
             await appSA.myAccounts.userLogOut()
             await appSA.pageAfterLogin.redirectToSighIn()
-            //await signUp.goto(AppNAGA, 'password/forgot')
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await appSA.signIn.forgotPasswordClick()
