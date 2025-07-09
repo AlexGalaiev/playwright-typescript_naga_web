@@ -213,7 +213,9 @@ export class SignUp{
         await this.page.waitForTimeout(500)
     }
     async getCryptoRiskDisclaimer(){
-        return await this.page.locator(".registration-form__terms-and-conditions").textContent()
+        let riskDisclaimer = await this.page.locator(".registration-form__terms-and-conditions")
+        await riskDisclaimer.scrollIntoViewIfNeeded()
+        return await riskDisclaimer.textContent()
     }
     async openCryptoLanguageMenu(){
         await this.page.locator("#registration-language").click()

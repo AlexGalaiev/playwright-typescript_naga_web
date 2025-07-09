@@ -44,6 +44,8 @@ import { MultiLicense } from "./FullRegistration/Multilicence";
 import { KYCWidgetModalPopup } from "./FullRegistration/components/Naga_KYCModalPopup";
 import { NagaX_KYC } from "./FullRegistration/NagaX_FullRegistration";
 import { TwoAuthenfication } from "./FullRegistration/components/NagaX_2Auth";
+import { NagaExchange } from "./NagaExchange/Exchange";
+import { CryptoMainPage } from "./Crypto/CryptoMainPage";
 
 export class BaseTest{
     page: Page
@@ -92,6 +94,8 @@ export class BaseTest{
     kycWidgetPopup: KYCWidgetModalPopup
     nagaX_KYC: NagaX_KYC
     twoAuth: TwoAuthenfication
+    exchange: NagaExchange
+    cryptoMainPage: CryptoMainPage
 
     constructor(page: Page){
         this.page = page
@@ -140,5 +144,7 @@ export class BaseTest{
         this.kycWidgetPopup = new KYCWidgetModalPopup(page)
         this.nagaX_KYC = new NagaX_KYC(page)
         this.twoAuth = new TwoAuthenfication(page)
+        this.exchange = new NagaExchange(page)
+        this.cryptoMainPage = new CryptoMainPage(page)
     }
 }

@@ -180,8 +180,7 @@ test.describe("Short regitration page elements", async()=>{
             await app.signUp.openCryptoLanguageMenu()
             for(let language of languages){
                 expect(await app.signUp.checkCryptoLanguageVisibility(language)).toBeTruthy()
-            }
-        })
+            }})
     })
 })
 
