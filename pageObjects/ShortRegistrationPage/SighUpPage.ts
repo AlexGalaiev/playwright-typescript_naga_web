@@ -213,7 +213,8 @@ export class SignUp{
         await this.page.waitForTimeout(500)
     }
     async getCryptoRiskDisclaimer(){
-        let riskDisclaimer = await this.page.locator(".registration-form__terms-and-conditions")
+        await this.page.waitForTimeout(500)
+        let riskDisclaimer = await this.page.locator("//div[@class='registration-form__terms-and-conditions']//span")
         await riskDisclaimer.scrollIntoViewIfNeeded()
         return await riskDisclaimer.textContent()
     }

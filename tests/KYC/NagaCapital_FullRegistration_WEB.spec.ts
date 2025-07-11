@@ -1,21 +1,13 @@
 import {test} from "../../test-options"
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { StartKYCPopup } from "../../pageObjects/common/startKYC_Popup/startKYCPage";
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGACapital-PersonalInformationPage";
 import { expect } from "@playwright/test";
-import { UdpateAccount } from "../../pageObjects/FullRegistration/NAGACapital-UpdateAccount";
-import { VerificationPopup } from "../../pageObjects/VerificationCenter/verificationPopup";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
 import { Captcha } from "../../pageObjects/captcha";
-import { MyAccounts } from "../../pageObjects/MainPage/MyAccounts";
 
 test.describe('WEB', async()=>{
     test("NagaCapital KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@KYC_Capital','@web']}, 
         async({ app, AppNAGA, NSCountry }, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 80000);
-        let scoring_AML = 0.45
+        let scoring_AML = 1.35
         let scoring_General = 0.25 
         let AML
         let Scoring

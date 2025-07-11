@@ -32,4 +32,49 @@ export class CryptoMainPage{
     async checkBuySellTittleIsVisible(){
         return await this.page.locator(".buy-sell-crypto__title").isVisible()
     }
+    async checkQRCodeVisible(){
+        return await this.page.locator(".receive-crypto__qr-code").isVisible()
+    }
+    async checkWalletVisible(){
+        return await this.page.locator("//span[contains(@class, 'copy-to-clipboard_text')]").isVisible()
+    }
+    async checkCopyButtonWorks(){
+        let copyBtn = await this.page.locator("//button[contains(@class, 'copy-to-clipboard_button')]")
+        await copyBtn.click()
+        await this.page.waitForTimeout(300)
+        return await copyBtn.textContent()
+    }
+    async inputWithdrawalAmount(amount: string){
+        await this.page.waitForTimeout(1000)
+        let inputField = await this.page.locator("//input[contains(@class, 'currency-input-with-swap__input')]")
+        await inputField.pressSequentially(amount)
+        await this.page.waitForTimeout(1000)
+    }
+    async getErrorMsgText(){
+        return await this.page.locator('.send-crypto-tab__amount-error-message').textContent()
+    }
+    async openAddressBook(){
+        await this.page.locator("//button[text()='Address book']").click()
+    }
+    async checkDogeCoinAddressBookPopupVisible(){
+        await this.page.waitForTimeout(500)
+        return await this.page.locator("//h4[text()='Dogecoin (Doge) address book']").isVisible()
+    }
+    async checkEmptyPageVisible(){
+        return await this.page.locator("//p[text()='There are currently no addresses saved.']").isVisible()
+    }
+    async switchToWithdrawTab(){
+        await this.page.waitForSelector("#receive-send-crypto-tabs", {state:'visible'})
+        await this.page.locator("//a[text()='Withdraw']").click()
+    }
+    async cryptoWalletDepositBtnClick(){
+        await this.page.locator("//button[contains(@class, 'your-portfolio_receiveCryptoButton')]").click()
+    }
+    async checkDepositScreen(){
+        await this.page.waitForSelector(".receive-crypto", {state:'visible'})
+        return await this.page.locator(".receive-crypto__qr-code").isVisible()
+    }
+    async cryptoWalleBuySellBtnClick(){
+        await this.page.locator("//a[contains(@class, 'your-portfolio_buySellCryptoButton')]").click()
+    }
 }

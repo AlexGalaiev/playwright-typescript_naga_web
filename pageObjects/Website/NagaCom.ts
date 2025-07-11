@@ -123,7 +123,8 @@ export class NagaCom{
         return await this.page.locator(`//span[text()='${exampleName}']`).first().textContent()
     }
     async getText(elementGetText: Locator){
-        await elementGetText.scrollIntoViewIfNeeded();
+        await elementGetText.scrollIntoViewIfNeeded()
+        await this.page.waitForTimeout(1000)
         return await elementGetText.first().textContent()
     }
     async getBtnHeaderText(buttonName: string){

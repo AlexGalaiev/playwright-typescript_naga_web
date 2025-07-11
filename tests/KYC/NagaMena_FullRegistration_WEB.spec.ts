@@ -1,17 +1,8 @@
 import { expect } from "@playwright/test";
 import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomUser";
-import { PhoneVerification } from "../../pageObjects/FullRegistration/NAGACapital-PhoneVerification";
-import { KYC_Start } from "../../pageObjects/FullRegistration/NAGAMarkets-KYCStart";
-import { PersonalInformation } from "../../pageObjects/FullRegistration/NAGAMarkets_PersonalInformation";
-import { MainPage } from "../../pageObjects/MainPage/MainPage";
-import { SignUp } from "../../pageObjects/ShortRegistrationPage/SighUpPage";
 import { test } from "../../test-options";
-import { MenaFullRegistration } from "../../pageObjects/FullRegistration/NagaMena_FullRegistration";
-import { FinalStep } from "../../pageObjects/FullRegistration/NAGAMarkets_KYCFinalStep";
 import { getLocalization } from "../../pageObjects/localization/getText";
 import { Captcha } from "../../pageObjects/captcha"
-import { YouAreInNagaMarkets } from "../../pageObjects/FullRegistration/components/NAGAMarkets_YouAreInpopup";
-
 
 test.describe('KYC WEB', async()=>{
   let email =''

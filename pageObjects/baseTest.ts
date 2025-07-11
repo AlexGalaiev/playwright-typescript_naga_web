@@ -46,6 +46,7 @@ import { NagaX_KYC } from "./FullRegistration/NagaX_FullRegistration";
 import { TwoAuthenfication } from "./FullRegistration/components/NagaX_2Auth";
 import { NagaExchange } from "./NagaExchange/Exchange";
 import { CryptoMainPage } from "./Crypto/CryptoMainPage";
+import { startVerification_NagaMarkets } from "./common/NagaMarkets_startKYC_verification/startVerification";
 
 export class BaseTest{
     page: Page
@@ -96,6 +97,7 @@ export class BaseTest{
     twoAuth: TwoAuthenfication
     exchange: NagaExchange
     cryptoMainPage: CryptoMainPage
+    startVerifyMarkets: startVerification_NagaMarkets
 
     constructor(page: Page){
         this.page = page
@@ -146,5 +148,6 @@ export class BaseTest{
         this.twoAuth = new TwoAuthenfication(page)
         this.exchange = new NagaExchange(page)
         this.cryptoMainPage = new CryptoMainPage(page)
+        this.startVerifyMarkets = new startVerification_NagaMarkets(page)
     }
 }

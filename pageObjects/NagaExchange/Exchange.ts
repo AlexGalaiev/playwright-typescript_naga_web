@@ -28,6 +28,7 @@ export class NagaExchange{
         return await this.mainBlock.isVisible()
     }
     async getUrl(){
+        await this.page.waitForTimeout(1000)
         return await this.page.url()
     }
     async filterCategory(categoryName: string){
