@@ -77,4 +77,16 @@ export class CryptoMainPage{
     async cryptoWalleBuySellBtnClick(){
         await this.page.locator("//a[contains(@class, 'your-portfolio_buySellCryptoButton')]").click()
     }
+    async searchInstrument(instrumentName:string){
+        let search = await this.page.locator("//div[contains(@class, 'your-portfolio_wrapper')]//input[@type='text']")
+        await search.pressSequentially(instrumentName)
+        await this.page.waitForTimeout(500)
+    }
+    async openActionDropdownPointMenu(menuPoint: string){
+        await this.page.locator("//button[contains(@class, 'crypto-account_sendButton')]").click()
+        let menu = await this.page.locator("//div[contains(@class, 'crypto-account_dorpdownMenu')]")
+        await menu.locator(`//span[contains(text(), '${menuPoint}')]`).click()
+        await this.page.waitForTimeout(500)
+    }
+
 }

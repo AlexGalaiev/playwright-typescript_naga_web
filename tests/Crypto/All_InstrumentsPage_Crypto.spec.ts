@@ -73,4 +73,20 @@ test.describe('All Instruments. WEB', async()=>{
         await app.cryptoMainPage.cryptoWalleBuySellBtnClick()
         expect(await app.cryptoMainPage.checkBuySellTittleIsVisible()).toBeTruthy()
     })
+    test('@Crypto. Check Actions dropdown. Check redirect from Buy|Sell button to buySell widget', {tag:['@web', '@crypto']}, async({app})=>{
+        await app.cryptoMainPage.searchInstrument(tradingInstrument)
+        await app.cryptoMainPage.openActionDropdownPointMenu('Buy / Sell')
+        expect(await app.cryptoMainPage.checkBuySellTittleIsVisible()).toBeTruthy()
+    })
+    test('@Crypto. Check Actions dropdown. Check redirect from Deposit btn to QR code', {tag:['@web', '@crypto']}, async({app})=>{
+        await app.cryptoMainPage.searchInstrument(tradingInstrument)
+        await app.cryptoMainPage.openActionDropdownPointMenu('Deposit')
+        expect(await app.cryptoMainPage.checkQRCodeVisible()).toBeTruthy()
+    })
+    test('@Crypto. Check Actions dropdown. Check redirect from Withdraw btn to QR code', {tag:['@web', '@crypto']}, async({app})=>{
+        await app.cryptoMainPage.searchInstrument(tradingInstrument)
+        await app.cryptoMainPage.openActionDropdownPointMenu('Withdraw')
+        expect(await app.cryptoMainPage.checkWalletVisible()).toBeTruthy()
+    })
+
 })

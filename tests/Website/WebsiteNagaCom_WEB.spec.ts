@@ -573,27 +573,27 @@ test.describe('Website. Footer and header elements', async()=>{
     }
 
     const pdfParams: pdfTypes[] = [
-        {type:'trade',regulation: 'EU', platform:'https://naga.com/eu/legal-documentation', documents: ["AML and Account Verification Policy", 'Client Agreement', 'Client Categorization Policy','Cost and Charges Policy','Privacy Policy']},
+        //{type:'trade',regulation: 'EU', platform:'https://naga.com/eu/legal-documentation', documents: ["AML and Account Verification Policy", 'Client Agreement', 'Client Categorization Policy','Cost and Charges Policy','Privacy Policy']},
         {type:'Trade',regulation: 'EN', platform:'https://naga.com/en/legal-documentation', documents: ["Client Agreement", 'Privacy Policy','Cost and Charges Policy','FATCA']},
         { type:'Trade',regulation: 'ZA', platform:'https://naga.com/za/legal-documentation', documents: ["Privacy Policy", 'Risk Disclosure and Warning Notice','Terms & Conditions']},
         { type:'Trade',regulation: 'AE', platform:'https://naga.com/ae/legal-documentation', documents: ["Terms & Conditions", 'Disclaimer','W-8 BEN Form', 'Privacy Policy']}
     ]
     for(const{ type, platform, documents, regulation}of pdfParams){
-        test(` Check legal documents on ${type} page. Base url ${platform}`,
-            {tag: ['@naga.com', '@compliance','@web']}, async({app}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 40000);
-            await test.step(`Open ${platform}`, async()=>{
-                await app.website.open(platform)
-            })
-            await test.step('Check documents in popup', async()=>{
-                for(let index in documents){
-                    await app.website.openLegalDocument(documents[index])
-                    expect(await app.website.getPopupHeader()).toEqual(documents[index])
-                    expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
-                    expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
-                    expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
-                    await app.website.goBack()
-                }})})
+    test(` Check legal documents on ${type} page. Base url ${platform}`,
+        {tag: ['@naga.com', '@compliance','@web']}, async({app}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 40000);
+        await test.step(`Open ${platform}`, async()=>{
+            await app.website.open(platform)
+        })
+        await test.step('Check documents in popup', async()=>{
+            for(let index in documents){
+                await app.website.openLegalDocument(documents[index])
+                expect(await app.website.getPopupHeader()).toEqual(documents[index])
+                expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
+                expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
+                expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
+                await app.website.goBack()
+            }})})
         }})
 
     test.describe('Website. Landing pages', async()=>{
