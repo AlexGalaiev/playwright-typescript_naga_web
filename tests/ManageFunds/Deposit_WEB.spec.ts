@@ -37,7 +37,7 @@ test.describe('Deposit', async()=>{
     const AfricaTestParams: AfricaPraxisTypes[] = [
         {brand: '@Africa', user: 'depositNagaAfrica', deposit: [ 'Credit Card', 'ozow', 'skrill', 'altbankwire' ]},
         {brand: '@Mena', user: 'depositNagaMena@naga.com', deposit: [ 'Credit Card', 'monetix', 'altcreditcard', 'altbankwire', 'applepay', 'google pay' ]},
-        {brand: '@Capital', user: 'testTrading2', deposit: [ 'Credit Card', 'skrill', 'altneteller', 'bank transfer' ]},
+        {brand: '@Capital', user: 'testTrading2', deposit: [ 'Credit Card', 'skrill', 'altneteller', 'bank transfer', 'crypto' ]},
     ]
     for(const{brand, user, deposit,} of AfricaTestParams){
     test(`${brand} Check praxis popup deposit methods`, {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
