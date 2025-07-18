@@ -55,6 +55,10 @@ export class PersonalInformation{
         await this.page.waitForTimeout(1000)
         await this.address.press('Enter')
         await this.page.waitForTimeout(1000)
+        await this.chooseFromDropDown('nationality')
+        await this.page.waitForTimeout(1000)
+        await this.clickPEPbtn('No')
+        await this.page.waitForTimeout(1000)
         await this.page.locator("//button[@type='submit']").click()
     }
 
@@ -70,5 +74,16 @@ export class PersonalInformation{
     }
     async clickExploreNaga(){
         await this.page.locator("//button[text()='Explore NAGA Platform']").click()
+    }
+     async chooseFromDropDown(questionName: string){
+        let question = await this.page.locator(`//p[@for='${questionName}']//..`).first()
+        let answer = await question.locator("//div[contains(@class, 'form-select__control')]")
+        await answer.click()
+        await this.page.waitForTimeout(1000)
+        await answer.press('Enter')
+        await this.page.waitForTimeout(1000)
+    }
+    async clickPEPbtn(answer: string){
+        await this.page.locator(`//button[text()='${answer}']`).click()
     }
 }

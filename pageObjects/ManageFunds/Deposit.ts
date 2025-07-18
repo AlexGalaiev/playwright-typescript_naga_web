@@ -143,4 +143,12 @@ export class Deposit{
     async getPraxisPopupStatusCode(response: any){
         return await response.status()
     }
+    async checkManageFundsPopupIsVisible(){
+        let manageFundsPopup = await this.page.locator("//div[text()='Manage Funds']")
+        await manageFundsPopup.waitFor({state:'visible'})
+        return await manageFundsPopup.isVisible()
+    }
+    async closeManageFundsPopup(){
+        await this.page.locator("//button[@class='close']").click()
+    }
 }

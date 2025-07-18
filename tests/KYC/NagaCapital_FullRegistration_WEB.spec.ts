@@ -24,6 +24,8 @@ test.describe('WEB', async()=>{
             await app.personalInformation.compleateYourProfile()
         });
         await test.step('Check name of the widget banner "Naga start". Assert that Compleate profile popup is hidden', async()=>{
+            expect(await app.deposit.checkManageFundsPopupIsVisible()).toBeTruthy()
+            await app.deposit.closeManageFundsPopup()
             await app.mainPage.openBackMenuPoint("feed");
             expect(await app.mainPage.getStatusOfWidgetStep('NAGA Start')).toContain('--finished')
             expect(await app.mainPage.getStatusOfWidgetStep('Deposit')).toContain('--active')
