@@ -31,7 +31,7 @@ test.describe("Trading - Positions/Orders.", async () => {
   ]
   for(const{brand, user,investDirection, currency, mobileDirection, ratePosition}of tradingParamsPositions){
     test(`${brand} Open/Close ${investDirection} trading position`,
-        {tag:['@trading', '@prodSanity', '@web'], 
+        {tag:['@trading', '@prodSanity', '@web','@smoke'], 
           annotation:{type:'ticket', description:'https://keywaygroup.atlassian.net/browse/RG-6633'}}, 
         async ({ app, AppNAGA }, testInfo) => {
       testInfo.setTimeout(testInfo.timeout + 90000)

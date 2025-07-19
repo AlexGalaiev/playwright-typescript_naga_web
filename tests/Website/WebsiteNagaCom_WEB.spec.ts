@@ -18,7 +18,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{ type, buttonName, redirectTo, baseUrl }of fromWebsiteToNM){
         test(` Redirect with VPN (Italy) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@prodSanity','@naga.com','@web']}, async({appIT},testInfo)=>{
+            {tag: ['@prodSanity','@naga.com','@web','@smoke']}, async({appIT},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 25000)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await appIT.website.open(`${baseUrl}`)
@@ -39,7 +39,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{type, buttonName, redirectTo, baseUrl }of fromWebsiteToNMena){
         test(`Redirect with VPN (UAE) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@prodSanity', '@naga.com','@web']}, async({appUAE},testInfo)=>{
+            {tag: ['@prodSanity', '@naga.com','@web','@smoke']}, async({appUAE},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 30000)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await appUAE.website.open(`${baseUrl}`)
@@ -57,7 +57,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{type, buttonName, redirectTo, baseUrl }of fromWebsiteToNAfrica){
         test(`Redirect with VPN (ZA) from ${baseUrl} / ${type} to ${redirectTo}.->Click ${buttonName} button`, 
-            {tag: ['@prodSanity', '@naga.com','@web']}, async({appSA},testInfo)=>{
+            {tag: ['@prodSanity', '@naga.com','@web','@smoke']}, async({appSA},testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await appSA.website.open(`${baseUrl}`)
@@ -80,7 +80,7 @@ test.describe('Website redirect', async()=>{
     ]
     for(const{type, buttonName, redirectTo, baseUrl}of fromWebsitetoNS){
         test(` Redirect with VPN (Ukraine) from ${baseUrl} /${type} to ${redirectTo}. -> Click ${buttonName} button`, 
-            {tag: ['@prodSanity', '@naga.com','@web']}, async({appUA}, testInfo)=>{
+            {tag: ['@prodSanity', '@naga.com','@web','@smoke']}, async({appUA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Open website ${baseUrl}`, async()=>{
                 await appUA.website.open(`${baseUrl}`)
