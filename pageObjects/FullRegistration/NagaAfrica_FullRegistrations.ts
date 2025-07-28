@@ -19,9 +19,9 @@ export class KYC_Africa{
     }
     async singleSelect(QuestionName: string, level: string){
         await this.page.waitForTimeout(700)
-        let question = await this.page.locator(`//p[@for='${QuestionName}']`)
+        //let question = await this.page.locator(`//p[text()='${QuestionName}']`)
         let quiz = new KYC_answerFunctions(KYC_SCORE[level])
-        await question.textContent() === await quiz.getQuizText(QuestionName)
+        //await question.textContent() === await quiz.getQuizText(QuestionName)
         let answer = await quiz.getQuizAnswer(QuestionName)
         let answerQuiz = await this.page.locator(`//button[text()="${answer}"]`)
         await this.page.waitForTimeout(4000);
@@ -34,13 +34,21 @@ export class KYC_Africa{
         await answer.click()
         await this.page.waitForTimeout(1000)
     }
+
+    async clickCheckBox(questionName:string, answerText:string){
+        let question = await this.page.locator("//p[contains(@class, 'stepTitle')]", {hasText:questionName})
+        let answer = await question.locator(`//..//following-sibling::div//div[text()='${answerText}']`)
+        await answer.click()
+        await this.page.waitForTimeout(500)
+    }
+    
     async clickBtnOther(QuestionName:string, level: string){
         await this.page.waitForTimeout(700)
-        let question = await this.page.locator(`//label[@for='${QuestionName}']//..//..`).first()
+        let question = await this.page.locator(`//p[@for='${QuestionName}']`)
         let quiz = new KYC_answerFunctions(KYC_SCORE[level])
-        await question.textContent() === await quiz.getQuizText(QuestionName)
+        //await question.textContent() === await quiz.getQuizText(QuestionName)
         let answer = await quiz.getQuizAnswer(QuestionName)
-        let answerQuiz = await question.locator(`//button[text()='${answer}']`).first()
+        let answerQuiz = await question.locator(`//following-sibling::div//div[text()='${answer}']`).first()
         await this.page.waitForTimeout(1500);
         await answerQuiz.click();
     }
@@ -51,12 +59,13 @@ export class KYC_Africa{
         //await this.page.locator("//button[@type='submit']").click()
     }
     async chooseFromDropDown(questionName: string){
-        let question = await this.page.locator(`//p[@for='${questionName}']//..`).first()
-        let answer = await question.locator("//div[contains(@class, 'form-select__control')]")
+        let question = await this.page.locator(`//label[text()='${questionName}']//..`).first()
+        let answer = await question.locator("//div[contains(@class, 'select__option')]").first()
+        await question.click()
         await answer.click()
         await this.page.waitForTimeout(1000)
-        await answer.press('Enter')
-        await this.page.waitForTimeout(1000)
+        // await answer.press('Enter')
+        // await this.page.waitForTimeout(1000)
     }
     async inputData(questionName: string, answerText: string, inputData: string){
         await this.clickBtn(questionName, answerText)
@@ -73,7 +82,7 @@ export class KYC_Africa{
     }
     async inputAdress(){
         await this.placeOfBirth.click()
-        await this.placeOfBirth.pressSequentially("Bosnia and herzegovina association for united nations")
+        await this.placeOfBirth.pressSequentially("405 E 45th St, New York, NY 10017, Соединенные Штаты")
         await this.page.waitForTimeout(1500)
         await this.placeOfBirth.press('Enter')
         await this.page.waitForTimeout(2000)
@@ -87,7 +96,7 @@ export class KYC_Africa{
     //used with Employment status, source of income, annual income, net=worth, anticipated_amount, currency
     async singleSelectOther(QuestionName: string, level: string){
         await this.page.waitForTimeout(700)
-        let question = await this.page.locator(`//label[@for='${QuestionName}']`)
+        let question = await this.page.locator(`//p[contains(@class, 'stepTitle')]`)
         let quiz = new KYC_answerFunctions(KYC_SCORE[level])
         await question.textContent() === await quiz.getQuizText(QuestionName)
         let answer = await quiz.getQuizAnswer(QuestionName)
@@ -108,17 +117,17 @@ export class KYC_Africa{
         await this.page.locator("//button[@type='submit']").click()
     }
     async fillPersonalInformation(){
-            await this.page.waitForTimeout(500)
-            await this.page.locator('#first_name').pressSequentially('testFN');
-            await this.page.waitForTimeout(500);
-            await this.page.locator("#middle_name").pressSequentially('testMN');
-            await this.page.waitForTimeout(500);
-            await this.page.locator("#last_name").pressSequentially('testLN');
-            await this.page.waitForTimeout(500)
-            await this.page.locator("#date_of_birth").pressSequentially('12.12.1990')
-            await this.page.waitForTimeout(500)
-            await this.submit.click()
-        }
+        await this.page.waitForTimeout(500)
+        await this.page.locator('#first_name').pressSequentially('testFN');
+        await this.page.waitForTimeout(500);
+        await this.page.locator("#middle_name").pressSequentially('testMN');
+        await this.page.waitForTimeout(500);
+        await this.page.locator("#last_name").pressSequentially('testLN');
+        await this.page.waitForTimeout(500)
+        await this.page.locator("#date_of_birth").pressSequentially('12.12.1990')
+        await this.page.waitForTimeout(500)
+        await this.submit.click()
+    }
     async fillStartInformation(){
         //await this.submit.click()
         //fill personal information
@@ -134,24 +143,23 @@ export class KYC_Africa{
     async fillKYC(level:string){
         //fill screen of passport and nationality
         await this.clickBtn('Gender on your passport', 'Female')
-        await this.chooseFromDropDown('nationality')
+        await this.chooseFromDropDown('Nationality')
         await this.submit.click()
         //screen with passport//
-        await this.clickBtn('Provide Passport or ID number', 'ID')
+        await this.clickCheckBox('Provide Passport or ID number', 'ID')
         await this.input('3344334433')
         //screen with tin information
-        await this.clickBtn('Do you have Tax Identification Number (TIN)?', 'No')
+        await this.clickCheckBox('Do you have Tax Identification Number (TIN)?', 'No')
         await this.singleSelect('tin_absence_reason', level)
         await this.submit.click()
         //screen with pep and citizen chosen
         await this.clickBtnOther('pep', level)
         await this.clickBtnOther('citizen', level)
         await this.submit.click()
-        //kuc
+        //kyc
         await this.singleSelectOther('employment_status', level)
         await this.input('IBM')
-        //await this.submit.click()
-        await this.singleSelect('employment_type', level)
+        await this.submit.click()
         await this.singleSelectOther('source_of_income', level)
         await this.singleSelectOther('annual_income', level)
         await this.singleSelectOther('net_worth', level)
@@ -165,6 +173,8 @@ export class KYC_Africa{
         await this.singleSelect('position_describing', level)
         await this.singleSelect('trading_with_leverage', level)
         await this.singleSelect('level_of_risk_to_tolerate_in_exchange', level)
+        //await this.singleSelect('employment_type', level)
+
         //await this.submit.click()
     }
 

@@ -128,7 +128,7 @@ export class FinalStep{
     }
     //new 
     async getUserScorringText(){
-        let userText = await this.page.locator("//p[contains(text(), 'Account Categorization')]")
+        let userText = await this.page.locator("//p[contains(text(), 'has been categorized')]")
         return await userText.textContent()
     }
     async getPreAdvanceRiskWarning(){
