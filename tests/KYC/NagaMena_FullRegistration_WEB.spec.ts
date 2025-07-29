@@ -26,7 +26,7 @@ test.describe('KYC WEB', async()=>{
     })
     await test.step('Click first step on main page', async()=>{
       await app.mainPage.clickOnWidgepPoint('Upgrade to Live')
-      await app.kycStart.clickStartVerificationBtn()
+      //await app.kycStart.clickStartVerificationBtn()
     })
   })
 
@@ -44,7 +44,7 @@ test.describe('KYC WEB', async()=>{
     await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
       expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Advanced");
       expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await app.KYC_FinalStep.clickBtn('Deposit');  
+      await app.KYC_FinalStep.clickBtn('Fund your Account');  
     })
   })
   test('KYC Mena - PreAdvance Score', {tag:['@kyc', '@KYC_Mena','@web']}, async({app})=>{
@@ -61,7 +61,7 @@ test.describe('KYC WEB', async()=>{
     await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
       expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Pre-Advanced");
       expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await app.KYC_FinalStep.clickBtn('Deposit');  
+      await app.KYC_FinalStep.clickBtn('Fund your Account');  
     })
   })
   test('KYC Mena - Intermediate Score', {tag:['@kyc', '@KYC_Mena','@web']}, async({app})=>{
@@ -78,7 +78,7 @@ test.describe('KYC WEB', async()=>{
     await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
       expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
       expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await app.KYC_FinalStep.clickBtn('Deposit');  
+      await app.KYC_FinalStep.clickBtn('Fund your Account');  
     })
   })
 
@@ -96,7 +96,7 @@ test.describe('KYC WEB', async()=>{
     await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
       expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Elementary");
       expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await app.KYC_FinalStep.clickBtn('Deposit');  
+      await app.KYC_FinalStep.clickBtn('Fund your Account');  
     })
   })
   test('KYC Mena - Beginner Score', {tag:['@kyc','@KYC_Mena','@web']}, async({app})=>{
@@ -113,7 +113,7 @@ test.describe('KYC WEB', async()=>{
     await test.step(`AML-${AML}, Scoring-${Scoring}. ${KYC_scorring} text in header`, async()=>{
       expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Beginner");
       expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-      await app.KYC_FinalStep.clickBtn('Deposit');  
+      await app.KYC_FinalStep.clickBtn('Fund your Account');  
     })
   })
 })

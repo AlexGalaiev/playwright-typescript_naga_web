@@ -60,8 +60,8 @@ export class KYC_Africa{
     }
     async chooseFromDropDown(questionName: string){
         let question = await this.page.locator(`//label[text()='${questionName}']//..`).first()
-        let answer = await question.locator("//div[contains(@class, 'select__option')]").first()
         await question.click()
+        let answer = await question.locator("//div[contains(@class, 'select__option')]").first()
         await answer.click()
         await this.page.waitForTimeout(1000)
         // await answer.press('Enter')

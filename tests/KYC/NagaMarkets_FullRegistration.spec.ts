@@ -24,7 +24,7 @@ test.describe('KYC', async()=>{
     await test.step("Verify phone number", async()=>{
       await app.phoneVerification.insertVerificationCode()
       await app.youAreIn.openNagaKyc()
-      await app.kycStart.clickStartVerificationBtn()
+      //await app.kycStart.clickStartVerificationBtn()
     })}
 )
 test("Naga Markets. KYC - Advance level.",
@@ -43,7 +43,7 @@ test("Naga Markets. KYC - Advance level.",
   await test.step(`AML = ${AML}, General Scoring = ${Scoring}. ${KYC_Advance} scorring must be in the header`, async () => {
     expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Advanced");
     expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-    await app.KYC_FinalStep.clickBtn('Deposit')
+    await app.KYC_FinalStep.clickBtn('Fund your Account')
   })
 })
 
@@ -63,7 +63,7 @@ test("Naga Markets. KYC - PreAdvance level.",
   await test.step(`AML = ${AML}, General Scoring = ${Scoring}. ${KYC_PreAdvance} scorring must be in the header`, async () => {
     expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Pre-Advanced");
     expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-    await app.KYC_FinalStep.clickBtn('Deposit');
+    await app.KYC_FinalStep.clickBtn('Fund your Account');
   })
 })
 
@@ -83,7 +83,7 @@ test("Naga Markets. KYC - Intermediate level.",
   await test.step(`AML = ${AML}, General Scoring = ${Scoring}. ${KYC_Intermediate} scorring must be in the header`, async () => {
     expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Intermediate");
     expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-    await app.KYC_FinalStep.clickBtn('Deposit');
+    await app.KYC_FinalStep.clickBtn('Fund your Account');
   })
 });
 
@@ -105,7 +105,7 @@ test("Naga Markets. KYC - Elementary level.",
     expect(await app.KYC_FinalStep.getUsersScorring()).toContain("Elementary");
     expect(await localization.getLocalizationText("KYC_Elementary_Warning")).toContain(await app.KYC_FinalStep.getElementaryWarning());
     await app.KYC_FinalStep.clickCheckbox();
-    await app.KYC_FinalStep.clickBtn('Deposit');
+    await app.KYC_FinalStep.clickBtn('Fund your Account');
   })
 });
 
@@ -125,7 +125,7 @@ test("Naga Markets. KYC - Beginner level.",
   await test.step(`AML = ${AML}, General Scoring = ${Scoring}. ${KYC_Beginner} scorring must be in the header`, async () => {
     expect(await app.KYC_FinalStep.getUserScorringText()).toContain("Beginner");
     expect(await app.KYC_FinalStep.getPreAdvanceRiskWarning()).toEqual(await localization.getLocalizationText("KYC_PreAdvance_RiskDisclaimer"))
-    await app.KYC_FinalStep.clickBtn('Deposit');
+    await app.KYC_FinalStep.clickBtn('Fund your Account');
   })
 })
 })
