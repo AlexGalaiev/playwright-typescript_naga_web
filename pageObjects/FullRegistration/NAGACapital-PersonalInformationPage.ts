@@ -43,21 +43,28 @@ export class PersonalInformation{
     }
     
     async compleateYourProfile(){
-        await this.page.waitForSelector("//p[text()='Complete your profile information']", {state:'visible'})
+        await this.page.waitForSelector("//p[text()='Enter your information as it appears on your ID/Passport:']", {state:'visible'})
         await this.firstName.pressSequentially('testFirstName');
         await this.page.waitForTimeout(1000);
         await this.lastName.pressSequentially('testLastName');
         await this.page.waitForTimeout(1000);
         await this.dateOfBirth.pressSequentially('12.12.1989')
         await this.page.waitForTimeout(500)
+        await this.page.locator("//button[@type='submit']").click()
+    }
+    async fillLocationInformation(){
         await this.address.click()
-        await this.address.pressSequentially("Bosnia and herzegovina association for united nations")
+        await this.address.pressSequentially("405 E 45th St, New York, NY 10017, Соединенные Штаты")
         await this.page.waitForTimeout(1000)
         await this.address.press('Enter')
         await this.page.waitForTimeout(1000)
-        await this.chooseFromDropDown('nationality')
+        await this.page.locator("//button[@type='submit']").click()
+    }
+
+    async fillPersonalDetailsInformation(){
+        await this.chooseFromDropDown('Nationality')
         await this.page.waitForTimeout(1000)
-        await this.clickPEPbtn('No')
+        await this.clickCheckBox('Are you a politically exposed person?*','No')
         await this.page.waitForTimeout(1000)
         await this.page.locator("//button[@type='submit']").click()
     }
@@ -76,14 +83,16 @@ export class PersonalInformation{
         await this.page.locator("//button[text()='Explore NAGA Platform']").click()
     }
      async chooseFromDropDown(questionName: string){
-        let question = await this.page.locator(`//p[@for='${questionName}']//..`).first()
-        let answer = await question.locator("//div[contains(@class, 'form-select__control')]")
+        let question = await this.page.locator(`//label[text()='${questionName}']//..`).first()
+        await question.click()
+        let answer = await question.locator("//div[contains(@class, 'select__option')]").first()
         await answer.click()
         await this.page.waitForTimeout(1000)
-        await answer.press('Enter')
-        await this.page.waitForTimeout(1000)
     }
-    async clickPEPbtn(answer: string){
-        await this.page.locator(`//button[text()='${answer}']`).click()
+    async clickCheckBox(questionName: string, answer: string){
+        let question = await this.page.locator(`//p[text()='${questionName}']//..`)
+        let answerText = await question.locator(`//div[text()='${answer}']`)
+        await answerText.click()
+        await this.page.waitForTimeout(500)
     }
 }

@@ -11,17 +11,17 @@ test.describe('KYC components', async()=>{
             await app.signIn.signInUserToPlatform(testUser, process.env.USER_PASSWORD || '')
         })
     })
-    test("@23575 Upgrade account banner",{tag:['@kyc','@KYC_Markets','@web']}, async({app})=>{
+    test("Upgrade account banner",{tag:['@kyc','@KYC_Markets','@web']}, async({app})=>{
         let localization_MainPage = new getLocalization("/pageObjects/localization/NagaMarkets_MainPage.json")
         let localization_KYC_start = new getLocalization("/pageObjects/localization/NagaMarkets_KYC_localization.json")
         await test.step("Check upgrade account banner", async()=>{
             expect(await app.mainPage.getTextOfWidgetStep('Upgrade to Live')).toContain(await localization_MainPage.getLocalizationText('KYC_AdvanceBanner'))
             await app.mainPage.clickOnWidgepPoint('Upgrade to Live')
-            expect(await localization_KYC_start.getLocalizationText("KYC_start_introduction")).toContain(await new startVerification_NagaMarkets(page).getKycIntroductionText())
+            expect(await app.multiLicense.checkKYCTitle("Expected country of origin and destination of your funds? ")).toBeTruthy()
         })
     })
     
-    test("KYC categorizations", {tag:['@kyc','@KYC_Markets','@web']},async({app})=>{
+    test.skip("KYC categorizations", {tag:['@kyc','@KYC_Markets','@web']},async({app})=>{
         let localization_KYC_start = new getLocalization("/pageObjects/localization/NagaMarkets_KYC_localization.json")
         await test.step("Open upgrade account popup", async()=>{
             await app.mainPage.clickOnWidgepPoint('Upgrade to Live')

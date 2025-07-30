@@ -7,7 +7,7 @@ export class MultiLicense{
         this.page = page
     }
 
-    async chooseRegulation(nameOfRegulation: string){
+    async checkRegulation(nameOfRegulation: string){
         let regulationBtn = await this.page.locator(`//button[text()='Continue with ${nameOfRegulation}']`)
         let block = await this.page.locator(`//p[contains(text(), '${nameOfRegulation}')]`)
         let atribute = await regulationBtn.getAttribute('class')
@@ -15,6 +15,11 @@ export class MultiLicense{
             await block.click()
         }
         await regulationBtn.click()
+    }
+
+    async checkKYCTitle(title: string){
+        await this.page.waitForSelector(`//p[text()='${title}']`, {state:'visible'})
+        return await this.page.locator(`//p[text()='${title}']`).isVisible()
     }
 
     async getPopupName(){

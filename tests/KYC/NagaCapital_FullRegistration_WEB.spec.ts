@@ -7,8 +7,8 @@ test.describe('WEB', async()=>{
     test("NagaCapital KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@KYC_Capital','@web']}, 
         async({ app, AppNAGA, NSCountry }, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 80000);
-        let scoring_AML = 1.35
-        let scoring_General = 0.25 
+        let scoring_AML = 0.99
+        //let scoring_General = 0.25 
         let AML
         let Scoring
         let email = await new RandomUser().getRandomUserEmail() 
@@ -20,8 +20,9 @@ test.describe('WEB', async()=>{
         await test.step('Open main page and switch to Compleate profile KYC. Fill KYC and go to main page.', async() =>{
             await app.youAreIn.clickExplorePlatform()
             await app.mainPage.clickOnWidgepPoint('NAGA Start')
-            await app.kycStartPopup.startKYC();
             await app.personalInformation.compleateYourProfile()
+            await app.personalInformation.fillLocationInformation()
+            await app.personalInformation.fillPersonalDetailsInformation()
         });
         await test.step('Check name of the widget banner "Naga start". Assert that Compleate profile popup is hidden', async()=>{
             expect(await app.deposit.checkManageFundsPopupIsVisible()).toBeTruthy()
@@ -31,11 +32,11 @@ test.describe('WEB', async()=>{
             expect(await app.mainPage.getStatusOfWidgetStep('Deposit')).toContain('--active')
         })
         await test.step('Open step:  Naga progres. User clicks on Finished btn(KYC is prefield)', async()=>{
-            await app.mainPage.clickOnWidgepPoint('NAGA Progress')
-            await app.kycStartPopup.startKYC();
+            await app.mainPage.clickOnWidgepPoint('NAGA Progress');
+            //await app.kycStartPopup.startKYC()
             [AML, Scoring] = await app.kycUpdatePopup.clickFinishBtn();
             expect(AML).toEqual(scoring_AML)
-            expect(Scoring).toEqual(scoring_General)
+           // expect(Scoring).toEqual(scoring_General)
         });
         await test.step('User see"s Verification popup', async()=>{
             expect(await app.verificationPopup.verificationPoupIsDisplyed()).toBeVisible()

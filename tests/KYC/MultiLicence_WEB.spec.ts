@@ -20,12 +20,11 @@ test.describe("Multi licence web", async()=>{
         await test.step(`Open KYC registration`, async()=>{
             await appBH.youAreIn.clickExplorePlatform()
             await appBH.mainPage.clickOnWidgepPoint('NAGA Start')
-            await appBH.kycStartPopup.startKYC()
         })
         await test.step(`Check MultiLicence popup for user-${email}. Switch to KYC-Capital`, async()=>{
             expect(await appBH.multiLicense.getPopupName()).toEqual('Select Your Preferred License')
-            await appBH.multiLicense.chooseRegulation('NAGA CAPITAL')
-            expect(await appBH.multiLicense.CapitalKYC()).toBeVisible()
+            await appBH.multiLicense.checkRegulation('NAGA CAPITAL')
+            expect(await appBH.multiLicense.checkKYCTitle('Enter your information as it appears on your ID/Passport:')).toBeTruthy() 
         })
     })
 
@@ -33,12 +32,11 @@ test.describe("Multi licence web", async()=>{
         await test.step(`Open KYC registration`, async()=>{
             await appBH.youAreIn.clickExplorePlatform()
             await appBH.mainPage.clickOnWidgepPoint('NAGA Start')
-            await appBH.kycStartPopup.startKYC()
         })
         await test.step(`Check MultiLicence popup for user-${email}. Switch to KYC-ADGM`, async()=>{
             expect(await appBH.multiLicense.getPopupName()).toEqual('Select Your Preferred License')
-            await appBH.multiLicense.chooseRegulation('NAGA FSRA')
-            expect(await appBH.multiLicense.ADGMKYC()).toBeVisible()
+            await appBH.multiLicense.checkRegulation('NAGA FSRA')
+            expect(await appBH.multiLicense.checkKYCTitle('Personal Details:')).toBeTruthy()        
         })
     })
 
@@ -52,7 +50,6 @@ test.describe("Multi licence web", async()=>{
             await appBH.mainPage.refreshPage()
             await appBH.mainPage.openBackMenuCategory('Manage Funds')
             await appBH.kycWidgetPopup.clickOnWidgetMenu('NAGA Start')
-            await appBH.kycStartPopup.startKYC()
             expect(await appBH.multiLicense.multiLycensePopup()).toBeTruthy()
         })
     })

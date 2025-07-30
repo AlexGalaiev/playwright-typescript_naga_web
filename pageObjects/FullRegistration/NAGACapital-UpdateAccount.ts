@@ -12,11 +12,15 @@ export class UdpateAccount{
     }
 
     async clickFinishBtn(){
-        await this.kycForm.waitFor({state:'visible'})
-        await this.finishBtn.scrollIntoViewIfNeeded()
+        await this.page.waitForSelector("//p[text()='Expected country of origin and destinations of your funds?']", {state:'visible'})
+        await this.page.locator('//button[@type="submit"]').click()
+        await this.page.waitForTimeout(700)
+        await this.page.locator('//button[@type="submit"]').click()
+        await this.page.waitForTimeout(700)
+        await this.page.locator('//button[@type="submit"]').click()
         const [response] = await Promise.all([
             this.page.waitForResponse("**/kyc/scores", {timeout:15000}),
-            this.finishBtn.click()
+            this.page.locator("//button[text()='Finish']").click()
         ])
         let body = await response.json()
         let amlScor = await body.data.aml_score

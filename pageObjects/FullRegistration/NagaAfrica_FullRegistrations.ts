@@ -173,9 +173,6 @@ export class KYC_Africa{
         await this.singleSelect('position_describing', level)
         await this.singleSelect('trading_with_leverage', level)
         await this.singleSelect('level_of_risk_to_tolerate_in_exchange', level)
-        //await this.singleSelect('employment_type', level)
-
-        //await this.submit.click()
     }
 
       async finishKycAndGetAML(){
