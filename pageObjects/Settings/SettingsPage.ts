@@ -59,7 +59,7 @@ export class SettingsPage{
         return await this.page.locator(".phone-verification-modal__text").isVisible()
     }
     async goBack(){
-        await this.page.locator("//span[text()='Back to Settings']").click()
+        await this.page.locator("//button[contains(@class, 'close-button')]").click()
     }
     async openEmailVerificationPopup(){
         await this.page.locator("//button[contains(@class, 'verify-email-button')]").click()
