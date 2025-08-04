@@ -237,7 +237,9 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '17'
-
+    - name: Debug Allure Results
+      if: always()
+      run: ls -l allure-results && cat allure-results/*.json || echo "No files"   
     - name: Generate Allure Report
       if: always()
       run: |
