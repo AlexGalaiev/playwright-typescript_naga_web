@@ -75,6 +75,7 @@ test.describe("New Trading account", async()=>{
                 AppNAGA)
         })
         await test.step('Add second live account in My Accounts', async()=>{
+            await app.mainPage.closeModal()
             await app.mainPage.waitForLiveAccount()
             await app.myAccounts.openUserMenu()
             await app.myAccounts.openMyAccountMenuItem('Trading Accounts')

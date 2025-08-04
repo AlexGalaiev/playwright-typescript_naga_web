@@ -2,7 +2,7 @@ import { Page } from "playwright";
 import { SignUp } from "../ShortRegistrationPage/SighUpPage";
 import { MainPage } from "../MainPage/MainPage";
 import { StartKYCPopup } from "../common/startKYC_Popup/startKYCPage";
-import { PersonalInformation } from "./NAGACapital-PersonalInformationPage";
+//import { PersonalInformation } from "./NAGACapital-PersonalInformationPage";
 import { VerificationPopup } from "../VerificationCenter/verificationPopup";
 import { RandomUser } from "../common/testUserCredentials/randomUser";
 import { YouAreInNagaMarkets } from "./components/NAGAMarkets_YouAreInpopup";
@@ -15,6 +15,8 @@ import { Captcha } from "../../pageObjects/captcha";
 import { MenaFullRegistration } from "./NagaMena_FullRegistration";
 import { MyAccounts } from "../MainPage/MyAccounts";
 import { KYC_Africa } from "./NagaAfrica_FullRegistrations";
+import {PersonalInformation} from "./NAGACapital-PersonalInformationPage"
+import { Deposit } from "../ManageFunds/Deposit";
 
 export class KYC_General{
     page: Page
@@ -26,7 +28,8 @@ export class KYC_General{
     async NagaCapital_KYC_HighScore(email: string, password: string, country: string, countrycCode: string, phone: string, brand: string){
         let signUp = new SignUp(this.page);
         let mainPage = new MainPage(this.page);
-        let personalInfo = new PersonalInformation(this.page)
+        let personalInformation = new PersonalInformation(this.page)
+        let deposit = new Deposit(this.page)
         //open platform and create lead user
         await signUp.goto(brand, 'register')
         await new Captcha(this.page).removeCaptcha()
@@ -35,10 +38,14 @@ export class KYC_General{
         await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
         //switch to main page and click to Naga Start widget step
         await mainPage.clickOnWidgepPoint('NAGA Start')
-        await new StartKYCPopup(this.page).startKYC();
+        //await new StartKYCPopup(this.page).startKYC();
         //After previous step - user sees next form. Add more information to personal info
-        await personalInfo.compleateYourProfile()
+        await personalInformation.compleateYourProfile()
+        await personalInformation.fillLocationInformation()
+        await personalInformation.fillPersonalDetailsInformation()
         await this.page.waitForTimeout(3000)
+        await deposit.closeManageFundsPopup()
+        await mainPage.openBackMenuPoint("feed");
     }
 
     async NagaCapital_KYC_Mobile(email: string, password: string, country: string, countrycCode: string, phone: string, brand: string){
@@ -74,12 +81,12 @@ export class KYC_General{
         await new PhoneVerification(this.page).insertVerificationCode()
         //open KYC 
         await new YouAreInNagaMarkets(this.page).openNagaKyc()
-        await kycStart.clickStartVerificationBtn()
+        //await kycStart.clickStartVerificationBtn()
         //fill kyc 
         await quiz.fill_KYC('Advance');
         await this.page.locator("//button[text()='Agree']").click()
         await this.page.waitForTimeout(500)
-        await KYC_FinalStep.clickBtn('Deposit');
+        await KYC_FinalStep.clickBtn('Fund your Account');
         await this.page.waitForTimeout(1500)
     }
     
@@ -116,6 +123,7 @@ export class KYC_General{
 
     async NagaMena_FullRegUser(email: string, brand: string){
         //create lead user via short registration
+        let menaKYC = new MenaFullRegistration(this.page)
         await new SignUp(this.page).goto(brand, "register");
         await new Captcha(this.page).removeCaptcha()
         await new SignUp(this.page).createCfdUser_All(email, process.env.USER_PASSWORD || "", 'United Arab Emirates','+387', '603039647');
@@ -125,10 +133,14 @@ export class KYC_General{
         await new PhoneVerification(this.page).insertVerificationCode()
         await new YouAreInNagaMarkets(this.page).clickExplorePlatform()
         await new MainPage(this.page).clickOnWidgepPoint('Upgrade to Live')
-        await new KYC_Start(this.page).clickStartVerificationBtn()
+        //await new KYC_Start(this.page).clickStartVerificationBtn()
+        // await menaKYC.clickBtn('Male')
+        // await menaKYC.inputDateOfBirth()
+        // await menaKYC.chooseFromDropDown('Nationality', 'level')
+        // await menaKYC.submit.click()
         await new MenaFullRegistration(this.page).fillKYC('Advance')
         await this.page.locator("//button[text()='Agree']").click()
-        await new FinalStep(this.page).clickBtn('Deposit');
+        await new FinalStep(this.page).clickBtn('Fund your Account');
     }
 
     async NagaMena_KYC_Mobile(email: string, password: string, country:string, phoneCode: string, phone: string, brand: string){

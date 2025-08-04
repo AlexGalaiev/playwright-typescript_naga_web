@@ -97,4 +97,7 @@ export class SignIn{
     async getPageTitleCrypto(){
         return await this.page.locator("//h2[contains(@class, 'login-form__headline')]").textContent()
     }
+    async getPageTittle(){
+        return await this.page.locator(".login-form__headline").textContent()
+    }
 }

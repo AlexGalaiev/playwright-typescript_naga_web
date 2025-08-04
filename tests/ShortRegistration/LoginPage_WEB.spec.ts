@@ -19,7 +19,7 @@ test.describe("WEB", async()=>{
         test.step('Log out from paltform and open forgot password link', async()=>{
             await appUA.myAccounts.openUserMenu()
             await appUA.myAccounts.userLogOut()
-            await appUA.pageAfterLogin.redirectToSighIn()
+            //await appUA.pageAfterLogin.redirectToSighIn()
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await appUA.signIn.forgotPasswordClick()
@@ -39,7 +39,7 @@ test.describe("WEB", async()=>{
         })
         test.step('Log out from paltform and open forgot password link', async()=>{
             await appIT.personalInformation.clickLogOut()
-            await appIT.pageAfterLogin.redirectToSighIn()
+            //await appIT.pageAfterLogin.redirectToSighIn()
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await appIT.signIn.forgotPasswordClick()
@@ -59,7 +59,7 @@ test.describe("WEB", async()=>{
         })
         test.step('Log out from paltform and open forgot password link', async()=>{
             await appUAE.personalInformation.clickLogOut()
-            await appUAE.pageAfterLogin.redirectToSighIn()
+            //await appUAE.pageAfterLogin.redirectToSighIn()
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await appUAE.signIn.forgotPasswordClick()
@@ -81,7 +81,7 @@ test.describe("WEB", async()=>{
         test.step('Log out from paltform and open forgot password link', async()=>{
             await appSA.myAccounts.openUserMenu()
             await appSA.myAccounts.userLogOut()
-            await appSA.pageAfterLogin.redirectToSighIn()
+            //await appSA.pageAfterLogin.redirectToSighIn()
         })
         await test.step('Check forgot password messages on UI', async()=>{
             await appSA.signIn.forgotPasswordClick()
@@ -165,7 +165,7 @@ test.describe('Login/LogOut',async()=>{
             await test.step('Log out from platform', async()=>{
                 await app.myAccounts.openUserMenu();
                 await app.myAccounts.userLogOut()
-                expect(await app.pageAfterLogin.getLogOutPageTittle()).toEqual('Trade with NAGA on the go!')
+                expect(await app.signIn.getPageTittle()).toEqual('Sign in to NAGA!')
             })})
     }
 

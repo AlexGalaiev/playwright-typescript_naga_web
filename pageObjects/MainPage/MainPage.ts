@@ -269,6 +269,7 @@ export class MainPage{
         await this.page.locator(`//span[text()='${pointName}']`).click()
     }
     async closeModal(){
+        await this.page.waitForSelector("//div[@class='modal-content']//button[@class='close']", {state:'visible'})
         await this.page.locator("//div[@class='modal-content']//button[@class='close']").click()
     }
     async checkExternalService(serviceName: string, serviceUrl){

@@ -135,6 +135,7 @@ export class FinalStep{
         return await this.page.locator("//p[contains(@class, 'account-specification-modal_description__content__span')]").first().textContent()
     }
     async clickBtn(buttonName: string){
+        await this.page.waitForSelector(`//button[text()='${buttonName}']`, {state:'visible'})
         await this.page.locator(`//button[text()='${buttonName}']`).click()
         await this.page.waitForTimeout(1500)
     }
