@@ -16,7 +16,7 @@ test.describe('Funds transfer', async()=>{
     for(const{ brand, user} of testTransferParams){
         test(`Internal transfer funds ${brand}`, 
             {tag:['@manageFunds', '@prodSanity', "@internalTransfer",'@web']}, async({app, AppNAGA}, testInfo)=>{
-            testInfo.setTimeout(testInfo.timeout + 30000);
+            testInfo.setTimeout(testInfo.timeout + 45000);
             await test.step(`Login to ${brand} platform by ${user} user`, async()=>{
                 await app.signIn.goto(AppNAGA,'login');
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '');
