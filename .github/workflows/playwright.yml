@@ -259,7 +259,7 @@ jobs:
     
     - name: Set Allure Report URL
       run: |
-        echo "ALLURE_REPORT_URL=https://your-user.github.io/your-repo/" >> $GITHUB_ENV
+        echo "ALLURE_REPORT_URL=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_ENV
 
 
     - uses: actions/upload-artifact@v4
