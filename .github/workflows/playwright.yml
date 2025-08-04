@@ -123,6 +123,10 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    
+    - name: Install Allure CLI
+      run: npm install -g allure-commandline --save-dev
+    
     - name: 'Create env file'
       run: |
           touch .env
@@ -228,6 +232,30 @@ jobs:
             export CANARY="$CANARY"
             CRON_RUN=${{github.event_name}} npx playwright test --grep "(?=.*@web)(?=.*$TAGS)" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         fi   
+    
+    - name: Generate Allure Report
+      if: always()
+      run: |
+        npx allure generate allure-results --clean -o allure-report
+
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: allure-report
+        path: allure-report/
+        retention-days: 30
+
+    - name: Deploy Allure Report to GitHub Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./allure-report
+    
+    - name: Set Allure Report URL
+      run: |
+        echo "ALLURE_REPORT_URL=https://your-user.github.io/your-repo/" >> $GITHUB_ENV
+
 
     - uses: actions/upload-artifact@v4
       if: always()
@@ -281,6 +309,7 @@ jobs:
           * **Actor:** ${{inputs.actor}}
           * **Component:** ${{inputs.component}}
           * **Release:** ${{inputs.release}}
+          * **Allure Report:** [View Report](${{ env.ALLURE_REPORT_URL }})
 
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:
