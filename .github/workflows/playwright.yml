@@ -232,7 +232,12 @@ jobs:
             export CANARY="$CANARY"
             CRON_RUN=${{github.event_name}} npx playwright test --grep "(?=.*@web)(?=.*$TAGS)" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         fi   
-    
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
     - name: Generate Allure Report
       if: always()
       run: |
