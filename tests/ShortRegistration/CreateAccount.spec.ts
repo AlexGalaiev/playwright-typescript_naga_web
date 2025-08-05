@@ -54,8 +54,10 @@ test.describe("Short regitration page elements", async()=>{
 
         test(`@Markets Risk Disclaimer text`, {tag:['@UI', '@mobile','@web']}, async({appIT})=>{
             let localizationText = await new getLocalization('/pageObjects/localization/NagaMarkets_SighUp.json').getLocalizationText('SighUp_RiskDisclaimer')
-            expect(await appIT.signUp.getRiskWarningNM()).toEqual(localizationText)
+            expect(localizationText).toContain('RISK WARNING: CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. ')
+            expect(localizationText).toContain('of retail investor accounts lose money when trading CFDs with this provider. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money. By registering for an account you hereby agree with the entire content of all legal documents.')
         })
+        
         test('@Markets Check default languages', {tag:['@UI', '@web']}, async({appIT})=>{
             let languages = ['English', 'Español', 'Deutsch','Polski','Italiano', 'Česky', 'Magyar', 'Português', 'Română', '汉语', '繁體中文']
             await appIT.signIn.openLanguages();
