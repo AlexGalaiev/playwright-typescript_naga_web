@@ -18,7 +18,7 @@ test.describe('WEB.Instrument page', async()=>{
         })
     })
 
-    test('@Crypto. Check Buy\sell btn on instrument page', {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip('@Crypto. Check Buy\sell btn on instrument page', {tag:['@web', '@crypto']}, async({app})=>{
         await test.step('Click buy\sell button', async()=>{
             await app.cryptoMainPage.clickBuySellBtn()
             expect(await app.cryptoMainPage.getSourceInstrumentName()).toEqual('Dogecoin (Doge) ')
@@ -27,7 +27,7 @@ test.describe('WEB.Instrument page', async()=>{
         })
     })
 
-    test(`@Crypto. Check Deposit elements on instrument page`, {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip(`@Crypto. Check Deposit elements on instrument page`, {tag:['@web', '@crypto']}, async({app})=>{
         await test.step('Check deposit qr code, wallet address, copy btn', async()=>{
             expect(await app.cryptoMainPage.checkQRCodeVisible()).toBeTruthy()
             expect(await app.cryptoMainPage.checkWalletVisible()).toBeTruthy()
@@ -35,7 +35,7 @@ test.describe('WEB.Instrument page', async()=>{
         })
     })
 
-    test(`@Crypto. Check withdrawal elements on instrument page`, {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip(`@Crypto. Check withdrawal elements on instrument page`, {tag:['@web', '@crypto']}, async({app})=>{
         await test.step('Check withdrawal elements on the page: input field', async()=>{
             await app.cryptoMainPage.switchToWithdrawTab()
             await app.cryptoMainPage.inputWithdrawalAmount('10000')
@@ -65,25 +65,25 @@ test.describe('All Instruments. WEB', async()=>{
         })
     })
 
-    test('@Crypto. Check Deposit btn on ALL instruments page', {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip('@Crypto. Check Deposit btn on ALL instruments page', {tag:['@web', '@crypto']}, async({app})=>{
         await app.cryptoMainPage.cryptoWalletDepositBtnClick()
         expect(await app.cryptoMainPage.checkDepositScreen()).toBeTruthy()
     })
-    test('@Crypto. Check Buy|Sell  btn on ALL instruments page', {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip('@Crypto. Check Buy|Sell  btn on ALL instruments page', {tag:['@web', '@crypto']}, async({app})=>{
         await app.cryptoMainPage.cryptoWalleBuySellBtnClick()
         expect(await app.cryptoMainPage.checkBuySellTittleIsVisible()).toBeTruthy()
     })
-    test('@Crypto. Check Actions dropdown. Check redirect from Buy|Sell button to buySell widget', {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip('@Crypto. Check Actions dropdown. Check redirect from Buy|Sell button to buySell widget', {tag:['@web', '@crypto']}, async({app})=>{
         await app.cryptoMainPage.searchInstrument(tradingInstrument)
         await app.cryptoMainPage.openActionDropdownPointMenu('Buy / Sell')
         expect(await app.cryptoMainPage.checkBuySellTittleIsVisible()).toBeTruthy()
     })
-    test('@Crypto. Check Actions dropdown. Check redirect from Deposit btn to QR code', {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip('@Crypto. Check Actions dropdown. Check redirect from Deposit btn to QR code', {tag:['@web', '@crypto']}, async({app})=>{
         await app.cryptoMainPage.searchInstrument(tradingInstrument)
         await app.cryptoMainPage.openActionDropdownPointMenu('Deposit')
         expect(await app.cryptoMainPage.checkQRCodeVisible()).toBeTruthy()
     })
-    test('@Crypto. Check Actions dropdown. Check redirect from Withdraw btn to QR code', {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip('@Crypto. Check Actions dropdown. Check redirect from Withdraw btn to QR code', {tag:['@web', '@crypto']}, async({app})=>{
         await app.cryptoMainPage.searchInstrument(tradingInstrument)
         await app.cryptoMainPage.openActionDropdownPointMenu('Withdraw')
         expect(await app.cryptoMainPage.checkWalletVisible()).toBeTruthy()

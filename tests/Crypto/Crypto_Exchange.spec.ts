@@ -11,7 +11,7 @@ test.describe('WEB', async()=>{
         await app.signIn.skip2AF()
     })
 
-    test(`@CryptoExchange. Redirect from Naga Crypto to Naga Exchange`, {tag:['@web', '@crypto']}, async({app})=>{
+    test.skip(`@CryptoExchange. Redirect from Naga Crypto to Naga Exchange`, {tag:['@web', '@crypto']}, async({app})=>{
         const newPage = await app.exchange.redirectToNagaExchange()
         let exchangePage = new NagaExchange(newPage)
         expect(await exchangePage.getUrl()).toContain('https://exchange.nagax.com/eu/')

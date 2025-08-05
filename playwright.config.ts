@@ -18,7 +18,7 @@ export default defineConfig<TestOptions>({
   expect: {
     timeout: 420000,
   },
-  reporter: [["list"], ["html"], ["allure-playwright"]],
+  reporter: [["list"], ["html"]],
   use: {
     video: 'off',
     screenshot:'only-on-failure',

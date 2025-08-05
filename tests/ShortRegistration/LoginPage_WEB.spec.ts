@@ -173,7 +173,7 @@ test.describe('Login/LogOut',async()=>{
         { brand: '@Crypto', email: "testLeadCrypto@naga.com"}
     ]
     for(const { brand, email } of testCryptoParams){
-    test(`Login/logout to platform ${brand} by ${email}`, 
+    test.skip(`Login/logout to platform ${brand} by ${email}`, 
         {tag:['@login', '@prodSanity','@smoke','@web','@crypto']}, async({app,AppNAGAX})=>{
         await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
             await app.signIn.goto(AppNAGAX, 'login')

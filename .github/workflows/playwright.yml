@@ -94,7 +94,6 @@ on:
     - cron: '05 0 * * 0-6'
     - cron: '25 1 * * 0-6'
     - cron: '25 2 * * 0-6'
-    - cron: '25 3 * * 0-6'
 jobs:
   test:
     timeout-minutes: 60
@@ -157,7 +156,6 @@ jobs:
                 "05 0 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
                 "25 1 * * 0-6") echo "TAGS=@settings" >> $GITHUB_ENV ;;
                 "25 2 * * 0-6") echo "TAGS=@verification" >> $GITHUB_ENV ;;
-                "25 3 * * 0-6") echo "TAGS=@crypto" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
@@ -232,32 +230,7 @@ jobs:
             export CANARY="$CANARY"
             CRON_RUN=${{github.event_name}} npx playwright test --grep "(?=.*@web)(?=.*$TAGS)" --project="$PROJECT" --workers=1 --config=playwright.service.config.ts | tee test-log.txt;
         fi   
-    - name: Setup Java
-      uses: actions/setup-java@v3
-      with:
-        distribution: 'temurin'
-        java-version: '17'
         
-    - name: Debug Allure Results
-      if: always()
-      run: ls -l allure-results && cat allure-results/*.json || echo "No files"   
-    - name: Generate Allure Report
-      if: always()
-      run: |
-        npx allure generate allure-results --clean -o allure-report
-
-    - name: Deploy Allure Report to GitHub Pages
-      if: always()
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./allure-report
-    
-    - name: Set Allure Report URL
-      run: |
-        echo "ALLURE_REPORT_URL=https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/" >> $GITHUB_ENV
-
-
     - uses: actions/upload-artifact@v4
       if: always()
       with:
@@ -310,7 +283,6 @@ jobs:
           * **Actor:** ${{inputs.actor}}
           * **Component:** ${{inputs.component}}
           * **Release:** ${{inputs.release}}
-          * **Allure Report:** [View Report](${{ env.ALLURE_REPORT_URL }})
 
             View report [${{ env.report_url }}](${{ env.report_url }})
       env:

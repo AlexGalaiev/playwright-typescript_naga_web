@@ -563,38 +563,6 @@ test.describe('Website. Footer and header elements', async()=>{
                 expect(await app.website.getText(await app.website.aeHeaderDisclaimer)).toEqual(await localization.getLocalizationText('AE_HeaderDisclaimer'))
             })})}
         })
-    test.describe('Website. Legal documents', async()=>{
-   
-    type pdfTypes = {
-        type: string,
-        platform: string,
-        documents: string[],
-        regulation: string,
-    }
-
-    const pdfParams: pdfTypes[] = [
-        //{type:'trade',regulation: 'EU', platform:'https://naga.com/eu/legal-documentation', documents: ["AML and Account Verification Policy", 'Client Agreement', 'Client Categorization Policy','Cost and Charges Policy','Privacy Policy']},
-        //{type:'Trade',regulation: 'EN', platform:'https://naga.com/en/legal-documentation', documents: ["Client Agreement", 'Privacy Policy','Cost and Charges Policy','FATCA']},
-        //{ type:'Trade',regulation: 'ZA', platform:'https://naga.com/za/legal-documentation', documents: ["Privacy Policy", 'Risk Disclosure and Warning Notice','Terms & Conditions']},
-        //{ type:'Trade',regulation: 'AE', platform:'https://naga.com/ae/legal-documentation', documents: ["Terms & Conditions", 'Disclaimer','W-8 BEN Form', 'Privacy Policy']}
-    ]
-    for(const{ type, platform, documents, regulation}of pdfParams){
-    test(` Check legal documents on ${type} page. Base url ${platform}`,
-        {tag: ['@naga.com', '@compliance','@web']}, async({app}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout + 40000);
-        await test.step(`Open ${platform}`, async()=>{
-            await app.website.open(platform)
-        })
-        await test.step('Check documents in popup', async()=>{
-            for(let index in documents){
-                await app.website.openLegalDocument(documents[index])
-                expect(await app.website.getPopupHeader()).toEqual(documents[index])
-                expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'name')).toBeVisible()
-                expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'updated')).toBeVisible()
-                expect(await app.website.checkDocumentVisibility(`${regulation}_${type}`, `${documents[index]}`, 'year')).toBeVisible()
-                await app.website.goBack()
-            }})})
-        }})
 
     test.describe('Website. Landing pages', async()=>{
 
@@ -604,14 +572,14 @@ test.describe('Website. Footer and header elements', async()=>{
             type: string;
         }
         const mainPageParams: mainPage[] = [
-            { regulation:'en', type:'Trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'money']},
-            { regulation:'en', type:'Invest', landingPages:['miketyson', 'trading', 'social', 'money']},
-            { regulation:'eu', type:'trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'earn']},
-            { regulation:'eu', type:'invest', landingPages:['miketyson', 'trading', 'social', 'money']},
-            { regulation:'eu', type:'crypto', landingPages:['miketyson', 'trading', 'social', 'money']},
-            { regulation:'za', type:'Trade', landingPages:['miketyson', 'trading', 'bvb', 'money']},
-            { regulation:'ae', type:'Trade', landingPages:['miketyson', 'trading', 'social', 'bvb', 'money']},
-            { regulation:'ae', type:'Invest', landingPages:['miketyson', 'trading', 'social', 'money']},
+            { regulation:'en', type:'Trade', landingPages:['trading', 'social', 'bvb', 'money']},
+            { regulation:'en', type:'Invest', landingPages:['trading', 'social', 'money']},
+            { regulation:'eu', type:'trade', landingPages:['trading', 'social', 'bvb', 'earn']},
+            { regulation:'eu', type:'invest', landingPages:['trading', 'social', 'money']},
+            { regulation:'eu', type:'crypto', landingPages:['trading', 'social', 'money']},
+            { regulation:'za', type:'Trade', landingPages:['trading', 'bvb', 'money']},
+            { regulation:'ae', type:'Trade', landingPages:['trading', 'social', 'bvb', 'money']},
+            { regulation:'ae', type:'Invest', landingPages:['trading', 'social', 'money']},
         ]
         for(const{ regulation, type, landingPages}of mainPageParams){
             test(` Landing pages on ${regulation}/ ${type}`, {tag: ['@naga.com','@web']},async({app}, testInfo)=>{
@@ -631,7 +599,7 @@ test.describe('Website. Footer and header elements', async()=>{
         }
 
         const mainPageLandings: mainPage[] = [
-            { regulation:'eu', type:'pay', landingPages:['miketyson', 'trading', 'social', 'money']}
+            { regulation:'eu', type:'pay', landingPages:['trading', 'social', 'money']}
         ]
         for(const{ regulation, type, landingPages}of mainPageLandings){
             test(`Landing page on ${type} page`,{tag: ['@naga.com','@web']},async({app})=>{

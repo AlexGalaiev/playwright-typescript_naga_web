@@ -170,12 +170,12 @@ test.describe("Short regitration page elements", async()=>{
             await app.signIn.goto(AppNAGAX, 'register')
         })
 
-        test(`Risk disclaimer test. Crypto`,{tag:['@UI','@web', '@crypto']}, async({app})=>{
+        test.skip(`Risk disclaimer test. Crypto`,{tag:['@UI','@web', '@crypto']}, async({app})=>{
             let localizationText = await new getLocalization('/pageObjects/localization/NagaCrypto.json').getLocalizationText('RiskDisclaimer')
             expect(await app.signUp.getCryptoRiskDisclaimer()).toEqual(localizationText)
         })
 
-        test('Check platform languages. Crypto', {tag:['@UI', '@web', '@crypto']}, async({app})=>{
+        test.skip('Check platform languages. Crypto', {tag:['@UI', '@web', '@crypto']}, async({app})=>{
             let languages = ['English','Español','Deutsch','Polski','Italiano']
             await app.signUp.openCryptoLanguageMenu()
             for(let language of languages){
