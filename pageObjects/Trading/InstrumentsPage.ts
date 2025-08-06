@@ -44,9 +44,9 @@ export class AllInstruments{
     async addToWatchlist(NameOfInstrument: string){
         let firstInstrument = await this.page.locator('.symbol-row', {has: await this.page.locator(`//div[text()='${NameOfInstrument}']`)}).first()
         await firstInstrument.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]//button").click()
-        await this.page.waitForTimeout(250)
+        await this.page.waitForTimeout(2000)
         await firstInstrument.locator("//li[@role='presentation']//a[text()='Add to favorites']").click()
-        await this.page.waitForTimeout(250)
+        await this.page.waitForTimeout(1000)
     };
     async addToMobileWatchlist(NameOfInstrument: string){
         let firstInstrument = await this.page.locator('.symbol-row-mobile', {has: await this.page.locator(`//div[text()='${NameOfInstrument}']`)}).first()
@@ -164,6 +164,16 @@ export class AllInstruments{
     }
     async openPriceAlerts(){
         await this.page.locator("#price_alerts_button").click()
+    }
+    async switchToSubcategory(category:string){
+        await this.page.waitForSelector("#symbol_types_dd", {state:'visible'})
+        let subcategory = await this.page.locator("//div[contains(@class, 'symbol-types-nav__bar__item')]", {has: await this.page.locator(`//p[text()='${category}']`)})
+        await subcategory.click()
+    }
+    async getInstrumentQuote(instrumentName: string, direction: string){
+        let instrument = await this.page.locator(`//div[@data-symbol="${instrumentName}"]`).first()
+        let price = await instrument.locator(`//div[@data-type='${direction}']//button[contains(@class, 'buy-sell-container__item__value')]//span`)
+        return await price.textContent()
     }
 
 }

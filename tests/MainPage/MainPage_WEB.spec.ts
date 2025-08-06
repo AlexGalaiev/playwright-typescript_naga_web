@@ -247,4 +247,41 @@ test.describe('WEB', async()=>{
             })})
     }})
 
+test.describe('WEB', async()=>{
+
+    type brandTypes = {
+        brand: string,
+        user: string,
+    }
+    const brandParams: brandTypes[] = [
+        {brand:'@Capital', user:'testTrading2'},
+        {brand:'@Markets', user:'testTrading2Markets'},
+        {brand:'@Mena', user:'testTrading@naga.com'},
+        {brand:'@Africa', user:'testTradingAfrica2@naga.com'},
+    ]
+    for(const{brand, user} of brandParams){
+        test(`${brand} Check visibility of quotes on All instruments page`, 
+            {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
+        await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
+            await app.signIn.goto(AppNAGA, 'login')
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+        })
+        await test.step('Open all insturments page and check that quotes for SELL  are visible', async()=>{
+            await app.mainPage.openBackMenuCategory('Trade')
+            await app.instruments.searchInstrument('SOLUSD')
+            let SellPrice = await app.instruments.getInstrumentQuote('SOLUSD', 'SELL')
+            expect(await SellPrice).not.toEqual('-')
+            expect(await SellPrice).not.toEqual('NaN')
+            expect(await SellPrice).not.toEqual('nulll')
+        })
+        await test.step('Check Buy quotes', async()=>{
+            let BuyPrice = await app.instruments.getInstrumentQuote('SOLUSD', 'BUY')
+            expect(await BuyPrice).not.toEqual('-')
+            expect(await BuyPrice).not.toEqual('NaN')
+            expect(await BuyPrice).not.toEqual('nulll')
+        })
+    })
+    }
+})
+
 

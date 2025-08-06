@@ -17,7 +17,7 @@ const AddWatchlistPatameters: testTypes[] = [
     { brand: '@Africa', user: 'testTradingAfrica@naga.com', localization: '/pageObjects/localization/NagaMarkets_Trading.json'}
 ]
 for(const{ brand, user, localization}of AddWatchlistPatameters){
-    test(` Add/Remove from Favorites ${brand}`,{tag:['@trading','@web']}, async({app, AppNAGA}, testInfo)=>{
+    test(`${brand} Add/Remove from Favorites`,{tag:['@trading','@web']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         let tradeInstrument = "SOLUSD"
         let localizationPage = new getLocalization(localization)
