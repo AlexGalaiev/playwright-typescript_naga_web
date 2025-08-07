@@ -41,7 +41,7 @@ test.describe('Autocopy', async()=>{
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await appUAE.mainPage.openBackMenuPoint('trade')
             await appUAE.instruments.openPositionOfInstrument(tradingInstrument, 'Sell')
-            await appUAE.newPosition.installLotsManually('0.01')
+            await appUAE.newPosition.installLotsManually('0.01', 'Lotsize')
             await appUAE.newPosition.submitPosition()
         })
         await test.step('Go to Mena My-trades and check source of opened position. Must be -OWN TRADE', async()=>{

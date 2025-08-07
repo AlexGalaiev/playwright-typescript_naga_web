@@ -56,8 +56,8 @@ export class NewPosition{
     }
     async getProtectionValue(NameOfProtection: string){
         let protectionfield = await this.nagaProtector.locator("//div[contains(@class, 'limit-value')]",{hasText: NameOfProtection})
-        let value = await protectionfield.locator("//span[contains(@class, 'limit-value__type__oposite-value')]")
-        return await value.textContent()
+        let value = await protectionfield.locator("//div[@class='limit-value__input']//input")
+        return await value.getAttribute('value')
     }
     async getNotEnoughFundsMsg(){
         return await this.notEnoughMsg.textContent()
@@ -90,14 +90,15 @@ export class NewPosition{
         await this.installMobileValueViaMinusBtn(numberOfClicks, positionOfEleemnt)
     }
     //test function just for debugging
-    async installLotsManually(valueToInstall: string){
-        await this.page.locator("//label[text()='Lotsize']").click()
-        let inputField = await this.page.locator("//div[@class='investment-section ']//div[@class='enter-value']//input").nth(1)
+    async installLotsManually(valueToInstall: string, fieldName: string){
+        //await this.page.locator("//label[text()='Lotsize']").click()
+        let inputField = await this.page.locator(`//label[text()='${fieldName}']//..//input`)
         await inputField.clear()
         await this.page.waitForTimeout(250)
         await inputField.pressSequentially(valueToInstall)
         await this.page.waitForTimeout(1000)
-        await this.page.locator("//div[@class='investment-section ']//div[contains(@class, 'minus-btn')]").nth(1).click()
+        let minusBtn = await this.page.locator(`//label[text()='${fieldName}']//..//div[contains(@class,'minus-btn')]`)
+        await minusBtn.click()
         await this.page.waitForTimeout(250)
         let submit = await this.page.locator("//button[contains(@class, 'buy-sell-button')]")
         await submit.scrollIntoViewIfNeeded()

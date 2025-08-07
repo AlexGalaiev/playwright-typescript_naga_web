@@ -32,7 +32,7 @@ test.describe('WEB', async()=>{
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
             await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
-            await app.newPosition.installLotsManually('0.01')
+            await app.newPosition.installLotsManually('0.01','Lotsize')
             //await app.newPosition.installLotsSize(90, 2)
             await app.newPosition.submitPosition()
         })
@@ -69,7 +69,7 @@ test.describe('WEB', async()=>{
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
             await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
-            await app.newPosition.installLotsManually('0.01')
+            await app.newPosition.installLotsManually('0.01', 'Lotsize')
             await app.newPosition.submitPosition()
         })
         await test.step(`Switch to My trades and open Trade details popup`, async()=>{
@@ -116,7 +116,7 @@ test.describe('WEB', async()=>{
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
             await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
-            await app.newPosition.installLotsManually('0.01')            
+            await app.newPosition.installLotsManually('0.01', 'Lotsize')            
             await app.newPosition.submitPosition()
         })
         await test.step(`Switch to My trades and open Trade details popup`, async()=>{
@@ -153,7 +153,7 @@ test.describe('WEB', async()=>{
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
             await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
-            await app.newPosition.installLotsManually('0.01')            
+            await app.newPosition.installLotsManually('0.01', 'Lotsize')            
             await app.newPosition.submitPosition()
         })
         await test.step('Check web notification appears after opened position', async()=>{

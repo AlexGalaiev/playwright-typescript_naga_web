@@ -49,8 +49,8 @@ test.describe("Trading - Positions/Orders.", async () => {
       });
       await test.step(`Check status of ${investDirection} button. And click on Submit btn`, async () => {
         expect(await app.newPosition.getStatusOfBtn(await app.newPosition.investmentDirectionBtn(mobileDirection))).toContain('active')
-        expect(await app.newPosition.getStatusOfBtn(await app.newPosition.ratePositionBtn(`${ratePosition} at Current Price`))).toContain('active')
-        await app.newPosition.installLotsManually('0.01')
+        expect(await app.newPosition.getStatusOfBtn(await app.newPosition.ratePositionBtn(`Market Price`))).toContain('active')
+        await app.newPosition.installLotsManually('0.01','Lotsize')
         await app.newPosition.submitPosition()
       });
       await test.step("Switch to My-Trades page. Save trading parameters - Investments and values. Close position", async () => {
@@ -99,8 +99,8 @@ test.describe('Trading - Pending orders', async()=>{
         await app.instruments.openPositionOfInstrument(tradingInstrument, investDirection)
       });
       await test.step('Open order with manual rate value', async()=>{
-        await app.newPosition.chooseBtn(await app.newPosition.ratePositionBtn(`${ratePosition} at Specific Rate`))
-        await app.newPosition.installLotsManually('0.01')
+        await app.newPosition.chooseBtn(await app.newPosition.ratePositionBtn(`Specific Price`))
+        await app.newPosition.installLotsManually('0.01','Lotsize')
         await app.newPosition.submitPosition()
       })
       await test.step('Check my-trades', async()=>{

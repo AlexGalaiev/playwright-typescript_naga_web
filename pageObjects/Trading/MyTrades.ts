@@ -88,13 +88,15 @@ export class MyTrades{
         await this.openedMobilePosition.waitFor({state:"visible"})
         return await this.openedMobilePosition.locator("//div[@class='my-trades-table-mobile__entry-price']").textContent()
     }
-    async getProtectionValue(NameOfProtection: string){
+    async getProtectionValue(NameOfProtection: string, currency:string){
         await this.openedPosition.waitFor({state:"visible"})
-        return await this.openedPosition.locator(`//div[@class='${NameOfProtection}']`).textContent()
+        let value = await this.openedPosition.locator(`//div[@class='${NameOfProtection}-in-currency']//span//span`).textContent()
+        return await value?.replace(currency,'')
     }
     async getMobileProtectionValue(NameOfProtection: string){
         await this.openedMobilePosition.waitFor({state:'visible'})
-        return await this.openedMobilePosition.locator(`//div[@class='${NameOfProtection}']`).textContent()
+        let value = await this.openedMobilePosition.locator(`//div[@class='${NameOfProtection}']`).textContent()
+        return value
     }
     async closePosition(){
         await this.page.locator("//i[contains(@class, 'trade-actions__close')]").click()
