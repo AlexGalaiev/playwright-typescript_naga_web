@@ -52,7 +52,7 @@ test.describe('WEB', async()=>{
         })})
     }
 
-    for(const{brand, user, currency} of tradeDetailsParams){
+    for(const{brand, user} of tradeDetailsParams){
     test(`${brand} Edit position on Trade details popup`, 
         {tag:['@trading', '@web']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)

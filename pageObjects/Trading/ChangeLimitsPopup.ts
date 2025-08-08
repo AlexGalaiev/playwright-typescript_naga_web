@@ -80,15 +80,13 @@ export class ChangeLimitsPopup{
     async updatePositionWithManuallInput(protectionName:string){
         await this.page.waitForTimeout(1500)
         let bouthgtAt = await this.page.locator("//span[text()='Bought at:']//..//span").nth(2).textContent()
-        let nagaProtector = await this.page.locator(".naga-protector")
+        let nagaProtector = await this.page.locator(".naga-protector-old")
         let protection = await nagaProtector.locator("//div[contains(@class, 'limit-value')]", {has: await this.page.locator(`//span[text()='${protectionName}']`)})
         await this.page.waitForTimeout(2000)
-        await protection.locator(".limit-value__switch").click()
+        await protection.locator(".limit-value-old__switch").click()
         await this.page.waitForTimeout(1500)
-        let value = await protection.locator("//div[@class='limit-value__input']//input")
+        let value = await protection.locator("//div[@class='limit-value-old__input']//input")
         await value.clear()
-        // let price = Number(bouthgtAt)+(Number(bouthgtAt) * Number(0.15))
-        // let newPrice = Math.floor(price * 10) / 10
         let newPrice = String(await this.calculationProtection(bouthgtAt || '', protectionName))
         await value.pressSequentially(String(newPrice))
         await this.page.waitForTimeout(1000)

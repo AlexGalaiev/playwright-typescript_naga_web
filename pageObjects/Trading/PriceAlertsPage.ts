@@ -24,7 +24,7 @@ export class PriceAlert{
         this.threshold = page.locator("//div[contains(@class, 'threshold-value')]//input")
         this.timePeriod = page.locator("//div[contains(@class, 'time-period')]//input")
         this.setPriceAlert = page.locator("#set_alert_button")
-        this.tab_instrumentName = page.locator("//div[@class='symbol-name']//p")
+        this.tab_instrumentName = page.locator("//div[@class='symbol-name']")
         this.tab_treshholdResult = page.locator("//p[@class='alert-type__trend-text']")
         this.tab_removeAlertFromTabBtn = page.locator("//i[contains(@class,'icn-trash')]");
         this.emptyTabPriceAlertHeader = page.locator(".no-data__title")

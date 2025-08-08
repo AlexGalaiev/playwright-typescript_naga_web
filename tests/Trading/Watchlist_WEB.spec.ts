@@ -76,6 +76,7 @@ for(const{ brand, user, localization}of priceAlertParameters){
             await app.priceAlert.clickSetPriceAlert()
         })
         await test.step("Check price alert tab, remove price alerts and check empty screen", async()=>{
+            await app.mainPage.openBackMenuSubcategory('Trading Tools', 'Price Alerts')
             expect(await app.priceAlert.getInstrumentNameFromTab()).toContain(tradeInstrument)
             expect(await app.priceAlert.getAlertType()).toContain("It raises by 100%")
             await app.priceAlert.removePriceAlert()

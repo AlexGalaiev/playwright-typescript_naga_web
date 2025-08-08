@@ -645,4 +645,32 @@ test.describe('Website. Footer and header elements', async()=>{
                         expect(await app.website.getTableData(allInstruments[index], '6')).not.toBeNull()
                     }}}
             )})}
+        
+    type pagesNumber = {
+        type: string,
+        regulation: string,
+        numberOfLandingPages: number
+    }
+    const pageNumberParams: pagesNumber[] = [
+        { regulation:'en', type:'Trade',  numberOfLandingPages: 4},
+        { regulation:'en', type:'Invest', numberOfLandingPages: 3},
+        { regulation:'eu', type:'trade', numberOfLandingPages: 4},
+        { regulation:'eu', type:'invest', numberOfLandingPages: 3},
+        { regulation:'eu', type:'crypto', numberOfLandingPages: 3},
+        { regulation:'eu', type:'pay', numberOfLandingPages: 3},
+        { regulation:'za', type:'Trade', numberOfLandingPages: 3},
+        { regulation:'ae', type:'Trade', numberOfLandingPages: 4},
+        { regulation:'ae', type:'Invest', numberOfLandingPages: 3}
+    ]
+    for(const{regulation, type, numberOfLandingPages} of pageNumberParams){
+        test.skip(`Check number of langing pages on website/${regulation}/${type}`, 
+            {tag:['@web', '@naga.com']}, async({app})=>{
+        await test.step(`Open naga.com/${regulation} ->${type} page`, async()=>{
+            await app.website.open(`https://naga.com/${regulation}`)
+            await app.website.checkTradeInstrument(type)
         })
+        await test.step('Check number of displayed landing pages', async()=>{
+            expect(await app.website.getNumberOfLandingPages()).toEqual(numberOfLandingPages)
+        })
+    })}
+})

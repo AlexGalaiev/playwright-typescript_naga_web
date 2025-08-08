@@ -29,7 +29,7 @@ for(const{ brand, user,tradingInstrument}of testNoFundsParaketers){
     });
     await test.step('Check Not enough money messages', async()=>{
         expect(await app.newPosition.getNotEnoughFundsMsg()).toEqual('You have insufficient funds to trade at the moment')
-        expect(await app.newPosition.getSubmitBtnText()).toEqual('Fund account now')
+        expect(await app.newPosition.getSubmitBtnText()).toEqual('Fund Account')
     })
 })}
 })

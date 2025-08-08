@@ -272,9 +272,10 @@ export class NagaCom{
     async getNumberOfLanguages(){
         return await this.page.locator("//a[contains(@id, 'language_menu_item')]").count()
     };
-    async getNumberOfLandPages(){
-        return await this.page.locator("//div[contains(@class, 'mantine-Tabs-panel')]").count()
-    }
+    // async getNumberOfLandPages(){
+    //     //await this.page.pause()
+    //     return await this.page.locator("//div[contains(@aria-labelledby, '-tab-')]").count()
+    // }
     async openLandingPageTab(landingPage: string){
         let minicard = await this.page.locator(`//button[contains(@id, '${landingPage}')]`)
         if(await minicard.isVisible()){
@@ -366,5 +367,10 @@ export class NagaCom{
     async goBack(){
         await this.page.goBack()
         await this.page.waitForTimeout(500)
+    }
+    async getNumberOfLandingPages(){
+        let number = await this.page.locator("//div[@role='tabpanel']")
+        await this.page.pause()
+        return await number.count()
     }
 }
