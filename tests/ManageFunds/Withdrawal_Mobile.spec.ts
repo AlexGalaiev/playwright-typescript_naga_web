@@ -16,7 +16,7 @@ test.describe('Withdrawal Mobile NS', async()=>{
         });
     })
     test("Mobile Withdrawal validation rulls", 
-        {tag:['@withdrawal', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        {tag:['@withdrawal', '@mobile', '@manageFunds']},
         async({app})=>{
         let valueToWithrawal = '1'
         await test.step('Open withdrawal menu', async()=>{
@@ -34,7 +34,7 @@ test.describe('Withdrawal Mobile NS', async()=>{
         })
     })
     test("Mobile. Crypto withdrawal", 
-        {tag:['@withdrawal', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        {tag:['@withdrawal', '@mobile', '@manageFunds']},
         async({app})=>{
         let localization = new getLocalization(ManageFunds_Withdrawal)
         await test.step('Open withdrawal menu', async()=>{
@@ -60,7 +60,7 @@ test.describe('Withdrawal Mobile NS', async()=>{
 
 test.describe('Withdrawal Mobile NM', async()=>{
     test("Mobile PayPal withdrawal", 
-        {tag:['@withdrawal', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        {tag:['@withdrawal', '@mobile', '@manageFunds']},
         async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000)
         let amountValueToWithrawal = 100
@@ -95,7 +95,7 @@ test.describe('Withdrawal Mobile All brands', async()=>{
 
     for(const{brand, user, menuPoint, paymentMethod, responsePaymentMethod}of NS_WithdrawalParams){
         test(`Mobile ${brand} EWallet withdrawals. Check ${paymentMethod} withdrawal`, 
-            {tag: ["@withdrawal", '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+            {tag: ["@withdrawal", '@mobile', '@manageFunds']}, 
             async({app,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 50000);
             await test.step(`Login by ${user} to ${brand} platform and open ${paymentMethod} withdrawal`, async()=>{
@@ -129,7 +129,7 @@ test.describe('Withdrawal Mobile All brands', async()=>{
 
     for(const{brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_WithdrawalParams){
         test(` Mobile ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
-            {tag: ["@withdrawal", '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+            {tag: ["@withdrawal", '@mobile', '@manageFunds']}, 
             async({app,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 20000)
             await test.step(`Login by ${user} to ${brand} plarform  and open withdrawal`, async()=>{
@@ -160,7 +160,7 @@ test.describe('Withdrawal Mobile All brands', async()=>{
     ]
     for(const{ brand, user, currency}of withdrawalEcompayParams){
         test(` Mobile ${brand} Withdrawal. Bank Account. Ecommpay`, 
-        {tag:["@withdrawal",'@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        {tag:["@withdrawal",'@mobile', '@manageFunds']},
         async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000)
         await test.step(`Login to ${brand} by ${user} and open withdrawal`, async()=>{

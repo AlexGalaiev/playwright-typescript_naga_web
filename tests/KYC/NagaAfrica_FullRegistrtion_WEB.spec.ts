@@ -30,7 +30,7 @@ test.describe('KYC WEB. Naga Africa', async()=>{
     })
 
     test(`NagaAfrica -  Advance score. User email-${email}`,
-        {tag:['@kyc', '@prodSanity','@smoke','@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}},async({app})=>{
+        {tag:['@kyc', '@prodSanity','@smoke','@KYC_Africa','@web']},async({app})=>{
         let KYC_scorring = 'Advance'
         let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json')
         let scoring_AML = 1.395
@@ -49,7 +49,7 @@ test.describe('KYC WEB. Naga Africa', async()=>{
     })
 
     test(`NagaAfrica - PreAdvance score. User email-${email}`,
-        {tag:['@kyc', '@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}}, async({app})=>{
+        {tag:['@kyc', '@KYC_Africa','@web']}, async({app})=>{
         let KYC_scorring = 'PreAdvance'
         let scoring_AML = 1.215
         let scoring_General = 0.2
@@ -67,7 +67,7 @@ test.describe('KYC WEB. Naga Africa', async()=>{
         })
     })
     test(`Naga Africa - Intermediate score. User email-${email}`,
-        {tag:['@kyc', '@KYC_Africa','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9127',type:'ticket'}},async({app})=>{
+        {tag:['@kyc', '@KYC_Africa','@web']},async({app})=>{
         let KYC_scorring = 'Intermediate'
         let scoring_AML = 0.945
         let scoring_General = 0

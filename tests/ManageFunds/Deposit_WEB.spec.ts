@@ -15,7 +15,7 @@ test.describe('Deposit', async()=>{
     ]
     for(const{numberOfDepositMethods, brand, user}of testDepositNumber){
         test(`WEB ${brand} Check number of exist deposit methods`, 
-            {tag:['@deposit', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+            {tag:['@deposit', '@manageFunds','@web']}, 
             async({app, AppNAGA})=>{
             await test.step(`Login by ${user} to ${brand} platform and check number of exist methods`, async()=>{
                 await app.signIn.goto(AppNAGA,'login');
@@ -40,7 +40,7 @@ test.describe('Deposit', async()=>{
         {brand: '@Capital', user: 'testTrading2', deposit: [ 'Credit Card', 'skrill', 'altneteller', 'bank transfer', 'crypto' ]},
     ]
     for(const{brand, user, deposit,} of AfricaTestParams){
-    test(`${brand} Check praxis popup deposit methods`, {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+    test(`${brand} Check praxis popup deposit methods`, {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web']}, 
         async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 45000)
         await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{
@@ -65,8 +65,7 @@ test.describe('Deposit', async()=>{
         requestURL: string,
     }
 
-    test(`Check Pay Pal deposit`, {tag:['@deposit', '@manageFunds','@web'], 
-        annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, async({app, AppNAGA}, testInfo)=>{
+    test(`Check Pay Pal deposit`, {tag:['@deposit', '@manageFunds','@web']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000)
         await test.step(`Login to platform by depositTestMarkets user`, async()=>{
             await app.signIn.goto(AppNAGA,'login');
@@ -88,7 +87,7 @@ test.describe('Deposit', async()=>{
     
     for(const{brand, user, depositName, requestURL} of NMdepositTestParams){    
     test(`${brand} Check ${depositName} deposit`, 
-        {tag:['@deposit', '@manageFunds', '@smoke','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, async({app,AppNAGA}, testInfo)=>{
+        {tag:['@deposit', '@manageFunds', '@smoke','@web']}, async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000)
         await test.step(`Login by ${user} user`, async()=>{
             await app.signIn.goto(AppNAGA,'login');

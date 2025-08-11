@@ -54,7 +54,7 @@ export class NagaCom{
         this.languageSwitcherCrypto = page.locator("//div[contains(@class, 'LanguageSelector_language-trigger')]//div[@title]").first()
         this.footerContainer = page.locator("#footer-container")
         this.zaRiskWarning = page.locator("//span[text()='RISK WARNING:']//..").first()
-        this.zaRegualtion = page.locator("//p[text()='Copyright © 2024 – All rights reserved.']//..//p[4]")
+        this.zaRegualtion = page.locator("//p[text()='Copyright © 2025 – All rights reserved.']//..//p[4]")
         this.aeFooterRiskWarning = page.locator("//span[text()='RISK WARNING:']//..").first()
         this.aeFooterDisclaimer = page.locator("//span[text()='Disclaimer:']//..").first()
         this.aeHeaderDisclaimer = page.locator("//div[@id='header-container']//preceding::div[contains(@class, 'block')][1]")

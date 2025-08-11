@@ -29,7 +29,7 @@ test.describe("Withdrawal Capital", async()=>{
         })
     })
     test("Withdrawal validation rulls", 
-        {tag:['@withdrawal', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},async({app})=>{
+        {tag:['@withdrawal', '@manageFunds','@web']},async({app})=>{
         let valueToWithrawal = '1'
         await test.step('Open withdrawal menu', async()=>{
             await app.mainPage.openBackMenuSubcategory('Manage Funds', 'Withdraw');
@@ -45,8 +45,7 @@ test.describe("Withdrawal Capital", async()=>{
         })
     });
 
-    test("Crypto withdrawal", {tag:['@withdrawal', '@manageFunds','@web'], 
-        annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+    test("Crypto withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},
         async({app})=>{
         let localization = new getLocalization(ManageFunds_Withdrawal);
         await test.step('Open withdrawal menu', async()=>{
@@ -70,7 +69,7 @@ test.describe("Withdrawal Capital", async()=>{
 })
 
 test.describe('Withdrawal Markets', async()=>{
-    test("PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+    test("PayPal withdrawal", {tag:['@withdrawal', '@manageFunds','@web']},
         async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
         let amountValueToWithrawal = 100
@@ -102,7 +101,7 @@ const NS_WithdrawalParams: NS_WithdrawalTypes[] = [
 //difference between NagaMarkets and NagaCapital -> Markets has withdrawal popup, Capital opens iframe
 for(const{ brand, user, menuPoint, paymentMethod, responsePaymentMethod}of NS_WithdrawalParams){
     test(` ${brand} EWallet withdrawals. Check ${paymentMethod} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, 
         async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000)
         await test.step(`Login by ${user} to ${brand} platform and open withdrawal`, async()=>{
@@ -137,7 +136,7 @@ const NM_WithdrawalParams: NM_WithdrawalTypes[] = [
 ]
 for(const{ brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_WithdrawalParams){
     test(` ${brand} Ewallet withdrawal. Check ${withdrawalPageTitle} withdrawal`, 
-        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        {tag: ["@withdrawal", '@prodSanity', '@manageFunds','@web']}, 
         async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000)
         let amount;
@@ -176,7 +175,7 @@ for(const{ brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_With
     ]
     for(const{ brand, user, numberOfEwalletWithdrawal} of testNumberOfWithdrawals){
         test(`${brand} Check number of available withdrawals`, 
-            {tag:["@withdrawal", '@manageFunds','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+            {tag:["@withdrawal", '@manageFunds','@web']}, 
             async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 60000);
         await test.step(`Login by ${user} to ${brand} platform`, async()=>{
@@ -204,7 +203,7 @@ for(const{ brand, user, menuPoint, paymentMethod,withdrawalPageTitle} of NM_With
     
     for(const{ brand, user, currency}of withdrawalEcompayParams){
         test(` ${brand} Withdrawal. Bank Account. Ecommpay`, 
-        {tag:["@withdrawal", '@manageFunds','@prodSanity','@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}},
+        {tag:["@withdrawal", '@manageFunds','@prodSanity','@web']},
         async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000)
         await test.step(`Login to ${brand} by ${user} and open withdrawal`, async()=>{

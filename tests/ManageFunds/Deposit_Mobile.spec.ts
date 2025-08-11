@@ -31,7 +31,7 @@ test.describe('Deposit Mobile', async()=>{
 test.describe('Deposit Mobile. NM. Other methods', async()=>{
 
     test(`Mobile Check Pay Pal deposit`, 
-        {tag:['@deposit', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        {tag:['@deposit', '@mobile', '@manageFunds']}, 
         async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 10000);
         await test.step(`Login to platform by depositTestMarkets user`, async()=>{
@@ -61,7 +61,7 @@ test.describe('Deposit Mobile. NM. Other methods', async()=>{
     
     for(const{brand, user, depositName, requestURL} of NMdepositTestParams){    
         test(`Mobile ${brand} Check ${depositName} deposit`, 
-        {tag:['@deposit', '@mobile', '@manageFunds'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9088', 'type':'ticket'}}, 
+        {tag:['@deposit', '@mobile', '@manageFunds']}, 
         async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 20000);
         await test.step(`Login by ${user} user`, async()=>{

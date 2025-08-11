@@ -131,7 +131,8 @@ const tradingParametersSLTP: changeLimittypes[] = [
 ]
 for(const{brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
   test(`${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
-    {tag:['@trading','@web']}, async({app, AppNAGA}, testInfo)=>{
+    {tag:['@trading','@web'], annotation:{'type':'ticket', "description":"https://keywaygroup.atlassian.net/browse/RG-11610"}}, 
+    async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 170000);
     let stopLossValue;
     await test.step(`Login to ${brand} platfotm by ${user}`, async () => {

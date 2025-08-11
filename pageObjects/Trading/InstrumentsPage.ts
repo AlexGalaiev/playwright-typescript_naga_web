@@ -39,7 +39,7 @@ export class AllInstruments{
         //await this.searchInstrumentField.pressSequentially(NameOfInstrument)
         await this.page.locator("//div[@id='symbol_types_dd']//button").click()
         await this.page.locator(".markets-search").pressSequentially(NameOfInstrument)
-        await this.page.waitForTimeout(500);
+        await this.page.waitForTimeout(1000);
     };
     async addToWatchlist(NameOfInstrument: string){
         let firstInstrument = await this.page.locator('.symbol-row', {has: await this.page.locator(`//div[text()='${NameOfInstrument}']`)}).first()
