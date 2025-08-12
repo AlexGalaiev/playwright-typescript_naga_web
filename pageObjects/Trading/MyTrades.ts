@@ -98,6 +98,11 @@ export class MyTrades{
         let value = await this.openedPosition.locator(`//div[@class='${NameOfProtection}-in-currency']//span//span`).textContent()
         return await value?.replace(currency,'')
     }
+    async getProtectionValueAmount(NameOfProtection: string, currency:string){
+        await this.openedPosition.waitFor({state:"visible"})
+        let value = await this.openedPosition.locator(`//div[@class='${NameOfProtection}']//span//span`).textContent()
+        return await value?.replace(currency,'')
+    }
     async getMobileProtectionValue(NameOfProtection: string){
         await this.openedMobilePosition.waitFor({state:'visible'})
         let value = await this.openedMobilePosition.locator(`//div[@class='${NameOfProtection}']`).textContent()
@@ -134,11 +139,15 @@ export class MyTrades{
         return await orderValue.textContent()
     }
     async openChangeLimitPopup(){
-        await this.optionDropdown.click();
+        await this.page.waitForTimeout(500)
+        await this.optionDropdown.click()
+        await this.page.waitForTimeout(1000)
         await this.changeLimits.click();
     }
     async openTradeDetails(){
-        await this.optionDropdown.click();
+        await this.page.waitForTimeout(500)
+        await this.optionDropdown.click()
+        await this.page.waitForTimeout(1000)
         await this.tradeDetails.click();
     }
     async openMobileTradeDetails(){

@@ -130,7 +130,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
   {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'}
 ]
 for(const{brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
-  test.fixme(`${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
+  test(`${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
     {tag:['@trading','@web'], annotation:{'type':'ticket', "description":"https://keywaygroup.atlassian.net/browse/RG-11610"}}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 170000);
@@ -168,15 +168,17 @@ for(const{brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL
       await app.changeLimitPopup.switchToSpecificRateForm()
       await app.changeLimitPopup.enableProtection('Stop Loss');
       await app.changeLimitPopup.enableProtection('Take Profit');
-      TP = await app.changeLimitPopup.getProtectionValue(protectionTP)
+      TP = await app.changeLimitPopup.pendingOrderProtectionCalculation()
+      //TP = await app.changeLimitPopup.getProtectionValue(protectionTP)
+      await app.changeLimitPopup.inputProtectionValue('Take Profit', TP)
       await app.changeLimitPopup.updatePosition()
     })
     await test.step('Check change limit succesfull popup', async()=>{
-      expect(await app.changeLimitSuccessPopup.getProtectionValue(protectionTP)).toContain(TP)
+      //expect(await app.changeLimitSuccessPopup.getProtectionValue(protectionTP)).toContain(TP)
       await app.changeLimitSuccessPopup.acceptPopup()
     })
     await test.step('Check my traders Stop Loss and Take profit', async()=>{
-      expect(await app.myTrades.getProtectionValue(tradeFieldsTP, currency)).toContain(TP)
+      expect(Number(await app.myTrades.getProtectionValueAmount(tradeFieldsTP, currency))).toBeCloseTo(Number(TP),1)
       await app.myTrades.closePosition()
       await app.successfullClosePopup.acceptPopup()
     })

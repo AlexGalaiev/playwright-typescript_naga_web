@@ -100,6 +100,8 @@ export class ChangeLimitsPopup{
         return newPrice
     }
 
+    //async getPending
+
     async calculationProtection(itemPrice: string, protectionName: string){
         let price
         if(protectionName == "Take Profit"){
@@ -114,4 +116,17 @@ export class ChangeLimitsPopup{
     async switchToSpecificRate(){
         await this.page.locator('//input[@value="rate"]').click()
     }
+    async pendingOrderProtectionCalculation(){
+        let newPrice
+        let protection = await this.page.locator("//span[contains(@class, 'trade-symbol__type')]").textContent()
+        let val= await this.page.locator("//div[@class='enter-value-old']//input")
+        let price = await val.getAttribute('value')
+        if(protection?.includes('SELL')){
+            newPrice = (Number(price)) / 1.10
+        }else if(protection?.includes('BUY')){
+            newPrice = (Number(price)) * 1.10
+        }
+        return (String(newPrice))
+    }
+
 }
