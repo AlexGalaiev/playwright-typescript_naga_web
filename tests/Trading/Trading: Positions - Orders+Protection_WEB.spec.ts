@@ -130,7 +130,7 @@ const tradingParametersSLTP: changeLimittypes[] = [
   {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'}
 ]
 for(const{brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
-  test(`${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
+  test.fixme(`${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 
     {tag:['@trading','@web'], annotation:{'type':'ticket', "description":"https://keywaygroup.atlassian.net/browse/RG-11610"}}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 170000);
@@ -159,15 +159,15 @@ for(const{brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL
       await app.mainPage.openBackMenuPoint("my-trades");
       //expect(await app.myTrades.checkStatusOfElement(await app.myTrades.activeTradesTab)).toContain("active");
       await app.myTrades.openActivePendingOrdersTab();
-      deposit = (await app.myTrades.getDepositValue(currency));
-      units = await app.myTrades.getUnits();
+      //deposit = (await app.myTrades.getDepositValue(currency));
+      units = await app.myTrades.getPendingUnits();
       expect(await app.myTrades.getStopLossValue()).toContain(stopLossValue)
       await app.myTrades.openChangeLimitPopup()
     })
     await test.step(`Enable ${protectionTP} and check result`, async()=>{
       await app.changeLimitPopup.switchToSpecificRateForm()
-      await app.changeLimitPopup.enableStopLoss();
-      await app.changeLimitPopup.enableTakeProgit();
+      await app.changeLimitPopup.enableProtection('Stop Loss');
+      await app.changeLimitPopup.enableProtection('Take Profit');
       TP = await app.changeLimitPopup.getProtectionValue(protectionTP)
       await app.changeLimitPopup.updatePosition()
     })

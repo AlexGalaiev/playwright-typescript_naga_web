@@ -118,7 +118,7 @@ export class AllInstruments{
         while(await existPosition.isVisible()){
             await existPosition.locator("//div[contains(@class, 'symbol-container__menu-dropdown')]").click()
             await existPosition.locator("//a[text()='Remove from favorites']").click()
-            await this.page.waitForTimeout(1500)
+            await this.page.waitForTimeout(3000)
         }
     }
     async cleanMobileWatchlist(){

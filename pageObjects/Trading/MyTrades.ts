@@ -84,6 +84,11 @@ export class MyTrades{
         await this.openedPosition.waitFor({state:"visible"})
         return await this.openedPosition.locator("//div[contains(@class, 'units-active')]").first().textContent();
     }
+    async getPendingUnits(){
+        await this.openedPosition.waitFor({state:"visible"})
+        return await this.openedPosition.locator("//div[contains(@class, 'units-pending')]").first().textContent();
+    }
+
     async getMobileUnits(){
         await this.openedMobilePosition.waitFor({state:"visible"})
         return await this.openedMobilePosition.locator("//div[@class='my-trades-table-mobile__entry-price']").textContent()

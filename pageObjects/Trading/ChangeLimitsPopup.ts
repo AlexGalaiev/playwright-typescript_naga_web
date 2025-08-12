@@ -41,13 +41,19 @@ export class ChangeLimitsPopup{
         await this.takeProfit.click()
         await this.page.waitForTimeout(500);
     };
+
+    async enableProtection(nameOfProtection:string){
+        let switcher = await this.page.locator(`//span[text()='${nameOfProtection}']//..//..//div[@class='limit-value-old__switch']`)
+        await switcher.click()
+        await this.page.waitForTimeout(1000)
+    }
     async updatePosition(){
         await this.updateBtn.click()
         await this.page.waitForTimeout(1000)
     };
     async getProtectionValue(protectionType: string){
-        let mainElement = await this.page.locator(`//span[text()='${protectionType}']//..//..`)
-        let element = await mainElement.locator("//div[@class='limit-value__input']//input[@type='text']")
+        let mainElement = await this.page.locator(`//span[text()='${protectionType}']//..//..`).first()
+        let element = await mainElement.locator("//input[@type='text']")
         return await element.textContent()
         ////span[text()='Stop Loss']//..//..//div[@class='limit-value__input']
     }
@@ -63,6 +69,7 @@ export class ChangeLimitsPopup{
         //await this.page.waitForTimeout(500)
     }
     async switchToSpecificRateForm(){
+        await this.page.waitForTimeout(250)
         await this.page.locator("//span[text()='Specific Rate']/preceding-sibling::input").nth(1).click()
         await this.page.waitForTimeout(250)
     }

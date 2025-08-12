@@ -29,6 +29,7 @@ for(const{ brand, user, localization}of AddWatchlistPatameters){
         await test.step("Check watchlist and clean from opened positions if they exist", async()=>{
             await app.instruments.openWatclistTab();
             await app.instruments.cleanWatchlist()
+            await app.mainPage.refreshPage()
         })
         await test.step(`Choose ${tradeInstrument} and add to watchlist`, async()=>{
             await app.instruments.searchInstrument(tradeInstrument)
