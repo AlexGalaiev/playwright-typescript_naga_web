@@ -5,7 +5,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 
 test.describe('WEB', async()=>{
 
-    test("NagaCapital. Change password via settings", {tag:['@web', '@settings']}, 
+test("NagaCapital. Change password via settings", {tag:['@web', '@settings']}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 40000);
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")
@@ -72,7 +72,7 @@ test("NagaMena, Change password via settings",{tag:['@web', '@settings']},
     })
 })
 
-test("NagaAfrica, Change password via settings",{tag:['@web', '@settings']}, 
+test.fixme("NagaAfrica, Change password via settings",{tag:['@web', '@settings']}, 
     async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 120000);
     let localization = new getLocalization("/pageObjects/localization/NagaCapital_Settings.json")

@@ -28,7 +28,7 @@ test.describe('KYC', async()=>{
     })}
 )
 test("Naga Markets. KYC - Advance level.",
-  {tag:['@kyc', '@prodSanity','@smoke','@KYC_Markets','@mobile','@web']}, async ({app}, testInfo) => {
+  {tag:['@kyc', '@prodSanity','@KYC_Markets','@mobile','@web']}, async ({app}, testInfo) => {
   testInfo.setTimeout(testInfo.timeout + 130000);
   let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json');
   let KYC_Advance = "Advance";

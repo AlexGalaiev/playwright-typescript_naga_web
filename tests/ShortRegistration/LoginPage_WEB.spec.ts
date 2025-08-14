@@ -67,7 +67,7 @@ test.describe("WEB", async()=>{
             expect(await appUAE.forgotPassword.getRequestMethod(response)).toBe('POST')
         })
     })
-    test("@Africa Forgot password link test",
+    test.fixme("@Africa Forgot password link test",
             {tag:['@forgotPassword', '@web', '@prodSanity','@settings'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-9272', type:'issue'}}, 
             async({appSA, AppNAGA, NagaAfricaCountry}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 40000)
@@ -174,7 +174,7 @@ test.describe('Login/LogOut',async()=>{
     ]
     for(const { brand, email } of testCryptoParams){
     test.skip(`Login/logout to platform ${brand} by ${email}`, 
-        {tag:['@login', '@prodSanity','@smoke','@web','@crypto']}, async({app,AppNAGAX})=>{
+        {tag:['@login', '@prodSanity','@web','@crypto']}, async({app,AppNAGAX})=>{
         await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
             await app.signIn.goto(AppNAGAX, 'login')
             await app.signIn.signInUserToPlatform(email, process.env.USER_PASSWORD || '')

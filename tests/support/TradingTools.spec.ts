@@ -15,7 +15,7 @@ test.describe('WEB', async()=>{
         {brand:'@Africa', user:'leadAfrica@naga.com'},
     ]
     for(const{brand, user} of tradingToolsParams){
-        test(`${brand} Trading tools. Trading sygnals`, {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
+        test(`${brand} Trading tools. Trading sygnals`, {tag:['@UI', '@web', '@smoke']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -38,7 +38,7 @@ test.describe('WEB', async()=>{
     ]
 
     for(const{brand, user} of contestParams){
-        test(`${brand} Trading tools. Contest tab`, {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
+        test(`${brand} Trading tools. Contest tab`, {tag:['@UI', '@web', '@smoke']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -51,7 +51,7 @@ test.describe('WEB', async()=>{
         })}
 
     for(const{brand, user} of tradingToolsParams){
-        test(`${brand} Trading tools. Market Buzz tab`, {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
+        test(`${brand} Trading tools. Market Buzz tab`, {tag:['@UI', '@web', '@smoke']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -63,7 +63,7 @@ test.describe('WEB', async()=>{
             })
         })}
     for(const{brand, user} of tradingToolsParams){
-        test(`${brand} Trading tools. Economic Calendar tab`, {tag:['@UI', '@web']}, async({app, AppNAGA})=>{
+        test(`${brand} Trading tools. Economic Calendar tab`, {tag:['@UI', '@web', '@smoke']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')

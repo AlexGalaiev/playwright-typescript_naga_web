@@ -4,7 +4,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import { Captcha } from "../../pageObjects/captcha";
 
 test.describe('WEB', async()=>{
-    test("NagaCapital KYC Advance",{tag:['@kyc', '@prodSanity','@smoke', '@KYC_Capital','@web']}, 
+    test("NagaCapital KYC Advance",{tag:['@kyc', '@prodSanity', '@KYC_Capital','@web']}, 
         async({ app, AppNAGA, NSCountry }, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 80000);
         let scoring_AML = 0.99

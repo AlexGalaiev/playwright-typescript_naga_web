@@ -30,7 +30,7 @@ test.describe('KYC WEB', async()=>{
     })
   })
 
-  test('KYC Mena - Advance Score', {tag:['@kyc', '@prodSanity','@smoke','@KYC_Mena','@web']}, async({app})=>{
+  test('KYC Mena - Advance Score', {tag:['@kyc', '@prodSanity','@KYC_Mena','@web']}, async({app})=>{
     let KYC_scorring = 'Advance'
     let scoring_AML = 1.485
     let scoring_General = 0.825

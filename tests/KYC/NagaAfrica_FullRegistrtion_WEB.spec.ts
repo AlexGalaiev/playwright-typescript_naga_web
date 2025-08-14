@@ -30,7 +30,7 @@ test.describe('KYC WEB. Naga Africa', async()=>{
     })
 
     test(`NagaAfrica -  Advance score. User email-${email}`,
-        {tag:['@kyc', '@prodSanity','@smoke','@KYC_Africa','@web']},async({app})=>{
+        {tag:['@kyc', '@prodSanity','@KYC_Africa','@web']},async({app})=>{
         let KYC_scorring = 'Advance'
         let localization = new getLocalization('/pageObjects/localization/NagaMarkets_KYC_localization.json')
         let scoring_AML = 1.395
