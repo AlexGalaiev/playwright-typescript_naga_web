@@ -150,6 +150,23 @@ export class MainPage{
         await this.page.waitForTimeout(500)
     }
 
+    async globalSearch(searchFor: string){
+        let field = await this.page.locator("#global_search_input")
+        await field.click()
+        await field.pressSequentially(searchFor)
+        await this.page.waitForTimeout(500)
+        let searchResults = await this.page.locator(".global-search__results__group").first()
+        await searchResults.waitFor({state:'visible'})
+        let instrument = await searchResults.locator(`//mark[contains(text(), '${searchFor}')]`).first()
+        await instrument.click()
+        await this.page.waitForTimeout(500)
+    }
+
+    async getTradingViewResponse(){
+        const [response] = await Promise.all([
+        ])
+    }
+
     async searchMobileUser(userName: string){
         await this.page.locator("//button[contains(@class, 'header-mobile__open-menu')]").click()
         await this.page.locator('#global_search_input').pressSequentially(userName)

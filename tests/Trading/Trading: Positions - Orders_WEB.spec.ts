@@ -117,8 +117,8 @@ test.describe('Trading - Pending orders', async()=>{
   })}
   
   const tradingParameters: tradingTypes[] = [
-    {brand: '@Capital', user:'testTrading2', investDirection:'Sell', mobileDirection:'SELL', currency:'$', ratePosition:'Short'},
-    {brand: '@Markets', user:'testTrading2Markets', investDirection:"Sell", mobileDirection:'SELL', currency:'$', ratePosition:'Short'}
+    {brand: '@Capital', user:'testTrading2', investDirection:'SELL', mobileDirection:'SELL', currency:'$', ratePosition:'Short'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:"SELL", mobileDirection:'SELL', currency:'$', ratePosition:'Short'}
   ]
   for(const{ brand, user, investDirection}of tradingParameters){
     test(`Open short position of real stock ${brand}`,

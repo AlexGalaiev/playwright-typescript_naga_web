@@ -24,7 +24,7 @@ test.describe('WEB. ', async()=>{
             await app.signIn.goto(AppNAGA, "login");
             await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || "");
         })
-        await test.step(`Open My-trades and switch to Close tra`, async()=>{
+        await test.step(`Open My-trades and switch to Close trades`, async()=>{
             await app.mainPage.openBackMenuPoint('my-trades')
             await app.myTrades.openCloseTradesTab()
         })

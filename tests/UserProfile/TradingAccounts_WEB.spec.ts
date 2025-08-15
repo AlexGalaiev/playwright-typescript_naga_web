@@ -127,18 +127,17 @@ test.describe("New Trading account", async()=>{
 
 test.describe('Actions with second account', async()=>{
     type tradingAcTypes = {
-        testRailId: string,
         brand: string,
         user: string,
     }
     const testTrAccountsParams: tradingAcTypes[] = [
-        {testRailId: '@23930', brand: '@Capital', user: 'leadUserCapital@naga.com'},
-        {testRailId: '@23602', brand: '@Markets', user: 'leadUserMarkets@naga.com'},
-        {testRailId: '@23602', brand: '@Mena', user: 'leadUserMena@naga.com'},
-        {testRailId: '@23602', brand: '@Africa', user: 'leadUserAfrica@naga.com'},
+        {brand: '@Capital', user: 'leadUserCapital@naga.com'},
+        {brand: '@Markets', user: 'leadUserMarkets@naga.com'},
+        {brand: '@Mena', user: 'leadUserMena@naga.com'},
+        {brand: '@Africa', user: 'leadUserAfrica@naga.com'},
     ]
-    for(const{testRailId, brand, user} of testTrAccountsParams){
-        test(`${testRailId} ${brand} Edit trading account information `, 
+    for(const{brand, user} of testTrAccountsParams){
+        test(`${brand} Edit trading account information `, 
             {tag:['@secondAccount', '@web']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 90000)
         await test.step(`Login to platform by ${user} to ${brand}`, async()=>{
@@ -160,14 +159,14 @@ test.describe('Actions with second account', async()=>{
 }
 
 const testAccountSwitchingParams: tradingAcTypes[] = [
-    {testRailId: '@25130', brand: '@Capital', user: 'userWithAccounts@i.ua'},
-    {testRailId: '@25187', brand: '@Markets', user: 'userWithAccounts2@i.ua'},
-    {testRailId: '@25187', brand: '@Mena', user: 'userWithAccounts3@i.ua'},
-    {testRailId: '@25187', brand: '@Africa', user: 'userWithAccounts4@i.ua'}
+    {brand: '@Capital', user: 'userWithAccounts@i.ua'},
+    {brand: '@Markets', user: 'userWithAccounts2@i.ua'},
+    {brand: '@Mena', user: 'userWithAccounts3@i.ua'},
+    {brand: '@Africa', user: 'userWithAccounts4@i.ua'}
 ]
-for(const{testRailId, brand, user} of testAccountSwitchingParams){
-    test(`${testRailId} ${brand} Switching between trading accounts`, 
-        {tag:['@secondAccount', '@web']}, async({app, AppNAGA}, testInfo)=>{
+for(const{brand, user} of testAccountSwitchingParams){
+    test(`${brand} Switching between trading accounts`, 
+        {tag:['@secondAccount', '@web', '@smoke']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000)
         await test.step(`Login to platform by ${user} user`, async()=>{
             await app.signIn.goto(AppNAGA,'login');
@@ -178,6 +177,12 @@ for(const{testRailId, brand, user} of testAccountSwitchingParams){
             await app.myAccounts.openMyAccountMenuItem('Trading Accounts')
             await app.addAccount.switchToAccount('secondAccount')
             expect(await app.mainPage.getloginnedUserAccount()).toEqual('secondAccount')
+        })
+        await test.step("Switch to DEMO", async()=>{
+            await app.myAccounts.openUserMenu()
+            await app.myAccounts.openMyAccountMenuItem('Trading Accounts')
+            await app.addAccount.switchToAccount('DEMO')
+            expect(await app.mainPage.getloginnedUserAccount()).toEqual('DEMO')
         })
         await test.step("Switch back to main account", async()=>{
             await app.myAccounts.openUserMenu()

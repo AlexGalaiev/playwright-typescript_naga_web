@@ -40,7 +40,7 @@ test.describe('Autocopy', async()=>{
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await appUAE.mainPage.openBackMenuPoint('trade')
-            await appUAE.instruments.openPositionOfInstrument(tradingInstrument, 'Sell')
+            await appUAE.instruments.openPositionOfInstrument(tradingInstrument, 'SELL')
             await appUAE.newPosition.installLotsManually('0.01', 'Lotsize')
             await appUAE.newPosition.submitPosition()
         })
@@ -102,7 +102,7 @@ test.describe('Autocopy', async()=>{
         })
         await test.step(`Open My trades and open 1 position for ${tradingInstrument}`, async()=>{
             await appUAE.mainPage.openBackMenuPoint('trade')
-            await appUAE.instruments.openPositionOfInstrument(tradingInstrument, 'Sell')
+            await appUAE.instruments.openPositionOfInstrument(tradingInstrument, 'SELL')
             await appUAE.newPosition.installLotsSize(90, 2)
             await appUAE.newPosition.submitPosition()
         })
