@@ -102,9 +102,9 @@ export class AllInstruments{
         //await this.searchInstrumentField.pressSequentially(instrumentName)
         await this.page.waitForTimeout(500);
         let instrumentContainer = await this.page.locator(".symbol-row", 
-            {has: await this.page.locator(`//div[@class = 'symbol-name-container']//div[text()='${instrumentName}']`)})
+            {has: await this.page.locator(`//div[@class = 'symbol-name-container']//div[contains(text(), '${instrumentName}')]`)})
         let instrument = await instrumentContainer.first();
-        let position = await instrument.locator(`//button//span[text()='${positionType}']`)
+        let position = await instrument.locator(`//div[@data-type='${positionType}']`)
         await this.page.waitForTimeout(1000)
         await position.first().click();
     }

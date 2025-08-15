@@ -19,14 +19,14 @@ let deposit;
 let units;
 
 const tradingParametersPositionsSL: tradingTypesWithProtection[] = [
-  {brand: '@Capital', user:'testTrading2', investDirection:'Sell', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL', ratePosition:'Short', currency:'$'},
-  {brand: '@Capital', user:'testTrading2', investDirection:"Buy", protection: 'Take Profit',tradeField: 'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
-  {brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'$'},
-  {brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
-  {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long', currency:'€'},
-  {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl',mobileDirection:'SELL', ratePosition:'Short',currency:'€'},
-  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long', currency:'$'},
-  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl',mobileDirection:'SELL', ratePosition:'Short', currency:'$'},
+  {brand: '@Capital', user:'testTrading2', investDirection:'SELL', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL', ratePosition:'Short', currency:'$'},
+  {brand: '@Capital', user:'testTrading2', investDirection:"BUY", protection: 'Take Profit',tradeField: 'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
+  {brand: '@Markets', user:'testTrading2Markets', investDirection:'SELL', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'$'},
+  {brand: '@Markets', user:'testTrading2Markets', investDirection:'BUY', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
+  {brand: '@Mena', user:'testTrading@naga.com', investDirection:'BUY', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long', currency:'€'},
+  {brand: '@Mena', user:'testTrading@naga.com', investDirection:'SELL', protection: 'Stop Loss', tradeField:'sl',mobileDirection:'SELL', ratePosition:'Short',currency:'€'},
+  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'BUY', protection: 'Take Profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long', currency:'$'},
+  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'SELL', protection: 'Stop Loss', tradeField:'sl',mobileDirection:'SELL', ratePosition:'Short', currency:'$'},
 ]
 
 for(const{brand, user, investDirection, protection,tradeField,currency} of tradingParametersPositionsSL){
@@ -63,14 +63,14 @@ for(const{brand, user, investDirection, protection,tradeField,currency} of tradi
   })}
 
   const tradingParametersOrders: tradingTypesWithProtection[] = [
-    {brand: '@Capital', user:'testTrading2', investDirection:'Sell', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'$'},
-    {brand: '@Capital', user:'testTrading2', investDirection:"Buy", protection: 'Take profit',tradeField: 'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
-    {brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'$'},
-    {brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
-    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'€'},
-    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'€'},
-    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
-    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'$'}
+    {brand: '@Capital', user:'testTrading2', investDirection:'SELL', protection: 'Stop Loss',tradeField: 'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'$'},
+    {brand: '@Capital', user:'testTrading2', investDirection:"BUY", protection: 'Take profit',tradeField: 'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:'SELL', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'$'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:'BUY', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
+    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'BUY', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'€'},
+    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'SELL', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'€'},
+    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'BUY', protection: 'Take profit', tradeField:'tp', mobileDirection:'BUY', ratePosition:'Long',currency:'$'},
+    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'SELL', protection: 'Stop Loss', tradeField:'sl', mobileDirection:'SELL', ratePosition:'Short',currency:'$'}
   ]
   for(const{brand, user, investDirection, protection, tradeField,ratePosition, currency}of tradingParametersOrders){
     test(`${brand} Open/Close pending ${investDirection} position + ${protection}`, 
@@ -124,10 +124,10 @@ type changeLimittypes = {
 }
 
 const tradingParametersSLTP: changeLimittypes[] = [
-  {brand: '@Capital', user:'testTrading2', investDirection:'Sell', protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'},
-  {brand: '@Markets', user:'testTrading2Markets', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'},
-  {brand: '@Mena', user:'testTrading@naga.com', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'€', mobileDirection:'SELL'},
-  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:"Sell", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'}
+  {brand: '@Capital', user:'testTrading2', investDirection:'SELL', protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'},
+  {brand: '@Markets', user:'testTrading2Markets', investDirection:"SELL", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'},
+  {brand: '@Mena', user:'testTrading@naga.com', investDirection:"SELL", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'€', mobileDirection:'SELL'},
+  {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:"SELL", protectionSL: 'Stop Loss', protectionTP: 'Take Profit', tradeFieldSL: 'sl', tradeFieldsTP: 'tp', currency:'$', mobileDirection:'SELL'}
 ]
 for(const{brand, user, investDirection, protectionSL, protectionTP, tradeFieldSL, tradeFieldsTP, currency} of tradingParametersSLTP){
   test(`${brand} Edit position popup with ${protectionSL}/${protectionTP}`, 

@@ -31,7 +31,7 @@ test.describe('WEB', async()=>{
         })
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
-            await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
+            await app.instruments.openPositionOfInstrument(tradingInstrument, 'BUY')
             await app.newPosition.installLotsManually('0.01','Lotsize')
             //await app.newPosition.installLotsSize(90, 2)
             await app.newPosition.submitPosition()
@@ -68,7 +68,7 @@ test.describe('WEB', async()=>{
         })
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
-            await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
+            await app.instruments.openPositionOfInstrument(tradingInstrument, 'BUY')
             await app.newPosition.installLotsManually('0.01', 'Lotsize')
             await app.newPosition.submitPosition()
         })
@@ -115,7 +115,7 @@ test.describe('WEB', async()=>{
         })
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
-            await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
+            await app.instruments.openPositionOfInstrument(tradingInstrument, 'BUY')
             await app.newPosition.installLotsManually('0.01', 'Lotsize')            
             await app.newPosition.submitPosition()
         })
@@ -152,7 +152,7 @@ test.describe('WEB', async()=>{
         })
         await test.step(`Open new ${tradingInstrument} position`, async()=>{
             await app.mainPage.openBackMenuPoint("trade");
-            await app.instruments.openPositionOfInstrument(tradingInstrument, 'Buy')
+            await app.instruments.openPositionOfInstrument(tradingInstrument, 'BUY')
             await app.newPosition.installLotsManually('0.01', 'Lotsize')            
             await app.newPosition.submitPosition()
         })

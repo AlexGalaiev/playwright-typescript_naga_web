@@ -20,14 +20,14 @@ let rate;
 test.describe("Trading - Positions/Orders.", async () => {
 
   const tradingParamsPositions: tradingTypes[] = [
-    {brand: '@Capital', user:'testTrading2', investDirection:'Sell',currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
-    {brand: '@Capital', user:'testTrading2', investDirection:"Buy", currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
-    {brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', currency:'$',mobileDirection:'SELL', ratePosition:'Short'},
-    {brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy', currency:'$',mobileDirection:'BUY', ratePosition:'Long'},
-    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell',currency:'€', mobileDirection: 'SELL', ratePosition:'Short'},
-    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy',currency:'€', mobileDirection: 'BUY', ratePosition:'Long'},
-    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell',currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
-    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy',currency:'$', mobileDirection:'BUY', ratePosition:'Long'}
+    {brand: '@Capital', user:'testTrading2', investDirection:'SELL',currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Capital', user:'testTrading2', investDirection:"BUY", currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:'SELL', currency:'$',mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:'BUY', currency:'$',mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'SELL',currency:'€', mobileDirection: 'SELL', ratePosition:'Short'},
+    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'BUY',currency:'€', mobileDirection: 'BUY', ratePosition:'Long'},
+    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'SELL',currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'BUY',currency:'$', mobileDirection:'BUY', ratePosition:'Long'}
   ]
   for(const{brand, user,investDirection, currency, mobileDirection, ratePosition}of tradingParamsPositions){
     test(`${brand} Open/Close ${investDirection} trading position`,
@@ -70,14 +70,14 @@ test.describe("Trading - Positions/Orders.", async () => {
 test.describe('Trading - Pending orders', async()=>{
   
   const tradingParamsOrders: tradingTypes[] = [
-    {brand: '@Capital', user:'testTrading2', investDirection:'Sell', currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
-    {brand: '@Capital', user:'testTrading2', investDirection:"Buy", currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
-    {brand: '@Markets', user:'testTrading2Markets', investDirection:'Sell', currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
-    {brand: '@Markets', user:'testTrading2Markets', investDirection:'Buy',currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
-    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Buy',currency:'€', mobileDirection:'BUY', ratePosition:'Long'},
-    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'Sell',currency:'€', mobileDirection:'SELL', ratePosition:'Short'},
-    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Buy',currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
-    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'Sell',currency:'$', mobileDirection:'SELL', ratePosition:'Short'}
+    {brand: '@Capital', user:'testTrading2', investDirection:'SELL', currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Capital', user:'testTrading2', investDirection:"BUY", currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:'SELL', currency:'$', mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Markets', user:'testTrading2Markets', investDirection:'BUY',currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'BUY',currency:'€', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Mena', user:'testTrading@naga.com', investDirection:'SELL',currency:'€', mobileDirection:'SELL', ratePosition:'Short'},
+    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'BUY',currency:'$', mobileDirection:'BUY', ratePosition:'Long'},
+    {brand: '@Africa', user:'testTradingAfrica2@naga.com', investDirection:'SELL',currency:'$', mobileDirection:'SELL', ratePosition:'Short'}
   ]
   for(const{brand, user,investDirection, ratePosition}of tradingParamsOrders){
     test(`${brand} Open/Close pending ${investDirection} order`,
