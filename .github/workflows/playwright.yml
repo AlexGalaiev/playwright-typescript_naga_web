@@ -157,7 +157,7 @@ jobs:
                 "05 0 * * 0-6") echo "TAGS=@secondAccount" >> $GITHUB_ENV ;;
                 "25 1 * * 0-6") echo "TAGS=@settings" >> $GITHUB_ENV ;;
                 "25 2 * * 0-6") echo "TAGS=@verification" >> $GITHUB_ENV ;;
-                "0 * * * *" echo "TAGS=@smoke" >> $GITHUB_ENV ;;
+                "0 * * * *") echo "TAGS=@smoke" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
