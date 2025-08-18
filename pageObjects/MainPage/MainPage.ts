@@ -267,7 +267,8 @@ export class MainPage{
     }
     async getBalanceValue(nameOfBalenceCategory: string){
         let balance = await this.page.locator(`//p[text()='${nameOfBalenceCategory}']/following-sibling::p`).textContent()
-        return balance?.replace(/[^\d.,-]/g, '')
+        let result = await balance?.replace(/[^\d.-]/g, '')
+        return result
     }
     async openMobileBalance(){
         await this.page.locator("//button[contains(@class, 'account-data-bar__tools__toggle')]").click()
