@@ -15,8 +15,9 @@ test.describe('LeaderBord page', async()=>{
     ]
 
     for(const{brand, user} of LeaderbordParams){
-        test.fixme(`${brand} FIlters of trading leaders. Check visibility of exist users`, 
-            {tag:['@UI', '@web','@smoke'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, async({app, AppNAGA})=>{
+        test(`${brand} FIlters of trading leaders. Check visibility of exist users`, 
+            {tag:['@UI', '@web','@smoke'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, async({app, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 30000)
         await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
             await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -41,9 +42,10 @@ test.describe('LeaderBord page', async()=>{
     }
 
     for(const{brand, user} of LeaderbordParams){
-        test.fixme(`${brand} Top traders main page`, 
+        test(`${brand} Top traders main page`, 
             {tag:['@UI', '@web','@smoke'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, 
-            async({app, AppNAGA})=>{
+            async({app, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 30000)
         await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
             await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -57,6 +59,37 @@ test.describe('LeaderBord page', async()=>{
             expect(await app.leaderboard.topTradersBlockIsVisible('Trending Leaders')).toBeTruthy()
             expect(await app.leaderboard.topTradersBlockIsVisible('Most Popular Leaders')).toBeTruthy()
         })
+    })}
+
+    for(const{brand, user} of LeaderbordParams){
+        test(`${brand} Check top traders on main page. Switch to trader profile`, 
+            {tag:['@UI', '@web', '@smoke']}, async({app, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout + 40000)
+        await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
+            await app.signIn.goto(AppNAGA, 'login')
+            await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
+        })
+        await test.step('Check Gold trader. Check redirection from mainpage to user cabinet', async()=>{
+            await app.mainPage.openBackMenuCategory('Top Traders')
+            let name = await app.leaderboard.getTraderNameWithStatus('gold')
+            let userProfileName = await app.userProfile.getUserNameText()
+            expect(name).toEqual(userProfileName)
+            await app.mainPage.goBack()
+        })
+        await test.step('Check Silver trader. Check redirection from mainpage to user cabinet', async()=>{
+            let name = await app.leaderboard.getTraderNameWithStatus('silver')
+            let userProfileName = await app.userProfile.getUserNameText()
+            expect(name).toEqual(userProfileName)
+            await app.mainPage.goBack()
+        })
+        await test.step('Check Bronze trader. Check redirection from mainpage to user cabinet', async()=>{
+            let name = await app.leaderboard.getTraderNameWithStatus('bronze')
+            let userProfileName = await app.userProfile.getUserNameText()
+            expect(name).toEqual(userProfileName)
+            await app.mainPage.goBack()
+        })
     })
-}})
+    }
+
+})
 

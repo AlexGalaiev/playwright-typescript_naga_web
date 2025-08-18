@@ -345,4 +345,8 @@ export class MainPage{
         ])
         return await response
     }
+    async goBack(){
+        await this.page.goBack()
+        await this.page.waitForTimeout(1500)
+    }
 }   

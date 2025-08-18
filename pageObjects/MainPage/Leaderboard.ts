@@ -61,4 +61,12 @@ export class Leaderboard{
         await this.page.waitForTimeout(300)
         return await users.isVisible()
     }
+    async getTraderNameWithStatus(status: string){
+        let trader = await this.page.locator(`//div[contains(@class, 'top-trader-item__${status}')]`)
+        await trader.waitFor({state:'visible'})
+        let user = await trader.locator("//a[contains(@class, 'name-frame__name')]")
+        let userName = await user.textContent()
+        await user.click()
+        return await userName
+    }
 }
