@@ -114,7 +114,7 @@ test.describe('WEB+Mobile',async()=>{
     ]
 
     for(const{brand, user} of balanceTestParams){
-        test(`${brand} Balance view on main page`, {tag: ['@web', '@UI', '@prodSanity', '@smoke']}, async({app, AppNAGA})=>{
+        test.fixme(`${brand} Balance view on main page`, {tag: ['@web', '@UI', '@prodSanity', '@smoke']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')

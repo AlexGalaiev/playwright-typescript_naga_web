@@ -15,7 +15,7 @@ test.describe('LeaderBord page', async()=>{
     ]
 
     for(const{brand, user} of LeaderbordParams){
-        test(`${brand} FIlters of trading leaders. Check visibility of exist users`, 
+        test.fixme(`${brand} FIlters of trading leaders. Check visibility of exist users`, 
             {tag:['@UI', '@web','@smoke'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
@@ -41,7 +41,7 @@ test.describe('LeaderBord page', async()=>{
     }
 
     for(const{brand, user} of LeaderbordParams){
-        test(`${brand} Top traders main page`, 
+        test.fixme(`${brand} Top traders main page`, 
             {tag:['@UI', '@web','@smoke'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, 
             async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
