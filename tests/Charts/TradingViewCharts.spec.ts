@@ -1,6 +1,7 @@
-import {test} from "..//..//test-options"
+import { expect } from "@playwright/test"
+import {test} from "../../test-options"
 
-test.describe('WEB', async()=>{
+test.describe('Trading view charts', async()=>{
 
     type chartsTypes= {
         brand: string,
@@ -13,7 +14,7 @@ test.describe('WEB', async()=>{
         {brand:'@Africa', user:'leadAfrica@naga.com'},
     ]
     for(const {brand, user} of tradingViewCharts){
-        test.skip(`${brand} Trading view charts visibility`, 
+        test(`${brand} Chart visibility. Check response from tradiung view service`, 
             {tag:['@web', '@smoke', '@trading']}, async({app, AppNAGA})=>{
         let tradingInstrument = 'SOLUSD'
         await test.step(`Login to platform by user ${user}`, async()=>{
@@ -21,8 +22,9 @@ test.describe('WEB', async()=>{
             await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
         })
         await test.step(`Search and open ${tradingInstrument} instrument. Get trading view response`, async()=>{
-            await app.mainPage.globalSearch(tradingInstrument)
-
+            const [config, symbols] = await app.mainPage.getTradingViewResponse(tradingInstrument)
+            expect(await app.mainPage.getServiceStatusCode(config)).toEqual(200)
+            expect(await app.mainPage.getInstrumentFullName(symbols)).toEqual(tradingInstrument)
         })
         })
     }

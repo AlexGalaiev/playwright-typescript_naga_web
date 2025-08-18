@@ -11,7 +11,7 @@ type tradingTypes = {
   ratePosition: string
 }
 const tradingInstrument = "SOLUSD";
-const realStockInstrument = 'Agilent Technologies'
+const realStockInstrument = 'ABNB.re'
 const realStockInstrumentShort = 'A.N'
 let investmentValue;
 let units;

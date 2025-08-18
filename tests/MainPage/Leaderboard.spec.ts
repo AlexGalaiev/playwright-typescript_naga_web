@@ -1,7 +1,7 @@
 import { expect } from "playwright/test"
 import { test } from "..//..//test-options"
 
-test.describe('WEB', async()=>{
+test.describe('LeaderBord page', async()=>{
     type leaderBoard = {
         brand: string,
         user: string
@@ -16,7 +16,7 @@ test.describe('WEB', async()=>{
 
     for(const{brand, user} of LeaderbordParams){
         test(`${brand} FIlters of trading leaders. Check visibility of exist users`, 
-            {tag:['@UI', '@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, async({app, AppNAGA})=>{
+            {tag:['@UI', '@web','@smoke'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
             await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -42,7 +42,7 @@ test.describe('WEB', async()=>{
 
     for(const{brand, user} of LeaderbordParams){
         test(`${brand} Top traders main page`, 
-            {tag:['@UI', '@web'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, 
+            {tag:['@UI', '@web','@smoke'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, 
             async({app, AppNAGA})=>{
         await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')

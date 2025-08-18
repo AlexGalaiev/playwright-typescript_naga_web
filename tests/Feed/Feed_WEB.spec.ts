@@ -4,18 +4,17 @@ import {test} from "../../test-options"
 test.describe("Feed", async()=>{
     
 type testFeedtypes = {
-    testRailId: string,
     brand: string,
     user: string
 }
 const testFeedParams: testFeedtypes[] = [
-   {testRailId: '@25122', brand: '@Capital', user: 'testFeedUser'},
-   {testRailId: '@25143', brand: '@Markets', user: 'testFeedUserMarkets'},
-   {testRailId: '@25382', brand: '@Mena', user: 'xz932923'}, //testFeedUser@naga.com
-   {testRailId: '@25403', brand: '@Africa', user: 'testAfricaFeed'} //'testAfricaFeed@naga.com'
+   {brand: '@Capital', user: 'testFeedUser'},
+   {brand: '@Markets', user: 'testFeedUserMarkets'},
+   {brand: '@Mena', user: 'xz932923'}, //testFeedUser@naga.com
+   {brand: '@Africa', user: 'testAfricaFeed'} //'testAfricaFeed@naga.com'
 ]
-for(const{testRailId, brand, user}of testFeedParams){
-    test(`${testRailId} Main actions for post: create, edit, delete ${brand}`,
+for(const{brand, user}of testFeedParams){
+    test(`${brand} Main actions for post: create, edit, delete`,
         {tag:['@feed', '@prodSanity','@web', '@smoke']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         await test.step(`Login by ${user}. ${brand} brand`, async()=>{
@@ -41,13 +40,13 @@ for(const{testRailId, brand, user}of testFeedParams){
     })} 
 
 const testFeedParamsActions: testFeedtypes[] = [
-    {testRailId: '@25123', brand: '@Capital', user: 'testFeedUser'},
-    {testRailId: '@25144', brand: '@Markets', user: 'testFeedUserMarkets'}, 
-    {testRailId: '@25383', brand: '@Mena', user: 'xz932923'}, //testFeedUser@naga.com
-    {testRailId: '@25404', brand: '@Africa', user: 'testAfricaFeed'} //testFeedUser@naga.com
+    {brand: '@Capital', user: 'testFeedUser'},
+    {brand: '@Markets', user: 'testFeedUserMarkets'}, 
+    {brand: '@Mena', user: 'xz932923'}, //testFeedUser@naga.com
+    {brand: '@Africa', user: 'testAfricaFeed'} //testFeedUser@naga.com
 ]
-for(const{testRailId, brand, user}of testFeedParamsActions){
-    test(`${testRailId} ${brand} Main actions for post: Action - Like`,
+for(const{ brand, user}of testFeedParamsActions){
+    test(`${brand} Main actions for post: Action - Like`,
         {tag:['@feed','@web']}, async({app, AppNAGA}, testInfo)=>{
     testInfo.setTimeout(testInfo.timeout + 50000);
     await test.step(`login by user ${user} to ${brand} platform`, async()=>{
@@ -77,13 +76,13 @@ for(const{testRailId, brand, user}of testFeedParamsActions){
 }
 
 const testFeedCommentParams: testFeedtypes[] = [
-    {testRailId: '@25124', brand: '@Capital', user: 'testFeedUser'},
-    {testRailId: '@25145', brand: '@Markets', user: 'testFeedUserMarkets'},
-    {testRailId: '@25384', brand: '@Mena', user: 'xz932923'},
-    {testRailId: '@25405', brand: '@Africa', user: 'testAfricaFeed'}
+    {brand: '@Capital', user: 'testFeedUser'},
+    {brand: '@Markets', user: 'testFeedUserMarkets'},
+    {brand: '@Mena', user: 'xz932923'},
+    {brand: '@Africa', user: 'testAfricaFeed'}
 ]
-for(const{testRailId, brand, user}of testFeedCommentParams){
-    test(`${testRailId} ${brand} Main actions for post: Comment a post ${brand}`, 
+for(const{brand, user}of testFeedCommentParams){
+    test(`${brand} Main actions for post: Comment a post ${brand}`, 
         {tag:['@feed','@web']},async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 50000);
         await test.step(`login by user ${user} to ${brand} platform`, async()=>{
@@ -116,13 +115,13 @@ for(const{testRailId, brand, user}of testFeedCommentParams){
 }
     
 const testShareCommentParams: testFeedtypes[] = [
-    {testRailId: '@25129', brand: '@Capital', user: 'testFeedUser'},
-    {testRailId: '@25146', brand: '@Markets', user: 'testFeedUserMarkets'},
-    {testRailId: '@25385', brand: '@Mena', user: 'xz932923'},
-    {testRailId: '@25406', brand: '@Africa', user: 'testAfricaFeed'}
+    {brand: '@Capital', user: 'testFeedUser'},
+    {brand: '@Markets', user: 'testFeedUserMarkets'},
+    {brand: '@Mena', user: 'xz932923'},
+    {brand: '@Africa', user: 'testAfricaFeed'}
 ]
-for(const{testRailId, brand, user}of testShareCommentParams){
-    test(`${testRailId} ${brand} Main action for post: Share a post ${brand}`, 
+for(const{brand, user}of testShareCommentParams){
+    test(`${brand} Main action for post: Share a post ${brand}`, 
         {tag:['@feed','@web']},async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000)
         await test.step(`login by user ${user} to ${brand} platform`, async()=>{
@@ -151,13 +150,13 @@ for(const{testRailId, brand, user}of testShareCommentParams){
 }
 
 const testParamsUserCabinet: testFeedtypes[] = [
-    {testRailId: '@25132', brand: '@Capital', user: 'testFeedUser'},
-    {testRailId: '@25147', brand: '@Markets', user: 'testFeedUserMarkets'},
-    {testRailId: '@25386', brand: '@Mena', user: 'xz932923'},
-    {testRailId: '@25407', brand: '@Africa', user: 'testAfricaFeed'}
+    {brand: '@Capital', user: 'testFeedUser'},
+    {brand: '@Markets', user: 'testFeedUserMarkets'},
+    {brand: '@Mena', user: 'xz932923'},
+    {brand: '@Africa', user: 'testAfricaFeed'}
 ]
-for(const{testRailId, brand, user}of testParamsUserCabinet){
-    test(`${testRailId} ${brand} Check post in user profile ${brand}`, 
+for(const{brand, user}of testParamsUserCabinet){
+    test(`${brand} Check post in user profile ${brand}`, 
         {tag:['@feed', '@web']}, async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000)
         let textForPost = 'Hello World'
@@ -181,19 +180,18 @@ for(const{testRailId, brand, user}of testParamsUserCabinet){
 }
 
 type testFeedNotVeried = {
-    testRailId: string,
     brand: string,
     user: string,
     localization: string
 }
 const testNotVerifieduser: testFeedNotVeried[] = [
-    {testRailId: '@25131', brand: '@Capital', user: 'notVerifiedUser', localization: '/pageObjects/localization/NagaCapital_Feed.json'},
-    {testRailId: '@25148', brand: '@Markets', user: 'testNotVerifiesUser', localization: '/pageObjects/localization/NagaMarkets_Feed.json'},
-    {testRailId: '@25387', brand: '@Mena', user: 'notVerifiedFeed', localization: '/pageObjects/localization/NagaMarkets_Feed.json'},
-    {testRailId: '@25408', brand: '@Africa', user: 'testAfricaNotVer', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
+    {brand: '@Capital', user: 'notVerifiedUser', localization: '/pageObjects/localization/NagaCapital_Feed.json'},
+    {brand: '@Markets', user: 'testNotVerifiesUser', localization: '/pageObjects/localization/NagaMarkets_Feed.json'},
+    {brand: '@Mena', user: 'notVerifiedFeed', localization: '/pageObjects/localization/NagaMarkets_Feed.json'},
+    {brand: '@Africa', user: 'testAfricaNotVer', localization: '/pageObjects/localization/NagaMarkets_Feed.json'}
 ]
-for(const{testRailId, brand, user, localization}of testNotVerifieduser){
-    test(`${testRailId} Not verified user tries to create new post${brand}`, 
+for(const{brand, user}of testNotVerifieduser){
+    test(`${brand} Not verified user tries to create new post`, 
         {tag:['@feed','@web']},async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000)
         await test.step(`Login to ${brand} platform with not verified ${user} user`, async()=>{

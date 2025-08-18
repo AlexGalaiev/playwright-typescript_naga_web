@@ -116,19 +116,18 @@ test.describe("WEB", async()=>{
 test.describe('Guest mode', async()=>{
 
     type testTypesGuestMode = {
-        testRailId: string,
         brand: string, 
         localization: string
     }
     
     const testParamsGuestMode: testTypesGuestMode[] = [
-        {testRailId: '@24929', brand: '@Capital', localization: '/pageObjects/localization/SighInPage.json'},
-        {testRailId: '@24936', brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
-        {testRailId: '@25434', brand: '@Mena', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
-        {testRailId: '@25435', brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+        { brand: '@Capital', localization: '/pageObjects/localization/SighInPage.json'},
+        { brand: '@Markets', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+        { brand: '@Mena', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
+        { brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
     ] 
-    for(const{testRailId, brand, localization} of testParamsGuestMode){
-        test(`${testRailId} Open ${brand} platform in Guest mode`, {tag:['@UI','@mobile','@web']}, async({app,AppNAGA}, testInfo)=>{
+    for(const{ brand, localization} of testParamsGuestMode){
+        test(`Open ${brand} platform in Guest mode`, {tag:['@UI','@mobile','@web', '@smoke']}, async({app,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 50000);
             let localizationPage = new getLocalization(localization);
             await test.step("Redirect from platform (in Guest mode) to sigh in page", async()=>{
@@ -156,7 +155,7 @@ test.describe('Login/LogOut',async()=>{
         { brand: '@Africa', email: "testLeadAfrica"}
     ]
     for(const { brand, email } of testParams){
-        test(`Login/logout to platform ${brand} by ${email}`, 
+        test(`${brand} Login/logout to platform by ${email}`, 
             {tag:['@login', '@prodSanity','@smoke','@web']}, async({app,AppNAGA})=>{
             await test.step(`Login to ${brand} plarform by ${email} user`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')

@@ -162,9 +162,13 @@ export class MainPage{
         await this.page.waitForTimeout(500)
     }
 
-    async getTradingViewResponse(){
-        const [response] = await Promise.all([
+    async getTradingViewResponse(nameOfInstrument: string){
+        const [config, symbols] = await Promise.all([
+            this.page.waitForResponse('https://api-v2.naga.com/trading_view/config'),
+            this.page.waitForResponse('https://api-v2.naga.com/trading_view/symbols?**'),
+            this.globalSearch(nameOfInstrument)
         ])
+        return await [config, symbols]
     }
 
     async searchMobileUser(userName: string){
@@ -300,6 +304,10 @@ export class MainPage{
     async getServiceStatusCode(response: any){
         let responseBody = await response.json()
         return responseBody.info.code
+    }
+    async getInstrumentFullName(response: any){
+        let responseBody = await response.json()
+        return responseBody.data.full_name
     }
     async checkTradingSymbolsIsVisible(){
         return await this.page.locator(".trading-central-signals").isVisible()
