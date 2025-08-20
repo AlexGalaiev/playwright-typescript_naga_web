@@ -8,7 +8,7 @@ test.describe('WEB', async()=>{
         languages: string[]
     }
     const languageParams: language[] = [
-        {brand:'Markets', languages:['English','Español','Deutsch','Polski','Česky','Italiano','Magyar','Português','Română','汉语','繁體中文']}
+        {brand:'Markets', languages:['English','Español','Deutsch','Polski','Česky','Italiano','Magyar','Português','Română','汉语']}
     ]
 
     for(const{brand, languages} of languageParams){

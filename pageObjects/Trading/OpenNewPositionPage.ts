@@ -1,4 +1,5 @@
 import { Locator, Page } from "playwright";
+import { Deposit } from "../ManageFunds/Deposit";
 
 export class NewPosition{
     page: Page;
@@ -130,5 +131,38 @@ export class NewPosition{
     async getBalloonText(){
         let baloon = await this.page.locator('.naga-toast')
         return await baloon.textContent()
+    }
+    async switchToTabAndGerResponse(tabName:string, depositUrl: string){
+        const [response] = await Promise.all([
+            this.page.waitForResponse(depositUrl, {timeout:15000}),
+            this.page.locator(`//label[text()='${tabName}']`).click()
+        ])
+        let body = await response.status()
+        return await body
+    }
+
+    async switchToTab(tabName:string){
+        await this.page.waitForTimeout(500)
+        await this.page.locator(`//label[text()='${tabName}']`).click()
+    }
+
+    async checkChartIsVisible(){
+        await this.page.waitForTimeout(1500)
+        return await this.page.locator('#tv_chart_container').first().isVisible()
+    }
+    async checkFeedFormIsVisible(){
+        await this.page.waitForTimeout(1500)
+        return await this.page.locator('.feed-status-post').isVisible()
+    }
+    async checkSymolsItemsIsVisbile(){
+        await this.page.waitForTimeout(1500)
+        return await this.page.locator('.symbol-sentiment__items').isVisible()
+    }
+    async moveBackToTrades(){
+        await this.page.locator("//a[@href='/markets']").nth(1).click()
+    }
+    async checkSmartScoreIsVisible(){
+        await this.page.waitForTimeout(500)
+        return await this.page.locator('.smart-score-container__wrapper').isVisible()
     }
 }

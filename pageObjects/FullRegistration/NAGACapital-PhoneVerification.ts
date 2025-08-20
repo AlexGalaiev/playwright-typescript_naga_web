@@ -38,7 +38,19 @@ export class PhoneVerification{
         await this.page.locator("//button[text()='Submit']").click()
         await this.page.waitForTimeout(10000)
         await this.page.waitForSelector("//button[text()='Submit']", {state:'hidden'})
-    };
+    }
+
+    async NS_insertVerificationCode(){
+        await this.insertCode(0, '1')
+        await this.insertCode(1, '1')
+        await this.insertCode(2, '1')
+        await this.insertCode(3, '1')
+        await this.page.locator("//footer[contains(@class, 'phone-verification-modal')]//button[@type='submit']").click()
+        await this.page.waitForTimeout(10000)
+        //await this.page.waitForSelector("//button[text()='Submit']", {state:'hidden'})
+    }
+
+
 
     async MN_insertVerificationCode(){
         await this.page.getByText('Send to SMS').click()

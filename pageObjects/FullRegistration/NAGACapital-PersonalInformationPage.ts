@@ -10,6 +10,7 @@ export class PersonalInformation{
     readonly userName: Locator;
     readonly countryCode: Locator;
     readonly phone: Locator;
+    readonly verificationCode: Locator;
     
     constructor(page:Page){
         this.page = page;
@@ -20,6 +21,7 @@ export class PersonalInformation{
         this.userName = page.locator('[name="user_name"]')
         this.countryCode = page.locator('[data-testid="naga-dropdown-input"]')
         this.phone = page.locator('[name="phone"]')
+        this.verificationCode = page.locator("//input[contains(@name, 'otp')]");
     }
 
     async fillPersonalInformation(submitBtnName: string){
@@ -94,5 +96,11 @@ export class PersonalInformation{
         let answerText = await question.locator(`//div[text()='${answer}']`)
         await answerText.click()
         await this.page.waitForTimeout(500)
+    }
+    async verifyYouPhoneNumber(){
+        await this.page.waitForTimeout(500)
+        await this.page.locator("//button[@type='submit']").click()
+        await this.page.waitForSelector("//p[text()='Verification Code']", {state:'visible'})
+        
     }
 }

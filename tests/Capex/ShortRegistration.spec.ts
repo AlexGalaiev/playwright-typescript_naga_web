@@ -3,6 +3,7 @@ import { RandomUser } from "../../pageObjects/common/testUserCredentials/randomU
 import {test} from "..//..//test-options"
 test.describe('Capex short registration page', async()=>{
 let leadUser = 'userLeadCapex@capex.com'
+//capexFullReg@capex.com
     test('Create lead user on Capex EU', {tag:['@web', '@Capex']}, async({app, Capex}, testInfo)=>{
         let email = new RandomUser().getRandomUserEmail()
         testInfo.setTimeout(testInfo.timeout+60000)

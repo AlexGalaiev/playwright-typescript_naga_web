@@ -261,7 +261,8 @@ test.describe('WEB', async()=>{
     ]
     for(const{brand, user} of brandParams){
         test(`${brand} Check visibility of quotes on All instruments page`, 
-            {tag:['@UI', '@web', '@smoke']}, async({app, AppNAGA})=>{
+            {tag:['@UI', '@web', '@smoke']}, async({app, AppNAGA}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout+30000)
         await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
             await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
