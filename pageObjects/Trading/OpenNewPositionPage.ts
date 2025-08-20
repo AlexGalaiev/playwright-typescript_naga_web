@@ -142,7 +142,7 @@ export class NewPosition{
     }
 
     async switchToTab(tabName:string){
-        await this.page.waitForTimeout(500)
+        await this.page.waitForTimeout(1500)
         await this.page.locator(`//label[text()='${tabName}']`).click()
     }
 
