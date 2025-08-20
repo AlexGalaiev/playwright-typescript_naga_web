@@ -127,14 +127,20 @@ test.describe('Guest mode', async()=>{
         { brand: '@Africa', localization: '/pageObjects/localization/NagaMarkets_SighInPage.json'},
     ] 
     for(const{ brand, localization} of testParamsGuestMode){
-        test(`Open ${brand} platform in Guest mode`, {tag:['@UI','@mobile','@web', '@smoke']}, async({app,AppNAGA}, testInfo)=>{
+        test(`Open ${brand} platform in Guest mode. Sign In page`, {tag:['@UI','@mobile','@web', '@smoke']}, async({app,AppNAGA}, testInfo)=>{
             testInfo.setTimeout(testInfo.timeout + 50000);
             let localizationPage = new getLocalization(localization);
             await test.step("Redirect from platform (in Guest mode) to sigh in page", async()=>{
                 await app.signUp.goto(AppNAGA,"feed");
                 await app.mainPage.openLoginFromGuestMode();
                 expect(await app.signIn.getSignInHeaderText()).toEqual(await localizationPage.getLocalizationText("SighInHeaderMainText"));
-            });
+            })
+        })}
+
+    for(const{ brand, localization} of testParamsGuestMode){
+        test(`Open ${brand} platform in Guest mode. Sign Up page`, {tag:['@UI','@mobile','@web', '@smoke']}, async({app,AppNAGA}, testInfo)=>{
+            testInfo.setTimeout(testInfo.timeout + 50000);
+            let localizationPage = new getLocalization(localization);
             await test.step("Redirect from platform(in Guest mode) to sigh Up page", async()=>{
                 await app.signUp.goto(AppNAGA, "feed");
                 await app.mainPage.openRegistrationFromGuestMode();

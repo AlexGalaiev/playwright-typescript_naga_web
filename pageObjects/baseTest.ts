@@ -47,6 +47,9 @@ import { TwoAuthenfication } from "./FullRegistration/components/NagaX_2Auth";
 import { NagaExchange } from "./NagaExchange/Exchange";
 import { CryptoMainPage } from "./Crypto/CryptoMainPage";
 import { startVerification_NagaMarkets } from "./common/NagaMarkets_startKYC_verification/startVerification";
+import { ShortRegistrationCapex } from "./Capex/ShortRegistrationCapexPage";
+import { MainPageCapex } from "./Capex/MainPageCapex";
+import { SignInCapex } from "./Capex/SignInCapex";
 
 export class BaseTest{
     page: Page
@@ -98,6 +101,9 @@ export class BaseTest{
     exchange: NagaExchange
     cryptoMainPage: CryptoMainPage
     startVerifyMarkets: startVerification_NagaMarkets
+    shortRegistrationCapex: ShortRegistrationCapex
+    mainPageCapex: MainPageCapex
+    signInCapex: SignInCapex
 
     constructor(page: Page){
         this.page = page
@@ -149,5 +155,8 @@ export class BaseTest{
         this.exchange = new NagaExchange(page)
         this.cryptoMainPage = new CryptoMainPage(page)
         this.startVerifyMarkets = new startVerification_NagaMarkets(page)
+        this.shortRegistrationCapex = new ShortRegistrationCapex(page)
+        this.mainPageCapex = new MainPageCapex(page)
+        this.signInCapex = new SignInCapex(page)
     }
 }

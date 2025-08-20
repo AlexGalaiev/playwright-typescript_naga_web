@@ -373,4 +373,15 @@ export class NagaCom{
         await this.page.pause()
         return await number.count()
     }
+    async waitForCapexPlatform(){
+        await this.page.locator("#lang_selector_header").waitFor({state:'visible'})
+    }
+    async clickSignIn_Capex(){
+        await this.page.locator("#login_btn").click()
+        await this.page.waitForTimeout(2000)
+    }
+    async clickSignUp_Capex(){
+        await this.page.locator("#register_btn").click()
+        await this.page.waitForTimeout(2000)
+    }
 }

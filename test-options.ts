@@ -23,7 +23,9 @@ export type TestOptions = {
     appUA: BaseTest;
     appIT: BaseTest;
     appSA: BaseTest;
-    appBH: BaseTest
+    appBH: BaseTest;
+    CapexWebsite: string
+    Capex: string
 }
 
 export const test = base.extend<TestOptions>({
@@ -36,6 +38,8 @@ export const test = base.extend<TestOptions>({
     NagaXCountry:['', {option: true}],
     baseUrl:['', {option: true}],
     WebsiteNagaCom:['', {option: true}],
+    CapexWebsite:['', {option: true}],
+    Capex:['', {option: true}],
     browserContext: async({}, use)=>{
         let browser = await baseChromium.launch();
         let context = await browser.newContext();

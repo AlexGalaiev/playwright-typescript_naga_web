@@ -674,3 +674,22 @@ test.describe('Website. Footer and header elements', async()=>{
         })
     })}
 })
+
+test.describe('Capex website', async()=>{
+
+    test.beforeEach('Open Capex website', async({app, CapexWebsite}, testInfo)=>{
+        await app.website.open(CapexWebsite)
+        await app.website.waitForCapexPlatform()
+    })
+
+    test('Capex. Redirect from Sign In btn to Capex platform', 
+        {tag:['@web', '@naga.com']}, async({app})=>{
+        await app.website.clickSignIn_Capex()
+        expect(await app.mainPage.getUrl()).toContain('https://account.capex.com/en/login')
+    })
+    test('Capex. Redirect from Sign Up btn to Capex registration platform', 
+        {tag:['@web', '@naga.com']}, async({app})=>{
+        await app.website.clickSignUp_Capex()
+        expect(await app.mainPage.getUrl()).toContain('https://account.capex.com/en/register')
+    })
+})

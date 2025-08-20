@@ -22,10 +22,12 @@ export class MainPage{
 
     //Naga Capital
     async openLoginFromGuestMode(){
+        await this.page.waitForTimeout(500)
         await this.GuestLogin.waitFor()
         return this.GuestLogin.click();
     };
     async openRegistrationFromGuestMode(){
+        await this.page.waitForTimeout(500)
         await this.GuestRegistration.waitFor({timeout:1500})
         return this.GuestRegistration.click();
     };

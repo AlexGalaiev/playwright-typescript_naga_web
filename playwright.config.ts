@@ -10,7 +10,7 @@ export default defineConfig<TestOptions>({
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 0 : 0,
+  retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -42,7 +42,9 @@ export default defineConfig<TestOptions>({
         NagaMenaCountry: "United Arab Emirates",
         NagaAfricaCountry: "South Africa",
         NagaXCountry: "Bosnia and Herzegovina",
-        WebsiteNagaCom: "https://naga.com"
+        WebsiteNagaCom: "https://naga.com",
+        CapexWebsite: 'https://capex.com/en',
+        Capex: 'https://account.capex.com/en'
       },
     },
     {
@@ -56,7 +58,9 @@ export default defineConfig<TestOptions>({
         NagaMenaCountry: "United Arab Emirates",
         NagaAfricaCountry: "South Africa",
         NagaXCountry: "Bosnia and Herzegovina",
-        WebsiteNagaCom: "https://naga.com"
+        WebsiteNagaCom: "https://naga.com",
+        CapexWebsite: 'https://capex.com/en',
+        Capex: 'https://account.capex.com/en'
       },
     },
     {
@@ -70,7 +74,9 @@ export default defineConfig<TestOptions>({
         NagaMenaCountry: "United Arab Emirates",
         NagaAfricaCountry: "South Africa",
         NagaXCountry: "Bosnia and Herzegovina",
-        WebsiteNagaCom: "https://naga.com"
+        WebsiteNagaCom: "https://naga.com",
+        CapexWebsite: 'https://capex.com/en',
+        Capex: 'https://account.capex.com/en'
       },
     },
     {
@@ -84,7 +90,9 @@ export default defineConfig<TestOptions>({
         NagaMenaCountry: "United Arab Emirates",
         NagaAfricaCountry: "South Africa",
         NagaXCountry: "Bosnia and Herzegovina",
-        WebsiteNagaCom: "https://naga.com"
+        WebsiteNagaCom: "https://naga.com",
+        CapexWebsite: 'https://capex.com/en',
+        Capex: 'https://account.capex.com/en'
       },
     },
     {
@@ -98,7 +106,9 @@ export default defineConfig<TestOptions>({
         NagaMenaCountry: "United Arab Emirates",
         NagaAfricaCountry: "South Africa",
         NagaXCountry: "Bosnia and Herzegovina",
-        WebsiteNagaCom: "https://naga.com"
+        WebsiteNagaCom: "https://naga.com",
+        CapexWebsite: 'https://capex.com/en',
+        Capex: 'https://account.capex.com/en'
       },
     },
     {
@@ -112,7 +122,9 @@ export default defineConfig<TestOptions>({
         NagaMenaCountry: "United Arab Emirates",
         NagaAfricaCountry: "South Africa",
         NagaXCountry: "Bosnia and Herzegovina",
-        WebsiteNagaCom: "https://naga.com"
+        WebsiteNagaCom: "https://naga.com",
+        CapexWebsite: 'https://capex.com/en',
+        Capex: 'https://account.capex.com/en'
       },
     },
   ],
