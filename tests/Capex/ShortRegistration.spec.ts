@@ -25,7 +25,7 @@ let leadUser = 'userLeadCapex@capex.com'
     testInfo.setTimeout(testInfo.timeout+30000)
     await test.step(`Open platform and login. User - ${leadUser}`, async()=>{
         await app.signInCapex.open(Capex, 'login')
-        await app.signInCapex.loginToPlatform(leadUser, 'Test123!')
+        await app.signInCapex.loginToPlatform(leadUser,  process.env.USER_PASSWORD || '')
     })
     await test.step('Wait for Capex main page', async()=>{
         await app.mainPageCapex.waitForMainPage()

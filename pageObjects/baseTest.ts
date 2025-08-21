@@ -50,6 +50,7 @@ import { startVerification_NagaMarkets } from "./common/NagaMarkets_startKYC_ver
 import { ShortRegistrationCapex } from "./Capex/ShortRegistrationCapexPage";
 import { MainPageCapex } from "./Capex/MainPageCapex";
 import { SignInCapex } from "./Capex/SignInCapex";
+import { DepositCapex } from "./Capex/DepositCapex";
 
 export class BaseTest{
     page: Page
@@ -104,6 +105,7 @@ export class BaseTest{
     shortRegistrationCapex: ShortRegistrationCapex
     mainPageCapex: MainPageCapex
     signInCapex: SignInCapex
+    depositCapex: DepositCapex
 
     constructor(page: Page){
         this.page = page
@@ -158,5 +160,6 @@ export class BaseTest{
         this.shortRegistrationCapex = new ShortRegistrationCapex(page)
         this.mainPageCapex = new MainPageCapex(page)
         this.signInCapex = new SignInCapex(page)
+        this.depositCapex = new DepositCapex(page)
     }
 }

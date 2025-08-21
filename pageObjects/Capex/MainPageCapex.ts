@@ -15,4 +15,13 @@ export class MainPageCapex{
     async userLogOut(){
         await this.page.locator('.icon-logout').click()
     }
+    async getChartResponse(){
+        const response = await this.page.waitForResponse('https://trading.capex.com/api/charts', {timeout:35000})
+        return await response.status()
+    }
+    async checkChartVisible(){
+        let chart = await this.page.locator('#devexperts-webtrader').first()
+        return await chart.isVisible()
+    }
+
 }
