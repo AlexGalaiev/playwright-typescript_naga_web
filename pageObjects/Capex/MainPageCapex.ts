@@ -23,5 +23,22 @@ export class MainPageCapex{
         let chart = await this.page.locator('#devexperts-webtrader').first()
         return await chart.isVisible()
     }
+    async openCategoryMenu(menuName: string){
+        await this.page.locator(`//span[text()='${menuName}']`).click()
+    }
+    async openTradingCentralMenu(menuPoint:string, url: string){
+        const [response ] = await Promise.all([
+            this.page.waitForResponse(url, {timeout:15000}),
+            this.page.locator(`//span[contains(text(), '${menuPoint}')]`).click()
+        ])
+        return await response.status()
+    }
+    async openKyc(){
+        await this.page.waitForTimeout(500)
+        await this.page.locator("//a[text()='complete the account registration process']").click()
+        await this.page.waitForSelector("//div[@class='open-live-account1']",{state:'visible'})
+        await this.page.locator("//button[text()='Start the Account Opening Process']").click()
+        await this.page.waitForSelector("//div[@class='panel-body']", {state:'visible'})
+    }
 
 }

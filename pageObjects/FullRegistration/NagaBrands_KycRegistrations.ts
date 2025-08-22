@@ -40,6 +40,8 @@ export class KYC_General{
         await mainPage.clickOnWidgepPoint('NAGA Start')
         //await new StartKYCPopup(this.page).startKYC();
         //After previous step - user sees next form. Add more information to personal info
+        await personalInformation.verifyYouPhoneNumber()
+        await new PhoneVerification(this.page).NS_insertVerificationCode()
         await personalInformation.compleateYourProfile()
         await personalInformation.fillLocationInformation()
         await personalInformation.fillPersonalDetailsInformation()

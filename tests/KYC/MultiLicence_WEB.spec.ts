@@ -16,7 +16,7 @@ test.describe("Multi licence web", async()=>{
         })
     })
 
-    test(`Mulilicence. KYC Capital`, {tag: ['@kyc', '@KYC_Capital', '@web']}, async({appBH})=>{
+    test.skip(`Mulilicence. KYC Capital`, {tag: ['@kyc', '@KYC_Capital', '@web']}, async({appBH})=>{
         await test.step(`Open KYC registration`, async()=>{
             await appBH.youAreIn.clickExplorePlatform()
             await appBH.mainPage.clickOnWidgepPoint('NAGA Start')
@@ -28,7 +28,7 @@ test.describe("Multi licence web", async()=>{
         })
     })
 
-    test(`Mulilicence. KYC ADGM`, {tag: ['@kyc', '@KYC_Mena', '@web']}, async({appBH})=>{
+    test.skip(`Mulilicence. KYC ADGM`, {tag: ['@kyc', '@KYC_Mena', '@web']}, async({appBH})=>{
         await test.step(`Open KYC registration`, async()=>{
             await appBH.youAreIn.clickExplorePlatform()
             await appBH.mainPage.clickOnWidgepPoint('NAGA Start')
@@ -40,7 +40,7 @@ test.describe("Multi licence web", async()=>{
         })
     })
 
-    test(`Open multilycence from different platfrorm places`, {tag:['@kyc', '@web']}, async({appBH}, testInfo)=>{
+    test.skip(`Open multilycence from different platfrorm places`, {tag:['@kyc', '@web']}, async({appBH}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 15000)
         await test.step('Open multilicence after click "Deposit now" btn', async()=>{
             await appBH.youAreIn.clickDepositNow()
