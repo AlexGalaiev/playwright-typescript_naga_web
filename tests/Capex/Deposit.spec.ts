@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test"
 import {test} from "..//..//test-options"
-test.describe('Deposit functionality', async()=>{
+test.describe('Deposit', async()=>{
 
     type depositTypes = {
         user: string,

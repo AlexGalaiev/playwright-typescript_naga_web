@@ -8,7 +8,7 @@ export class DepositCapex{
     }
 
     async openDepositFromMainPageAndChooseValue(valueToChoose:string){
-        await this.page.locator("//button[text()='Deposit']").first().click()
+        await this.page.locator("//a[text()='Deposit']").first().click()
         await this.page.waitForSelector("//div[contains(@class, 'deposit-view-content')]", {state:'visible'})
         const [customerData] = await Promise.all([
             this.page.waitForResponse('https://api-terminal.praxispay.com/api/cashier/get-customer-data', {timeout:20000}),

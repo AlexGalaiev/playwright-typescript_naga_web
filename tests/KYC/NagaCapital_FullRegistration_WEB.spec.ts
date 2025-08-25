@@ -20,8 +20,8 @@ test.describe('WEB', async()=>{
         await test.step('Open main page and switch to Compleate profile KYC. Fill KYC and go to main page.', async() =>{
             await app.youAreIn.clickExplorePlatform()
             await app.mainPage.clickOnWidgepPoint('NAGA Start')
-            await app.personalInformation.verifyYouPhoneNumber()
-            await app.phoneVerification.NS_insertVerificationCode()
+            // await app.personalInformation.verifyYouPhoneNumber()
+            // await app.phoneVerification.NS_insertVerificationCode()
             await app.personalInformation.compleateYourProfile()
             await app.personalInformation.fillLocationInformation()
             await app.personalInformation.fillPersonalDetailsInformation()

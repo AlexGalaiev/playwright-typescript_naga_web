@@ -35,4 +35,17 @@ let leadUser = 'userLeadCapex@capex.com'
         expect(await app.signInCapex.checkPageTitleIsVisible()).toBeTruthy()
     })
     })
+
+    test(`Forgot password for email - ${leadUser}`, {tag:['@web', '@Capex']}, async({app, Capex})=>{
+        await test.step(`Open Capex platform and fill personal information, email - ${leadUser}`, async()=>{
+            await app.shortRegistrationCapex.open(Capex, 'login')
+        })
+        await test.step('Open forgot password page, and check forgot password respone', async()=>{
+            await app.signInCapex.openForgotPasswordPage()
+            let response = await app.signInCapex.checkForgotPasswordResponse(leadUser)
+            expect(await app.signInCapex.getStatusCode(response)).toEqual(200)
+            expect(await app.signInCapex.getStatusMessage(response)).toEqual('OK')
+
+        })
+    })
 })

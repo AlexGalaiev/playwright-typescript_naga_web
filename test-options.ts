@@ -9,6 +9,7 @@ export type TestOptions = {
     AppNAGAX: string;
     baseUrl: string;
     browserContext: BrowserContext;
+    browerContextMax: BrowserContext;
     testInfo: TestInfo;
     NSCountry: string;
     NMCountry: string;
@@ -18,6 +19,7 @@ export type TestOptions = {
     WebsiteNagaCom: string;
     page2: Page;
     app: BaseTest;
+    appMax: BaseTest;
     appSpain: BaseTest;
     appUAE: BaseTest;
     appUA: BaseTest;
@@ -25,7 +27,8 @@ export type TestOptions = {
     appSA: BaseTest;
     appBH: BaseTest;
     CapexWebsite: string
-    Capex: string
+    Capex: string;
+    pageMax: Page
 }
 
 export const test = base.extend<TestOptions>({
@@ -45,6 +48,11 @@ export const test = base.extend<TestOptions>({
         let context = await browser.newContext();
         await use(context);
     },
+    browerContextMax: async({}, use)=>{
+        let browser = await baseChromium.launch({args: ['--start-maximized']});
+        let context = await browser.newContext({viewport: null, deviceScaleFactor: undefined,});
+        await use(context);
+    },
     page: async ({browserContext}, use)=>{
         let page = await browserContext.newPage()
         await use(page)
@@ -52,6 +60,11 @@ export const test = base.extend<TestOptions>({
         // await Tr.addResultToTest(await Tr.getTestRunId(), await test.info().tags, await test.info().status)
         // await Tr.addCommentToTestCase(await Tr.getTestCaseId(await Tr.getTestRunId(), await test.info().tags), await test.info().status)
         await browserContext.close()
+    },
+    pageMax: async ({browerContextMax}, use)=>{
+        let page = await browerContextMax.newPage()
+        await use(page)
+        await browerContextMax.close()
     },
     page2: async ({browserContext}, use)=>{
         let page = await browserContext.newPage()
@@ -101,4 +114,8 @@ export const test = base.extend<TestOptions>({
         await context.close()
         await browser.close()
     },
+    appMax: async({ pageMax }, use) =>{
+        const context = new BaseTest(pageMax)
+        await use(context)
+    }
 })

@@ -9,11 +9,13 @@ export class MainPageCapex{
 
     async waitForMainPage(){
         await this.page.waitForTimeout(500)
-        await this.page.locator("//div[contains(@class, 'page-header')]").first().waitFor({state:'visible'})
+        await this.page.locator("#topbarmenu").first().waitFor({state:'visible'})
     }
 
     async userLogOut(){
-        await this.page.locator('.icon-logout').click()
+        await this.page.locator("//span[contains(@class, 'username')]").first().click()
+        await this.page.locator("//span[text()='Log Out']").first().waitFor({state:'visible'})
+        await this.page.locator("//span[text()='Log Out']").first().click()
     }
     async getChartResponse(){
         const response = await this.page.waitForResponse('https://trading.capex.com/api/charts', {timeout:35000})
@@ -25,14 +27,17 @@ export class MainPageCapex{
     }
     async openCategoryMenu(menuName: string){
         await this.page.locator(`//span[text()='${menuName}']`).click()
+       
     }
     async openTradingCentralMenu(menuPoint:string, url: string){
+        await this.page.locator('//ul[@aria-labelledby="topnavDashboards"]').nth(1).waitFor({state:'visible'})
         const [response ] = await Promise.all([
             this.page.waitForResponse(url, {timeout:15000}),
             this.page.locator(`//span[contains(text(), '${menuPoint}')]`).click()
         ])
         return await response.status()
     }
+
     async openKyc(){
         await this.page.waitForTimeout(500)
         await this.page.locator("//a[text()='complete the account registration process']").click()
@@ -40,5 +45,7 @@ export class MainPageCapex{
         await this.page.locator("//button[text()='Start the Account Opening Process']").click()
         await this.page.waitForSelector("//div[@class='panel-body']", {state:'visible'})
     }
-
+    async resumeMyAppBtn(){
+        return await this.page.locator("//button[text()='Resume My Application']").isVisible()
+    }
 }

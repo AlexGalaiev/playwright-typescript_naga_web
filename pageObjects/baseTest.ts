@@ -51,6 +51,7 @@ import { ShortRegistrationCapex } from "./Capex/ShortRegistrationCapexPage";
 import { MainPageCapex } from "./Capex/MainPageCapex";
 import { SignInCapex } from "./Capex/SignInCapex";
 import { DepositCapex } from "./Capex/DepositCapex";
+import { CapexKYC } from "./Capex/KYC";
 
 export class BaseTest{
     page: Page
@@ -106,6 +107,7 @@ export class BaseTest{
     mainPageCapex: MainPageCapex
     signInCapex: SignInCapex
     depositCapex: DepositCapex
+    capexKYC: CapexKYC
 
     constructor(page: Page){
         this.page = page
@@ -161,5 +163,6 @@ export class BaseTest{
         this.mainPageCapex = new MainPageCapex(page)
         this.signInCapex = new SignInCapex(page)
         this.depositCapex = new DepositCapex(page)
+        this.capexKYC = new CapexKYC(page)
     }
 }
