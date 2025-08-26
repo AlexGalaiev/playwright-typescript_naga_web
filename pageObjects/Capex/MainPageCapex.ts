@@ -26,8 +26,9 @@ export class MainPageCapex{
         return await chart.isVisible()
     }
     async openCategoryMenu(menuName: string){
-        await this.page.locator(`//span[text()='${menuName}']`).click()
-       
+        let category = await this.page.locator(`//span[text()='${menuName}']`)
+        await category.waitFor({state:'visible'})
+        await category.click()
     }
     async openTradingCentralMenu(menuPoint:string, url: string){
         await this.page.locator('//ul[@aria-labelledby="topnavDashboards"]').nth(1).waitFor({state:'visible'})
@@ -46,6 +47,30 @@ export class MainPageCapex{
         await this.page.waitForSelector("//div[@class='panel-body']", {state:'visible'})
     }
     async resumeMyAppBtn(){
+        await this.page.waitForSelector("//button[text()='Resume My Application']", {state:'visible'})
         return await this.page.locator("//button[text()='Resume My Application']").isVisible()
+    }
+    async checkAccountPlatformVisibility(accountId: string, platformType: string){
+        await this.page.waitForTimeout(250)
+        let account = await this.page.locator(`//a[contains(@alt, '${accountId}')]//..//..//..`).first()
+        return await account.locator(`//td[text()='${platformType}']`).isVisible()
+    }
+    async checkAccountPlatformAccountIdVisibility(accountId: string){
+        await this.page.waitForTimeout(250)
+        let account = await this.page.locator(`//a[contains(@alt, '${accountId}')]//..//..//..`).first()
+        return await account.locator(`//a[text()='${accountId}']`).isVisible()
+    }
+    async checkAccountPlatformType(accountId: string, type: string){
+        await this.page.waitForTimeout(250)
+        let account = await this.page.locator(`//a[contains(@alt, '${accountId}')]//..//..//..`).first()
+        return await account.locator(`//td[text()='${type}']`).isVisible()
+    }
+    async checkAccountPlatformCurrency(accountId: string, currency: string){
+        await this.page.waitForTimeout(250)
+        let account = await this.page.locator(`//a[contains(@alt, '${accountId}')]//..//..//..`).first()
+        return await account.locator(`//td[text()='${currency}']`)
+    }
+    async waitForAccountTable(){
+        await this.page.locator("#trading-accounts-account-table").waitFor({state:'visible'})
     }
 }

@@ -8,7 +8,7 @@ export class CapexKYC{
     }
     async chooseDropDown(answerText:string, questionText:string){
         await this.page.waitForTimeout(1000)
-        let question = await this.page.locator("//div[contains(@class, 'qa-select div_question_')]", {has: await this.page.locator(`//span[contains(text(), '${questionText}')]`)})
+        let question = await this.page.locator("//div[contains(@class, 'qa-select div_question_')]", {has: await this.page.locator(`//span[contains(text(), '${questionText}')]`)}).first()
         await question.locator('//button').click()
         let dropDown = await question.locator("//div[@class='dropdown-menu show']")
         await dropDown.waitFor({state:'visible'})
@@ -109,17 +109,29 @@ export class CapexKYC{
         await this.chooseDropDown('Traded on my own', 'In the past 2 years I have:')
         await this.chooseDropDown('Stop loss', 'What type of order should you place in order to limit your losses?')
         await this.chooseDropDown('Going up', 'If we are in a Bull market the general prices in financial markets are:')
+        await this.chooseDropDown('Only through our platform', 'Where can you sell an Amazon share CFD bought on our platform?')
         await this.chooseDropDown('Trade in multiple financial instruments such as CFDs (e.g shares, indices)', 'What is your main trading purpose and objective?')
         await this.page.locator("//button[text()='Next']").click()
     }
     async checkRiskWarningCheckbox(){
         await this.page.locator("//span[text()='I am over 18 years of age.']").waitFor({state:'visible'})
         await this.page.locator("//button[text()='Next']").click()
+        await this.page.waitForTimeout(1000)
     }
     async checkVerificationScreenAndSubmit(){
+        await this.page.waitForSelector('//button[@data-name="doc-id"]', {state:'visible'})
         return await this.page.locator('//button[@data-name="doc-id"]').isVisible()
     }
     async passVerification(){
         await this.page.locator("//button[text()='Close']").click()
+    }
+
+    async createFullyRegisteredUser(){
+        await this.fillPersonalInformation()
+        await this.skipDeposit()
+        await this.fillTaxInformation()
+        await this.fillFinancialInformation()
+        await this.fillKnoledgeTradingExperience()
+        await this.passVerification()
     }
 }

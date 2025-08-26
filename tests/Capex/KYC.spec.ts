@@ -6,8 +6,8 @@ import {test} from "..//..//test-options"
 test.describe("KYC Capex EU", async()=>{
     let email = new RandomUser().getRandomUserEmail()
 
-    test.skip('Advance scorring', {tag:['@web', '@Capex']}, async({app, Capex}, testInfo)=>{
-        testInfo.setTimeout(testInfo.timeout+160000)
+    test('Advance scorring', {tag:['@web', '@Capex']}, async({app, Capex}, testInfo)=>{
+        testInfo.setTimeout(testInfo.timeout+170000)
         await test.step(`Create lead user with ${email} email`, async()=>{
             await app.shortRegistrationCapex.open(Capex, 'register')
             await app.shortRegistrationCapex.createLeadUser(email)
@@ -25,6 +25,9 @@ test.describe("KYC Capex EU", async()=>{
         await test.step('Fill Financial information', async()=>{
             await app.capexKYC.fillFinancialInformation()
         })
+        await test.step('Fill Knoledge and Trading experience', async()=>{
+            await app.capexKYC.fillKnoledgeTradingExperience()
+        })
         await test.step('Check risk warning checkboxes', async()=>{
             await app.capexKYC.checkRiskWarningCheckbox()
             expect(await app.capexKYC.checkVerificationScreenAndSubmit()).toBeTruthy()
@@ -33,7 +36,5 @@ test.describe("KYC Capex EU", async()=>{
         await test.step("Check main page", async()=>{
             expect(await app.mainPageCapex.resumeMyAppBtn()).toBeTruthy()
         })
-
-
     })
 })
