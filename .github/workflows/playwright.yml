@@ -94,6 +94,7 @@ on:
     - cron: '05 0 * * 0-6'
     - cron: '25 1 * * 0-6'
     - cron: '0 * * * *'
+    - cron: '30 * * * *'
     - cron: '25 3 * * 0-6'
 jobs:
   test:
@@ -158,6 +159,7 @@ jobs:
                 "25 1 * * 0-6") echo "TAGS=@settings" >> $GITHUB_ENV ;;
                 "25 3 * * 0-6") echo "TAGS=@Capex" >> $GITHUB_ENV ;;
                 "0 * * * *") echo "TAGS=@smoke" >> $GITHUB_ENV ;;
+                "30 * * * *") echo "TAGS=@Capex" >> $GITHUB_ENV ;;
               esac
     - name: Run Playwright tests
       id: playwright_tests
