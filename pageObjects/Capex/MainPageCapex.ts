@@ -96,4 +96,22 @@ export class MainPageCapex{
         await this.page.locator('#topbarmenu').waitFor({state:'visible'})
         await this.page.waitForTimeout(2000)
     }
+    async openCapexTradeDetailsInfo(){
+        await this.page.locator("//button[contains(text(), 'View Account Details')]").click()
+    }
+    async openFilters(){
+        await this.page.locator("//button[contains(@class, 'filters')]").first().click()
+        await this.page.waitForTimeout(500)
+    }
+    async filterViaOption(option:string, defaultView: string){
+        await this.page.locator(`//div[text()='${defaultView}']`).click()
+        await this.page.waitForTimeout(1000)
+        await this.page.locator(`//span[text()='${option}']`).click()
+        await this.page.waitForTimeout(1000)
+        await this.page.locator("//i[contains(@class, 'fa-magnifying-glass')]//..//..").first().click()
+        await this.page.waitForTimeout(2000)
+    }
+    async checkPlatformTypeDisplay(platformName:string){
+        return await this.page.locator(`//td[text()='${platformName}']`)
+    }
 }
