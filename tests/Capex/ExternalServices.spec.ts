@@ -15,6 +15,7 @@ test.describe('External services. Trading Central', async()=>{
 
     test('Economic calendar', {tag:['@web', '@Capex']}, async({appMax})=>{
         await test.step('Check status code of trading central response', async()=>{
+            await appMax.mainPageCapex.waitNavbarVisibility()
             await appMax.mainPageCapex.openCategoryMenu('Trading Central')
             let statusCode = await appMax.mainPageCapex.openTradingCentralMenu('Economic Calendar', 'https://global.tradingcentral.com/dist/web-economic-insight/**')
             expect(statusCode).toEqual(200)
@@ -22,6 +23,7 @@ test.describe('External services. Trading Central', async()=>{
     })
     test('Analyst Views', {tag:['@web', '@Capex']}, async({appMax})=>{
         await test.step('Check status code of trading central response', async()=>{
+            await appMax.mainPageCapex.waitNavbarVisibility()
             await appMax.mainPageCapex.openCategoryMenu('Trading Central')
             let statusCode = await appMax.mainPageCapex.openTradingCentralMenu('Analyst Views', 'https://site.recognia.com/capex/**')
             expect(statusCode).toEqual(200)

@@ -73,4 +73,8 @@ export class MainPageCapex{
     async waitForAccountTable(){
         await this.page.locator("#trading-accounts-account-table").waitFor({state:'visible'})
     }
+    async waitNavbarVisibility(){
+        await this.page.locator('#topbarmenu').waitFor({state:'visible'})
+        await this.page.waitForTimeout(100)
+    }
 }
