@@ -26,15 +26,34 @@ export class MainPageCapex{
         return await chart.isVisible()
     }
     async openCategoryMenu(menuName: string){
+        let more = await this.page.locator("//span[text()='More']")
+        if(await more.isVisible()){
+            await more.hover()
+            await this.page.waitForTimeout(700)
+            await more.click()
+            await this.page.waitForTimeout(700)
+        }
         let category = await this.page.locator(`//span[text()='${menuName}']`)
         await category.waitFor({state:'visible'})
+        await category.hover()
+        await this.page.waitForTimeout(700)
         await category.click()
     }
     async openTradingCentralMenu(menuPoint:string, url: string){
-        await this.page.locator('//ul[@aria-labelledby="topnavDashboards"]').nth(1).waitFor({state:'visible'})
+        let more = await this.page.locator("//span[text()='More']")
+        await more.hover()
+        await this.page.waitForTimeout(700)
+        await more.click()
+        await this.page.waitForTimeout(700)
+        let category = await this.page.locator(`//span[text()='Trading Central']`)
+        await category.waitFor({state:'visible'})
+        await category.hover()
+        await this.page.waitForTimeout(700)
+        let mPoint = await this.page.locator(`//span[contains(text(), '${menuPoint}')]`)
+        await mPoint.hover()
         const [response ] = await Promise.all([
             this.page.waitForResponse(url, {timeout:15000}),
-            this.page.locator(`//span[contains(text(), '${menuPoint}')]`).click()
+            mPoint.click()
         ])
         return await response.status()
     }
@@ -75,6 +94,6 @@ export class MainPageCapex{
     }
     async waitNavbarVisibility(){
         await this.page.locator('#topbarmenu').waitFor({state:'visible'})
-        await this.page.waitForTimeout(100)
+        await this.page.waitForTimeout(2000)
     }
 }
