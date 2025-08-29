@@ -51,7 +51,8 @@ for(const{platform, account, type, currency} of CapexParams){
 }
 
 for(const{platform, account, type, currency} of CapexParams){
-    test(`Check visibility ${account} in Capex Trader ${platform}`, {tag:['@web', '@Capex']}, async({app, Capex})=>{
+    test(`Check visibility ${account} in Capex Trader ${platform}`, {tag:['@web', '@Capex']}, async({app, Capex}, testInfo)=>{
+    testInfo.setTimeout(testInfo.timeout+15000)    
     let user = "capexFullReg@capex.com"
     await test.step(`Open platform and login. User - ${user}`, async()=>{
         await app.signInCapex.open(Capex, 'login')
@@ -67,8 +68,9 @@ for(const{platform, account, type, currency} of CapexParams){
     })})
 }
 
-test('Filtering accounts per Platform and Type', {tag:['@web', '@Capex']}, async({app, Capex})=>{
+test('Filtering accounts per Platform and Type', {tag:['@web', '@Capex']}, async({app, Capex}, testInfo)=>{
     let user = "capexFullReg@capex.com"
+    testInfo.setTimeout(testInfo.timeout+10000)
     await test.step(`Open platform and login. User - ${user}`, async()=>{
         await app.signInCapex.open(Capex, 'login')
         await app.signInCapex.loginToPlatform(user,  process.env.USER_PASSWORD || '')

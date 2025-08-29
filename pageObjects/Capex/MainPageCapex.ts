@@ -114,4 +114,19 @@ export class MainPageCapex{
     async checkPlatformTypeDisplay(platformName:string){
         return await this.page.locator(`//td[text()='${platformName}']`)
     }
+    async openMainPageDisclaimer(){
+        let disclaimer = await this.page.locator('//a[@title="Disclaimer"]')
+        await disclaimer.scrollIntoViewIfNeeded()
+        await disclaimer.click()
+        await this.page.waitForSelector("//h2[text()='Disclaimer']", {state:'visible'})
+    }
+    async getPlatformLicence(){
+        return await this.page.locator('//a[@title="http://capex.com/en"]//..').first().textContent()
+    }
+    async getRiskWarningText(){
+        return await this.page.locator("//strong[text()='HIGH RISK INVESTMENT WARNING:']//..").first().textContent()
+    }
+    async changeLanguageTo(language:string){
+        let def = await this.page.locator("//li[contains(@class, 'lang-select')]//span[text()='en']")
+    }
 }

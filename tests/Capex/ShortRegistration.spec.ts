@@ -48,4 +48,13 @@ let leadUser = 'userLeadCapex@capex.com'
 
         })
     })
+    
+    test('Check Sign In page Risk Warning text', {tag:['@web', '@Capex']}, async({app, Capex})=>{
+        await test.step(`Open platform and login. User - ${leadUser}`, async()=>{
+            await app.signInCapex.open(Capex, 'login')
+        })
+        await test.step('Check Risk Warning message', async()=>{
+            expect(await app.shortRegistrationCapex.getSignInRiskWarningText()).toEqual('CAPEX is a brand name operated by KW Investments Ltd, authorised and regulated by the Seychelles Financial Services Authority (FSA). Trading leveraged products involves significant risk and may not be suitable for all investors. Please read the Risk Disclosure before trading.')
+        })
+    })
 })

@@ -38,4 +38,7 @@ export class ShortRegistrationCapex{
         await input.pressSequentially(countryCode)
         await this.page.waitForTimeout(500)
     }
+    async getSignInRiskWarningText(){
+        return await this.page.locator("//span[contains(@class, 'button-login-disclaimer-legal-docs')]//..").first().textContent()
+    }
 }

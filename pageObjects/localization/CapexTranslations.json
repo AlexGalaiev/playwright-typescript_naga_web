@@ -1,0 +1,38 @@
+{
+    "ES":{
+        "MyPortal":"Mi portal",
+        "CAPEX Trader":"CAPEX Trader",
+        "My Account":"Mi Billetera",
+        "My Profile":"Mi perfil",
+        "MetaTrader 5":"MetaTrader 5",
+        "Trading Accounts":"Cuentas de Trading",
+        "Trading Central":"Trading Central",
+        "My Report":"My Report",
+        "Deposit":"Depósito rapido",
+        "Available Amount":"Monto Disponible"
+    },
+    "AR":{
+        "MyPortal":"بوابتي",
+        "CAPEX Trader":"CAPEX Trader",
+        "My Account":"محفظتى",
+        "My Profile":"ملفي",
+        "MetaTrader 5":"ميتا تريدر 5",
+        "Trading Accounts":"حسابات التداول",
+        "Trading Central":"Trading Central",
+        "My Report":"My Report",
+        "Deposit":"إيداع",
+        "Available Amount":"المبلغ المتاح"
+    },
+    "VN":{
+        "MyPortal":"Cổng thông tin của tôi",
+        "CAPEX Trader":"CAPEX Trader",
+        "My Account":"Ví của tôi",
+        "My Profile":"Thông tin của tôi",
+        "MetaTrader 5":"MetaTrader 5",
+        "Trading Accounts":"Tài khoản giao dịch",
+        "Trading Central":"Trung tâm giao dịch",
+        "My Report":"My Report",
+        "Deposit":"Nạp tiền",
+        "Available Amount":"Số lượng có sẵn"
+    }
+}
