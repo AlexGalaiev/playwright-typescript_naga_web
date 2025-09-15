@@ -16,7 +16,7 @@ test.describe('Deposit', async()=>{
         {brand: '@Markets', user: 'depositTestMarkets', deposit: [ 'Credit Card','OpenBanking','VoltConnect','altbankwire','klarna','paypal','truelayer','skrill']},
     ]
     for(const{brand, user, deposit,} of AfricaTestParams){
-    test(`${brand} Check praxis popup deposit methods`, {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web']}, 
+    test(`${brand} Check praxis popup deposit methods`, {tag:['@deposit', '@prodSanity', '@manageFunds', '@smoke','@web','@lightTests']}, 
         async({app,AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 45000)
         await test.step(`Login by ${user} to platfrom ${brand}`, async()=>{

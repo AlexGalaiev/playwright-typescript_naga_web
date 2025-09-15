@@ -15,7 +15,7 @@ test.describe('Trading view charts', async()=>{
     ]
     for(const {brand, user} of tradingViewCharts){
         test(`${brand} Chart visibility. Check response from tradiung view service`, 
-            {tag:['@web', '@smoke', '@trading']}, async({app, AppNAGA})=>{
+            {tag:['@web', '@smoke', '@trading','@lightTests']}, async({app, AppNAGA})=>{
         let tradingInstrument = 'SOLUSD'
         await test.step(`Login to platform by user ${user}`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
@@ -43,7 +43,7 @@ test.describe('Trading view charts', async()=>{
     ]
     for(const{brand, user, instrument1, instrument2, instrument3} of chartTabInstrumentsView){
         test(`${brand} Check visibility of chart tabs. And check visibility elements inside these tabs`, 
-            {tag:['@web', '@smoke', '@trading']}, async({app, AppNAGA}, testInfo)=>{
+            {tag:['@web', '@smoke', '@trading','@lightTests']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout+40000)
         await test.step(`Login to platform by user ${user}. Open Trade tab`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')

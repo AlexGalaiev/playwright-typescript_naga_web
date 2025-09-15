@@ -114,7 +114,7 @@ test.describe('WEB+Mobile',async()=>{
     ]
 
     for(const{brand, user} of balanceTestParams){
-        test(`${brand} Balance view on main page`, {tag: ['@web', '@UI', '@prodSanity', '@smoke']}, async({app, AppNAGA})=>{
+        test(`${brand} Balance view on main page`, {tag: ['@web', '@UI', '@prodSanity', '@smoke','@lightTests']}, async({app, AppNAGA})=>{
             await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')
@@ -219,7 +219,7 @@ test.describe('WEB', async()=>{
         {brand:'@Mena', user:'leadMena@naga.com', step1Name:'Upgrade to Live', step2Name:'Deposit', step3Name:'Verify Identity', step4Name:'none'}
     ]
     for(const{brand, user, step1Name, step2Name, step3Name, step4Name} of userDemoParamsMarkets){
-        test(`${brand} Visibility of kyc widget per lead user`, {tag:['@UI', '@web','@smoke']}, async({AppNAGA, app})=>{
+        test(`${brand} Visibility of kyc widget per lead user`, {tag:['@UI', '@web','@smoke','@lightTests']}, async({AppNAGA, app})=>{
             await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
                 await app.signIn.goto(AppNAGA, 'login')
                 await app.signIn.signInUserToPlatform(user, process.env.USER_PASSWORD || '')

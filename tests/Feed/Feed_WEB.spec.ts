@@ -15,7 +15,7 @@ const testFeedParams: testFeedtypes[] = [
 ]
 for(const{brand, user}of testFeedParams){
     test(`${brand} Main actions for post: create, edit, delete`,
-        {tag:['@feed', '@prodSanity','@web', '@smoke']}, async({app, AppNAGA}, testInfo)=>{
+        {tag:['@feed', '@prodSanity','@web', '@smoke','@lightTests']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000);
         await test.step(`Login by ${user}. ${brand} brand`, async()=>{
             await app.signIn.goto(AppNAGA,'login');

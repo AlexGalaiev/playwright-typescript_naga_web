@@ -166,7 +166,7 @@ const testAccountSwitchingParams: tradingAcTypes[] = [
 ]
 for(const{brand, user} of testAccountSwitchingParams){
     test(`${brand} Switching between trading accounts`, 
-        {tag:['@secondAccount', '@web', '@smoke']}, async({app, AppNAGA}, testInfo)=>{
+        {tag:['@secondAccount', '@web', '@smoke','@lightTests']}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 70000)
         await test.step(`Login to platform by ${user} user`, async()=>{
             await app.signIn.goto(AppNAGA,'login');

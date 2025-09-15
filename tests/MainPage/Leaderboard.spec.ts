@@ -16,7 +16,7 @@ test.describe('LeaderBord page', async()=>{
 
     for(const{brand, user} of LeaderbordParams){
         test(`${brand} FIlters of trading leaders. Check visibility of exist users`, 
-            {tag:['@UI', '@web','@smoke'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, async({app, AppNAGA}, testInfo)=>{
+            {tag:['@UI', '@web','@smoke','@lightTests'], annotation:{description:'https://keywaygroup.atlassian.net/browse/RG-10132',type:'ticket'}}, async({app, AppNAGA}, testInfo)=>{
         testInfo.setTimeout(testInfo.timeout + 30000)
         await test.step(`Login to platform by ${user}, ${brand} brand`, async()=>{
             await app.signIn.goto(AppNAGA, 'login')
