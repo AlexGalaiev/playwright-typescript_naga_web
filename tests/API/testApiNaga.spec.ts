@@ -1,4 +1,5 @@
 import {test} from "..//..//test-options"
+
 test.describe('Api tests', async()=>{
 
     test('login user', async({request})=>{
@@ -8,6 +9,9 @@ test.describe('Api tests', async()=>{
             'data':{"user_name":"testTrading2","password":"xxA36VLk5eX7zWqBZM36Ppq8VUUD61ZR189d+g6fYmo=","device_uuid":"99768926b3358dffb75aeca3b6bfff98","g_recaptcha_type":"geetest","get_user_info":true},
             'headers':{"Platform":"web-trader"}
         })
+        let body = await loginResponse.json()
+        const token = body.info.token
+        const authRequest = await request.get('https://api-v2.naga.com/user/info')
+        console.log(await authRequest.json())
     })
-
 })
