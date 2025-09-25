@@ -52,6 +52,8 @@ import { MainPageCapex } from "./Capex/MainPageCapex";
 import { SignInCapex } from "./Capex/SignInCapex";
 import { DepositCapex } from "./Capex/DepositCapex";
 import { CapexKYC } from "./Capex/KYC";
+import { User } from "../types/user";
+import { Users } from "../types/Customers";
 
 export class BaseTest{
     page: Page
