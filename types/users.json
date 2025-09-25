@@ -1,0 +1,12 @@
+{
+    "admin":{
+        "id":"1",
+        "name":"ALexQA",
+        "email":"testTrading@i.ua"
+    },
+    "QA":{
+        "id":"2",
+        "name":"MishaQA",
+        "email":"testTrading2@i.ua"
+    }
+}

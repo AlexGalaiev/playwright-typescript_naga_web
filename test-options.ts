@@ -3,6 +3,8 @@ import { TestRailIntegration } from "./testrail_setup";
 import { TestError } from "playwright/types/testReporter";
 import { createVpnApp, VPN } from "./pageObjects/Website/VPN";
 import { BaseTest } from "./pageObjects/baseTest";
+import { User } from "./types/user";
+import { Users } from "./types/Customers";
 
 export type TestOptions = {
     AppNAGA: string;
@@ -28,7 +30,9 @@ export type TestOptions = {
     appBH: BaseTest;
     CapexWebsite: string
     Capex: string;
-    pageMax: Page
+    pageMax: Page;
+    admin: User
+    users: Users
 }
 
 export const test = base.extend<TestOptions>({
@@ -117,5 +121,14 @@ export const test = base.extend<TestOptions>({
     appMax: async({ pageMax }, use) =>{
         const context = new BaseTest(pageMax)
         await use(context)
+    },
+    users: async({}, use) =>{
+        const user = new Users('/types/users.json')
+        await use(user)
+    },
+    admin: async({users}, use) =>{
+        const adminUser = await users.getUserDataByRole('admin')
+        await use(adminUser)
     }
+    
 })

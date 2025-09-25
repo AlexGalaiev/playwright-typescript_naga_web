@@ -192,3 +192,7 @@ test.describe('Login/LogOut',async()=>{
         })})
     }
 })
+
+test('test test', async({admin})=>{
+    console.log(admin.email)
+})
